@@ -1,0 +1,24 @@
+<!--
+//-------------------------------------------------
+Der nachfolgende Text darf nicht entfernt werden.
+//-------------------------------------------------
+SMALL Time
+SMALL - SIMPLE - SMART
+IT-Master GmbH, info@it-master.ch
+-- Lizenz - Informationen --
+SMALL - Time ist Open Source.
+Weitere Infos entnehmen Sie bitte unserer Webseite.
+//-------------------------------------------------
+-->
+<hr color=#DFDFDF size=1>
+<font size='-2'>
+SMALL - Time V ##ver##
+<br>
+<br>IT-Master GmbH
+<br></font>
+<a target='_new' href='http://www.it-master.ch'>
+<font size='-2'>www.it-master.ch</font></a>
+<font size='-2'><br></font>
+<a target='_new' href='http://www.small.li'>
+<font size='-2'>www.small.li</font></a>
+<font size='-2'><br></font>
