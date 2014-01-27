@@ -575,7 +575,7 @@ if($_SESSION['admin']){
 	// Jahresdaten berechnen
 	// ----------------------------------------------------------------------------
 	// berechnung Endjahr = aktuelles jahr, dann 0 sonst $_time->_jahr
-	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr);
+	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 	if(in_array(6,$show)){
 		txt("Jahres - Daten füllen und anzeigen : \$_jahr");
 		showClassVar($_jahr);

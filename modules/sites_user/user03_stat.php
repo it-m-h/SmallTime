@@ -45,7 +45,7 @@ echo "</tr>";
 
 
 echo "<tr>";
-echo "<td class=td_background_top width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
+echo "<td class=td_background_top width=100 align=left colspan=2>Aktuelle Total - Saldi</td>";
 echo "</tr>";
 
 /*
@@ -54,8 +54,17 @@ echo "<td class=td_background_tag width=100>Vorholzeit</td>";
 echo "<td class=td_background_tag >$user->_Vorholzeit_pro_Jahr h</td>";
 echo "</tr>";
 */
+
+if($_user->_modell==2) {
+	$str = "Monatssaldo";
+}elseif($_user->_modell==1) {
+	$str = "Jahressaldo";
+}else {
+	$str = "Zeitsaldo";
+}
+
 echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Zeitsaldo</td>";
+echo "<td class=td_background_info width=100 align=left>".$str."</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 echo "</tr>";
 

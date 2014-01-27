@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.8
+* Version 0.82
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -39,6 +39,7 @@ class time_month{
 	public $_SummeExtern				= NULL;
 		
 	public $_MonatsArray 				= NULL;		// Array des Monats
+	
 	
 	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause){	
 		$this->_file 				= "./Data/".$ordnerpfad."/Rapport/";

@@ -6,18 +6,18 @@ meta:Content-Type#text/html; charset=iso-8859-1#Zeichensatz
 meta:Content-Script-Type#text/javascript#Sprache
 meta:Page-type#SMALL - Time, Zeiterfassung, Projekterfassung, Stempeluhr für Ihre Mitarbeiter#Seite
 meta:Page-topic#SMALL - Time, Zeiterfassung, Projekterfassung, Stempeluhr für Ihre Mitarbeiter#Seite
-meta:Description#Zeiterfassung für Einzelfirmen, Privatpersonen und kleinstunternehmen#Beschreibung
-meta:Keywords#php, zeiterfassung, datenbank, textbasieren, import, stempeluhr, digital#Suchw&ouml;rter
-meta:Copyright#info&#8212;it-master.ch
+meta:Description#Zeiterfassung für Einzelfirmen, Privatpersonen und Kleinstunternehmen#Beschreibung
+meta:Keywords#php, zeiterfassung, datenbank, textbasierend, import, stempeluhr, digital#Suchwörter
+meta:Copyright#info@it-master.ch#Copyright by...
 Monatsanzeige#Jan.;Feb.;März;April;Mai;Juni;Juli;Aug.;Sept.;Okt.;Nov.;Dez.#Anzeige im Menue
-Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung f&uuml;r den Bundes - Feiertag
-<img src='images/icons/report_user.png' border='0'> Anwesenheitsliste#1#D&uuml;rfen die User die Anwesenheit der andern sehen
-<img src='images/icons/clock_edit.png' border='0'> Stempelzeit edit#1#D&uuml;rfen die User die Stempelzeiten nachtr&auml;glich ver&ouml;ssern (ja, nein)
-<img src='images/icons/time_add.png' border='0'> Eine Zeit hinzuf&uuml;gen#1#User d&uuml;rfen eine Zeit hinzuf&uuml;gen
-<img src='images/icons/time_go.png' border='0'> Mehrere Zeitangaben#1#User d&uuml;rfen mehrere Zeiten eingeben
-<img src='images/icons/date_add.png' border='0'> Absenzen eingeben#1#User d&uuml;rfen Absenzen eintragen
-<img src='images/icons/application_add.png' border='0'> Raport eintragen#1#User d&uuml;rfen einen Rapport eingeben
-<img src='images/icons/application_view_tile.png' border='0'> Mehrbenutzersystem#0#Zentrales - Login - Formular
+Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung für den Bundes - Feiertag
+<img src='images/icons/report_user.png' border='0'> Anwesenheitsliste#1#Dürfen die User die Anwesenheit der andern sehen
+<img src='images/icons/clock_edit.png' border='0'> Stempelzeit edit#1#Dürfen die User die Stempelzeiten nachträglich verändern (ja, nein)
+<img src='images/icons/time_add.png' border='0'> Eine Zeit hinzufügen#1#User dürfen eine Zeit hinzufügen
+<img src='images/icons/time_go.png' border='0'> Mehrere Zeitangaben#1#User dürfen mehrere Zeiten eingeben
+<img src='images/icons/date_add.png' border='0'> Absenzen eingeben#1#User dürfen Absenzen eintragen
+<img src='images/icons/application_add.png' border='0'> Raport eintragen#1#User dürfen einen Rapport eingeben
+<img src='images/icons/application_view_tile.png' border='0'> Mehrbenutzersystem#1#Zentrales - Login - Formular
 <img src='images/icons/printer.png' border='0'> MA d&uuml;rfen Drucken#0#Bis zu welchem Tag, darf der Mitarbeiter den letzten Monat Drucken? (0=immer)
 <img src='images/icons/clock_pause.png' border='0'> Pause ab ? Stunden.#0#Ab welcher Stempelzeit wird die Automatische Pause eingerechnet. (0 = keine Pause berechnen)
 <img src='images/icons/clock_pause.png' border='0'> Automatische Pause.#0#L&auml;nge der automatischen Pause.

@@ -21,12 +21,13 @@ class time_user{
 	public $_SollZeitProTag			= NULL;
 	public $_BeginnDerZeitrechnung	= NULL;	
 	public $_Vorholzeit_pro_Jahr		= NULL;
-	public $_Ferien_pro_Jahr			= NULL;		
+	public $_Ferien_pro_Jahr		= NULL;		
 	public $_Stunden_uebertrag 		= NULL;
 	public $_Ferienguthaben_uebertrag 	= NULL;
 	public $_feiertage 				= array(0,0,0,0,0,0,0,0,0,0,0);
 	public $_absenzen				= array();
 	public $_zuschlag				= array();
+	public $_modell				= NULL;
 	
 	function __construct(){
 		$this->check_htaccess();
@@ -60,7 +61,9 @@ class time_user{
 		$this->_zuschlag[3] = explode(";", $_userdaten[12]);
 		$this->_zuschlag[4] = explode(";", $_userdaten[13]);
 		$this->_zuschlag[5] = explode(";", $_userdaten[14]);
-		$this->_zuschlag[6] = explode(";", $_userdaten[15]);	
+		$this->_zuschlag[6] = explode(";", $_userdaten[15]);
+		$this->_modell = $_userdaten[16];
+		if ($this->_modell==NULL) $this->_modell = 0;
 	}
 	function load_data_session(){
 		if($_SESSION['datenpfad']){
@@ -93,6 +96,8 @@ class time_user{
 			$this->_zuschlag[4] = explode(";", $_userdaten[13]);
 			$this->_zuschlag[5] = explode(";", $_userdaten[14]);
 			$this->_zuschlag[6] = explode(";", $_userdaten[15]);	
+			$this->_modell = $_userdaten[16];
+			if ($this->_modell==NULL) $this->_modell = 0;
 		}	
 	}
 	function set_user_data($_id,$pfad,$loginname,$passwort,$rfid){
@@ -123,6 +128,7 @@ class time_user{
 		//$_b wird zu einem Timestamp
 		$_b = explode(".", $_b);
 		$_tmp = mktime(0, 0, 0, $_b[1], $_b[0], $_b[2]);
+		$_m = $_POST['_m'];
 		$_c 				= $_POST['_c'];
 		$_d				= $_POST['_d'];
 		$_e				= $_POST['_e'];
@@ -198,6 +204,7 @@ class time_user{
 		fputs($fp, $_FT.$_zeilenvorschub);
 		$_ZT = implode($_zeilenvorschub, $_ZT);
 		fputs($fp, $_ZT.$_zeilenvorschub);
+		fputs($fp, $_m.$_zeilenvorschub);
 		fclose($fp);
 		$this->load_data_pfad($_SESSION['datenpfad']);
 		//$this->load_data_session();

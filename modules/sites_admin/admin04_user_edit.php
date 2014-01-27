@@ -21,6 +21,21 @@ echo "<td align=left class=td_background_tag>Start - Datum</td>";
 echo "<td align=left class=td_background_tag ><input type='text' name='_b' value='".date("d.m.Y",$_user->_BeginnDerZeitrechnung)."' size='10'> (Beginn der Zeitrechnung)</td>";
 echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterstützt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
+//------------------------------------------------------------------------------------
+// Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
+//------------------------------------------------------------------------------------
+echo "<tr>";
+echo "<td align=left class=td_background_tag>Zeitberechnungsmodell</td>";
+echo "<td align=left class=td_background_tag ><select name='_m' size='1'><option value='0";
+      			echo ($_user->_modell==0) ? " selected " : "" ;  
+      			echo "'>kumulierend</option><option value='1'";
+      			echo ($_user->_modell==1) ? " selected " : "" ;  
+      			echo "'>Jährlich</option><option value='2'";
+      			echo ($_user->_modell==2) ?  " selected " : "" ;  
+      			echo "'>Monatlich</option>	</select></td>
+      			";
+echo "<td align=left class=td_background_tag width=16><img title='Überstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zurücksetzend.' src='images/icons/information.png' border=0></td>";
+echo "</tr>";
 
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Anstellung</td>";
