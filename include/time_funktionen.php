@@ -2,11 +2,20 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.8
+* Version 0.83
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
+// ----------------------------------------------------------------------------
+// InfoText bei Admin - Content / String und CSS - Class
+// ----------------------------------------------------------------------------
+function getinfotext($str,$css){
+	$_infotext = "<table width=100% border=0 cellpadding=5 cellspacing=1><tr><td colspan=9 class='".$css."' width=100 align=left>";
+	$_infotext .= $str;
+	$_infotext .= "</td></tr></table>";	
+	return $_infotext;
+}
 
 // ----------------------------------------------------------------------------
 // Berechtigung, für Userzugriff auf PDF

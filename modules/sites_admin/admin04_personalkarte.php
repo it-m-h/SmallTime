@@ -1,4 +1,12 @@
 <?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 //--------------------------------------------------------------
 //zip-Pfad überprüfen und erstellen falls nicht vorhanden
 //--------------------------------------------------------------
@@ -53,10 +61,8 @@ if(!file_exists($_bild)){
 Bild wird automatisch verkleinert.	<br/>
 <br/>
 Aktuelles Bild:<br/>
-<?php echo $_bild ?><br/>
-</td>
-<td class=td_background_top width=120 align=left>Bez.</td>
-<td class=td_background_top > </td>
+<?php echo $_bild ?>
+<br/>
 </tr>
 <?php
 $x=0;
@@ -71,7 +77,7 @@ foreach($_personaldaten->_personaldaten as $_zeilen){
 ?>
 <tr>
 <td ></td>
-<td class=td_background_top align=center colspan="2">
+<td class="alert alert-error" align="center" colspan="2">
 <input type="submit" name='update' value="update">
 </td>
 </tr>

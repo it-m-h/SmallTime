@@ -11,7 +11,7 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.8
+	* Version 0.82
 	* Author:  IT-Master GmbH
 	* www.it-master.ch / info@it-master.ch
 	* Copyright (c) , IT-Master GmbH, All rights reserved

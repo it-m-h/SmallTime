@@ -1,3 +1,13 @@
+<?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
 <Form action="?action=user_update_absenzen&admin_id=<?php echo $_id ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="1 	">
 		<tr>
@@ -24,9 +34,9 @@
 			<td class=td_background_tag align=left>
 			<input type='text' name='ab0_$i' value='".$string[0]."' size='20'>
 			</td><td class=td_background_tag align=center>
-			<input type='text' name='ab1_$i' value='".$string[1]."' size='1'>
+			<input class='smallinput' type='text' name='ab1_$i' value='".$string[1]."' size='1'>
 			</td><td class=td_background_tag align=left>
-			<input type='text' name='ab2_$i' value='".$string[2]."' size='3'>
+			<input class='smallinput' type='text' name='ab2_$i' value='".$string[2]."' size='3'>
 			</td>
 			</tr>
 			";

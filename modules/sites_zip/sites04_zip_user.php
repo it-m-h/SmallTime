@@ -1,3 +1,13 @@
+<?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
 <Form name='login' action='?action=zip_user&admin_id=<?php echo $_SESSION['id']; ?>' method='post' target='_self'>
 	<input type='submit' name='make' value='Neue Sicherung erstellen' >
 </form>

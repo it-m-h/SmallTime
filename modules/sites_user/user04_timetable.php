@@ -1,4 +1,14 @@
 <?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
+<?php
 // ----------------------------------------------------------------------------
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
@@ -8,15 +18,17 @@ if($_settings->_array[16][1]) $t++;
 $a = 1;
 if($_settings->_array[17][1]) $a++;
 if(!$_settings->_array[18][1]) $a++;
+$modal = "";
+if($_template->_modal) $modal = "&modal";
 ?>
 <table width=100% border=0 cellpadding=3 cellspacing=1>
 	<tr>
 		<th COLSPAN="3" class="td_background_top" align="center">Datum</th>
 		<th COLSPAN="<?php echo $t; ?>" class="td_background_top"  align="left">Zeiten</th>
-		<th class=td_background_top width="40" align="center">Std.</th>
-		<th class=td_background_top width="40" align="center">Saldo</th>
+		<th class="td_background_top" width="40" align="center">Std.</th>
+		<th class="td_background_top" width="40" align="center">Saldo</th>
 		<th COLSPAN="<?php echo $a; ?>" class="td_background_top" width="50" align="center">Absenzen</th>
-		<?php if($_settings->_array[18][1]) echo "<th class=td_background_top width=16 align=center>Do</th>"; ?>
+		<?php if($_settings->_array[18][1]) echo "<th class='td_background_top' width=16 align=center>Do</th>"; ?>
 	</tr>
 <?php
 for ($z=1; $z< count($_monat->_MonatsArray); $z++){
@@ -42,12 +54,12 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 	//-------------------------------------------------------------------------
 	// Falls User die Zeit eintragen darf - anzeigen	
 	//-------------------------------------------------------------------------
-	if($_settings->_array[15][1]==1 && $edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0]."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
+	if($_settings->_array[15][1]==1 && $edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
 	if($_settings->_array[15][1]==1 && !$edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
 	//-------------------------------------------------------------------------
 	// Falls User mehrere zeiten eintragen darf - anzeigen
 	//-------------------------------------------------------------------------
-	if($_settings->_array[16][1]==1 && $edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0]."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
+	if($_settings->_array[16][1]==1 && $edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
 	if($_settings->_array[15][1]==1 && !$edit) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
 	//-------------------------------------------------------------------------
 	// Stempelzeiten anzeigen mit Link zum editieren falls in den Settings true
@@ -59,7 +71,7 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 		if ($x==0){$trenn = "";}elseif($x%2 and $x<>0){$trenn = "-"; }else{$trenn = " / ";}
 		$tmp = $tmp . $trenn;
 		if ($_settings->_array[14][1] && $edit){
-			$tmp = $tmp ."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x]."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
+			$tmp = $tmp ."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x].$modal."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
 		}else{
 			$tmp = $tmp . '<p class="time">'.$_monat->_MonatsArray[$z][12][$x].'</p>';
 		}	
@@ -144,3 +156,15 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 ?>
 	</tr>
 </table>
+<?php if ($_template->_modal){ ?>
+<script type="text/javascript">
+        $('#div_user04 a').click(function(e){
+                e.preventDefault();
+                $("#modalBody").html("");
+                $('#myModalLabel').html($(this).attr('title'));
+                $("#modalBody").load(this.href + '');
+                $("#mainModal").modal('show');
+        });
+	$('a[title="Absenz louml;schen"]').unbind();
+</script>
+<?php } ?>

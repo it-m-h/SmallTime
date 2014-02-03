@@ -11,14 +11,7 @@ Weitere Infos entnehmen Sie bitte unserer Webseite.
 //-------------------------------------------------
 -->
 <hr color=#DFDFDF size=1>
-<font size='-2'>
-SMALL - Time V ##ver##
-<br>
-<br>IT-Master GmbH
-<br></font>
-<a target='_new' href='http://www.it-master.ch'>
-<font size='-2'>www.it-master.ch</font></a>
-<font size='-2'><br></font>
-<a target='_new' href='http://www.small.li'>
-<font size='-2'>www.small.li</font></a>
-<font size='-2'><br></font>
+SMALL - Time V ##ver##<br>
+IT-Master GmbH<br>
+<a target='_new' href='http://www.it-master.ch'>www.it-master.ch</a><br>
+<a target='_new' href='http://www.small.li'>www.small.li</a>

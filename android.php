@@ -4,6 +4,17 @@ date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 header("Content-Type: text/html; charset=iso-8859-1"); 
 error_reporting(E_ALL ^ E_NOTICE);
+
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.82
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+	
+	
 $login = false;
 if(isset($_GET['rfid'])){	
 	// Mac Adresse = RFID
@@ -113,27 +124,27 @@ if($login){
 	}
 	switch($_action){
 		case "monat":
-			get_statistik();	
-			break;
+		get_statistik();	
+		break;
 		case "tag":
-			get_tag();
-			break;
+		get_tag();
+		break;
 		case "quicktime":
-			$_time->save_quicktime($_user->_ordnerpfad);
-			break;
+		$_time->save_quicktime($_user->_ordnerpfad);
+		break;
 		case "getmitarbeiter":
-			get_mitarbeiter();
-			break;
+		get_mitarbeiter();
+		break;
 		case "getvar":
-			// einzelne Variable abfragen und ausgeben , class und var (Klassenneme und Variablenname)
-			// android.php?rfid=1234&action=getvar&class=_monat&var=_SummeSollProMonat
-			// MIt array - Angaben : (immer x und y)
-			// android.php?rfid=1234&action=getvar&class=_monat&var=_MonatsArray&arr=17,20
-			get_var();
-			break;
+		// einzelne Variable abfragen und ausgeben , class und var (Klassenneme und Variablenname)
+		// android.php?rfid=1234&action=getvar&class=_monat&var=_SummeSollProMonat
+		// MIt array - Angaben : (immer x und y)
+		// android.php?rfid=1234&action=getvar&class=_monat&var=_MonatsArray&arr=17,20
+		get_var();
+		break;
 		default:
-			get_statistik();
-			break;			
+		get_statistik();
+		break;			
 	}
 	
 }else{
@@ -159,7 +170,7 @@ function get_var(){
 			//$string = "";
 			$referenz =&  ${$_GET['class']}->$_GET['var'];
 			$temp =  $referenz[$koordinaten[0]][$koordinaten[1]];
-			if (is_array($temp)){
+			if(is_array($temp)){
 				foreach($temp as $zeile){
 					echo $zeile . "\n";
 				}
@@ -313,9 +324,9 @@ function get_mitarbeiter(){
 		echo $pic . " | ". $_group->_array[4][$_grpwahl][$x];
 		/*
 		f($anwesend){
-			echo " /  " . $_group->_array[5][$_grpwahl][$x][count($_group->_array[5][$_grpwahl][$x])-1];
+		echo " /  " . $_group->_array[5][$_grpwahl][$x][count($_group->_array[5][$_grpwahl][$x])-1];
 		}else{
-			echo " / Abwesend";
+		echo " / Abwesend";
 		}	*/
 		echo "\n";
 	}

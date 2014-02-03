@@ -1,18 +1,26 @@
 <?php
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 //-----------------------------------------------------------------------------
 // Quick Time - Schnelle zeiterfassung
 //-----------------------------------------------------------------------------
-echo "<a title='Quick Time erfassung' href='?action=quick_time&timestamp=$_timestamp'>";
+//echo "--".$_time->_timestamp."--";
+echo "<a title='Quick Time erfassung' href='?action=quick_time&timestamp=".$_time->_timestamp."'>";
 echo "<img src='./".$_template->get_templatepfad() ."images/quicktime.jpg' border=0>";
 echo "</a>";
-echo "<br><br>";
+echo "<br>";
+echo "<br>";
 //-----------------------------------------------------------------------------
 // Logout - Button anzeigen
 //-----------------------------------------------------------------------------
 echo "<Form action='?action=logout' method='post' target='_self'>";
 echo "<input src='./".$_template->get_templatepfad() ."images/logout.jpg' type='image' name='logout' value='Logout' >";
 echo "</form>";
-echo "<br>";
+//echo "<br>";
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus Statistik
 //-----------------------------------------------------------------------------
@@ -63,38 +71,44 @@ if($_user->_modell==2) {
 	$str = "Zeitsaldo";
 }
 
-echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>".$str."</td>";
-echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class='alert";
+	echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
+	echo "' align=left>".$str."</td>";
+	echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
+	echo "</tr>";
 
-echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Feriensaldo</td>";
-echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class='alert";
+	echo $_jahr->_saldo_F > 0 ? " alert-success" : " alert-error";
+	echo "' align=left>Feriensaldo</td>";
+	echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
+	echo "</tr>";
 
-echo "<tr>";
-echo "<td class=td_background_top width=100 align=left colspan=2>Monats - Summen</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class='td_background_top' align=left colspan=2>Monats - Summen</td>";
+	echo "</tr>";
 
-echo "<tr>";
-echo "<td class=td_background_tag width=100 align=left>Monat&nbsp;</td>";
-echo "<td class=td_background_tag align=left>";
-echo $_time->_monatname . " ". $_time->_jahr. "</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class=td_background_tag align=left>Monat&nbsp;</td>";
+	echo "<td class=td_background_tag align=left>";
+	echo $_time->_monatname . " ". $_time->_jahr. "</td>";
+	echo "</tr>";
 
 
-echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Saldo</td>";
-echo "<td class=td_background_tag align=left>$_monat->_SummeSaldoProMonat Std.</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class='alert";
+	echo $_monat->_SummeSaldoProMonat >= 0 ? " alert-success" : " alert-error";
+	echo "' align=left>Saldo</td>";
+	echo "<td class=td_background_tag align=left>$_monat->_SummeSaldoProMonat Std.</td>";
+	echo "</tr>";
 
-echo "<tr>";
-echo "<td class=td_background_tag width=100 align=left>Soll</td>";
-echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
-echo "</tr>";
+	echo "<tr>";
+	echo "<td class=td_background_tag align=left>Soll</td>";
+	echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
+	echo "</tr>";
 
-//Absenzen anzeigen
+	//Absenzen anzeigen
 
 
 if($_monat->_SummeFerien > 0){
@@ -140,7 +154,7 @@ echo "<td class=td_background_wochenende align=left>$_monat->_SummeExtern Tage (
 echo "</tr>";
 }
 echo "</table>";
-//-----------------------------------------------------------------------------
+/*//-----------------------------------------------------------------------------
 // Anzeige eines Monatskalenders
 //-----------------------------------------------------------------------------
 echo "<br>";
@@ -159,5 +173,10 @@ $_zeitmessung = substr($_zeitmessung,0,4);
 //echo "-----------------".$_time_end." - ".$_start_time." = ". $_zeitmessung. " Sekunden";
 // ^^ Die Zeit wird auf X Kommastellen gekürzt
 echo "<br><hr color=#DFDFDF size=1><font size='-2'>Ladezeit der Seite: $_zeitmessung Sekunden.</font><br>";
-echo $_copyright;
+echo $_copyright;*/
 ?>
+</br>
+<link rel="stylesheet" media="screen" href="./css/calendar_js.css" type="text/css" />
+<script type="text/javascript" src="./js/calendar_js.js"></script>
+<div id="calendar"></div>
+ 

@@ -1,53 +1,80 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-	<head>
-		<title>
-			<?php echo $_settings->_array[0][1] ?>
-		</title>
-		<meta name="author" content="<?php echo $_settings->_array[1][1] ?>">
-		<meta name="editor" content="<?php echo $_settings->_array[2][1] ?>">
-		<meta name="Content-language" content="<?php echo $_settings->_array[3][1] ?>">
-		<meta http-equiv="Content-Type" content="<?php echo $_settings->_array[4][1] ?>">
-		<meta http-equiv="Content-Script-Type" content="<?php echo $_settings->_array[5][1] ?>">
-		<meta name="page-type" content="<?php echo $_settings->_array[6][1] ?>">
-		<meta name="page-topic" content="<?php echo $_settings->_array[7][1] ?>">
-		<meta name="description" content="<?php echo $_settings->_array[8][1] ?>">
-		<meta name="keywords" content="<?php echo $_settings->_array[9][1] ?>">
-		<meta name="copyright" content="<?php echo $_settings->_array[10][1] ?>">
-		<meta http-equiv="expires" content="0">
-		<meta http-equiv="pragma" content="no-cache">
-		<meta http-equiv="cache-control" content="no-cache">
-		<meta name="revisit-after" content="2 days">
-		<link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
-	</head>
-	<script type="text/javascript" src="js/jquery.js?time=<?php echo time()?>" ></script>
-	<script type="text/javascript" src="js/jquery.qrcode.js?time=<?php echo time()?>"></script>
-	<script type="text/javascript" src="js/qrcode.js?time=<?php echo time()?>"></script>
-	<script type="text/javascript" src="js/smalltime.js?time=<?php echo time()?>" ></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css?time=<?php echo time(); ?>">
-	<body>
-		<center>
-			<div id='div_body'>
-				<div id='div_plugin'>
-					<?php include($_template->get_plugin()); ?>
-				</div>
-				<!-- Content / Monatsansicht / Eintragen, Edit usw. !-->
-				<div id='div_user04'>
-					<?php include($_template->get_user04()); ?>
-				</div>
-				<!-- Hauptmenue !-->
-				<div id='div_user01'>
-					<?php include($_template->get_user01()); ?>
-				</div>
-				<!-- Menue - f�r Content (Kalender) !-->
-				<div id='div_user02'>
-					<?php include($_template->get_user02()); ?>
-				</div>
-				<!-- Statistik / Bearbeitung / Infos !-->
-				<div id='div_user03'>
-					<?php include($_template->get_user03()); ?>
-				</div>
-			</div>
-		</center>
-	</body>
+<!DOCTYPE html>
+<html lang="de">
+        <head>
+                <?php include('include/defaultheader.php'); ?>
+                <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css?time=<?php echo time(); ?>">
+        </head>
+        <?php if($_modal == false) { ?>
+        <body>
+                <div class="container">
+                        <div class="row">
+                                <div class="span12">
+                                        <img style="width:100%" src="<?php echo $_template->get_templatepfad() ?>images/smalltime.jpg">
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="span3">
+                                        <div id='div_plugin'>
+                                                <?php include($_template->get_plugin()); ?>
+                                        </div>
+                                </div>
+                                <div class="span9">
+                                        <div id="div_user01" class="pull-right">
+                                                <!-- Hauptmenue !-->
+                                                <?php //echo "<pre>".$_template->get_user01()."</pre>"; ?>
+                                                <?php include($_template->get_user01()); ?>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="span3">
+                                        <!-- Statistik / Bearbeitung / Infos !-->
+                                        <div id='div_user03'>
+                                                <?php  //echo "<pre>".$_template->get_user03()."</pre>"; ?>
+                                                <?php include($_template->get_user03()); ?>
+                                        </div>
+                                </div>
+                                <div class="span9">
+                                        <!-- Menue - fÃ¼r Content (Kalender) !-->
+                                        <div id='div_user02'>
+                                                <?php //echo "<pre>".$_template->get_user02()."</pre>"; ?>
+                                                <?php include($_template->get_user02()); ?>
+                                        </div>
+                                        <!-- Content / Monatsansicht / Eintragen, Edit usw. !-->
+                                        <div id='div_user04'>
+
+                                                <?php //echo "<pre>".$_template->get_user04()."</pre>"; ?>
+                                                <?php include($_template->get_user04()); ?>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="row footer">
+                                <div class="span12">
+                                        <?php echo $_copyright; ?>
+                                </div>
+                        </div>
+                </div>
+                <div id="mainModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="myModalLabel">Edit:</h3>
+            </div>
+            <div id="modalBody" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                    <div id="scheduleModalMsg" class="alert alert-block alert-error hide">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h3>Warning!</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        </body>
+        <?php } else if($_modal == true) { ?>
+                <body>
+                        <div id='div_user04'>
+                                <?php include($_template->get_user04()); ?>
+                        </div>
+                </body>
+        <?php } ?>
 </html>

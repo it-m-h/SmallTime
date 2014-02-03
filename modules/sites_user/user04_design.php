@@ -1,3 +1,13 @@
+<?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
 <?php if ($_GET["designname"]=="mobile"){ ?>
 <script type="text/javascript">
 $(document).ready(function()
@@ -16,7 +26,8 @@ $(document).ready(function()
 	
 //echo "<div id=debug>";
 //echo "Design = " . $_COOKIE["designname"];
-//echo "<hr>";
+echo getinfotext( "Eventuell die Seite nach der Auswahl des Designs mit F5 neu laden." ,"td_background_top");
+echo "<hr>";
 //echo "design = ".$_template->get_template()."<hr>";
 //echo "pfad = ". $_template->get_templatepfad()."<hr>";
 //echo "</div>";

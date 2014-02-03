@@ -1,16 +1,20 @@
 <?php
-
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 //$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr);
-
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus Statistik
 //-----------------------------------------------------------------------------
-
-echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
+echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
 echo "<tr>";
-echo "<td class=td_background_top width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
+echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
 echo "</tr>";
-
 /*
 echo "<tr>";
 echo "<td class=td_background_tag width=100>Vorholzeit</td>";
@@ -18,41 +22,44 @@ echo "<td class=td_background_tag >$user->_Vorholzeit_pro_Jahr h</td>";
 echo "</tr>";
 */
 echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Zeitsaldo</td>";
+echo "<td class='alert";
+echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
+echo "'  width=100 align=left>Zeitsaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Feriensaldo</td>";
+echo "<td class='alert";
+echo $_jahr->_saldo_F >0 ? " alert-success" : " alert-error";
+echo "' width=100 align=left>Feriensaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 echo "</tr>";
 echo "</table>";
-
 echo "<br>";
 
 
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
 echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left colspan=2>Grund - Einstellungen</td>";
+echo "<td class=td_background_top width=100 align=left colspan=2>Grund - Einstellungen</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Ferien:</td>";
+echo "<td class=td_background_top width=100 align=left>Ferien:</td>";
 echo "<td class=td_background_tag align=left>$_user->_Ferien_pro_Jahr Tage / Jahr</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>&Uuml;bertrag F:</td>";
+echo "<td class=td_background_top width=100 align=left>&Uuml;bertrag F:</td>";
 echo "<td class=td_background_tag align=left>$_user->_Ferienguthaben_uebertrag Tage (Ferienguthaben bei Beginn der Zeitrechnung)</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>&Uuml;bertrag T:</td>";
+echo "<td class=td_background_top width=100 align=left>&Uuml;bertrag T:</td>";
 echo "<td class=td_background_tag align=left>$_user->_Stunden_uebertrag Std. (Stundenguthaben bei Beginn der Zeitrechnung)</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Vorholzeit:</td>";
+echo "<td class=td_background_top width=100 align=left>Vorholzeit:</td>";
 echo "<td class=td_background_tag align=left>$_user->_Vorholzeit_pro_Jahr Std. / Jahr</td>";
 echo "</tr>";
 
@@ -208,9 +215,9 @@ foreach($_jahr->_data as $_year){ */
 	}	
 	echo "
 		<tr>
-			<td class=td_background_info align = left>Saldo:</td>
-			<td class=td_background_info align=right>".$tmpfont1.$tot1.$tmpfont2."</td>
-			<td class=td_background_info align=right>".$tot2." Tage</td>
+			<td class=td_background_top align = left>Saldo:</td>
+			<td class=td_background_top align=right>".$tmpfont1.$tot1.$tmpfont2."</td>
+			<td class=td_background_top align=right>".$tot2." Tage</td>
 		</tr>";	
 		
 	echo "</table>";

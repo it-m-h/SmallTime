@@ -1,4 +1,12 @@
 <?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 echo "<div id='meineid'>";
 //$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
 //$_timestamp = $_GET['timestamp'];
@@ -88,7 +96,7 @@ for ($i=0; $i<=6; $i++){
 		echo $_monat->get_wochentage($i);
         //$_tmp = explode(";", $_userdaten[7]);
         echo "</td><td>";
-        echo "<input type='text' name='wotag".$i."' value='".$_user->_arbeitstage[$i]."' size='4'>";
+        echo "<input class='smallinput' type='text' name='wotag".$i."' value='".$_user->_arbeitstage[$i]."' size='4'>";
         echo "</td></tr>";
 }
 echo "</table>";
@@ -159,13 +167,13 @@ for ($i=0; $i<=6; $i++){
 		
         echo " : </td>";
 		echo "<td>";
-        echo "Zeit : <input type='text' name='zutagvon".$i."' value='".$_user->_zuschlag[$i][0]."' size='3'>";
+        echo "Zeit : <input class='smallinput' type='text' name='zutagvon".$i."' value='".$_user->_zuschlag[$i][0]."' size='3'>";
         echo "</td>";
 		echo "<td>";
-        echo " - <input type='text' name='zutagbis".$i."' value='".$_user->_zuschlag[$i][1]."' size='3'>";
+        echo " - <input class='smallinput' type='text' name='zutagbis".$i."' value='".$_user->_zuschlag[$i][1]."' size='3'>";
         echo "</td>";
 				echo "<td>";
-        echo ", Zuschlag in % <input type='text' name='zutagporzent".$i."' value='".$_user->_zuschlag[$i][2]."' size='3'>";
+        echo ", Zuschlag in % <input class='smallinput' type='text' name='zutagporzent".$i."' value='".$_user->_zuschlag[$i][2]."' size='3'>";
         echo "</td>";
 		echo "</tr>";
 }

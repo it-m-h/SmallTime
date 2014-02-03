@@ -1,3 +1,13 @@
+<?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
 <Form action='?action=user_einstellungen_update&admin_id=<?php echo $_id; ?>' method='post' target='_self'>
 	<table width=100% border=0 cellpadding=3 cellspacing=1>
 		<tr>

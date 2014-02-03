@@ -1,29 +1,69 @@
 <?php
-$_last = new time();
-$_last->set_timestamp($_time->get_lastmonth());
-$_last->set_monatsname($_settings->_array[11][1]);
-$_next = new time();
-$_next->set_timestamp($_time->get_nextmonth());
-$_next->set_monatsname($_settings->_array[11][1]);
+echo '<table cellpadding="2" cellspacing="1" border="0"><tr>';
+for($i=1; $i<count($_monat->_MonatsArray); $i++){
+	$tmp = explode(".", $_monat->_MonatsArray[$i][1]);
+	echo '<td valign="middle" align="center" width="20" height="20" ';
+	if($_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][2]==0 or $_monat->_MonatsArray[$i][5] >=0){
+		echo ' class="td_background_wochenende"';	
+	}else{
+		echo ' class="td_background_top"';	
+	}
+	echo '><font size="-6">'.$tmp[0].'</font></td>';
+}
+echo '</tr>';
+$_benutzer = file("./Data/users.txt");
+unset($_benutzer[0]);
+foreach($_benutzer as $string){
+	echo '<tr>';
+	$string = explode(";", $string);
+	$_userdaten_tmp = file("./Data/".$string[0]."/userdaten.txt");
+	//Absenzen laden
+	$_user_absenzen = array();
+	if (file_exists("./Data/".$string[0]."/Timetable/A". $_time->_jahr)){
+		$_user_absenzen = file("./Data/".$string[0]."/Timetable/A". $_time->_jahr);
+	}
+	// Monatsanzeige
+	for($i=1; $i<count($_monat->_MonatsArray); $i++){
+		$tmp = explode(".", $_monat->_MonatsArray[$i][1]);
+		echo '<td valign="middle" align="center" width="20" height="20"';
+		// Absenzeintrag anzeigen
+		$_text="";
+		$z=0;
+		if($_user_absenzen){
+			foreach($_user_absenzen as $_eintrag){
+				$_eintrag = explode(";", $_eintrag);
+				if ($_eintrag[0] == $_monat->_MonatsArray[$i][0]){
+					$_text=$_eintrag[1];
+				}
+				$z++;
+			} 
+		}			
+		//Arbeitstag , falls nein Wochenende anzeigen
+		$_arbeitstag = explode(";",$_userdaten_tmp[7]);
+		if($_arbeitstag[$_monat->_MonatsArray[$i][2]]==0 or $_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][5] >=0){
+			echo ' class="td_background_wochenende"';
+		}elseif($_text){
+			echo ' class="td_background_info"';
+		}else{
+			$_prozent = $_arbeitstag[$_monat->_MonatsArray[$i][2]];
+			if($_prozent <= 0.5){
+				echo ' class="td_background_tag50"';
+			}else{
+			 	echo ' class="td_background_tag"';	
+			}
+				
+		}
+		echo '>';	
+		// Arbeitstag - in Prozent wenn nicht 0 oder 1
+		if($_arbeitstag[$_monat->_MonatsArray[$i][2]]>0 && $_arbeitstag[$_monat->_MonatsArray[$i][2]]< 1 && !$_text){
+			echo '<font size="-6" color="#a6a6a6">'.$_arbeitstag[$_monat->_MonatsArray[$i][2]].'</font>';
+		}else{
+			echo '<font size="-6">'.$_text.'</font>';
+		}			
+		echo '</td>';
+	}
+	echo '</tr>';
+}
+echo '</table>';
 ?>
-<table width='390' height='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='middle'>
-		</td><td valign='middle' align='right'>
-			<img src='images/icons/calendar_view_month.png' border=0>
-		</td><td valign='middle' align='left'>
-			<a title='Monat <?php echo $_last->_monatname ?>' href='?action=plugins&timestamp=<?php echo $_last->_timestamp ?>'>
-				<?php echo $_last->_monatname ?> <?php echo $_last->_jahr ?>	
-			</a>&nbsp;&nbsp;
-		</td><td valign='middle' class='td_background_info' align='right'>
-			<img src='images/icons/calendar_edit.png' border=0>
-		</td><td valign='middle' class='td_background_info' align='left'>
-			<a title='Monat <?php echo $_time->_monatname ?>' href='?action=plugins&timestamp=<?php echo $_time->_timestamp ?>'>
-				<u><?php echo $_time->_monatname ?> <?php echo $_time->_jahr ?></u>
-			</a>&nbsp;&nbsp;
-		</td><td valign='middle' align='right'>
-			<img src='images/icons/calendar_view_month.png' border=0>
-		</td><td valign='middle' align='left'>
-			<a title='Monat <?php echo $_next->_monatname ?>' href='?action=plugins&timestamp=<?php echo $_next->_timestamp ?>'>
-				<?php echo $_next->_monatname ?> <?php echo $_next->_jahr ?>
-			</a>&nbsp;&nbsp;
-		</td></tr>
-</table>
+

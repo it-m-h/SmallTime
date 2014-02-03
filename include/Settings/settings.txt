@@ -22,3 +22,4 @@ Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung für den Bundes - Feier
 <img src='images/icons/clock_pause.png' border='0'> Pause ab ? Stunden.#0#Ab welcher Stempelzeit wird die Automatische Pause eingerechnet. (0 = keine Pause berechnen)
 <img src='images/icons/clock_pause.png' border='0'> Automatische Pause.#0#L&auml;nge der automatischen Pause.
 <img src='images/icons/clock_edit.png' border='0'> Stempelzeit edit#0#Wie viele Tage r&uuml;ckwerts darf der User Zeiten editieren?
+<img src='images/icons/color_wheel.png' border='0'> Design auswählen#1#Designwahl aktiv?

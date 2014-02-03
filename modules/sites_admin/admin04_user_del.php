@@ -1,4 +1,12 @@
 <?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 $x = $_GET['delete_user_id'];
 
 echo  "<Form action='?action=delete_user&delete_user_id=".$_GET['delete_user_id']."' method='post' target='_self'>";

@@ -40,6 +40,8 @@ class time_month{
 		
 	public $_MonatsArray 				= NULL;		// Array des Monats
 	
+	public $_modal					= NULL;
+	public $_modal_str					= NULL;
 	
 	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause){	
 		$this->_file 				= "./Data/".$ordnerpfad."/Rapport/";
@@ -108,6 +110,7 @@ class time_month{
 		fclose($fp);
 	}
 	private function set_monatsdaten($monat,$jahr){	
+		$this->_modal_str = "&modal";
 		for($i=1; $i<=$this->_letzterTag; $i++){
 			
 			//for ($q=0;$q<=35;$q++){
@@ -214,12 +217,12 @@ class time_month{
 			// Links
 			if($this->_MonatsArray[$i][4]<>0 and $this->_MonatsArray[$i][5]== -1){
 				if($this->_MonatsArray[$i][14]<>""){
-					$this->_MonatsArray[$i][31] = "<a title='Absenz l&ouml;schen' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
+					$this->_MonatsArray[$i][31] = "<a title='Absenz louml;schen' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
 					// Info bezüglich Absenz
 					$this->_MonatsArray[$i][32] = "<img border='0' src='images/icons/information.png' title='".trim($this->_MonatsArray[$i][15])." Tag ".trim($this->_MonatsArray[$i][16])." /  Bezahlt : ".trim($this->_MonatsArray[$i][17])."%'>";
 					$this->_MonatsArray[$i][32] = trim($this->_MonatsArray[$i][15])." Tag ".trim($this->_MonatsArray[$i][16])." /  Bezahlt : ".trim($this->_MonatsArray[$i][17])."%";	
 				}else{
-					$this->_MonatsArray[$i][31] = "<a href='?action=add_absenz&timestamp=".$this->_MonatsArray[$i][0]."' title='Absenz hinzuf&uuml;gen'><img border='0' src='images/icons/date_add.png'></img></a>";
+					$this->_MonatsArray[$i][31] = "<a href='?action=add_absenz&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."' title='Absenz hinzuf&uuml;gen'><img border='0' src='images/icons/date_add.png'></img></a>";
 					$this->_MonatsArray[$i][32] = " ";
 				}
 			}else{
@@ -229,9 +232,9 @@ class time_month{
 			// Rapport - hinzufügen oder löschen falls vorhanden
 			$_file = $this->_pfad."Rapport/" . date("Y.m.d", $this->_MonatsArray[$i][0]);
 			if(file_exists($_file)){
-				$this->_MonatsArray[$i][33] = "<a title='Rapport &auml;ndern' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/application_edit.png' border=0></a> ";
+				$this->_MonatsArray[$i][33] = "<a title='Rapport &auml;ndern' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_edit.png' border=0></a> ";
 			}else{
-				$this->_MonatsArray[$i][33] = "<a title='Rapport hinzuf&uuml;gen' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/application_add.png' border=0></a> ";
+				$this->_MonatsArray[$i][33] = "<a title='Rapport hinzuf&uuml;gen' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_add.png' border=0></a> ";
 			}
 			$this->_MonatsArray[$i][34] = $this->get_rapport($this->_MonatsArray[$i][0]);	
 			$this->_MonatsArray[$i][35] = "";

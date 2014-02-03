@@ -1,0 +1,109 @@
+/**********************************************************************
+*          Calendar JavaScript [DOM] v3.1 by Michael Loesler           *
+************************************************************************
+* Copyright (C) 2005-10 by Michael Loesler, http//derletztekick.com    *
+*                                                                      *
+*                                                                      *
+* This program is free software; you can redistribute it and/or modify *
+* it under the terms of the GNU General Public License as published by *
+* the Free Software Foundation; either version 3 of the License, or    *
+* (at your option) any later version.                                  *
+*                                                                      *
+* This program is distributed in the hope that it will be useful,      *
+* but WITHOUT ANY WARRANTY; without even the implied warranty of       *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        *
+* GNU General Public License for more details.                         *
+*                                                                      *
+* You should have received a copy of the GNU General Public License    *
+* along with this program; if not, see <http://www.gnu.org/licenses/>  *
+* or write to the                                                      *
+* Free Software Foundation, Inc.,                                      *
+* 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.            *
+*                                                                      *
+ **********************************************************************/
+
+				
+			#calendar { /* Fuer IE <= 6 */
+				text-align: center;
+				width: 100%
+			}
+    
+			#calendar table thead th{ 
+				font-weight: bold; 
+				font-size: 1em;
+				line-height: 1.5em;				
+				color: #1d3a81; 
+				text-align: center;
+				background-color: #c4d2f2;
+			}
+			
+			#calendar table thead th.weekday{ 
+				font-weight: bold; 
+				font-size: 0.75em;
+				line-height: 1.5em;
+				color: #1d3a81; 
+				text-align: center;
+				background-color: #d3d8dc;
+				border: solid #8ea9e6 1px;
+			}
+
+			#calendar table tbody td, #calendar table tfoot td{ 
+				font-weight: normal; 
+				font-size: 0.75em;
+				line-height: 1.5em;
+				width: 2.0em;
+				padding-left: 0.6em; 
+				padding-right: 0.6em; 
+				color: #0E224B; 
+				text-align: right;
+				border: 1px solid #CCD2D8;
+			}
+			
+			#calendar table tfoot td {
+				font-size: 0.85em;
+				border: none;
+			}
+			
+			#calendar table tfoot td.calendar_week {
+				text-align: left;
+			}
+			
+			#calendar table tbody td.saturday{ 
+				color: #9A2525;
+				font-weight: normal;
+			}
+			
+			#calendar table tbody td.sunday{ 
+				color: #9A2525;
+				font-weight: bold;
+				
+			}
+			
+			#calendar table tbody td.weekend{ 
+				color: #ad2929;
+			}
+			
+			#calendar table tbody td.today{
+				background-color: #A7B5C7;
+			}
+			
+			#calendar table thead th.prev_year, #calendar table thead th.next_year {
+				margin: 0.1em;
+				padding: 0.1em;
+				line-height: 0.75em;
+				font-size: 0.65em;
+			}
+			
+			#calendar table tbody td.last_month, #calendar table tbody td.next_month {
+				color: 	#a3afc4;
+			}
+			
+			#calendar table{
+				border-collapse: collapse;
+				border: solid #c4d2f2 1px;
+				padding: 0;
+				margin-left:auto;
+				margin-right:auto;
+				background-color: #F6F6F6;
+				width: 100%;
+			}

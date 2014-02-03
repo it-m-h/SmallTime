@@ -1,5 +1,3 @@
-Mitarbeiter
-<hr>
 <?php
 $_benutzer = file("./Data/users.txt");
 unset($_benutzer[0]);

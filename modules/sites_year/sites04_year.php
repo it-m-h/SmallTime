@@ -1,13 +1,19 @@
 <?php
+/********************************************************************************
+* Small Time
+/*******************************************************************************
+* Version 0.83
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus Statistik
 //-----------------------------------------------------------------------------
-
-echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
+echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
 echo "<tr>";
-echo "<td class=td_background_top width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
+echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
 echo "</tr>";
-
 /*
 echo "<tr>";
 echo "<td class=td_background_tag width=100>Vorholzeit</td>";
@@ -15,16 +21,19 @@ echo "<td class=td_background_tag >$user->_Vorholzeit_pro_Jahr h</td>";
 echo "</tr>";
 */
 echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Zeitsaldo</td>";
+echo "<td class='alert";
+echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
+echo "'  width=100 align=left>Zeitsaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td class=td_background_info width=100 align=left>Feriensaldo</td>";
+echo "<td class='alert";
+echo $_jahr->_saldo_F >0 ? " alert-success" : " alert-error";
+echo "' width=100 align=left>Feriensaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 echo "</tr>";
 echo "</table>";
-
 echo "<br>";
 
 
@@ -109,29 +118,29 @@ $monate = explode(";",$_settings->_array[11][1]);
 
 echo "<table width='100%' hight='100%' border='0' cellpadding='3' cellspacing='1'>";
 echo "<tr>";
-echo "<td class=td_background_top>";
+echo "<td class='td_background_top'>";
 echo "Monat";
 echo "</td>";
 
-echo "<td class=td_background_top align='middle'>";
+echo "<td class='td_background_top'>";
 echo "Soll";
 echo "</td>";
 	
-echo "<td class=td_background_top align='middle'>";
+echo "<td class='td_background_top'>";
 echo "Work";
 echo "</td>";
 	
-echo "<td class=td_background_top align='middle'>";
+echo "<td class='td_background_top'>";
 echo "Absenz";
 echo "</td>";
 	
-echo "<td class=td_background_top align='middle'>";
+echo "<td class='td_background_top'>";
 echo "Saldo";
 echo "</td>";	
 
 foreach($_absenz->_filetext as $spalten){
 	explode(";",$spalten);
-	echo "<td width='40' align='middle' class=td_background_top>";
+	echo "<td width='40' align='middle' class='td_background_top'>";
 	echo "" .$spalten[0] . "";
 	echo "</td>";
 }
@@ -212,12 +221,12 @@ for($i=0; $i<12;$i++){
 }
 // Totale ------------------------------------------------------
 echo "<tr>";
-echo "<td class=td_background_info>";
+echo "<td class=td_background_top>";
 echo "Total :";
 echo "</td>";
 foreach($_data as $_spalten){
 	//echo "Sunmme " .$_spalten[0] . " : " . $_spalten[1] . "<br>"
-	echo "<td align='middle' class=td_background_info>";
+	echo "<td align='middle' class=td_background_top>";
 	if($_spalten[1]<0) echo "<font class=minus>";
 	echo $_spalten[1];
 	if($_spalten[1]<0) echo "</font>";
