@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.83.1
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -13,11 +13,13 @@
 		<tr>
 			<td align=left COLSPAN=3 class=td_background_top width=60>Userdaten Editieren, neuer User erstellen</td>
 		</tr>
+		<!-- Nach dem erstellen eines Users sollte der Ordnerpfad nicht mehr verändert werden
 		<tr>
 			<td align=left class=td_background_tag width=300>Pfad (Ordnername ./Data/XXXXX)</td>
 			<td align=left class=td_background_tag><input type='text' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'></td>
 			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten für diesen Benutzer. Ohne Sonderzeichen, leerschläge oder Umlaute!' src='images/icons/information.png' border=0></td>
-		</tr>
+		</tr> !-->
+		<input type='hidden' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'>
 		<tr>
 			<td align=left class=td_background_tag>Loginname (empfehlung: Kurzzeichen)</td>
 			<td align=left class=td_background_tag><input type='text' name='_b' value='<?php echo $_users->_array[$_id][1] ?>' size='70'></td>
