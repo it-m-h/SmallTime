@@ -18,7 +18,7 @@ echo "<br>";
 // Logout - Button anzeigen
 //-----------------------------------------------------------------------------
 echo "<Form action='?action=logout' method='post' target='_self'>";
-echo "<input src='./".$_template->get_templatepfad() ."images/logout.jpg' type='image' name='logout' value='Logout' >";
+echo "<input id='logout_button' src='./".$_template->get_templatepfad() ."images/logout.jpg' type='image' name='logout' value='Logout' >";
 echo "</form>";
 //echo "<br>";
 //-----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<strong><!DOCTYPE html>
 <html lang="de">
         <head>
                 <?php include('include/defaultheader.php'); ?>
@@ -6,10 +6,17 @@
         </head>
         <?php if($_modal == false) { ?>
         <body>
+                <!--Anfang DIV für die InfoBox -->
+			<div id="InfoBox" style="z-index: 1; visibility: hidden; left: 0px; top: 0px;">
+				<div id="BoxInnen">
+					<span id="BoxInhalte"></span>
+				</div>
+			</div>
+		<!--Ende DIV für die InfoBox 	-->
                 <div class="container">
                         <div class="row">
                                 <div class="span12">
-                                        <img style="width:100%" src="<?php echo $_template->get_templatepfad() ?>images/smalltime.jpg">
+                                       <img style="width:100%" src="<?php echo $_template->get_templatepfad() ?>images/smalltime.jpg">
                                 </div>
                         </div>
                         <div class="row">
@@ -35,7 +42,7 @@
                                         </div>
                                 </div>
                                 <div class="span9">
-                                        <!-- Menue - fÃ¼r Content (Kalender) !-->
+                                        <!-- Menue - für Content (Kalender) !-->
                                         <div id='div_user02'>
                                                 <?php //echo "<pre>".$_template->get_user02()."</pre>"; ?>
                                                 <?php include($_template->get_user02()); ?>
@@ -55,26 +62,26 @@
                         </div>
                 </div>
                 <div id="mainModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 id="myModalLabel">Edit:</h3>
-            </div>
-            <div id="modalBody" class="modal-body">
-            </div>
-            <div class="modal-footer">
-                    <div id="scheduleModalMsg" class="alert alert-block alert-error hide">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <h3>Warning!</h3>
-                    <p></p>
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                         <h3 id="myModalLabel">Edit:</h3>
+                     </div>
+                     <div id="modalBody" class="modal-body">
+                     </div>
+                     <div class="modal-footer">
+                             <div id="scheduleModalMsg" class="alert alert-block alert-error hide">
+                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                             <h3>Warning!</h3>
+                             <p></p>
+                         </div>
+                     </div>
                 </div>
-            </div>
-        </div>
         </body>
-        <?php } else if($_modal == true) { ?>
+        <?php } elseif($_modal == true) { ?>
                 <body>
                         <div id='div_user04'>
                                 <?php include($_template->get_user04()); ?>
                         </div>
                 </body>
         <?php } ?>
-</html>
+</html></strong>

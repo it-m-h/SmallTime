@@ -58,7 +58,6 @@ echo "<br>";
 $_SESSION['last'] = $_SESSION['now'];
 
 echo "write = ".$_write."<hr>";*/
-
 // ----------------------------------------------------------------------------
 // Debugg - Ionformationen
 // ----------------------------------------------------------------------------
@@ -136,6 +135,7 @@ $_template->_user01 = "sites_admin/admin01.php";
 $_template->_user02 = "sites_login/login_mehr_02.php";
 $_template->_user04 = "sites_login/login_mehr_04.php";
 $_template->_user03 = "sites_admin/admin03.php";
+$_template->set_portal(0);
 //include ('./include/setting.php');
 //echo $_template->get_template();
 $_favicon = "./images/favicon_admin.ico";

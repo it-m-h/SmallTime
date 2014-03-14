@@ -20,6 +20,8 @@ if(isset($_GET['rfid'])){
 	// Mac Adresse = RFID
 	// in den Settings einzustellen bei jedem Mitarbeiter, damit er mit seinem Android - Gerät stempeln kann
 	$rfid =$_GET['rfid'];
+	// Test ohne rfid
+	//$rfid = bcf5acfaf028;
 	// ----------------------------------------------------------------------------------------------
 	// Benutzerdaten in Array ( RFID => Pfad ) lesen:
 	// Mac - Adresse des Gerätes ist die RFID

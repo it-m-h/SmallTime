@@ -3,4 +3,6 @@
 	<bootstrap>true</bootstrap> 
 	<jquery>true</jquery>
 	<modal>true</modal> 
+	<portal_user>index.php</portal_user>
+	<portal_admin>index.php</portal_admin> 
 </document>

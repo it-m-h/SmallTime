@@ -3,6 +3,8 @@ img {
 }
 A img { 
 	border: none;
+	max-width: 100%;
+	height: auto;
 }
 input[type="image"] {
 	max-width: 100%;
@@ -47,12 +49,12 @@ a:hover {
 	background-image: url(./../images/smalltime.jpg);
 	text-align: right;
 }
+
 #div_user01 {
 
 }
 #div_user02 {
 	text-align: center;
-	padding-bottom: 10px;
 	width: 100%;
 }
 #div_user03 {
@@ -87,13 +89,48 @@ a:hover {
 	font-size: 12px;
 	text-decoration: none;
 	color: #737373;
-	font-family: tahoma;
-	font-size: 8px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: normal;
+	font-size: 11px;
 	margin: 0 auto;
 	margin-top: 0px;
 	width: 100%;
 	line-height: 16px;
 }
+
+
+
+/* -----------------------------------------------------------------------------------------------------------*/
+/* INFOBOX                                                                                                           */
+/* -----------------------------------------------------------------------------------------------------------*/
+
+#InfoBox {
+	visibility:hidden;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:1;
+	width:150px;
+	background-color:#d0dbf4;
+	border:1px solid #555555;
+	-moz-box-shadow:    1px 1px 1px 0px #606060;
+  	-webkit-box-shadow: 1px 1px 1px 0px #606060;
+  	box-shadow:         1px 1px 1px 0px #606060;
+}
+
+#BoxInnen {
+	padding:10px;
+}
+
+#BoxInhalte {
+	text-decoration: none;
+	color: #333333;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: normal;
+	font-size: 12px;
+	line-height:130%;
+}
+
 
 /* -----------------------------------------------------------------------------------------------------------*/
 /* Hover                                                                                                                   */
@@ -210,7 +247,7 @@ a:hover {
 	padding: 15px 10px 5px 10px !important;
 }
 .jahresmenu a {
-	padding: 15px 20px 5px 20px !important;
+	padding: 15px 19px 5px 19px !important;
 }
 #Liste{
 	background-image: url(./../../../images/icons/report_user.png);
@@ -282,6 +319,10 @@ a:hover {
 	background-repeat: no-repeat;
 	background-position: 20px 2px;
 }
+#logout_button{
+	width: 268px;
+	height: auto;
+}
 /* -----------------------------------------------------------------------------------------------------------*/
 /* Jahres - Navigation und Menue */
 /* -----------------------------------------------------------------------------------------------------------*/
@@ -337,6 +378,11 @@ a:hover {
 	background-image: linear-gradient( #fafafa,#e8e8e8 ); 
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#fafafa', endColorstr='#e8e8e8');/*For IE7-8-9*/ 
 }
+.td_background_tag img {
+	width: 16px;
+}
+
+
 /* Wochenende (3)*/
 .td_background_wochenende, .td_background_feiertag {
 	padding: 8px 8px 8px 8px;
@@ -458,7 +504,6 @@ a:hover {
 }
 #show_year div {
 	width: 325px;
-	height: 100%;
 	margin: 5px ;
 	padding: 5px;
 	position: relative;
@@ -501,7 +546,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
 	display: inline-block;
-	height: 20px;
+	height: 30px;
 	padding: 4px 6px;
 	margin-bottom: 0px;
 	line-height: 20px;

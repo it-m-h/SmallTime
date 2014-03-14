@@ -17,13 +17,13 @@
                 <meta http-equiv="cache-control" content="no-cache">
                 <meta name="revisit-after" content="2 days">
                 <link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
-                <script type="text/javascript" src="js/jquery.js?time=<?php echo time(); ?>" ></script>
-                <script type="text/javascript" src="js/jquery-ui.js?time=<?php echo time(); ?>"></script>
-                <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js?time=<?php echo time(); ?>"></script>
-                <script type="text/javascript" src="js/jquery.qrcode.js?time=<?php echo time(); ?>"></script>
-                <script type="text/javascript" src="js/qrcode.js?time=<?php echo time(); ?>"></script>
-                <script type="text/javascript" src="js/smalltime.js?time=<?php echo time(); ?>" ></script>
-                <script type="text/javascript" src="js/bootstrap.js?time=<?php echo time(); ?>" ></script>
-                <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css?time=<?php echo time(); ?>">
-                <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css?time=<?php echo time(); ?>">
-                <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css?time=<?php echo time(); ?>">
+                <script type="text/javascript" src="js/jquery.js" ></script>
+                <script type="text/javascript" src="js/jquery-ui.js"></script>
+                <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+                <script type="text/javascript" src="js/jquery.qrcode.js"></script>
+                <script type="text/javascript" src="js/qrcode.js"></script>
+                <script type="text/javascript" src="js/smalltime.js" ></script>
+                <script type="text/javascript" src="js/bootstrap.js" ></script>
+                <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
+                <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css">
+                <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">

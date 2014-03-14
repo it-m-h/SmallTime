@@ -24,6 +24,8 @@ class time_template{
 	public  $_modal		= false;
 	public  $_jquery		= false;
 	public  $_bootstrap		= false;
+	public  $_portal_admin	= false;
+	public  $_portal_user	= false;
 
 	function __construct($_start){
 		if($_COOKIE["designname"]){
@@ -38,7 +40,6 @@ class time_template{
 		
 		//Settings des Templates laden
 		// wird JQuery benutzt, werden andere module geladen
-		
 		$xmlfile = $this->_templatepfad."settings.xml"; 
 		if(file_exists($xmlfile)){
 			//echo 'Settings :'.$xmlfile . ', existiert und wird geladen<hr>';
@@ -47,7 +48,30 @@ class time_template{
 			if ($xml->bootstrap) $this->_bootstrap = $xml->bootstrap;	
 			if ($xml->jquery) $this->_jquery = $xml->jquery;
 			if ($xml->modal) $this->_modal = $xml->modal;
+			if ($xml->portal_admin) {
+				$this->_portal_admin = $xml->portal_admin; 
+			}else{ 
+				$this->_portal_admin="index.php";
+			}
+			if ($xml->portal_user) { 
+				$this->_portal_user = $xml->portal_user;
+			}else{
+				$this->_portal_user ="index.php";
+			}
 		}
+	}
+	
+	function set_portal($i){
+		// $i=0 -> index.php //$i=1 -> admin.php
+		if($i){
+			$this->_startseite = $this->_portal_user;
+			$this->_template = $this->_templatepfad.$this->_startseite;
+			//echo "setzte : ".$this->_startseite ."<hr>";
+		}else{
+			$this->_startseite = $this->_portal_admin;
+			$this->_template = $this->_templatepfad.$this->_startseite;
+			//echo "setzte : ".$this->_startseite ."<hr>";
+		}	
 	}
 
 	function set_templatepfad($pfad){

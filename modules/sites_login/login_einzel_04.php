@@ -18,11 +18,11 @@ $_CheckCode = "<br>
 		<td align=left COLSPAN=2 class=td_background_top width=60>Login</td>
 	</tr><tr>
 		<td align=left class=td_background_tag width=100>Loginname :</td>
-		<td align=left class=td_background_tag ><input type='text' name='_n' value='' size='20' onfocus=\"this.value=''\"></td>
+		<td align=left class=td_background_tag ><input type='text' name='_n' value='' size='20' onfocus=\"this.value=''\" class='form-control'></td>
 	</tr>
 	<tr>
 		<td align=left class=td_background_tag width=100>Passwort :</td>
-		<td align=left class=td_background_tag ><input type='password' name='_p' value='' size='20' onfocus=\"this.value=''\"></td>
+		<td align=left class=td_background_tag ><input type='password' name='_p' value='' size='20' onfocus=\"this.value=''\" class='form-control'></td>
 	</tr><tr>
 		<td align=center COLSPAN=2 width=60>
 			<input type='submit' name='login' value='Login' >

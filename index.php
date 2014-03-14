@@ -58,7 +58,6 @@ echo "<br>";
 $_SESSION['last'] = $_SESSION['now'];
 
 echo "write = ".$_write."<hr>";*/
-
 // ----------------------------------------------------------------------------
 // Debugg - Ionformationen
 // ----------------------------------------------------------------------------
@@ -112,7 +111,7 @@ include ("./include/time_funktionen.php");
 
 
 // ----------------------------------------------------------------------------
-// MGET und POST Daten anzeigen
+// GET und POST Daten anzeigen
 // ----------------------------------------------------------------------------
 if(in_array(11,$show)){
 	echo "GET : ";
@@ -124,7 +123,7 @@ if(in_array(11,$show)){
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
 $_users		= new time_filehandle("./Data/","users.txt",";");
-$_groups	= new time_filehandle("./Data/","group.txt",";");
+$_groups		= new time_filehandle("./Data/","group.txt",";");
 //$_absenz	= new time_filehandle("./Data/","absenz.txt",";");
 $_settings	= new time_settings();
 if(in_array(8,$show)){
@@ -133,6 +132,7 @@ if(in_array(8,$show)){
 	txt("<hr color=red>");
 }
 $_template	= new time_template("index.php");
+$_template->set_portal(1);
 //include ('./include/setting.php');
 //echo $_template->get_template();
 $_favicon = "./images/favicon.ico";
@@ -414,6 +414,7 @@ switch($_action){
 	$_template->_user02 = "sites_user/user02_cal.php";
 	$_template->_user04 = "sites_user/user04_timetable.php";
 	$_template->_user03 = "sites_user/user03_stat.php";
+	header("Location: index.php");
 	break;
 	case "add_time":
 	if(in_array(2,$show)) txt("Zeit eintragen - Formular");

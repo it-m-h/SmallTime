@@ -230,13 +230,34 @@ class time_month{
 				$this->_MonatsArray[$i][32] = " ";	
 			}
 			// Rapport - hinzufügen oder löschen falls vorhanden
+			$this->_MonatsArray[$i][34] = $this->get_rapport($this->_MonatsArray[$i][0]);	
+			
 			$_file = $this->_pfad."Rapport/" . date("Y.m.d", $this->_MonatsArray[$i][0]);
 			if(file_exists($_file)){
-				$this->_MonatsArray[$i][33] = "<a title='Rapport &auml;ndern' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_edit.png' border=0></a> ";
+				//$this->_MonatsArray[$i][33] = "<a title='".$this->_MonatsArray[$i][34]."' onmouseout='close();' onmouseover='show(''".$this->_MonatsArray[$i][34]."'');' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_edit.png' border=0></a> ";
+				//  DIV, das sich öffnet und den Text anzeigt im Rapport 
+				
+				$text = $this->_MonatsArray[$i][34];
+				$text = str_replace("\n", "<br>", $text);
+				$text = str_replace("\r", "", $text);
+				$this->_MonatsArray[$i][33] = '';		
+				$this->_MonatsArray[$i][33] .= '<a ';
+				$this->_MonatsArray[$i][33] .= 'onMouseout="RapportMouseout();" ';
+				$this->_MonatsArray[$i][33] .= 'onMouseover="RapportMouseover(event, \'' . $text . '\');" ';
+				$this->_MonatsArray[$i][33] .= 'href="?action=add_rapport&timestamp=';
+				$this->_MonatsArray[$i][33] .= $this->_MonatsArray[$i][0].$this->_modal_str.'" ';
+				$this->_MonatsArray[$i][33] .= '>';
+				$this->_MonatsArray[$i][33] .= '<img src="images/icons/application_edit.png" border="0">';
+				$this->_MonatsArray[$i][33] .= '';
+				$this->_MonatsArray[$i][33] .= '</a>';
+				//$this->_MonatsArray[$i][33] .= '<div id="' . $this->_MonatsArray[$i][0] . '" >';
+				//$this->_MonatsArray[$i][33] .= $this->_MonatsArray[$i][34];
+				//$this->_MonatsArray[$i][33] .= '</div>';
+	
 			}else{
 				$this->_MonatsArray[$i][33] = "<a title='Rapport hinzuf&uuml;gen' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_add.png' border=0></a> ";
 			}
-			$this->_MonatsArray[$i][34] = $this->get_rapport($this->_MonatsArray[$i][0]);	
+			
 			$this->_MonatsArray[$i][35] = "";
 			if($this->_setautopause){
 				$_temptext = "Die automatische Pause von " . $this->_autopause . " wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;

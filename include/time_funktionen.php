@@ -88,10 +88,19 @@ function dec2time($number, $format = "%h:%i") {
 function txt($txt){
         echo "<p style='color:red'>$txt</p>";
 }
+
+function showController($c){
+	$cVars = get_class_vars(get_class($c));
+	foreach($cVars as $cname => $cvalue) {
+		echo "<font color=red size=+3>NAME: '<b>" . $cname . "</b>'</font>";
+		showClassVar( $c->$cname);
+		echo "<hr>";	
+	}
+}
 function showClassVar($class) {
   echo "<table>";
   echo "<tr><td colspan=3>";
-  echo '<strong>'.get_class($class).' - Variablen:</strong></td><tr>';
+  echo '<strong>KLASSE: "'.get_class($class).'"</strong></td><tr>';
   $aVars = get_class_vars(get_class($class));
   foreach($aVars as $name => $value) {
     echo "<tr><td>";
