@@ -2,29 +2,31 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.82
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_jahr{
 		
-	public $_jahr 		= NULL;		// Startjahr des Users
+	public $_jahr 			= NULL;		// Startjahr des Users
 	public $_timestamp	= NULL;		// welches jahr wurde gewählt, bzw Monat wurde gewählt
-	public $_summe_t	= NULL;		// Summe seit Beginn inkl. Übertrag
-	public $_modell 	= NULL;		// Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
+	public $_summe_t		= NULL;		// Summe seit Beginn inkl. Übertrag
+	public $_modell 		= NULL;		// Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
 	public $_summe_F	= NULL;		// Feriensumme
 	public $_summe_vorholzeit;
 	
 	
-	public $_saldo_t	= NULL;		// Zeitsaldo
-	public $_saldo_F	= NULL;		// Feriensaldo
+	public $_saldo_t		= NULL;		// Zeitsaldo
+	public $_saldo_F		= NULL;		// Feriensaldo
+	public $_arr_ausz		= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
+	public $_tot_ausz		= NULL;		// Auszahlungen summe
 		
 	public $_ordnerpfad	= NULL;		// Pfad zu den Daten
-	public $_startjahr 	= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
+	public $_startjahr 		= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_startmonat	= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
-	public $_array		= NULL;		// Array des Jahres
-	public $_data		= NULL;		// Array der Daten
+	public $_array			= NULL;		// Array des Jahres
+	public $_data			= NULL;		// Array der Daten
 	
 	public $_Ferien_pro_Jahr;
 	public $_Stunden_uebertrag; 		
@@ -37,34 +39,57 @@ class time_jahr{
 		//echo $Ferienguthaben_uebertrag."hhhhhhhhhhh";
 		
 		$this->_ordnerpfad 				= $ordnerpfad;
-		$this->_timestamp 					= $_timestamp;
+		$this->_timestamp 				= $_timestamp;
 		// Jahr auf aktuell setzten falls kein Endjahr angegeben ist
 		if($jahr==0) $this->_jahr = date("Y", time());
 		$this->_startjahr 					= date("Y",$startjahr);
-		$this->_startmonat 					= date("n",$startjahr);
+		$this->_startmonat 				= date("n",$startjahr);
 		$this->_Stunden_uebertrag 			= $Stunden_uebertrag;
 		$this->_Ferienguthaben_uebertrag 	= $Ferienguthaben_uebertrag;
 		$this->_Ferien_pro_Jahr 			= $Ferien_pro_Jahr;
-		$this->_Vorholzeit_pro_Jahr 			= $Vorholzeit_pro_Jahr;	
+		$this->_Vorholzeit_pro_Jahr 		= $Vorholzeit_pro_Jahr;	
 		$this->_modell 					= $modell;
 		
 		$this->calc_feriensumme();
-		
 		// ---------------------------------------------------------------------------------------
 		// Falls jeden Monat die Überzeit auf 0 gestellt wird:
-		if($this->_modell ==2){ $this->calc_month();
+		if($this->_modell ==2){ 
+			$this->calc_month();
 			// ---------------------------------------------------------------------------------------
 			// Falls jedes jahr die Überzeit auf 0 gestellt wird:
-		}elseif($this->_modell ==1){ $this->calc_year();
+		}elseif($this->_modell ==1){ 
+			$this->calc_auszahlungen();
+			$this->calc_year();
 			// ---------------------------------------------------------------------------------------
 			// kumuliert
-		}else{ $this->calc_kumuliert();}
-		
-		
+		}else{ 
+			$this->calc_auszahlungen();
+			$this->calc_kumuliert();
+		}
+		$this->_saldo_t = round($this->_saldo_t,2);
 		$this->savetotal();
 	}
-	
-		
+	function get_auszahlung($monat, $jahr){
+		$anz = 0;
+		for($i=0; $i< count($this->_arr_ausz);$i++){
+				if (strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
+					$anz =  $this->_arr_ausz[$i][2];
+				}
+		}
+		return $anz;
+	}
+	function calc_auszahlungen(){
+		// Auszahlungen berechnen (Datei ./Data/username/Timetable/auszahlungen : Monat;Jahr;Anzahl)
+		$file = "./Data/".$_SESSION['datenpfad'] ."/Timetable/auszahlungen";
+		if(file_exists($file)){
+			$this->_arr_ausz = file($file);
+			for($i=0; $i< count($this->_arr_ausz);$i++){
+				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
+				$this->_tot_ausz += $this->_arr_ausz[$i][2];
+			}
+		}
+		//print_r ($this->_arr_ausz);
+	}	
 	
 	function calc_month(){
 		//$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
@@ -97,13 +122,15 @@ class time_jahr{
 				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0]; 
 				$z++;
 			}
+			
+		// $this->_summe_t = $this->_summe_t - $this->_tot_ausz;
 		// Jährliche Vorholzeit - Summe hinzurechnen
 		//echo $this->_Vorholzeit_pro_Jahr. "<hr>";
-		$this->_saldo_t = $this->_summe_t - $this->_Vorholzeit_pro_Jahr;
+		$this->_saldo_t = $this->_summe_t - $this->_Vorholzeit_pro_Jahr - $this->_tot_ausz;
 		// im Start-Jahr Übertrag hinzufügen
 		if($this->_startjahr==date("Y", $this->_timestamp)){
-			$this->_saldo_t = $this->_saldo_t  + $this->_Stunden_uebertrag ;	
-		}		
+			$this->_saldo_t = $this->_saldo_t  + $this->_Stunden_uebertrag;	
+		}					
 	}
 	
 	function calc_kumuliert(){
@@ -132,7 +159,8 @@ class time_jahr{
 			//echo "Vorholzeit einberechnen : " .$this->_Vorholzeit_pro_Jahr . "<br>";
 		}
 		// Vorholzeiten abrechnen und Übertrag hinzufügen
-		$this->_saldo_t = $this->_summe_t - $this->_summe_vorholzeit + $this->_Stunden_uebertrag ;	
+		$this->_saldo_t = $this->_summe_t - $this->_summe_vorholzeit + $this->_Stunden_uebertrag - $this->_tot_ausz;	
+		//$this->_saldo_t = $this->_summe_t - $this->_summe_vorholzeit + $this->_Stunden_uebertrag;
 		//echo "&Uml;bertrag der Stunden - Beginn: ".$this->_Stunden_uebertrag."<br>";
 		//echo "saldo : ". $this->_saldo_t . "<hr>";
 	}

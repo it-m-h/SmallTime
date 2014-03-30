@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -16,7 +16,7 @@ $_next->set_monatsname($_settings->_array[11][1]);
 ?>
 <?php  
 // Settings des Templates mit Bootstrap
-if ($_template->_bootstrap){
+if (strstr($_template->_bootstrap,'true')){
 ?>
 <div class="btn-group">
         <span class="btn">

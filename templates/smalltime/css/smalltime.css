@@ -56,6 +56,7 @@ a:hover {
 #div_user02 {
 	text-align: center;
 	width: 100%;
+	margin-bottom: 10px;
 }
 #div_user03 {
 }
@@ -272,52 +273,52 @@ a:hover {
 #Home{
 	background-image: url(./../../../images/icons/house.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 22px 2px;
 }
 #Mitarbeiter{
 	background-image: url(./../../../images/icons/user_add.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 29px 2px;
 }
 #Gruppen{
 	background-image: url(./../../../images/icons/group_go.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 27px 2px;
 }
 #Design{
 	background-image: url(./../../../images/icons/color_wheel.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 26px 2px;
 }
 #Settings{
 	background-image: url(./../../../images/icons/cog_edit.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 27px 2px;
 }
 #Feiertag{
 	background-image: url(./../../../images/icons/calendar_view_day.png);
 	background-repeat: no-repeat;
-	background-position: 25px 2px;
+	background-position: 35px 2px;
 }
 #Import{
 	background-image: url(./../../../images/icons/table_go.png);
 	background-repeat: no-repeat;
-	background-position: 30px 2px;
+	background-position: 38px 2px;
 }
 #Status{
 	background-image: url(./../../../images/icons/bug.png);
 	background-repeat: no-repeat;
-	background-position: 17px 2px;
+	background-position: 23px 2px;
 }
 #Codes{
 	background-image: url(./../../../images/icons/images.png);
 	background-repeat: no-repeat;
-	background-position: 30px 2px;
+	background-position: 32px 2px;
 }
 #Logout{
 	background-image: url(./../../../images/icons/key_delete.png);
 	background-repeat: no-repeat;
-	background-position: 20px 2px;
+	background-position: 22px 2px;
 }
 #logout_button{
 	width: 268px;
@@ -552,9 +553,9 @@ input[type="color"],
 	line-height: 20px;
 	color: #202020;
 	vertical-align: middle;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
 }
 
 textarea,

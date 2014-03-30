@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -18,7 +18,7 @@
 		<tr>
 			<td class=td_background_top align=left width="50%" align="center">
 				<input type="submit" name="absenden" value="UPDATE" >
-			<?php if (!$_template->_jquery){ ?> <input type="submit" name="absenden" value="CANCEL" ><?php } ?> 
+			<?php if (!strstr($_template->_jquery,'true')){ ?> <input type="submit" name="absenden" value="CANCEL" ><?php } ?> 
 			</td>
 		</tr>
 		<tr>

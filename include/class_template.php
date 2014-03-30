@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Template - Klasse 
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -23,7 +23,7 @@ class time_template{
 	public  $_modulpfad     	= "modules/";
 	public  $_modal		= false;
 	public  $_jquery		= false;
-	public  $_bootstrap		= false;
+	public  $_bootstrap	= false;
 	public  $_portal_admin	= false;
 	public  $_portal_user	= false;
 
@@ -45,19 +45,25 @@ class time_template{
 			//echo 'Settings :'.$xmlfile . ', existiert und wird geladen<hr>';
 			$xml = simplexml_load_file($xmlfile);
 			//echo $xml->modal; 				
-			if ($xml->bootstrap) $this->_bootstrap = $xml->bootstrap;	
-			if ($xml->jquery) $this->_jquery = $xml->jquery;
-			if ($xml->modal) $this->_modal = $xml->modal;
-			if ($xml->portal_admin) {
+			if($xml->bootstrap) $this->_bootstrap = $xml->bootstrap;	
+			if($xml->jquery) $this->_jquery = $xml->jquery;
+			if($xml->modal) $this->_modal = $xml->modal;
+			if($xml->portal_admin){
 				$this->_portal_admin = $xml->portal_admin; 
 			}else{ 
 				$this->_portal_admin="index.php";
 			}
-			if ($xml->portal_user) { 
+			if($xml->portal_user){ 
 				$this->_portal_user = $xml->portal_user;
 			}else{
 				$this->_portal_user ="index.php";
 			}
+		}else{
+			$this->_bootstrap 	= false;
+			$this->_jquery 		= false;
+			$this->_modal 		= false;
+			$this->_portal_user  = "index.php";
+			$this->_portal_user 	= "index.php";	
 		}
 	}
 	

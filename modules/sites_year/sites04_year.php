@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -22,14 +22,14 @@ echo "</tr>";
 */
 echo "<tr>";
 echo "<td class='alert";
-echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
+echo $_jahr->_saldo_t >=0 ? " alert-success" : " alert-error";
 echo "'  width=100 align=left>Zeitsaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 echo "</tr>";
 
 echo "<tr>";
 echo "<td class='alert";
-echo $_jahr->_saldo_F >0 ? " alert-success" : " alert-error";
+echo $_jahr->_saldo_F >=0 ? " alert-success" : " alert-error";
 echo "' width=100 align=left>Feriensaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 echo "</tr>";
@@ -61,15 +61,16 @@ $_SummeExtern
 $_data[0][0]	= "SummeSollProMonat";
 $_data[1][0] 	= "SummeWorkProMonat";	
 $_data[2][0] 	= "SummeAbsenzProMona";	
-$_data[3][0] 	= "SummeSaldoProMonat";	
+$_data[3][0] 	= "SummeSaldoProMonat";
+$_data[4][0] 	= "Auszahlung";	
 //$_data[4][0] 	= "SummeStempelzeiten";	
-$_data[4][0] 	= "SummeFerien";	
-$_data[5][0] 	= "SummeKrankheit";	
-$_data[6][0] 	= "SummeUnfall";	
-$_data[7][0] 	= "SummeMilitaer";	
-$_data[8][0] 	= "SummeIntern";	
-$_data[9][0] 	= "SummeWeiterbildung";
-$_data[10][0] 	= "SummeExtern";
+$_data[5][0] 	= "SummeFerien";	
+$_data[6][0] 	= "SummeKrankheit";	
+$_data[7][0] 	= "SummeUnfall";	
+$_data[8][0] 	= "SummeMilitaer";	
+$_data[9][0] 	= "SummeIntern";	
+$_data[10][0] 	= "SummeWeiterbildung";
+$_data[11][0] 	= "SummeExtern";
 
 //print_R($_data);
 for($i=0; $i<12;$i++){
@@ -101,14 +102,15 @@ for($i=0; $i<12;$i++){
 	$_data[1][1]	+= $_jahres_berechnung[$i]->_SummeWorkProMonat;
 	$_data[2][1]	+= $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
 	$_data[3][1]	+= $_jahres_berechnung[$i]->_SummeSaldoProMonat;
+	$_data[4][1]	+= $_jahr->get_auszahlung(($i+1), $_time->_jahr);
 	//$_data[4][1]	+= $_jahres_berechnung[$i]->_SummeStempelzeiten;
-	$_data[4][1]	+= $_jahres_berechnung[$i]->_SummeFerien;
-	$_data[5][1]	+= $_jahres_berechnung[$i]->_SummeKrankheit;
-	$_data[6][1]	+= $_jahres_berechnung[$i]->_SummeUnfall;
-	$_data[7][1]	+= $_jahres_berechnung[$i]->_SummeMilitaer;
-	$_data[8][1]	+= $_jahres_berechnung[$i]->_SummeIntern;
-	$_data[9][1]	+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
-	$_data[10][1]	+= $_jahres_berechnung[$i]->_SummeExtern;	
+	$_data[5][1]	+= $_jahres_berechnung[$i]->_SummeFerien;
+	$_data[6][1]	+= $_jahres_berechnung[$i]->_SummeKrankheit;
+	$_data[7][1]	+= $_jahres_berechnung[$i]->_SummeUnfall;
+	$_data[8][1]	+= $_jahres_berechnung[$i]->_SummeMilitaer;
+	$_data[9][1]	+= $_jahres_berechnung[$i]->_SummeIntern;
+	$_data[10][1]	+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
+	$_data[11][1]	+= $_jahres_berechnung[$i]->_SummeExtern;	
 	//echo "<hr>";	
 }
 // ----------------------------------------------------------------------------
@@ -118,25 +120,29 @@ $monate = explode(";",$_settings->_array[11][1]);
 
 echo "<table width='100%' hight='100%' border='0' cellpadding='3' cellspacing='1'>";
 echo "<tr>";
-echo "<td class='td_background_top'>";
+echo "<td class='td_background_top' align='middle'>";
 echo "Monat";
 echo "</td>";
 
-echo "<td class='td_background_top'>";
+echo "<td class='td_background_top' align='middle'>";
 echo "Soll";
 echo "</td>";
 	
-echo "<td class='td_background_top'>";
+echo "<td class='td_background_top' align='middle'>";
 echo "Work";
 echo "</td>";
 	
-echo "<td class='td_background_top'>";
+echo "<td class='td_background_top' align='middle'>";
 echo "Absenz";
 echo "</td>";
 	
-echo "<td class='td_background_top'>";
+echo "<td class='td_background_top' align='middle'>";
 echo "Saldo";
 echo "</td>";	
+
+echo "<td class='td_background_top' align='middle'>";
+echo "Ausz.";
+echo "</td>";
 
 foreach($_absenz->_filetext as $spalten){
 	explode(";",$spalten);
@@ -146,17 +152,17 @@ foreach($_absenz->_filetext as $spalten){
 }
 echo "</tr>";
 
-$_SummeSollProMonat 	+= $_jahres_berechnung[$i]->_SummeSollProMonat;
+$_SummeSollProMonat 		+= $_jahres_berechnung[$i]->_SummeSollProMonat;
 $_SummeWorkProMonat		+= $_jahres_berechnung[$i]->_SummeWorkProMonat;
 $_SummeAbsenzProMonat	+= $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
-$_SummeSaldoProMonat	+= $_jahres_berechnung[$i]->_SummeSaldoProMonat;
-$_SummeStempelzeiten	+= $_jahres_berechnung[$i]->_SummeStempelzeiten;
+$_SummeSaldoProMonat		+= $_jahres_berechnung[$i]->_SummeSaldoProMonat;
+$_SummeStempelzeiten		+= $_jahres_berechnung[$i]->_SummeStempelzeiten;
 $_SummeFerien			+= $_jahres_berechnung[$i]->_SummeFerien;
-$_SummeKrankheit		+= $_jahres_berechnung[$i]->_SummeKrankheit;
+$_SummeKrankheit			+= $_jahres_berechnung[$i]->_SummeKrankheit;
 $_SummeUnfall			+= $_jahres_berechnung[$i]->_SummeUnfall;
 $_SummeMilitaer			+= $_jahres_berechnung[$i]->_SummeMilitaer;
 $_SummeIntern			+= $_jahres_berechnung[$i]->_SummeIntern;
-$_SummeWeiterbildung	+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
+$_SummeWeiterbildung		+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
 $_SummeExtern			+= $_jahres_berechnung[$i]->_SummeExtern;
 
 for($i=0; $i<12;$i++){
@@ -188,6 +194,13 @@ for($i=0; $i<12;$i++){
 	echo $_jahres_berechnung[$i]->_SummeSaldoProMonat;
 	if($_jahres_berechnung[$i]->_SummeSaldoProMonat<0) echo "</font>";
 	echo "</td>";
+	
+	echo "<td width='60' align='middle' class=td_background_tag><div id='mymodal'>";
+	echo "<a title='Auszahlung' href='?action=edit_ausz&admin_id=".$_SESSION['id']."&monat=".($i+1)."&jahr=".$_time->_jahr."&modal'>";
+	echo $_jahr->get_auszahlung(($i+1), $_time->_jahr);
+	echo "</a>";
+	echo "</div></td>";
+	
 		
 	echo "<td width='40' align='middle' class=td_background_tag>";
 	echo $_jahres_berechnung[$i]->_SummeFerien . "&nbsp;";
@@ -221,14 +234,14 @@ for($i=0; $i<12;$i++){
 }
 // Totale ------------------------------------------------------
 echo "<tr>";
-echo "<td class=td_background_top>";
+echo "<td class='td_background_top''  align='middle'>";
 echo "Total :";
 echo "</td>";
 foreach($_data as $_spalten){
 	//echo "Sunmme " .$_spalten[0] . " : " . $_spalten[1] . "<br>"
 	echo "<td align='middle' class=td_background_top>";
 	if($_spalten[1]<0) echo "<font class=minus>";
-	echo $_spalten[1];
+	echo round($_spalten[1],2);
 	if($_spalten[1]<0) echo "</font>";
 	echo "</td>";
 }
@@ -236,3 +249,15 @@ echo "</tr>";
 
 echo "</table>"
 ?>
+
+<?php if (strstr($_template->_modal,'true')){ ?>
+<script type="text/javascript">
+        $('#mymodal a').click(function(e){
+                e.preventDefault();
+                $("#modalBody").html("");
+                $('#myModalLabel').html($(this).attr('title'));
+                $("#modalBody").load(this.href + '');
+                $("#mainModal").modal('show');
+        });
+</script>
+<?php } ?>

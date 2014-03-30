@@ -2,13 +2,14 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Falls Template jquery benutzt (im XML - File), dann kann datetimepicker verwendet werden
-if ($_template->_jquery){ ?>
+
+if (strstr($_template->_jquery,'true')){ ?>
 <script>
 	$(function() {
 			$('#datetimepicker2').datetimepicker({
@@ -37,7 +38,7 @@ if ($_template->_jquery){ ?>
 				<?php echo $_time->_jahr; ?><input type="hidden" type="text" name="_w_jahr" value="<?php echo $_time->_jahr; ?>" size="4">
 			</td>
 		</tr>
-<?php if ($_template->_jquery){ ?>
+<?php if (strstr($_template->_jquery,'true')){ ?>
 		<tr style="display: none">
 			<td class=td_background_wochenende align=left>Zeit : (Stunde:Minute)</td>
 			<td class=td_background_tag align=left>

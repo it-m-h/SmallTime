@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -19,7 +19,7 @@ $a = 1;
 if($_settings->_array[17][1]) $a++;
 if(!$_settings->_array[18][1]) $a++;
 $modal = "";
-if($_template->_modal) $modal = "&modal";
+if(strstr($_template->_modal,'true')) $modal = "&modal";
 ?>
 <table width=100% border=0 cellpadding=3 cellspacing=1>
 	<tr>
@@ -73,7 +73,7 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 		if ($_settings->_array[14][1] && $edit){
 			$tmp = $tmp ."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x].$modal."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
 		}else{
-			$tmp = $tmp . '<p class="time">'.$_monat->_MonatsArray[$z][12][$x].'</p>';
+			$tmp = $tmp . ' '.$_monat->_MonatsArray[$z][12][$x].' ';
 		}	
 	}
 	
@@ -156,7 +156,7 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 ?>
 	</tr>
 </table>
-<?php if ($_template->_modal){ ?>
+<?php if (strstr($_template->_modal,'true')){ ?>
 <script type="text/javascript">
         $('#div_user04 a').click(function(e){
                 e.preventDefault();

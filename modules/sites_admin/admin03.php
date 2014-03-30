@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -165,7 +165,7 @@ if($show_user){
 
 	echo "<tr>";
 	echo "<td class='alert";
-	echo $_jahr->_saldo_F > 0 ? " alert-success" : " alert-error";
+	echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
 	echo "' align=left>Feriensaldo</td>";
 	echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 	echo "</tr>";

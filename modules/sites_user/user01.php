@@ -2,14 +2,14 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Settings des Templates mit Bootstrap
 //echo "--". $_template->_bootstrap ."--";
-if ($_template->_bootstrap){
+if (strstr($_template->_bootstrap,'true')){
 ?>
 	<ul class="nav nav-tabs adminmenu">	
                 <?php  if($_settings->_array[13][1]) {?><li<?php echo $_action=="anwesend" ?  ' class="active"':''; ?>><a id="Liste" title="Anwesenheitsliste" href="?action=anwesend">Liste</a></li> <?php }?>

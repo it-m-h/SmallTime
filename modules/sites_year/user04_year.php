@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -30,7 +30,7 @@ echo "</tr>";
 
 echo "<tr>";
 echo "<td class='alert";
-echo $_jahr->_saldo_F >0 ? " alert-success" : " alert-error";
+echo $_jahr->_saldo_F >=0 ? " alert-success" : " alert-error";
 echo "' width=100 align=left>Feriensaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 echo "</tr>";
@@ -81,6 +81,26 @@ echo "<div id='show_year'>";
 for($x=$_now; $x>=$_to; $x--){
 	//$x=2013;
 	$_year =  $_jahr->_data[$x];
+	//Auszahlungen berechnen
+	$_sum_ausz =0;
+	//echo "<hr>";
+	//echo "Jahr: " .$x . "<hr>";
+	//print_r($auszahlung->_arr_ausz);
+	for($u=0; $u< count($auszahlung->_arr_ausz);$u++){
+		$_tmp_ausz = trim($auszahlung->_arr_ausz[$u][1]);
+		$_wahl = (string)$x;
+		//echo "<br>vergleich -". $_tmp_ausz. "-=-" .$_wahl ."-";
+		if(strstr($_tmp_ausz,$_wahl)){
+			//echo "---------gleich";
+			$_sum_ausz += $auszahlung->_arr_ausz[$u][2];	
+		}else{
+			//echo "----------------------------------nönönönönön";
+		}
+	}
+	//echo "<br>".$_sum_ausz;
+
+	//echo "<hr>";
+	
 //echo($x);
 echo "<div id='year'>";
 
@@ -147,7 +167,7 @@ foreach($_jahr->_data as $_year){ */
 			<td class=td_background_tag align=right>".$tmpfont1.$_month[0].$tmpfont2."</td>
 			<td class=td_background_tag align=right>".$_text."</td>
 		</tr>"	;
-		$tot1 = $tot1 + $_month[0];
+		$tot1 = round($tot1 + $_month[0],2);
 		$tot2 = $tot2 + $_month[1];
 		$m++;
 		if ($m >12){
@@ -173,6 +193,15 @@ foreach($_jahr->_data as $_year){ */
 		$_jahr->_Ferien_pro_Jahr = $_jahr->_Ferien_pro_Jahr*(13-$_jahr->_startmonat);
 		$_jahr->_Ferien_pro_Jahr = round($_jahr->_Ferien_pro_Jahr,2);
 		}
+		
+		
+		
+	echo "
+		<tr>
+			<td class=td_background_tag align = left>Auszahlung:</td>
+			<td class=td_background_tag align=right>- ".$_sum_ausz."</td>
+			<td class=td_background_tag align=right></td>
+		</tr>"	;
 	echo "
 		<tr>
 			<td class=td_background_tag align = left>Vorholzeit / Ferien</td>
@@ -180,6 +209,7 @@ foreach($_jahr->_data as $_year){ */
 			<td class=td_background_tag align=right>$_jahr->_Ferien_pro_Jahr Tage</td>
 		</tr>"	;
 	$tot1 -= $_jahr->_Vorholzeit_pro_Jahr;
+	$tot1 -= $_sum_ausz;
 	$tot2 = round($_jahr->_Ferien_pro_Jahr - $tot2,2);
 	
 	$tmpfont1 = "";

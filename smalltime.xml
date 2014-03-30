@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<smalltime>
+	<time_login>
+		<_id></_id> 
+		<_datenpfad></_datenpfad> 
+		<_username></_username> 
+		<_passwort></_passwort> 
+		<_login></_login> 
+		<_admins></_admins> 
+	</time_login>
+	<_action>
+		<_wahl></_wahl> 
+	</_action>
+	<_users>
+		<_filename></_filename> 
+		<_filepfad></_filepfad> 
+		<_array></_array> 
+		<_user>
+			<_pfad></_pfad> 
+			<_name></_name>
+			<_passwort></_passwort>
+			<_gruppe></_gruppe>
+		</_user>
+	</_users>
+	<_user>
+		<_loginname></_loginname> 
+		<_password></_password> 
+		<_ordnerpfad></_ordnerpfad> 
+		<_name></_name> 
+		<_SollZeitProWoche></_SollZeitProWoche> 
+		<_WochenArbeiztsZeit></_WochenArbeiztsZeit> 
+		<_arbeitstage>
+			<_so></_so> 
+			<_mo></_mo> 
+			<_di></_di> 
+			<_mi></_mi> 
+			<_do></_do> 
+			<_fr></_fr> 
+			<_sa></_sa> 
+		</_arbeitstage> 
+		<_SummeArbeitstage></_SummeArbeitstage> 
+		<_SollZeitProTag></_SollZeitProTag> 
+		<_BeginnDerZeitrechnung></_BeginnDerZeitrechnung> 
+	</_user>
+</smalltime>

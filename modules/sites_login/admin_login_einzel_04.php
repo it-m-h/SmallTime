@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_template->_bootstrap){
+if(strstr($_template->_bootstrap,'true')){
 	
 	
 }else{

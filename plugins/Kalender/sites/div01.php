@@ -1,4 +1,12 @@
 <?php
+/********************************************************************************
+* Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
+/*******************************************************************************
+* Version 0.84
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
 $_last = new time();
 $_last->set_timestamp($_time->get_lastmonth());
 $_last->set_monatsname($_settings->_array[11][1]);
@@ -6,7 +14,7 @@ $_next = new time();
 $_next->set_timestamp($_time->get_nextmonth());
 $_next->set_monatsname($_settings->_array[11][1]);
 ?>
-<table width='390' height='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='middle'>
+<table width='390' border='0' cellpadding='2' cellspacing='0'><tr><td valign='middle'>
 		</td><td valign='middle' align='right'>
 			<img src='images/icons/calendar_view_month.png' border=0>
 		</td><td valign='middle' align='left'>

@@ -1,8 +1,21 @@
+<?php
+/********************************************************************************
+* Small Time - Template
+/*******************************************************************************
+* Version 0.84
+* Author:  IT-Master GmbH
+* www.it-master.ch / info@it-master.ch
+* Copyright (c) , IT-Master GmbH, All rights reserved
+*******************************************************************************/
+?>
 <strong><!DOCTYPE html>
 <html lang="de">
         <head>
-                <?php include('include/defaultheader.php'); ?>
-                <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css?time=<?php echo time(); ?>">
+                <?php 
+                include('include/defaultheader.php'); 
+                echo "\n";
+                ?>
+                <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css">
         </head>
         <?php if($_modal == false) { ?>
         <body>

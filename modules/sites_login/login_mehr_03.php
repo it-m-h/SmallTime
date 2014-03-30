@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_template->_bootstrap){
+if(strstr($_template->_bootstrap,'true')){
 ?>	
 <img style="width: 100%" src="images/ico/groups.png">
 <form style="padding: 5px;" name="login" action='index.php?action=login_mehr&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>&group=<?php echo $_grpwahl+1; ?>' method='post' target='_self'>

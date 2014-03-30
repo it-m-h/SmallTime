@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -10,18 +10,20 @@
 //Session starten
 session_start();
 // Caching verhindern
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Pragma: no-cache");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Datum in der Vergangenheit
-header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
+//header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+//header("Pragma: no-cache");
+//header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Datum in der Vergangenheit
+//header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+//header("Cache-Control: no-store, no-cache, must-revalidate");
+//header("Cache-Control: post-check=0, pre-check=0", false);
+//header("Pragma: no-cache");
 //error_reporting(0);
 error_reporting(E_ALL ^ E_NOTICE);
 // Zeitzone setzten , damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
+//Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
+@ini_set('memory_limit', '32M');
 header("Content-Type: text/html; charset=iso-8859-1"); 
 // Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
 $_start_time = explode(" ",microtime());
@@ -218,13 +220,11 @@ if($_SESSION['admin']){
 // ----------------------------------------------------------------------------
 if(in_array(2,$show)) txt("SWITCH von \$_action = ". $_action);
 switch($_action){
-	case "show_year2":
-	//include("./include/import_csv.php");
-	$_infotext = "Jahresübersicht Variante2";
-	//$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user02 = "sites_year/sites02_year.php";
-	$_template->_user04 = "sites_year/sites04_year.php";
-	break;
+	//case "show_year2":
+	//$_infotext = "Jahresübersicht Variante2";
+	//$_template->_user02 = "sites_year/sites02_year.php";
+	//$_template->_user04 = "sites_year/sites04_year.php";
+	//break;
 	case "show_year":
 	if(in_array(2,$show)) txt("Jahresübersicht - Anzeigen");
 	$_template->_user02 = "sites_user/user02_cal.php";
@@ -409,13 +409,14 @@ switch($_action){
 	$_template->_user03 = "sites_user/user03_stat.php";
 	break;
 	case "quick_time":
-	if(in_array(2,$show)) txt("Quick Time wird gestempelt");
-	$_time->save_quicktime($_user->_ordnerpfad);
-	$_template->_user02 = "sites_user/user02_cal.php";
-	$_template->_user04 = "sites_user/user04_timetable.php";
-	$_template->_user03 = "sites_user/user03_stat.php";
-	header("Location: index.php");
-	break;
+		if(in_array(2,$show)) txt("Quick Time wird gestempelt");
+		$_time->set_runden((int) $_settings->_array[25][1]);	
+		$_time->save_quicktime($_user->_ordnerpfad);
+		$_template->_user02 = "sites_user/user02_cal.php";
+		$_template->_user04 = "sites_user/user04_timetable.php";
+		$_template->_user03 = "sites_user/user03_stat.php";
+		header("Location: index.php");
+		break;
 	case "add_time":
 	if(in_array(2,$show)) txt("Zeit eintragen - Formular");
 	$_template->_user02 = "sites_user/user02_cal.php";
@@ -628,5 +629,11 @@ $_copyright .= "</div>";
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
-include ($_template->get_template());
+//echo "--".$_GET[timestamp] ."--".$_GET[modal] ."---------------------<hr>";
+if(isset($_GET[modal])){
+	// bei Modal nur DIV04 anzeigen
+	include($_template->get_user04()); 
+}else{
+	include ($_template->get_template());
+}
 ?>

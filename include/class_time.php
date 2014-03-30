@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.82
+* Version 0.85
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -18,6 +18,7 @@ class time{
 	public $_sekunde;
 	public $_timestamp;
 	public $_letzterTag;
+	public $_runden;
 
 	function __construct(){
 		$this->_jahr = date("Y", time());
@@ -29,6 +30,7 @@ class time{
 		$this->_timestamp = mktime($this->_stunde, $this->_minute, $this->_sekunde, $this->_monat, $this->_tag, $this->_jahr);
 		$this->_letzterTag = idate(d,mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));
 		//$this->_letzterTag = idate("d",mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));
+		$this->_runden = 0;
 	}
 	function edit_accept($time,$settingday){
 		$lastday = mktime(0, 0, 0, date("n", time()), date("j", time())-$settingday, date("Y", time()));
@@ -136,6 +138,12 @@ class time{
 		fputs($fp, $_zeilenvorschub);
 		fclose($fp);	
 	}
+	
+	function set_runden($zahl){
+		$this->_runden = (int) $zahl;
+		//echo "zahl : " . $zahl . "<br>";
+		//echo "runden : " . $this->_runden. "<br>";
+	}
 	function save_quicktime($_ordnerpfad){
 		$_zeilenvorschub = "\r\n";
 		$time = time();
@@ -145,8 +153,24 @@ class time{
 		$_w_stunde= date("H", $time);
 		$_w_minute = date("i", $time);
 		$_w_sekunde=0;
-		$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
+		//$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $_w_jahr . "." . $_w_monat;
+		// runden der Quicktime stempelzeit auf Minuten die in den Settings eingestellt ist
+		if ($this->_runden){
+			//echo "Minuten : " . $_w_minute . "<br>"; 							// Beispiel : 58
+			$_neu = round($_w_minute / $this->_runden,0)*$this->_runden; 		// Beispiel : 60
+			$_von = $_neu - ($this->_runden/2); 								// Beispiel : 55
+			$_bis = $_von + $this->_runden; 									// Beispiel : 65
+			//echo "von : " .$_von . "<br>";
+			//echo "bis : " . $_bis . "<br>";
+			//echo "wirdzu : " . $_neu . "<br>";
+			$_w_minute = $_neu;
+		}
+		$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
+		//echo "<br>Minute: " . $_w_minute = date("i", $_timestamp);
+		//echo " / Stunden: " . $_w_minute = date("H", $_timestamp);
+		//echo "<hr>";
+		
 		$fp = fopen($_file,"a+");
 		// Sekundengenau stempeln, kann zu Berechnungsfehlern führen 
 		// Sekunden grösser als kommt und Minute geht kleiner als kommt, wird keine Stunde abgerechnet - Logik überprüfen)
@@ -158,7 +182,7 @@ class time{
 		// Sekundengenau
 		$this->set_timestamp(time());
 		// Minutengenau	
-		$this->set_timestamp($_timestamp);	
+		$this->set_timestamp($_timestamp);			
 	}
 
 	function update_stempelzeit($_oldtime, $_newtime, $_ordnerpfad){

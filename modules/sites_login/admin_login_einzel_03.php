@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.84
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_template->_bootstrap){
+if(strstr($_template->_bootstrap,'true')){
 	echo '
 	<img style="width: 100%" src="images/ico/admin.png">
 <a style="float:left; margin: 2px; padding: 3px; background-color: #bebebe; width: 45%" href="index.php?group=2">
