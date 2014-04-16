@@ -8,12 +8,11 @@
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<strong><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
         <head>
                 <?php 
                 include('include/defaultheader.php'); 
-                echo "\n";
                 ?>
                 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css">
         </head>
@@ -97,4 +96,4 @@
                         </div>
                 </body>
         <?php } ?>
-</html></strong>
+</html>
