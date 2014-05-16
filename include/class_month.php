@@ -173,10 +173,12 @@ class time_month{
 			$this->_MonatsArray[$i][14] = $tmp[1];
 			$this->_MonatsArray[$i][15] = $tmp[2];	// Anzahl der Absenz
 			$this->_MonatsArray[$i][16] = $tmp[3];
-			$this->_MonatsArray[$i][17] = $tmp[4];
-			$tmp = round($this->_MonatsArray[$i][8]*$this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][17]/100, 2);
+			$this->_MonatsArray[$i][17] = $tmp[4]; $tmp1=0;          
+      if($this->_MonatsArray[$i][15]<>0 &&  ($this->_MonatsArray[$i][4]==0 || $this->_MonatsArray[$i][5]<> -1) && $_Day<time()){$tmp=$this->_SollProTag;$tmp1=1;}else{$tmp=$this->_MonatsArray[$i][8];$tmp1=0;}    
+			$tmp = round($tmp*$this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][17]/100, 2);
 			$this->_MonatsArray[$i][18] = $tmp;
 			$this->_MonatsArray[$i][19] = "";
+
 			//-------------------------------------------------------------------------
 			// Zeitberechnung
 			//-------------------------------------------------------------------------
@@ -185,21 +187,29 @@ class time_month{
 			$saldo = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
 			//$saldo = round($saldo,2);
 			// wenn gearbeitet grösser als soll, dann Absenzen ignorieren
-			if($this->_MonatsArray[$i][13] > $this->_MonatsArray[$i][8] and $this->_MonatsArray[$i][15] == 1){
-				$this->_MonatsArray[$i][15] = 0;
-				$this->_MonatsArray[$i][18] = 0;
+			if($this->_MonatsArray[$i][13] > $this->_SollProTag and $this->_MonatsArray[$i][15] == 1){
+        $this->_MonatsArray[$i][15] = 0;
+        $this->_MonatsArray[$i][18] = 0;
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
-			}
+			} 
 			//wenn absenz(15) == 1 und $saldo > 0, Prozentual ausrechnen
-			if($this->_MonatsArray[$i][15] == 1 and $saldo > 0){
-				 
+			if($this->_MonatsArray[$i][15] == 1  and $tmp1==1){
+				                                                                    
+				$this->_MonatsArray[$i][18] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
+				$this->_MonatsArray[$i][15] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])/$this->_SollProTag,2);
+				//$this->_MonatsArray[$i][20] = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
+				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13];                
+ 				//$saldo = 0;
+			} 
+			if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
+				                                                                         print "$saldo juo" ;
 				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
 				$this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
 				//$this->_MonatsArray[$i][20] = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
 				//$saldo = 0;
-			}
-			if($this->_MonatsArray[$i][15]) $this->_MonatsArray[$i][15] = $this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4];
+			} 
+			//if($this->_MonatsArray[$i][15]) $this->_MonatsArray[$i][15] = $this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4]; 
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
 			if($i>0){
@@ -215,7 +225,7 @@ class time_month{
 			if($this->_MonatsArray[$i][6]<>"") $this->_MonatsArray[$i][30] = "class=td_background_feiertag";
 			if(date("Y.m.d", $this->_MonatsArray[$i][0]) == date("Y.m.d", time())) $this->_MonatsArray[$i][30] = "class=td_background_heute";		
 			// Links
-			if($this->_MonatsArray[$i][4]<>0 and $this->_MonatsArray[$i][5]== -1){
+			//if($this->_MonatsArray[$i][4]<>0 and $this->_MonatsArray[$i][5]== -1){
 				if($this->_MonatsArray[$i][14]<>""){
 					$this->_MonatsArray[$i][31] = "<a title='Absenz louml;schen' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
 					// Info bezüglich Absenz
@@ -225,10 +235,10 @@ class time_month{
 					$this->_MonatsArray[$i][31] = "<a href='?action=add_absenz&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."' title='Absenz hinzuf&uuml;gen'><img border='0' src='images/icons/date_add.png'></img></a>";
 					$this->_MonatsArray[$i][32] = " ";
 				}
-			}else{
-				$this->_MonatsArray[$i][31] = " ";
-				$this->_MonatsArray[$i][32] = " ";	
-			}
+			//}else{
+			//	$this->_MonatsArray[$i][31] = " ";
+		//	$this->_MonatsArray[$i][32] = " ";	
+			//}
 			// Rapport - hinzufügen oder löschen falls vorhanden
 			$this->_MonatsArray[$i][34] = $this->get_rapport($this->_MonatsArray[$i][0]);	
 			
@@ -250,6 +260,14 @@ class time_month{
 				$this->_MonatsArray[$i][33] .= '<img src="images/icons/application_edit.png" border="0">';
 				$this->_MonatsArray[$i][33] .= '';
 				$this->_MonatsArray[$i][33] .= '</a>';
+				$this->_MonatsArray[$i][37] = '';		
+				$this->_MonatsArray[$i][37] .= '<div ';
+				$this->_MonatsArray[$i][37] .= 'onMouseout="RapportMouseout();" ';
+				$this->_MonatsArray[$i][37] .= 'onMouseover="RapportMouseover(event, \'' . $text . '\');" ';
+				$this->_MonatsArray[$i][37] .= '>';
+				$this->_MonatsArray[$i][37] .= '<img src="images/icons/application_edit.png" border="0">';
+				$this->_MonatsArray[$i][37] .= '';
+				$this->_MonatsArray[$i][37] .= '</div>';
 				//$this->_MonatsArray[$i][33] .= '<div id="' . $this->_MonatsArray[$i][0] . '" >';
 				//$this->_MonatsArray[$i][33] .= $this->_MonatsArray[$i][34];
 				//$this->_MonatsArray[$i][33] .= '</div>';
@@ -635,6 +653,7 @@ class time_month{
 		$this->_MonatsArray[0][34]  = "(34)<br>text";			// Rapport - text
 		$this->_MonatsArray[0][35]  = "(35)<br>ap";				// automatische Pause
 		$this->_MonatsArray[0][36]  = "(36)<br>az";				// Arbeits zeit spezial vergütung
+		$this->_MonatsArray[0][33]  = "(37)<br>rapport popup";		// Rapport - Nur popup
 	}
 	
 	public function check_autopause($zeit,$pause){
