@@ -98,6 +98,21 @@ $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$
 
 
 //------------------------------------------------------------------------------------
+// Admin Full Edit
+//------------------------------------------------------------------------------------
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[26][0] . "</td>";
+if($_settings->_array[26][1]==1){ $check1=" checked ";}else{$check1="";}
+if($_settings->_array[26][1]==0){ $check2=" checked ";}else{$check2="";}
+$_anzeige = $_anzeige . '<td class="td_background_tag"><table border="0" cellspacing="0" cellpadding="0" ><tr>
+		<td><input type="radio" value="1" name="26" '. $check1 .'></td>
+		<td>ja</td>
+		<td><input type="radio" value="0" name="26" '. $check2 .'></td>
+		<td>nein</td>
+		</tr></table></td>';
+$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[26][2]."' src='images/icons/information.png' border=0></td></tr>";
+
+
+//------------------------------------------------------------------------------------
 //Zeit Edit - Einstellungen, wie lange zurück darf der User Zeiten editieren - Zeile 23
 //------------------------------------------------------------------------------------
 //$_anzeige = $_anzeige . "<tr><td colspan='3'><hr></td></tr>";
