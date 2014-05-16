@@ -11,11 +11,11 @@
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
 $t = 1;
-if($_settings->_array[15][1]) $t++;
-if($_settings->_array[16][1]) $t++;
+if($_settings->_array[15][1]||$_settings->_array[26][1]) $t++;
+if($_settings->_array[16][1]||$_settings->_array[26][1]) $t++;
 $a = 1;
-if($_settings->_array[17][1]) $a++;
-if(!$_settings->_array[18][1]) $a++;
+if($_settings->_array[17][1]||$_settings->_array[26][1]) $a++;
+if(!$_settings->_array[18][1||$_settings->_array[26][1]]) $a++;
 $modal = "";
 if(strstr($_template->_modal,'true')) $modal = "&modal";
 ?>
@@ -48,11 +48,11 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 	// Falls User die Zeit eintragen darf - anzeigen	
 	//-------------------------------------------------------------------------
 
-	if($_settings->_array[15][1]==1) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
+	if($_settings->_array[15][1]==1||$_settings->_array[26][1]) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
 	//-------------------------------------------------------------------------
 	// Falls User mehrere zeiten eintragen darf - anzeigen
 	//-------------------------------------------------------------------------
-	if($_settings->_array[16][1]==1) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
+	if($_settings->_array[16][1]==1||$_settings->_array[26][1]) echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
 	//-------------------------------------------------------------------------
 	// Stempelzeiten anzeigen mit Link zum editieren falls in den Settings true
 	//-------------------------------------------------------------------------
@@ -62,10 +62,10 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 		// Trennzeichen bei Stempelzeiten als $trenn
 		if ($x==0){$trenn = "";}elseif($x%2 and $x<>0){$trenn = "-"; }else{$trenn = " / ";}
 		$tmp = $tmp . $trenn;
-		if ($_settings->_array[14][1]){
+		if ($_settings->_array[14][1]||$_settings->_array[26][1]){
 			$tmp = $tmp ."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x].$modal."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
 		}else{
-			$tmp = $tmp . '<p class="time">'.$_monat->_MonatsArray[$z][12][$x].'</p>';
+			$tmp = $tmp . ' '.$_monat->_MonatsArray[$z][12][$x].' ';
 		}
 	}
 	
@@ -97,7 +97,7 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 	//-------------------------------------------------------------------------
 	// Absenzen enzeigen
 	//-------------------------------------------------------------------------
-	if($_settings->_array[17][1]){
+	if($_settings->_array[17][1]||$_settings->_array[26][1]){
 		echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";	
 	}
 	echo "		<td ". $_monat->_MonatsArray[$z][30]." width=62 align=center>";
@@ -117,7 +117,7 @@ for ($z=1; $z< count($_monat->_MonatsArray); $z++){
 	//-------------------------------------------------------------------------
 	// Rapport editieren oder erstellen
 	//-------------------------------------------------------------------------		
-	if($_settings->_array[18][1]) {
+	if($_settings->_array[18][1]||$_settings->_array[26][1]) {
 		echo "		<td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][33]."</td>\n";
 	}
 	echo "	</tr>\n";	
