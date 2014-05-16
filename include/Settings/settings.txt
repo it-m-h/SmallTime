@@ -7,7 +7,7 @@ meta:Content-Script-Type#text/javascript#Sprache
 meta:Page-type#SMALL - Time, Zeiterfassung, Projekterfassung, Stempeluhr für Ihre Mitarbeiter#Seite
 meta:Page-topic#SMALL - Time, Zeiterfassung, Projekterfassung, Stempeluhr für Ihre Mitarbeiter#Seite
 meta:Description#Zeiterfassung für Einzelfirmen, Privatpersonen und Kleinstunternehmen#Beschreibung
-meta:Keywords#php, zeiterfassung, datenbank, textbasierend, import, stempeluhr, digital#Suchw�rter
+meta:Keywords#php, zeiterfassung, datenbank, textbasierend, import, stempeluhr, digital#Suchwörter
 meta:Copyright#info@it-master.ch#Copyright by...
 Monatsanzeige#Jan.;Feb.;März;April;Mai;Juni;Juli;Aug.;Sept.;Okt.;Nov.;Dez.#Anzeige im Menue
 Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung für den Bundes - Feiertag
