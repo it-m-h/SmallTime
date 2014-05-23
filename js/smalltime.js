@@ -34,9 +34,6 @@ function RapportMouseover(e,Inhalte){
 		PositionX = e.clientX + document.body.scrollLeft;
 		PositionY = e.clientY + document.body.scrollTop;
 	}
-        
-      
-        
 	document.getElementById("BoxInhalte").innerHTML = Inhalte;
 	document.getElementById('InfoBox').style.left = (PositionX+offsetx)+"px";
 	document.getElementById('InfoBox').style.top = (PositionY+offsety)+"px";

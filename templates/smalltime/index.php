@@ -8,7 +8,7 @@
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<strong><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
         <head>
                 <?php 
@@ -97,4 +97,4 @@
                         </div>
                 </body>
         <?php } ?>
-</html></strong>
+</html>

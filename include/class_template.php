@@ -23,7 +23,7 @@ class time_template{
 	public  $_modulpfad     	= "modules/";
 	public  $_modal		= false;
 	public  $_jquery		= false;
-	public  $_bootstrap	= false;
+	public  $_bootstrap		= false;
 	public  $_portal_admin	= false;
 	public  $_portal_user	= false;
 
@@ -59,10 +59,10 @@ class time_template{
 				$this->_portal_user ="index.php";
 			}
 		}else{
-			$this->_bootstrap 	= false;
+			$this->_bootstrap 		= false;
 			$this->_jquery 		= false;
-			$this->_modal 		= false;
-			$this->_portal_user  = "index.php";
+			$this->_modal 			= false;
+			$this->_portal_user  	= "index.php";
 			$this->_portal_user 	= "index.php";	
 		}
 	}

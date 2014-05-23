@@ -10,7 +10,7 @@
 echo '<table cellpadding="2" cellspacing="1" border="0"><tr>';
 for($i=1; $i<count($_monat->_MonatsArray); $i++){
 	$tmp = explode(".", $_monat->_MonatsArray[$i][1]);
-	echo '<td valign="middle" align="center" width="20" height="37" ';
+	echo '<td valign="middle" align="center" width="20" height="22" ';
 	if($_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][2]==0 or $_monat->_MonatsArray[$i][5] >=0){
 		echo ' class="td_background_wochenende"';	
 	}else{
@@ -33,7 +33,7 @@ foreach($_benutzer as $string){
 	// Monatsanzeige
 	for($i=1; $i<count($_monat->_MonatsArray); $i++){
 		$tmp = explode(".", $_monat->_MonatsArray[$i][1]);
-		echo '<td valign="middle" align="center" width="20" height="37" ';
+		echo '<td valign="middle" align="center" width="20" height="22" ';
 		// Absenzeintrag anzeigen
 		$_text="";
 		$z=0;
