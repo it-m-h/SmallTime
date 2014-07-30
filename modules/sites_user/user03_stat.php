@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
-* Version 0.85
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -107,52 +107,21 @@ if($_user->_modell==2) {
 	echo "<td class=td_background_tag align=left>Soll</td>";
 	echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
 	echo "</tr>";
-
-	//Absenzen anzeigen
-
-
-if($_monat->_SummeFerien > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Ferienbezug</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeFerien Tage (F)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeKrankheit > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Krankheit</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeKrankheit Tage (K)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeUnfall > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Unfall</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeUnfall Tage (U)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeMilitaer > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Milit&auml;r</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeMilitaer Tage (M)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeIntern > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Intern</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeIntern Tage (I)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeWeiterbildung > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Weiterbildung</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeWeiterbildung Tage (W)</td>";
-echo "</tr>";
-}
-if($_monat->_SummeExtern > 0){
-echo "<tr>";
-echo "<td class=td_background_wochenende width=100 align=left>Extern</td>";
-echo "<td class=td_background_wochenende align=left>$_monat->_SummeExtern Tage (E)</td>";
-echo "</tr>";
-}
+	//-------------------------------------------------------------------------
+	// Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
+	//-------------------------------------------------------------------------
+	//$zeig = new time_show($_monat->get_calc_absenz());
+	
+	foreach ($_monat->get_calc_absenz() as $werte){
+		if($werte[3]<>0){
+			echo "<tr>";
+			echo "<td class=td_background_wochenende align=left>$werte[0]</td>";
+			echo "<td class=td_background_wochenende align=left>";	
+			echo "$werte[3] Tage ($werte[1])";		
+			echo "</td>";
+			echo "</tr>";			
+		}
+	}
 echo "</table>";
 /*//-----------------------------------------------------------------------------
 // Anzeige eines Monatskalenders

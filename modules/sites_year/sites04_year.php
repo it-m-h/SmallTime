@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.85
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -64,13 +64,15 @@ $_data[2][0] 	= "SummeAbsenzProMona";
 $_data[3][0] 	= "SummeSaldoProMonat";
 $_data[4][0] 	= "Auszahlung";	
 //$_data[4][0] 	= "SummeStempelzeiten";	
-$_data[5][0] 	= "SummeFerien";	
-$_data[6][0] 	= "SummeKrankheit";	
-$_data[7][0] 	= "SummeUnfall";	
-$_data[8][0] 	= "SummeMilitaer";	
-$_data[9][0] 	= "SummeIntern";	
-$_data[10][0] 	= "SummeWeiterbildung";
-$_data[11][0] 	= "SummeExtern";
+//$_data[5][0] 	= "SummeFerien";	
+//$_data[6][0] 	= "SummeKrankheit";	
+//$_data[7][0] 	= "SummeUnfall";	
+//$_data[8][0] 	= "SummeMilitaer";	
+//$_data[9][0] 	= "SummeIntern";	
+//$_data[10][0] 	= "SummeWeiterbildung";
+//$_data[11][0] 	= "SummeExtern";
+
+$_summe_calc_absenz = array();
 
 //print_R($_data);
 for($i=0; $i<12;$i++){
@@ -81,7 +83,7 @@ for($i=0; $i<12;$i++){
 	$_temp_time->set_timestamp(mktime(0,0,0,$i+1,1,$_time->_jahr));
 	//echo $_temp_time->_letzterTag;
 	//echo "<hr>";
-	$_jahres_berechnung[$i]         = new time_month( $_settings->_array[12][1] , $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i+1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1]);	
+	$_jahres_berechnung[$i]         = new time_month( $_settings->_array[12][1] , $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i+1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);	
 	//echo "Monat : " .$i . "<br>";
 	//echo "Soll " . $_jahres_berechnung[$i]->_SummeSollProMonat; 
 	/*
@@ -104,14 +106,26 @@ for($i=0; $i<12;$i++){
 	$_data[3][1]	+= $_jahres_berechnung[$i]->_SummeSaldoProMonat;
 	$_data[4][1]	+= $_jahr->get_auszahlung(($i+1), $_time->_jahr);
 	//$_data[4][1]	+= $_jahres_berechnung[$i]->_SummeStempelzeiten;
-	$_data[5][1]	+= $_jahres_berechnung[$i]->_SummeFerien;
-	$_data[6][1]	+= $_jahres_berechnung[$i]->_SummeKrankheit;
-	$_data[7][1]	+= $_jahres_berechnung[$i]->_SummeUnfall;
-	$_data[8][1]	+= $_jahres_berechnung[$i]->_SummeMilitaer;
-	$_data[9][1]	+= $_jahres_berechnung[$i]->_SummeIntern;
-	$_data[10][1]	+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
-	$_data[11][1]	+= $_jahres_berechnung[$i]->_SummeExtern;	
+	//$_data[5][1]	+= $_jahres_berechnung[$i]->_SummeFerien;
+	//$_data[6][1]	+= $_jahres_berechnung[$i]->_SummeKrankheit;
+	//$_data[7][1]	+= $_jahres_berechnung[$i]->_SummeUnfall;
+	//$_data[8][1]	+= $_jahres_berechnung[$i]->_SummeMilitaer;
+	//$_data[9][1]	+= $_jahres_berechnung[$i]->_SummeIntern;
+	//$_data[10][1]	+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
+	//$_data[11][1]	+= $_jahres_berechnung[$i]->_SummeExtern;	
 	//echo "<hr>";	
+	//-------------------------------------------------------------------------
+	// Summen der Absenzen berechnen (ab 0.87 erweiterbar pro Mitarbeiter)
+	//-------------------------------------------------------------------------	
+	if (!$_summe_calc_absenz){
+		$_summe_calc_absenz = $_jahres_berechnung[$i]->get_calc_absenz();
+	}else{
+		$tp=0;
+		foreach($_jahres_berechnung[$i]->get_calc_absenz() as $werte){
+			$_summe_calc_absenz[$tp][3] = $_summe_calc_absenz[$tp][3] + $werte[3];
+			$tp++;
+		}
+	}	
 }
 // ----------------------------------------------------------------------------
 // Viewer für die Jahresansicht
@@ -144,6 +158,12 @@ echo "<td class='td_background_top' align='middle'>";
 echo "Ausz.";
 echo "</td>";
 
+
+//$zeig = new time_show($_summe_calc_absenz);
+
+
+
+
 foreach($_absenz->_filetext as $spalten){
 	explode(";",$spalten);
 	echo "<td width='40' align='middle' class='td_background_top'>";
@@ -157,6 +177,7 @@ $_SummeWorkProMonat		+= $_jahres_berechnung[$i]->_SummeWorkProMonat;
 $_SummeAbsenzProMonat	+= $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
 $_SummeSaldoProMonat		+= $_jahres_berechnung[$i]->_SummeSaldoProMonat;
 $_SummeStempelzeiten		+= $_jahres_berechnung[$i]->_SummeStempelzeiten;
+//-----------------------------------------------------------------------alt
 $_SummeFerien			+= $_jahres_berechnung[$i]->_SummeFerien;
 $_SummeKrankheit			+= $_jahres_berechnung[$i]->_SummeKrankheit;
 $_SummeUnfall			+= $_jahres_berechnung[$i]->_SummeUnfall;
@@ -164,7 +185,7 @@ $_SummeMilitaer			+= $_jahres_berechnung[$i]->_SummeMilitaer;
 $_SummeIntern			+= $_jahres_berechnung[$i]->_SummeIntern;
 $_SummeWeiterbildung		+= $_jahres_berechnung[$i]->_SummeWeiterbildung;
 $_SummeExtern			+= $_jahres_berechnung[$i]->_SummeExtern;
-
+//--------------------------------------------------------------------alt
 for($i=0; $i<12;$i++){
 	$_timestamp = mktime(0, 0, 0, $i+1, 1, $_time->_jahr);	
 	echo "<tr>";
@@ -201,7 +222,17 @@ for($i=0; $i<12;$i++){
 	echo "</a>";
 	echo "</div></td>";
 	
-		
+	//-------------------------------------------------------------------------
+	// Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
+	//-------------------------------------------------------------------------	
+	$tmp = $_jahres_berechnung[$i]->get_calc_absenz();
+	foreach($tmp as $werte){
+		echo "<td width='40' align='middle' class=td_background_tag>";
+		echo $werte[3] . "&nbsp;";
+		echo "</td>";
+	}
+	
+/*-----------------------------------------------------------------------------------		
 	echo "<td width='40' align='middle' class=td_background_tag>";
 	echo $_jahres_berechnung[$i]->_SummeFerien . "&nbsp;";
 	echo "</td>";
@@ -229,7 +260,7 @@ for($i=0; $i<12;$i++){
 	echo "<td width='40' align='middle' class=td_background_tag>";
 	echo $_jahres_berechnung[$i]->_SummeExtern . "&nbsp;";
 	echo "</td>";
-
+//----------------------------------------------------------------------------------------*/
 	echo "</tr>";
 }
 // Totale ------------------------------------------------------
@@ -245,6 +276,23 @@ foreach($_data as $_spalten){
 	if($_spalten[1]<0) echo "</font>";
 	echo "</td>";
 }
+
+//-------------------------------------------------------------------------
+// Total - Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
+//-------------------------------------------------------------------------	
+	foreach($_summe_calc_absenz as $werte){
+		//echo "<td width='40' align='middle' class=td_background_tag>";
+		//echo $werte[3] . "&nbsp;";
+		//echo "</td>";
+		echo "<td align='middle' class=td_background_top>";
+		if($werte[3]<0) echo "<font class=minus>";
+		echo round($werte[3],2);
+		if($werte[3]<0) echo "</font>";
+		echo "</td>";
+	
+	
+	}	
+	
 echo "</tr>";
 
 echo "</table>"

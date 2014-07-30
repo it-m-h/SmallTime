@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.84
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -28,6 +28,7 @@ if (strstr($_template->_bootstrap,'true')){
 		 <?php  if($_settings->_array[24][1]){ ?>
                 <li<?php echo $_action=="design" ?  ' class="active"':''; ?>><a id="Design" title="Design" href="?action=design">Design</a></li> 
                 <?php } ?>
+                <li<?php echo $_action=="password" ?  ' class="active"':''; ?>><a id="password" title="password" href="?action=password">Passwort</a></li>
 		  <li<?php echo $_action=="show_time" ?  ' class="active"':''; ?>>
 		<?php
 		// ----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.86
+* Version 0.87
 * Letzte Veränderung von mh-77
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
@@ -24,7 +24,8 @@ class time_month{
 	private $_autopause	= NULL;
 	private $_setautopause	= "";
 	private $_zeitzuschlag	= NULL;
-
+	private $_absenzberechnung = NULL;
+	
 	public $_SummeSollProMonat = NULL;	// Summe der Soll - Stunden im Monat
 	public $_SummeWorkProMonat = NULL;	// Summe der gearbeiteten Stunden im Monat
 	public $_SummeAbsenzProMonat = NULL;
@@ -43,8 +44,9 @@ class time_month{
 
 	public $_modal	= NULL;
 	public $_modal_str	= NULL;
+	
 
-	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause){	
+	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause, $absenzberechnung){	
 		$this->_file = "./Data/".$ordnerpfad."/Rapport/";
 		$this->_pfad = "./Data/".$ordnerpfad."/";
 		$this->_arbeitstage	= $arbeitstage;
@@ -60,17 +62,28 @@ class time_month{
 		$this->_absenz = new time_absenz($ordnerpfad, $jahr);
 		$this->_arbeitszeit = $arbeitszeit;
 		$this->_autopause	= $autopause;
-
+		$this->_absenzberechnung = $absenzberechnung;
+		//Absenzenberechnung nur bis heute in den Settings?
+		if($absenzberechnung){ $this->absenzsetting(); }
 		//$zeig = new time_show($this->_feiertage);
 		//echo $ordnerpfad;
-		//$zeig = new time_show($this->_absenz);
+		//$zeig = new time_show($this->_absenz->_filetext);
 		//Monatsdaten berechnen und im Array speichern
 		$this->set_monatsdaten($monat,$jahr);
 		$this->save_data($monat,$jahr);
 	}
 	function __destruct(){
 	}
-
+	function get_calc_absenz(){
+		return $this->_absenz->_calc;
+	}  
+	private function absenzsetting(){
+		for($i=0; $i<= count($this->_absenz->_array);$i++){
+			if($this->_absenz->_array[$i][0] >= time()){
+				$this->_absenz->_array[$i][2]="";
+			}	
+		}
+	}
 	private function save_data($monat,$jahr){
 		$_zeilenvorschub = "\r\n";
 		$_file = $this->_pfad ."Timetable/" . $jahr;
@@ -301,7 +314,22 @@ class time_month{
 			$this->_SummeAbsenzProMonat = $this->_SummeAbsenzProMonat	+ $this->_MonatsArray[$i][18];
 			$this->_SummeSaldoProMonat = $this->_SummeSaldoProMonat + $this->_MonatsArray[$i][20];
 			$this->_SummeStempelzeiten = $this->_SummeStempelzeiten + $this->_MonatsArray[$i][11];
-
+			//-------------------------------------------------------------------------
+			// Summen der Absenzen berechnen
+			//-------------------------------------------------------------------------
+			// Array mit Daten - Summen in der Spalte 3 
+			// $this->_absenz->_calc()
+			// $zeile = new time_show($this->_absenz->_calc);
+			$a=0;
+			foreach ($this->_absenz->_calc as $zeile){
+				if($this->_MonatsArray[$i][14]==$zeile[1]) {
+					$this->_absenz->_calc[$a][3] = $this->_absenz->_calc[$a][3] + $this->_MonatsArray[$i][15];
+				}	
+				$a++;
+			}
+			//$zeile = new time_show($this->_absenz->_calc);
+			//print_r ($this->_absenz->define());
+			//-------------------------------------------------------------alte Abwesenheitsberechnungen
 			if($this->_MonatsArray[$i][14]=="F") $this->_SummeFerien = $this->_SummeFerien + $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="K") $this->_SummeKrankheit = $this->_SummeKrankheit+ $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="U") $this->_SummeUnfall = $this->_SummeUnfall+ $this->_MonatsArray[$i][15];
@@ -309,9 +337,11 @@ class time_month{
 			if($this->_MonatsArray[$i][14]=="I") $this->_SummeIntern = $this->_SummeIntern+ $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="W") $this->_SummeWeiterbildung = $this->_SummeWeiterbildung+ $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="E") $this->_SummeExtern = $this->_SummeExtern+ $this->_MonatsArray[$i][15];
-
+		//------------------------------------------------------------------alte Abwesenheitsberechnungen
+		
 		}	
 	}
+
 	private function get_absenz($_Day){
 		foreach($this->_absenz->_array as $string){
 			if($string[0] == $_Day){
@@ -326,6 +356,7 @@ class time_month{
 			foreach($_absenzliste as $string){
 				$string = explode(";", $string);
 				if($string[0] == $_Day){
+					
 					return $string;
 				}
 			}

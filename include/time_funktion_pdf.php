@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.82
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -27,12 +27,12 @@ function erstelle_neu($_drucktime){
 		//echo "". $_drucktime . "<hr>";
 		//echo "<hr>Monat :" . $tmp_monat . "/". $tmp_jahr . "<hr>"; 
 		// Falls der Mitarbeiter Drucken darf ist das nur der letzte Monat
-		$_monat 	= new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1]);
+		$_monat 	= new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
 		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_drucktime);
 		//echo "Nur der letzte Monat ".$tmp_monat;
 	}else{
 		//echo "". $_time->_timestamp . "<hr>";
-		$_monat 	= new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1]);
+		$_monat 	= new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
 		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell,$_time->_timestamp);
 		//echo "jeder Monat";
 	}
@@ -73,24 +73,17 @@ function erstelle_neu($_drucktime){
 	$pdf->Ln();
 
 	$pdf->Line(20, 60, 200, 60);
-
-	$i=0;
-	$_SummeAbsenzenProMonat = array($_monat->_SummeFerien,$_monat->_SummeKrankheit,$_monat->_SummeUnfall,$_monat->_SummeMilitaer,$_monat->_SummeIntern,$_monat->_SummeWeiterbildung,$_monat->_SummeExtern);
-	$_abwesenheit = $_absenz->_filetext;
-	foreach($_abwesenheit as $_tmp){
-		//if (!$_SummeAbsenzenProMonat[$i][2] == 0){
-		$_tmp = explode(";", $_tmp);
-		$pdf->Cell(10,6,'',0,'','L');
-		$pdf->Cell(40,6,$_tmp[0]." : ",0,0,'L');
-	
-		if(!$_SummeAbsenzenProMonat[$i]) $_SummeAbsenzenProMonat[$i] = 0;
-		
-		$pdf->Cell(60,6,$_SummeAbsenzenProMonat[$i]. " Tage (" . $_tmp[1].")",0,0,'L');
-		$pdf->Ln();
-		//}
-		$i++;
+	//-------------------------------------------------------------------------
+	// Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
+	//-------------------------------------------------------------------------	
+	foreach ($_monat->get_calc_absenz() as $werte){
+		if($werte[3]<>0){	
+			$pdf->Cell(10,6,'',0,'','L');
+			$pdf->Cell(40,6,$werte[0]." : ",0,0,'L');
+			$pdf->Cell(60,6,$werte[3]. " Tage (" . $werte[1].")",0,0,'L');
+			$pdf->Ln();	
+		}
 	}
-	//$pdf->Line(20, 20, 200, 20);
 	$pdf->Ln();
 
 	$pdf->SetFillColor(200, 200, 200);

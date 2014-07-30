@@ -2,23 +2,27 @@
 /*******************************************************************************
 * Absenzen - Klasse
 /*******************************************************************************
-* Version 0.8
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_absenz{
-	public $_array = NULL;
-	public $_filetext  = NULL;
+	public $_array 		= NULL;
+	public $_filetext  	= NULL;
+	public $_calc 		= NULL;
+	private $ordnerpfad	= NULL;
 	function __construct($ordnerpfad,$jahr){	
-		$_file = "./Data/".$ordnerpfad."/Timetable/A" . $jahr;
-		$this->_filetext = file("./Data/".$ordnerpfad."/absenz.txt");
+		$this->ordnerpfad = $ordnerpfad;
+		$_file = "./Data/".$this->ordnerpfad."/Timetable/A" . $jahr;
+		$this->_filetext = file("./Data/".$this->ordnerpfad."/absenz.txt");
 		//print_r($this->_text);
 		if(file_exists($_file)){
 			$this->_array = file($_file);
 			$i=0;
 			foreach($this->_array as $string){
 				$string = explode(";", $string);
+				
 				foreach($this->_filetext as $_zeile){
 					$_zeile = explode(";", $_zeile);
 					//echo "Vergleich : ". trim($string[1])." == ". trim($_zeile[1]);
@@ -35,8 +39,23 @@ class time_absenz{
 				$i++;
 			}
 		}
+		$this->calc();
 		return $this->_array;
 	}	
+	function calc(){
+		if(!$this->_calc){
+			$o=0;
+			foreach($this->_filetext as $_zeile){
+				$_zeile = str_replace("ä","ae", $_zeile);
+				$_zeile = str_replace("ö","oe", $_zeile);
+				$_zeile = str_replace("ü","ue", $_zeile);
+				$_zeile = explode(";", $_zeile);
+				$this->_calc[$o] = array($_zeile[0], $_zeile[1], $_zeile[2], 0);
+				$o++;
+			}		
+		}
+		//return 	$this->_calc;
+	}
 	function get_absenztext(){
 		return $this->_filetext;
 	}

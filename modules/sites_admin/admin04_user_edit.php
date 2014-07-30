@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -116,21 +116,25 @@ echo "<td align=left class=td_background_tag >";
 echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 $i=0;
 $_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
-foreach ($_feiertage->getFeiertageUserEdit($_time->_jahr, $_settings->_array[12][1]) as $_bez => $_tag){
-        echo "\n<tr><td width='150'>". $_bez;
+$FT = $_feiertage->getFeiertageUserEdit();
+foreach ($FT as $zeile){
+        echo "\n<tr><td width='150'>". $zeile['_bez'];
         echo "</td><td width='100'>";
-        echo date("d.m.Y",$_tag);
+        echo date("d.m.Y",$zeile['_tag']);
         echo "</td><td>";
-		
-		if ($_user->_feiertage[$i]=="1"){
-			echo '<input name="feiertag'.$i.'" type="checkbox" checked />';
+        $wahl = $zeile['_wahl'];
+        $wahl = trim($wahl);
+        $wahl =str_replace("/r","", $wahl);
+        $wahl =str_replace("/n","", $wahl);
+		if ($wahl=="1"){
+			echo '<input name="feiertag'.$zeile['_id'].'" type="checkbox" checked />';
 		}else{
-			echo '<input name="feiertag'.$i.'" type="checkbox" />';
+			echo '<input name="feiertag'.$zeile['_id'].'" type="checkbox" />';
 		}
-        //echo "<input type='text' name='feiertag_$i' value='".$_user->_feiertage[$i]."' size='4'>";
         echo "</td></tr>\n";
         $i++;
 }
+echo "<input type='hidden' name='anzahlFT' value='$i' >";
 echo "</table>";
 echo "</td>";
 echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Aktivieren oder deaktivieren Sie die Feiertage, je nach dem, welche gültig sind.' src='images/icons/information.png' border=0></td>";

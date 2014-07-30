@@ -289,7 +289,7 @@ a:hover {
 #Design{
 	background-image: url(./../../../images/icons/color_wheel.png);
 	background-repeat: no-repeat;
-	background-position: 26px 2px;
+	background-position: 23px 2px;
 }
 #Settings{
 	background-image: url(./../../../images/icons/cog_edit.png);
@@ -321,6 +321,12 @@ a:hover {
 	background-repeat: no-repeat;
 	background-position: 22px 2px;
 }
+#password{
+	background-image: url(./../../../images/icons/key_go.png);
+	background-repeat: no-repeat;
+	background-position: 29px 2px;
+}
+
 #logout_button{
 	width: 268px;
 	height: auto;

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.85
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -110,6 +110,7 @@ include_once ('./include/class_filehandle.php');
 include_once ('./include/class_rapport.php');
 include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
+require_once	('./include/class_table.php');
 include ("./include/time_funktionen.php");
 //$controller = new time_controller();
 // ----------------------------------------------------------------------------
@@ -292,73 +293,73 @@ switch($_action){
 		$_template->_user04 = "sites_year/user04_year.php";
 		break;
 	case "delete_user":
-	if($_POST['absenden'] == "OK"){
-		$id = $_GET['delete_user_id'];
-		$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
-		header("Location: admin.php?action=delete_user&show=delete");		
-	}elseif($_POST['absenden'] == "CANCEL"){
-		$_infotext = getinfotext( "User wurde nicht gelöscht."  ,"td_background_heute"); 
-		$_template->_user02 = "sites_admin/admin02.php";
-		$_template->_user04 = "sites_admin/admin04.php";
-	}elseif(@$_GET['show']=="delete"){
-		$_infotext = getinfotext("User wurde gelöscht."  ,"td_background_heute");
-		$_infotext04 = "";	
-		$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_XXXXXXX!";
-		$_infotext04 .= "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
-		$_infotext04 .=  "<br>Falls einmal ein gleicher Benutzer erstellt und dieser wieder gel&ouml;scht wird k&ouml;nnte es zu einer Fehlermeldung kommen.";
-		$_template->_user02 = "sites_admin/admin02.php";
-		$_template->_user04 = "sites_admin/admin04.php";		
-	}else{
-		$_infotext = getinfotext("User löschen?"  ,"td_background_heute");
-		$_template->_user02 = "sites_admin/admin02.php";
-		$_template->_user04 = "sites_admin/admin04_user_del.php";
-	}			
-	break;
+		if($_POST['absenden'] == "OK"){
+			$id = $_GET['delete_user_id'];
+			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
+			header("Location: admin.php?action=delete_user&show=delete");		
+		}elseif($_POST['absenden'] == "CANCEL"){
+			$_infotext = getinfotext( "User wurde nicht gelöscht."  ,"td_background_heute"); 
+			$_template->_user02 = "sites_admin/admin02.php";
+			$_template->_user04 = "sites_admin/admin04.php";
+		}elseif(@$_GET['show']=="delete"){
+			$_infotext = getinfotext("User wurde gelöscht."  ,"td_background_heute");
+			$_infotext04 = "";	
+			$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_XXXXXXX!";
+			$_infotext04 .= "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
+			$_infotext04 .=  "<br>Falls einmal ein gleicher Benutzer erstellt und dieser wieder gel&ouml;scht wird k&ouml;nnte es zu einer Fehlermeldung kommen.";
+			$_template->_user02 = "sites_admin/admin02.php";
+			$_template->_user04 = "sites_admin/admin04.php";		
+		}else{
+			$_infotext = getinfotext("User löschen?"  ,"td_background_heute");
+			$_template->_user02 = "sites_admin/admin02.php";
+			$_template->_user04 = "sites_admin/admin04_user_del.php";
+		}			
+		break;
 	case "import":
-	//include("./include/import_csv.php");
-	$_infotext = getinfotext("CSV - Import (z.B.IPhone APP TimeOrg - timeorg.zimco.com)"  ,"td_background_top");		
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_csv_import.php";
-	break;
+		//include("./include/import_csv.php");
+		$_infotext = getinfotext("CSV - Import (z.B.IPhone APP TimeOrg - timeorg.zimco.com)"  ,"td_background_top");		
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_csv_import.php";
+		break;
 	case "anwesend":
-	if(in_array(2,$show)) txt("Anwesenheitsliste");
-	if($_grpwahl==0) $_grpwahl = 1;
-	$_group = new time_group($_grpwahl);
-	if($id) $_grpwahl = $_group->get_usergroup($id);
-	//$_template->_user02 = "sites_login/login_mehr_02.php";
-	//$_template->_user04 = "sites_login/login_mehr_04.php";
-	//$_template->_user03 = "sites_user/user03_stat.php";
-	break;
-	case "login_mehr":
-	if(in_array(2,$show)) txt("Mehrbenutzer - Login");
-	//echo "<hr> login, daten schreiben, logout",
-	//if ($_SESSION['admin'] ) echo "<hr>  erfolgreich eingeloggt";
-	if($_POST['login'] == "Stempelzeit eintragen" and $_write){
-		$_logcheck->login($_POST, $_users->_array);
-		//echo "<hr>" . $_SESSION['admin'];
-		if($_SESSION['admin']){
-			$id = $_logcheck->_id;
-			//echo "<hr>";
-			//echo $id;
-			//echo "<hr>";
-			// Fehlerhandling bei F5 und dann sendenklick
-			if($_POST['_n']<>"" and $_POST['_p']<>""){
-				$_time->set_timestamp(time());
-				$_time->save_time(time(), $_user->_ordnerpfad);
+		if(in_array(2,$show)) txt("Anwesenheitsliste");
+		if($_grpwahl==0) $_grpwahl = 1;
+		$_group = new time_group($_grpwahl);
+		if($id) $_grpwahl = $_group->get_usergroup($id);
+		//$_template->_user02 = "sites_login/login_mehr_02.php";
+		//$_template->_user04 = "sites_login/login_mehr_04.php";
+		//$_template->_user03 = "sites_user/user03_stat.php";
+		break;
+		case "login_mehr":
+		if(in_array(2,$show)) txt("Mehrbenutzer - Login");
+		//echo "<hr> login, daten schreiben, logout",
+		//if ($_SESSION['admin'] ) echo "<hr>  erfolgreich eingeloggt";
+		if($_POST['login'] == "Stempelzeit eintragen" and $_write){
+			$_logcheck->login($_POST, $_users->_array);
+			//echo "<hr>" . $_SESSION['admin'];
+			if($_SESSION['admin']){
+				$id = $_logcheck->_id;
+				//echo "<hr>";
+				//echo $id;
+				//echo "<hr>";
+				// Fehlerhandling bei F5 und dann sendenklick
+				if($_POST['_n']<>"" and $_POST['_p']<>""){
+					$_time->set_timestamp(time());
+					$_time->save_time(time(), $_user->_ordnerpfad);
+				}
 			}
+			$_logcheck->logout();
 		}
-		$_logcheck->logout();
-	}
-	//if($_grpwahl==0) $_grpwahl = 1;
-	//$_group = new time_group($_grpwahl);
-	//echo " - ist in Gruppe : " . $_group->get_usergroup($id);
-	//if($id) $_grpwahl = $_group->get_usergroup($id);
-	//echo "<hr> Logout";
-	$_template->_user01 = "sites_time/null.php";
-	$_template->_user02 = "sites_login/login_mehr_02.php";
-	$_template->_user03 = "sites_login/login_mehr_03.php";
-	$_template->_user04 = "sites_login/login_mehr_04.php";
-	break;
+		//if($_grpwahl==0) $_grpwahl = 1;
+		//$_group = new time_group($_grpwahl);
+		//echo " - ist in Gruppe : " . $_group->get_usergroup($id);
+		//if($id) $_grpwahl = $_group->get_usergroup($id);
+		//echo "<hr> Logout";
+		$_template->_user01 = "sites_time/null.php";
+		$_template->_user02 = "sites_login/login_mehr_02.php";
+		$_template->_user03 = "sites_login/login_mehr_03.php";
+		$_template->_user04 = "sites_login/login_mehr_04.php";
+		break;
 	case "login_einzel":
 	if(in_array(2,$show)) txt("Einzel - Login");
 	$_template->_user01 = "sites_time/null.php";
@@ -740,7 +741,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	//define('user2','<hr>--------------------------------------------------------bla<hr>');
 	//echo user2;
-	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1]);
+	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
 
 	

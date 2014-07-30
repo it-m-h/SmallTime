@@ -2,7 +2,7 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.8
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -10,24 +10,24 @@
 class time_user{
 	public $_loginname 				= NULL;
 	public $_password 				= NULL;
-	public $_ordnerpfad 				= NULL;	
+	public $_ordnerpfad 			= NULL;	
 	public $_name					= NULL;	
 	public $_SollZeitProWoche		= NULL;
-	public $_SollZeitProzent			= NULL;
+	public $_SollZeitProzent		= NULL;
 	public $_WochenArbeiztsZeit		= NULL;
 	//So = 0, Sa = 7
 	public $_arbeitstage 			= array(0,0,0,0,0,0,0);
 	public $_SummeArbeitstage 		= NULL;
 	public $_SollZeitProTag			= NULL;
 	public $_BeginnDerZeitrechnung	= NULL;	
-	public $_Vorholzeit_pro_Jahr		= NULL;
+	public $_Vorholzeit_pro_Jahr	= NULL;
 	public $_Ferien_pro_Jahr		= NULL;		
 	public $_Stunden_uebertrag 		= NULL;
 	public $_Ferienguthaben_uebertrag 	= NULL;
 	public $_feiertage 				= array(0,0,0,0,0,0,0,0,0,0,0);
 	public $_absenzen				= array();
 	public $_zuschlag				= array();
-	public $_modell				= NULL;
+	public $_modell					= NULL;
 	
 	function __construct(){
 		$this->check_htaccess();
@@ -143,33 +143,12 @@ class time_user{
 		$_tag[]			= $_POST['wotag4'];
 		$_tag[]			= $_POST['wotag5'];
 		$_tag[]			= $_POST['wotag6'];
+		
+		$_anzahlFT		= $_POST['anzahlFT'];		
 		$_FT 			= array();
-		
-		$_FT[]			= $_POST['feiertag0'];
-		$_FT[]			= $_POST['feiertag1'];
-		$_FT[]			= $_POST['feiertag2'];
-		$_FT[]			= $_POST['feiertag3'];
-		$_FT[]			= $_POST['feiertag4'];
-		$_FT[]			= $_POST['feiertag5'];
-		$_FT[]			= $_POST['feiertag6'];
-		$_FT[]			= $_POST['feiertag7'];
-		$_FT[]			= $_POST['feiertag8'];
-		$_FT[]			= $_POST['feiertag9'];
-		$_FT[]			= $_POST['feiertag10'];
-		$_FT[]			= $_POST['feiertag11'];
-		$_FT[]			= $_POST['feiertag12'];
-		$_FT[]			= $_POST['feiertag13'];
-		$_FT[]			= $_POST['feiertag14'];
-		$_FT[]			= $_POST['feiertag15'];
-		$_FT[]			= $_POST['feiertag16'];
-		$_FT[]			= $_POST['feiertag17'];
-		$_FT[]			= $_POST['feiertag18'];
-		$_FT[]			= $_POST['feiertag19'];
-		$_FT[]			= $_POST['feiertag20'];
-		$_FT[]			= $_POST['feiertag21'];
-		$_FT[]			= $_POST['feiertag22'];
-		
-		//echo $_POST['feiertag0']."<hr>";
+		for ($u=1; $u<=$_anzahlFT; $u++){
+			$_FT[]	= $_POST['feiertag'.$u];
+		}
 		$x=0;
 		foreach($_FT as $_wert){
 			if($_wert){
@@ -177,7 +156,6 @@ class time_user{
 			}else{
 				$_FT[$x]=0;
 			}
-			//echo $_FT[$x]. "<hr>";
 			$x++;
 		}
 		

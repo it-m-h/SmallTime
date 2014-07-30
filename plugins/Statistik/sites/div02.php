@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time - Plugin : Statistik der Mitarbeiter (Überzeit, Ferien usw.)
 /*******************************************************************************
-* Version 0.86
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -87,10 +87,10 @@ for($z=1; $z<count($_users->_array ) ; $z++){
 			$abstxt[] = $spalte[1];
 		}
 	}	
-	
 	$_data[$uz][0][0] = $wahljahr;
 	$_data[$uz][0][1] 	= "Saldo";
 	for($c=2;($c-2)<count($abstxt);$c++){
+	//for($c=2;($c-2)<7;$c++){
 		$_data[$uz][0][$c] 	= $abstxt[($c-2)];
 	}	
 	for($a=1; $a<=13; $a++){
@@ -125,8 +125,9 @@ for($z=1; $z<count($_users->_array ) ; $z++){
 			$_data[$uz][$i][2] = $werte[1];			
 		}
 	}	
+	$anz =  count($_data[$uz][13]);
 	for($a=1; $a<=12; $a++){
-		for($b=0; $b<=8; $b++){
+		for($b=0; $b<=$anz; $b++){
 			$_data[$uz][13][$b] += $_data[$uz][$a][$b]; 
 		}
 	}
@@ -178,6 +179,7 @@ echo $html;
 function view_jahr($a){
 	global $_data;
 	global $wahljahr;
+	$anz =  count($_data[$a][13]);
 	$html = "";
 	$html .=  "<table width=100% hight=100% border=0 cellpadding=3 cellspacing=1>";
 	$html .=  "<tr>";
@@ -200,7 +202,7 @@ function view_jahr($a){
 		$html .=   $m;
 		$html .=   "</td></tr></table>";			
 		$html .=   "</td>";
-		for($mi=1; $mi < count($_data[$a][$m]); $mi++){	
+		for($mi=1; $mi < $anz; $mi++){	
 			$html .=  "<td width=40 align=middle class=td_background_tag> ";
 			if($_data[$a][$m][$mi]<>0){
 				//$html .=  trim($_data[$a][$m][$mi]) ;

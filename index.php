@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.85
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -107,6 +107,7 @@ include_once ('./include/class_filehandle.php');
 include_once ('./include/class_rapport.php');
 include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
+require_once ('./include/class_table.php');
 include ("./include/time_funktionen.php");
 
 //$controller = new time_controller();
@@ -225,6 +226,34 @@ switch($_action){
 	//$_template->_user02 = "sites_year/sites02_year.php";
 	//$_template->_user04 = "sites_year/sites04_year.php";
 	//break;
+	case "password":
+		$_infotext = "";	
+		if($_POST['senden']){
+			if($_POST['new1'] <> $_POST['new2']  OR $_POST['new1'] == "" OR $_POST['new2'] == ""){
+				$_infotext = getinfotext('Neue Passw&ouml;rter nicht identisch','alert-error');
+			}elseif(sha1($_POST['old']) <> $_SESSION['passwort'] and $_POST['old'] <>""){
+				$_infotext = getinfotext('Altes Passwort nicht korrekt','alert-error');
+			}else{
+				$_infotext = getinfotext('Neues Passwort wurde gespeichert','alert-error');
+				$tmpusers= file("./Data/users.txt");		
+				for($u=0; $u<= count($tmpusers); $u++){
+					$zeilen = explode(";", $tmpusers[$u]);
+					if($zeilen[1] == $_user->_loginname){
+						$tmpusers[$u] = str_replace(sha1($_POST['old']),sha1($_POST['new1']),$tmpusers[$u]);
+					}
+				}	
+				$neu = implode( "", $tmpusers);
+				$open = fopen("./Data/users.txt","w+");
+				fwrite ($open, $neu);
+				fclose($open);
+			}
+		}else{	
+			$_infotext = getinfotext('Passwort ver&auml;ndern','td_background_top');
+		}
+		$_template->_user02 = "sites_user/user02.php";
+		$_template->_user04 = "sites_user/user04_password.php";
+		$_template->_user03 = "sites_user/user03_stat.php";
+		break;		
 	case "show_year":
 		if(in_array(2,$show)) txt("Jahresübersicht - Anzeigen");
 		$_template->_user02 = "sites_user/user02_cal.php";
@@ -575,7 +604,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	//define('user2','<hr>--------------------------------------------------------bla<hr>');
 	//echo user2;
-	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1]);
+	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
 	if(in_array(5,$show)){
 		txt("Monatsdaten - Daten füllen und anzeigen : \$_monat");
