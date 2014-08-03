@@ -2,7 +2,8 @@
 session_start();
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
-header("Content-Type: text/html; charset=iso-8859-1"); 
+//header("Content-Type: text/html; charset=iso-8859-1"); 
+header("Content-Type: text/html; charset=utf-8"); 
 error_reporting(E_ALL ^ E_NOTICE);
 
 /********************************************************************************
