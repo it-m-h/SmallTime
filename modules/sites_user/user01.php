@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -56,7 +56,7 @@ if (strstr($_template->_bootstrap,'true')){
 			$_timestampn = mktime(0, 0, 0, 1, 1, $_w_jahr+1);
 			echo "
 			<td valign='middle' align='center' class='td_background_menue' width='35'>
-				<a title='vorwärts' href='?action=show_time&timestamp=$_timestampn'><img src='images/icons/control_fastforward.png' border=0></a>
+				<a title='vorw&auml;rts' href='?action=show_time&timestamp=$_timestampn'><img src='images/icons/control_fastforward.png' border=0></a>
 			</td>";
 			}
 		echo "
@@ -67,7 +67,7 @@ if (strstr($_template->_bootstrap,'true')){
 <?php 
 }else{ 
 	echo "<table width='400'  border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
-	if($_settings->_array[13][1]) echo "<a title='Anwesenheitsübersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
+	if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
 	if($_settings->_array[13][1]) echo "</td><td valign='middle'>";
 	if($_settings->_array[13][1]) echo " | ";
 	echo "</td><td valign='middle'>";
@@ -76,7 +76,7 @@ if (strstr($_template->_bootstrap,'true')){
 	echo " | ";
 	$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
 	echo "</td><td valign='middle'>";
-	echo "<a title='Jahresübersicht' href='?action=show_year'><img src='images/icons/table_multiple.png' border=0></a> ";
+	echo "<a title='Jahres&uuml;bersicht' href='?action=show_year'><img src='images/icons/table_multiple.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
 	echo "</td><td valign='middle'>";
@@ -95,7 +95,7 @@ if (strstr($_template->_bootstrap,'true')){
 	//Druck auf 2 Seiten print=1, bei Druck auf einer Seite nur 4 Stempelzeiten anzeigbar (breite der Spalte)
 	//--------------------------------------------------------------------------------------------------------
 	echo "</td><td valign='middle'>";
-	echo "<a title='Monatsübersicht drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
+	echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
 	} elseif($_settings->_array[20][1] >= date("j", time())){	
@@ -103,7 +103,7 @@ if (strstr($_template->_bootstrap,'true')){
 	//wenn z.B. 20 eingestellt ist, wird nur der letzte Monat gedruckt
 	//--------------------------------------------------------------------------------------------------------
 	echo "</td><td valign='middle'>";
-	echo "<a title='Monatsübersicht vom letzten Monat drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
+	echo "<a title='Monats&uuml;bersicht vom letzten Monat drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
 	}
@@ -131,14 +131,14 @@ if (strstr($_template->_bootstrap,'true')){
 	$_nextjahr	= date("Y",time());								// nächstes Jahr
 	if ($_startjahr<$_w_jahr) {
 		$_timestampv = mktime(0, 0, 0, 1, 1, $_w_jahr-1);
-		echo "<td class='td_background_menue' valign='middle' align='center' width='20'><a title='zurück' href='?action=show_time&timestamp=$_timestampv'><img src='images/icons/control_rewind.png' border=0></a></td>";
+		echo "<td class='td_background_menue' valign='middle' align='center' width='20'><a title='zur&uuml;ck' href='?action=show_time&timestamp=$_timestampv'><img src='images/icons/control_rewind.png' border=0></a></td>";
 	}
 	echo "<td valign='middle' align='center' class='td_background_menue' width='45'>";
 	echo $_w_jahr;
 	echo "</td>";
 	if ($_nextjahr >= $_w_jahr){ 
 		$_timestampn = mktime(0, 0, 0, 1, 1, $_w_jahr+1);
-		echo "<td valign='middle' align='center' class='td_background_menue' width='20'><a title='vorwärts' href='?action=show_time&timestamp=$_timestampn'><img src='images/icons/control_fastforward.png' border=0></a></td>";
+		echo "<td valign='middle' align='center' class='td_background_menue' width='20'><a title='vorw&auml;rts' href='?action=show_time&timestamp=$_timestampn'><img src='images/icons/control_fastforward.png' border=0></a></td>";
 		}
 	echo "</tr></table>";
  }

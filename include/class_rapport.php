@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Rapport
 /*******************************************************************************
-* Version 0.861
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -33,7 +33,7 @@ class time_rapport{
 	function get_rapport($_ordnerpfad, $_timestamp){
 		$_file = "./Data/".$_ordnerpfad."/Rapport/".date("Y.m.d", $_timestamp);
 		if(!file_exists($_file)){
-			$_txt = "Rapport für den " . date("d.m.Y",$_timestamp). "\n-";
+			$_txt = "Rapport f&uuml;r den " . date("d.m.Y",$_timestamp). "\n-";
 			$_txt = "";
 		}else{
 			//$_txt = file($_file);

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -38,11 +38,11 @@ echo "<td align=left class=td_background_tag ><select name='_m' size='1'><option
       			echo ($_user->_modell==0) ? " selected " : "" ;  
       			echo "'>kumulierend</option><option value='1'";
       			echo ($_user->_modell==1) ? " selected " : "" ;  
-      			echo "'>Jährlich</option><option value='2'";
+      			echo "'>J&auml;hrlich</option><option value='2'";
       			echo ($_user->_modell==2) ?  " selected " : "" ;  
       			echo "'>Monatlich</option>	</select></td>
       			";
-echo "<td align=left class=td_background_tag width=16><img title='Überstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zurücksetzend.' src='images/icons/information.png' border=0></td>";
+echo "<td align=left class=td_background_tag width=16><img title='&Uuml;berstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zurücksetzend.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 
 echo "<tr>";
@@ -76,7 +76,7 @@ echo "</tr>";
 //	$_tmp_time = explode(";", $_userdaten[6]);
 
 echo "<tr>";
-echo "<td align=left class=td_background_tag>Guthaben - Übertrag<br>(Stunden / Ferien)</td>";
+echo "<td align=left class=td_background_tag>Guthaben - &Uuml;bertrag<br>(Stunden / Ferien)</td>";
 echo "<td align=left class=td_background_tag><input type='text' name='_g1' value='".$_user->_Stunden_uebertrag."' size='10'> | <input type='text' name='_g2' value='".$_user->_Ferienguthaben_uebertrag."' size='10'></td>";
 echo "<td align=left class=td_background_tag width=16><img title='Falls Überzeitguthaben oder Ferienguthaben bei Beginn existiert, bitte hier eintragen.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
@@ -155,7 +155,7 @@ echo "<td align=left class=td_background_tag valign='top'>Arbeitszuschlag :
 		<br><br>
 		<b>Zur Info: </b>
 		<br>- nur eine Zeit pro Tag einstellbar 
-		<br>- nicht Möglich ist: 23 - 6 Uhr 
+		<br>- nicht M&ouml;glich ist: 23 - 6 Uhr 
 	</td>";
 echo "<td align=left class=td_background_tag >";
 

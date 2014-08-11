@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Absenzen - Klasse
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -63,7 +63,7 @@ class time_absenz{
 		$_zeilenvorschub = "\r\n";
         $_file = "./Data/".$ordnerpfad."/Timetable/A" . $_w_jahr;
         if (!file_exists($_file)) {
-             $_meldung=  "Keine Daten vorhanden, folgende Datei wurde versucht zu öffnen ". $_file;
+             $_meldung=  "Keine Daten vorhanden, folgende Datei wurde versucht zu &ouml;ffnen ". $_file;
         }else{
         	//$_meldung = "Datei vorhanden : ". $_file;
         	$_abwesenheit = file($_file);

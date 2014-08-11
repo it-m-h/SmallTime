@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83.1
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -17,16 +17,16 @@
 		<tr>
 			<td align=left class=td_background_tag width=300>Pfad (Ordnername ./Data/XXXXX)</td>
 			<td align=left class=td_background_tag><input type='text' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'></td>
-			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten für diesen Benutzer. Ohne Sonderzeichen, leerschläge oder Umlaute!' src='images/icons/information.png' border=0></td>
+			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten f&uuml;r diesen Benutzer. Ohne Sonderzeichen, leerschläge oder Umlaute!' src='images/icons/information.png' border=0></td>
 		</tr> !-->
 		<input type='hidden' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'>
 		<tr>
 			<td align=left class=td_background_tag>Loginname (empfehlung: Kurzzeichen)</td>
 			<td align=left class=td_background_tag><input type='text' name='_b' value='<?php echo $_users->_array[$_id][1] ?>' size='70'></td>
-			<td align=left class=td_background_tag width=16><img title='Loginnname, ohne Sonderzeichen, leerschläge oder Umlaute!' src='images/icons/information.png' border=0></td>
+			<td align=left class=td_background_tag width=16><img title='Loginnname, ohne Sonderzeichen, leerschl&auml;ge oder Umlaute!' src='images/icons/information.png' border=0></td>
 		</tr>
 		<tr>
-			<td align=left class=td_background_tag>neues Passwort (nur neu vergeben möglich!)</td>
+			<td align=left class=td_background_tag>neues Passwort (nur neu vergeben m&ouml;glich!)</td>
 			<td align=left class=td_background_tag><input type='text' name='_c' value='1234' size='70'></td>
 			<td align=left class=td_background_tag width=16><img title='Neues Passwort.' src='images/icons/information.png' border=0></td>
 		</tr>

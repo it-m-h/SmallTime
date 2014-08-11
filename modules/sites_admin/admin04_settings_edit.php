@@ -2,8 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
-* Letzte Veränderung von mh-77
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.84
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -77,7 +77,7 @@ if($_POST['login']){
 //-------------------------------------------------------------------------------------------
 // Mögliche Erweiterung:
 // Stempelzeiten nach login anzeigen lassen und automatisch ausblenden lassen
-// MONATSARRY überarbeiten, da Summen nicht berechnet werden
+// MONATSARRY &uuml;berarbeiten, da Summen nicht berechnet werden
 //-------------------------------------------------------------------------------------------
 if($_POST['login']){
 	//include ("./include/setting.php");

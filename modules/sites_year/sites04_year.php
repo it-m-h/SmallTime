@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -74,6 +74,9 @@ $_data[4][0] 	= "Auszahlung";
 
 $_summe_calc_absenz = array();
 
+
+
+
 //print_R($_data);
 for($i=0; $i<12;$i++){
 	// ----------------------------------------------------------------------------
@@ -130,7 +133,11 @@ for($i=0; $i<12;$i++){
 // ----------------------------------------------------------------------------
 // Viewer für die Jahresansicht
 // ----------------------------------------------------------------------------	
+
 $monate = explode(";",$_settings->_array[11][1]);
+
+
+
 
 echo "<table width='100%' hight='100%' border='0' cellpadding='3' cellspacing='1'>";
 echo "<tr>";

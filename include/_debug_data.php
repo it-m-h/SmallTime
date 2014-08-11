@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Debug der Applikation
 /*******************************************************************************
-* Version 0.8
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -26,7 +26,7 @@ if (in_array(1,$show))
 	//print_r ($_setting->_array[0]);
 	//echo $_settings->_array[1][1];
 	//-----------------------------------------------------------------
-	txt("Feiertage für die ganze Firma (\$_settings->_feiertage)");
+	txt("Feiertage f&uuml;r die ganze Firma (\$_settings->_feiertage)");
 	$zeig = new time_show($_settings->_feiertage);
 	//-----------------------------------------------------------------
 	txt("Alle User (\$_users->_array)");

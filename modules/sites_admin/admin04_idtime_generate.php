@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -40,7 +40,7 @@
 <b>Tipps:</b> 
 <ul>
 	<li>Klick zum Ausblenden von Elementen, dann mit Strg+P ausdrucken.</li>
-	<li>Link (rot) mit rechtsklick -> Link-Adresse kopieren, für die Weitergabe.</li>
+	<li>Link (rot) mit rechtsklick -> Link-Adresse kopieren, f&uuml;r die Weitergabe.</li>
 </ul>
 <?php
         $idtime_secret = 'CHANGEME'; // gleichzeitig in idtime.php ändern

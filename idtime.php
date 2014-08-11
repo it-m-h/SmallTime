@@ -11,7 +11,7 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.82
+	* Version 0.872
 	* Author:  IT-Master GmbH
 	* www.it-master.ch / info@it-master.ch
 	* Copyright (c) , IT-Master GmbH, All rights reserved
@@ -63,10 +63,10 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 			$_timestamp = time();
 			$_zeilenvorschub= "\r\n";
 			$_file = './Data/' . $user . '/Timetable/' . date('Y') . '.' . date('n');
-			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht öffnen!");
+			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht &ouml;ffnen!");
 			fputs($fp, time().$_zeilenvorschub);
 			fclose($fp);
-			txt("OK – Stempelzeit für <b>$user</b> eingetragen.", true);
+			txt("OK – Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
 			//$_SESSION['time'] = true; // ?
 		}
 		else txt("Fehler – unbekannte ID!", false);
@@ -76,14 +76,14 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 			$_timestamp = time();
 			$_zeilenvorschub= "\r\n";
 			$_file = './Data/' . $user . '/Timetable/' . date('Y') . '.' . date('n');
-			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht öffnen!");
+			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht &ouml;ffnen!");
 			fputs($fp, time().$_zeilenvorschub);
 			fclose($fp);
-			txt("OK – Stempelzeit für <b>$user</b> eingetragen.", true);
+			txt("OK – Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
 			//$_SESSION['time'] = true; // ?			
 		}else txt("Fehler – unbekannte ID!", false);
 	}else{ 
-		txt("Fehler – keine ID übermittelt!", false);	
+		txt("Fehler – keine ID &uuml;bermittelt!", false);	
 	}
 	function txt($txt, $ok) {
 		echo '<p style="color:'.($ok?'green':'red').'">' . $txt . '</p>';

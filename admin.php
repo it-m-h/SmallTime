@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -131,7 +131,7 @@ $_groups         	= new time_filehandle("./Data/","group.txt",";");
 //$_absenz        	= new time_filehandle("./Data/","absenz.txt",";");
 $_settings         	= new time_settings();
 if(in_array(8,$show)){
-	txt("Settings - Daten füllen und anzeigen : \$_settings");
+	txt("Settings - Daten f&uuml;llen und anzeigen : \$_settings");
 	showClassVar($_settings);
 	txt("<hr color=red>");
 }
@@ -173,13 +173,13 @@ $_logcheck->checkadmin( $_users->_array);
 // ----------------------------------------------------------------------------
 // keine Session vorhanden
 if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
-	if(in_array(2,$show)) txt("keine Session, Login durchführen");
+	if(in_array(2,$show)) txt("keine Session, Login durchf&uuml;hren");
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";
 }
 // Login über Cookie mit Datenüberprüfung
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
-	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin prüfen");
+	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
 	//$_action = "";
 }
@@ -211,9 +211,9 @@ if($_SESSION['admin'] and !$_GET['action']){
 }elseif($_GET['action'] && $_SESSION['admin']){
 	$_action = $_GET['action'];
 	$_grpwahl = $_GET['group']-1;
-	if(array_search(2,$show)) txt("GET_Action gewählt : ". $_action);
+	if(array_search(2,$show)) txt("GET_Action gew&auml;hlt : ". $_action);
 }elseif($_GET['group']){
-	if(in_array(2,$show)) txt("GET Group gewählt : ". $_GET['group']);
+	if(in_array(2,$show)) txt("GET Group gew&auml;hlt : ". $_GET['group']);
 	$_grpwahl = $_GET['group']-1;
 	$_action = "login_mehr";
 	if($_GET['group']=="-1"){
@@ -299,11 +299,11 @@ switch($_action){
 			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
 			header("Location: admin.php?action=delete_user&show=delete");		
 		}elseif($_POST['absenden'] == "CANCEL"){
-			$_infotext = getinfotext( "User wurde nicht gelöscht."  ,"td_background_heute"); 
+			$_infotext = getinfotext( "User wurde nicht gel&ouml;scht."  ,"td_background_heute"); 
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04.php";
 		}elseif(@$_GET['show']=="delete"){
-			$_infotext = getinfotext("User wurde gelöscht."  ,"td_background_heute");
+			$_infotext = getinfotext("User wurde gel&ouml;scht."  ,"td_background_heute");
 			$_infotext04 = "";	
 			$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_XXXXXXX!";
 			$_infotext04 .= "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
@@ -311,7 +311,7 @@ switch($_action){
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04.php";		
 		}else{
-			$_infotext = getinfotext("User löschen?"  ,"td_background_heute");
+			$_infotext = getinfotext("User l&ouml;schen?"  ,"td_background_heute");
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04_user_del.php";
 		}			
@@ -431,11 +431,11 @@ switch($_action){
 		// update oldtime, newtime, Ordner
 		$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
 	}elseif($_POST['absenden'] == "DELETE" and $_write){
-		if(in_array(2,$show)) txt("Zeit löschen :".$_oldtime);
+		if(in_array(2,$show)) txt("Zeit l&ouml;schen :".$_oldtime);
 		// delete //oldtime, Ordner
 		$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
 	}else{
-		if(in_array(2,$show)) txt("Zeit updaten und löschen fehlgeschlagen");
+		if(in_array(2,$show)) txt("Zeit updaten und l&ouml;schen fehlgeschlagen");
 	}
 	$_template->_user02 = "sites_admin/admin02_user_cal.php";
 	$_template->_user04 = "sites_user/admin04_timetable.php";
@@ -522,7 +522,7 @@ switch($_action){
 	$_template->_user04 = "sites_user/user04_pdf.php";
 	break;
 	case "show_jear":
-	if(in_array(2,$show)) txt("Jahresübersicht - Anzeigen");
+	if(in_array(2,$show)) txt("Jahres&uuml;bersicht - Anzeigen");
 	$_template->_user02 = "sites_admin/admin02_user_cal.php";
 	$_template->_user04 = "sites_user/user04_jear.php";
 	break;
@@ -544,12 +544,12 @@ switch($_action){
 	$_template->_user04 = "sites_user/user04_pdf_show.php";
 	break;
 	case "design":
-	$_infotext = getinfotext("Design auswählen"  ,"td_background_top");
+	$_infotext = getinfotext("Design ausw&auml;hlen"  ,"td_background_top");
 	$_template->_user02 = "sites_admin/admin02.php";
 	$_template->_user04 = "sites_user/user04_design.php";
 	break;
 	case "setdesign":
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neues Design gewählt</td></tr></table>" ,"td_background_heute");
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neues Design gew&auml;hlt</td></tr></table>" ,"td_background_heute");
 		$_template         = new time_template("index.php");
 		$_template->set_templatepfad($_GET['designname']);	
 		$_template->_plugin	= "modules/sites_plugin/plugin.php";
@@ -633,7 +633,7 @@ switch($_action){
 	//löschen einer Gruppe
 	//-----------------------------------------------
 	if($_GET['del']<>""){
-		$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gelöscht</td></tr></table>" ,"td_background_heute");
+		$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>" ,"td_background_heute");
 		$_group->del_group($_GET['del']);	
 	}
 	//-----------------------------------------------
@@ -668,7 +668,7 @@ switch($_action){
 		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>" ,"td_background_heute");
 		$_feiertage->save_feiertage();
 	}elseif($_GET['del']<>""){
-		$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gelöscht</td></tr></table>"  ,"td_background_heute");
+		$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>"  ,"td_background_heute");
 		$_feiertage->delete_feiertag($_GET['del']);
 	}
 	$_template->_user02 = "sites_admin/admin02.php";
@@ -752,7 +752,7 @@ if($_SESSION['admin']){
 	}
 		
 	if(in_array(5,$show)){
-		txt("Monatsdaten - Daten füllen und anzeigen : \$_monat");
+		txt("Monatsdaten - Daten f&uuml;llen und anzeigen : \$_monat");
 		showClassVar($_monat);
 		//txt("Daten : \$_monat->_monate");
 		//$zeig = new time_show($_monat->_monate);
@@ -769,7 +769,7 @@ if($_SESSION['admin']){
 	// Berechnung Endjahr = aktuelles Jahr, dann 0 sonst $_time->_jahr
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 	if(in_array(6,$show)){
-		txt("Jahres - Daten füllen und anzeigen : \$_jahr");
+		txt("Jahres - Daten f&uuml;llen und anzeigen : \$_jahr");
 		showClassVar($_jahr);
 		//txt("Daten : \$_monat->_monate");
 		//$zeig = new time_show($_monat->_monate);

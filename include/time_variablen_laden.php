@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time Start, Variablen deklarieren
 /*******************************************************************************
-* Version 0.8
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -48,7 +48,7 @@ if(isset($_GET['admin_id'])){
 }
 $_user->load_data_session();	
 if(in_array(3,$show)){
-	txt("User - Daten füllen und anzeigen : \$_user");
+	txt("User - Daten f&uuml;llen und anzeigen : \$_user");
 	showClassVar($_user);
 	txt("<hr color=red>");
 }
@@ -58,7 +58,7 @@ if(in_array(3,$show)){
 // ----------------------------------------------------------------------------
 $_absenz = new time_absenz($_user->_ordnerpfad, $_time->_jahr);
 if(in_array(12,$show)){
-	txt("Absenz - Daten füllen und anzeigen : \$_absenz");
+	txt("Absenz - Daten f&uuml;llen und anzeigen : \$_absenz");
 	showClassVar($_absenz);
 	txt("<hr color=red>");
 }

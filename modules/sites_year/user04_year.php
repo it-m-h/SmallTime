@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.85
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -11,6 +11,7 @@
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus Statistik
 //-----------------------------------------------------------------------------
+
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
 echo "<tr>";
 echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
@@ -94,7 +95,7 @@ for($x=$_now; $x>=$_to; $x--){
 			//echo "---------gleich";
 			$_sum_ausz += $auszahlung->_arr_ausz[$u][2];	
 		}else{
-			//echo "----------------------------------nönönönönön";
+			//echo "----------------------------------nönönönön&ouml;n";
 		}
 	}
 	//echo "<br>".$_sum_ausz;

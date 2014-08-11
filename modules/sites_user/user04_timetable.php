@@ -2,8 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.86
-* Letzte Veränderung von mh-77
+* Version 0.872
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -169,6 +168,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 				$("#modalBody").load(this.href + '');
 				$("#mainModal").modal('show');
 			});
-		$('a[title="Absenz louml;schen"]').unbind();
+		$('a[title="Absenz l&ouml;schen"]').unbind();
 	</script>
 <?php } ?>

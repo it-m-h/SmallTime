@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.84
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -17,7 +17,7 @@ if (strstr($_template->_bootstrap,'true')){
                 <li<?php echo $_action=="group" ?  ' class="active"':''; ?>><a id="Gruppen" title="Gruppen verwalten" href="?action=group">Gruppe</a></li>
                 <li<?php echo $_action=="design" ?  ' class="active"':''; ?>><a id="Design" title="Design" href="?action=design">Design</a></li>
                 <li<?php echo $_action=="settings" ?  ' class="active"':''; ?>><a id="Settings" title="Settings" href="?action=settings">Setting</a></li>
-                <li<?php echo $_action=="feiertage" ?  ' class="active"':''; ?>><a id="Feiertag" title="Zusätzlicher Feiertag" href="?action=feiertage">Feiertage</a></li>
+                <li<?php echo $_action=="feiertage" ?  ' class="active"':''; ?>><a id="Feiertag" title="Zus&auml;tzlicher Feiertag" href="?action=feiertage">Feiertage</a></li>
                 <li<?php echo $_action=="import" ?  ' class="active"':''; ?>><a id="Import" title="Import von csv" href="?action=import">CSV Import</a></li>
                 <li<?php echo $_action=="debug_info" ?  ' class="active"':''; ?>><a id="Status" title="Status / Meldungen" href="?action=debug_info">Status</a></li>
                 <li<?php echo $_action=="idtime-generate" ?  ' class="active"':''; ?>><a id="Codes" title="QR-Codes" href="?action=idtime-generate">QR-Codes</a></li>

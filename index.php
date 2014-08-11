@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -131,7 +131,7 @@ $_groups	= new time_filehandle("./Data/","group.txt",";");
 //$_absenz	= new time_filehandle("./Data/","absenz.txt",";");
 $_settings	= new time_settings();
 if(in_array(8,$show)){
-	txt("Settings - Daten füllen und anzeigen : \$_settings");
+	txt("Settings - Daten f&uuml;llen und anzeigen : \$_settings");
 	showClassVar($_settings);
 	txt("<hr color=red>");
 }
@@ -160,13 +160,13 @@ if(in_array(0,$show)){
 $_logcheck = new time_login();
 // keine Session vorhanden
 if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
-	if(in_array(2,$show)) txt("keine Session, Login durchführen");
+	if(in_array(2,$show)) txt("keine Session, Login durchf&uuml;hren");
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";
 }
 // Login über Cookie mit Datenüberprüfung
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
-	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin prüfen");
+	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
 	//$_action = "";
 }
@@ -198,7 +198,7 @@ if($_SESSION['admin'] and !$_GET['action']){
 }elseif($_GET['action'] && $_SESSION['admin']){
 	$_action = $_GET['action'];
 	$_grpwahl = $_GET['group']-1;
-	if(array_search(2,$show)) txt("GET_Action gewählt : ". $_action);
+	if(array_search(2,$show)) txt("GET_Action gew&auml;hlt : ". $_action);
 }elseif($_GET['group']){
 	if(in_array(2,$show)) txt("GET Group gewählt : ". $_GET['group']);
 	$_grpwahl = $_GET['group']-1;
@@ -256,7 +256,7 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;		
 	case "show_year":
-		if(in_array(2,$show)) txt("Jahresübersicht - Anzeigen");
+		if(in_array(2,$show)) txt("Jahres&uuml;bersicht - Anzeigen");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_year/user04_year.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
@@ -392,11 +392,11 @@ switch($_action){
 			// update oldtime, newtime, Ordner
 			$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
 		}elseif($_POST['absenden'] == "DELETE" and $_write){
-			if(in_array(2,$show)) txt("Zeit löschen :".$_oldtime);
+			if(in_array(2,$show)) txt("Zeit l&ouml;schen :".$_oldtime);
 			// delete //oldtime, Ordner
 			$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
 		}else{
-			if(in_array(2,$show)) txt("Zeit updaten und löschen fehlgeschlagen");
+			if(in_array(2,$show)) txt("Zeit updaten und l&ouml;schen fehlgeschlagen");
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -520,7 +520,7 @@ switch($_action){
 				erstelle_neu(0);
 				$_template->_user04 = "sites_user/user04_pdf_show.php";
 			}else{
-				$_infotext04 =  "Leider ist ein Drucken nicht mehr möglich, wende Dich bitte an den Admin.";
+				$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
 				$_template->_user04 = "sites_user/user04.php";
 			}
 		}
@@ -608,7 +608,7 @@ if($_SESSION['admin']){
 	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
 	if(in_array(5,$show)){
-		txt("Monatsdaten - Daten füllen und anzeigen : \$_monat");
+		txt("Monatsdaten - Daten f&uuml;llen und anzeigen : \$_monat");
 		showClassVar($_monat);
 		//txt("Daten : \$_monat->_monate");
 		//$zeig = new time_show($_monat->_monate);
@@ -625,7 +625,7 @@ if($_SESSION['admin']){
 	// berechnung Endjahr = aktuelles jahr, dann 0 sonst $_time->_jahr
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 	if(in_array(6,$show)){
-		txt("Jahres - Daten füllen und anzeigen : \$_jahr");
+		txt("Jahres - Daten f&uuml;llen und anzeigen : \$_jahr");
 		showClassVar($_jahr);
 		//txt("Daten : \$_monat->_monate");
 		//$zeig = new time_show($_monat->_monate);

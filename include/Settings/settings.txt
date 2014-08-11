@@ -13,7 +13,7 @@ Monatsanzeige#Jan.;Feb.;März;April;Mai;Juni;Juli;Aug.;Sept.;Okt.;Nov.;Dez.#Anze
 Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung f&uuml;r den Bundes - Feiertag
 <img src='images/icons/report_user.png' border='0'> Anwesenheitsliste#1#D&uuml;rfen die User die Anwesenheit der andern sehen
 <img src='images/icons/clock_edit.png' border='0'> Stempelzeit edit#1#D&uuml;rfen die User die Stempelzeiten nachtr&auml;glich ver&auml;ndern (ja, nein)
-<img src='images/icons/time_add.png' border='0'> Eine Zeit hinzuf&uuml;gen#1#User d&uuml;rfen eine Zeit hinzufügen
+<img src='images/icons/time_add.png' border='0'> Eine Zeit hinzuf&uuml;gen#1#User d&uuml;rfen eine Zeit hinzuf&uuml;gen
 <img src='images/icons/time_go.png' border='0'> Mehrere Zeitangaben#1#User d&uuml;rfen mehrere Zeiten eingeben
 <img src='images/icons/date_add.png' border='0'> Absenzen eingeben#1#User d&uuml;rfen Absenzen eintragen
 <img src='images/icons/application_add.png' border='0'> Raport eintragen#1#User d&uuml;rfen einen Rapport eingeben

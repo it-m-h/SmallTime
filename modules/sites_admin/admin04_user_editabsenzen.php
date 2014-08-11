@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.872
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -11,8 +11,8 @@
 <Form action="?action=user_update_absenzen&admin_id=<?php echo $_id ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="1 	">
 		<tr>
-			<td colspan=3 class=td_background_wochenende width="100%" align=left>Absenz - Auswahl einstellen (Bezeichnung, Kurzzeichen, Übernommen wird in ?% von der Firma)
-				<br>ACHTUNG: Es kann zu Fehlern führen, wenn schon eine Absenz mit dem Kurzzeichen existiert und es geändert wird!
+			<td colspan=3 class=td_background_wochenende width="100%" align=left>Absenz - Auswahl einstellen (Bezeichnung, Kurzzeichen, &Uuml;bernommen wird in ?% von der Firma)
+				<br>ACHTUNG: Es kann zu Fehlern f&uuml;ren wenn schon eine Absenz mit dem Kurzzeichen existiert und es ge&auml;ndert wird!
 			</td>
 		</tr>
 		<tr>
