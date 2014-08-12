@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.876
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -10,7 +10,7 @@
 if(strstr($_template->_bootstrap,'true')){
 ?>	
 <img style="width: 100%" src="images/ico/groups.png">
-<form style="padding: 5px;" name="login" action='index.php?action=login_mehr&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>&group=<?php echo $_grpwahl+1; ?>' method='post' target='_self'>
+<form style="padding: 5px;" name="login" action='index.php?action=login_mehr&timestamp=<?php echo time() ?>&token=<?php echo $token ?>&group=<?php echo $_grpwahl+1; ?>' method='post' target='_self'>
         <div class="alert alert-block">
                 <h4>Schnell-Stempeln!</h4>
         </div>

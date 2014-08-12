@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.876
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -164,8 +164,8 @@ if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";
 }
-// Login über Cookie mit Datenüberprüfung
-if($_COOKIE["lname"] and $_COOKIE["lpass"] and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
+// Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
+if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
 	//$_action = "";
@@ -183,6 +183,7 @@ if($_GET['action']=="logout"){
 	header("Location: index.php");
 	exit();
 }
+
 if(in_array(2,$show)) showClassVar($_logcheck);
 // ----------------------------------------------------------------------------
 // Controller für Action
