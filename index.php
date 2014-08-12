@@ -308,8 +308,10 @@ switch($_action){
 		$_infotext02 = getinfotext( "Stempel - Pannel"  ,"td_background_top");
 		if($_GET['tmp']=="1"){
 			$_infotext04 = getinfotext( "Stempelzeit erfasst!"  ,"td_background_heute");
-		}else{
+		}elseif($_GET['tmp']=="2"){
 			$_infotext04 = getinfotext( "Falscher Benutzername oder Passwort!"  ,"td_background_top");
+		}else{
+			$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!"  ,"td_background_top");
 		}
 		
 		$_template->_user01 = "sites_time/null.php";
