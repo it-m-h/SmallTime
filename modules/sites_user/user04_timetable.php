@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.874
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -81,7 +81,11 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		//-------------------------------------------------------------------------
 		// Anzeige von Zeit fehlt, wenn ungerade Stempelzeiten
 		//-------------------------------------------------------------------------
-		if($_monat->_MonatsArray[$z][11]%2==1) $tmp = $tmp . " - <font class=timefehlt>Zeit fehlt!</font>";
+		if($_monat->_MonatsArray[$z][11]%2==1) {
+			$tmp = $tmp ."<a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit zuf&uuml;gen'>";	
+			$tmp = $tmp . " - <font class=timefehlt>Zeit fehlt!</font>";
+			$tmp = $tmp . "</a>";
+		}
 		echo $tmp;
 		echo "</td>\n";
 		//-------------------------------------------------------------------------
