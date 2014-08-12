@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Auszahlung von Stunden
 /*******************************************************************************
-* Version 0.872
+* Version 0.875
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -25,43 +25,44 @@ class auszahlung{
         
         function save_auszahlung($anzahl){
         	$_zeilenvorschub = "\r\n";
-		$file = "./Data/".$_SESSION['datenpfad'] ."/Timetable/auszahlungen";
-		//echo "Ich speichere : " . $this->_ausz_jahr  . "/" . $this->_ausz_monat ."/". $anzahl."<hr>";
-		if(count($this->_arr_ausz)==0){
-			//Falls Datei leer ist, Eintrag speichern
-			$this->_arr_ausz[] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl;
-			$neu = implode( "", $this->_arr_ausz);
-			$open = fopen($file,"w+");
-			fwrite ($open, $neu);
-			fclose($open);	
-		}else{
-			//echo "<br>nene:<br>"	;
-			// suche ob schon ein Eintrag vorhanden ist
-			$pos = -1;
-			for($i=0; $i< count($this->_arr_ausz);$i++){
-				if (strstr(trim($this->_arr_ausz[$i][0]),$this->_ausz_monat) && strstr(trim($this->_arr_ausz[$i][1]),$this->_ausz_jahr)){
-					$pos =  $i;
-					break;	
-				}
-			}
-			//existiert schon ein Eintrag, falls nein eine Zeile hinzufügen
-			$_new = file($file);
-			if($pos>=0) {
-				//echo "<br>position:$pos<br>"	;
-				$_new[$pos] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl.$_zeilenvorschub;
+			$file = "./Data/".$_SESSION['datenpfad'] ."/Timetable/auszahlungen";
+			//echo "Ich speichere : " . $this->_ausz_jahr  . "/" . $this->_ausz_monat ."/". $anzahl."<hr>";
+			if(count($this->_arr_ausz)==0){
+				//Falls Datei leer ist, Eintrag speichern
+				$this->_arr_ausz[] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl;
+				$neu = implode( "", $this->_arr_ausz);
+				$open = fopen($file,"w+");
+				fwrite ($open, $neu . $_zeilenvorschub);
+				fclose($open);	
 			}else{
-				//echo "<br>neu.....<br>"	;
-				$_new[] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl.$_zeilenvorschub;
+				//echo "<br>nene:<br>"	;
+				// suche ob schon ein Eintrag vorhanden ist
+				$pos = -1;
+				for($i=0; $i< count($this->_arr_ausz);$i++){
+					if (strstr(trim($this->_arr_ausz[$i][0]),$this->_ausz_monat) && strstr(trim($this->_arr_ausz[$i][1]),$this->_ausz_jahr)){
+						$pos =  $i;
+						break;	
+					}
+				}
+				//existiert schon ein Eintrag, falls nein eine Zeile hinzufügen
+				$_new = file($file);
+				if($pos>=0) {
+					//echo "<br>position:$pos<br>"	;
+					$_new[$pos] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl.$_zeilenvorschub;
+				}else{
+					//echo "<br>neu.....<br>"	;
+					$_new[] = $this->_ausz_monat .";".$this->_ausz_jahr  . ";" .  $anzahl.$_zeilenvorschub;
+				}
+				$neu = implode( "", $_new);
+				$open = fopen($file,"w+");
+				fwrite ($open, $neu);
+				fclose($open);
 			}
-			$neu = implode( "", $_new);
-			$open = fopen($file,"w+");
-			fwrite ($open, $neu);
-			fclose($open);
-		}
-		//print_r($this->_arr_ausz);	
+			//print_r($this->_arr_ausz);	
 	}
 	
 	function save($array){
+		$_zeilenvorschub = "\r\n";
 		$file = "./Data/".$_SESSION['datenpfad'] ."/Timetable/auszahlungen";
 		$fp = fopen($file,"w+");				
 		fputs($fp, $array.$_zeilenvorschub);		
