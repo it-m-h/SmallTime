@@ -27,7 +27,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Start - Datum</td>";
 echo "<td align=left class=td_background_tag ><input type='text' name='_b' value='".date("d.m.Y",$_user->_BeginnDerZeitrechnung)."' size='10'> (Beginn der Zeitrechnung)</td>";
-echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterstützt.' src='images/icons/information.png' border=0></td>";
+echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterst&uuml;tzt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------
 // Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
@@ -42,7 +42,7 @@ echo "<td align=left class=td_background_tag ><select name='_m' size='1'><option
       			echo ($_user->_modell==2) ?  " selected " : "" ;  
       			echo "'>Monatlich</option>	</select></td>
       			";
-echo "<td align=left class=td_background_tag width=16><img title='&Uuml;berstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zurücksetzend.' src='images/icons/information.png' border=0></td>";
+echo "<td align=left class=td_background_tag width=16><img title='&Uuml;berstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zur&uuml;cksetzend.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 
 echo "<tr>";
@@ -78,7 +78,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Guthaben - &Uuml;bertrag<br>(Stunden / Ferien)</td>";
 echo "<td align=left class=td_background_tag><input type='text' name='_g1' value='".$_user->_Stunden_uebertrag."' size='10'> | <input type='text' name='_g2' value='".$_user->_Ferienguthaben_uebertrag."' size='10'></td>";
-echo "<td align=left class=td_background_tag width=16><img title='Falls Überzeitguthaben oder Ferienguthaben bei Beginn existiert, bitte hier eintragen.' src='images/icons/information.png' border=0></td>";
+echo "<td align=left class=td_background_tag width=16><img title='Falls &Uuml;berzeitguthaben oder Ferienguthaben bei Beginn existiert, bitte hier eintragen.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 
 echo "<tr>";
@@ -137,7 +137,7 @@ foreach ($FT as $zeile){
 echo "<input type='hidden' name='anzahlFT' value='$i' >";
 echo "</table>";
 echo "</td>";
-echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Aktivieren oder deaktivieren Sie die Feiertage, je nach dem, welche gültig sind.' src='images/icons/information.png' border=0></td>";
+echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Aktivieren oder deaktivieren Sie die Feiertage, je nach dem, welche g&uuml;ltig sind.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 
 

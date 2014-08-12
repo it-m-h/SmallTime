@@ -18,6 +18,7 @@ $(function() {
         var now = new Date();
         var seldate = new Date(<?php echo$_GET[timestamp];?>*1000);
         seldate.setHours(now.getHours());
+        seldate.setMinutes(now.getMinutes());
         $('#datetimepicker1').data('datetimepicker').setLocalDate(seldate);
         $('#datetimepicker1').on('changeDate', function(e) {
           $('input[name=_w_tag]').val(e.localDate.getDate());
