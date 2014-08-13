@@ -274,13 +274,12 @@ switch($_action){
 	case "login_mehr":
 		if(in_array(2,$show)) txt("Mehrbenutzer - Login");
 		if (isset($_SESSION['save'])) $_SESSION['save'] = 8;
-		echo $_SESSION['save'] . "<hr>";
+		//echo $_SESSION['save'] . "<hr>";
 		//echo "<hr> login, daten schreiben, logout";
 		//if ($_SESSION['admin'] ) echo "<hr>  erfolgreich eingeloggt";
-		
 		if($_POST['login'] == "Stempelzeit eintragen" and $_write){
 			$_logcheck->login($_POST, $_users->_array);
-			echo "<hr>" . $_SESSION['admin'];
+			//echo "<hr>" . $_SESSION['admin'];
 			if($_SESSION['admin']){
 				$id = $_logcheck->_id;
 				//echo "<hr>";
