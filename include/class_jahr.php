@@ -79,9 +79,11 @@ class time_jahr{
 				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
-			}else{
+				//echo "get auszahlungen if<br>";
+			}elseif(!$this->_CalcToTimestamp){
 				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
-					//$anz =  $this->_arr_ausz[$i][2];
+					$anz =  $this->_arr_ausz[$i][2];
+					//echo "get auszahlungen else<br>";
 				}
 			}
 				
@@ -98,6 +100,10 @@ class time_jahr{
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 				if($this->_CalcToTimestamp && date("n", $this->_timestamp)>=$this->_arr_ausz[$i][0] && date("Y", $this->_timestamp)>=$this->_arr_ausz[$i][1]){
 					$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					//echo "calc auszahlungen if<br>";
+				}elseif(!$this->_CalcToTimestamp){
+					$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					//echo "calc auszahlungen else<br>";
 				}
 			}
 		}
@@ -132,10 +138,15 @@ class time_jahr{
 		$z=0;
 		foreach($this->_data[$i] as $zeile){
 			$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
-			//echo "calc year $z<br>";
+			//echo "year " . $z . "/". $this->_CalcToTimestamp."<br>";
 			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 			if($this->_CalcToTimestamp && date("n", $this->_timestamp)>$z){
 				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0]; 
+				//echo "calc";
+				//echo "calc year if<br>";
+			}elseif(!$this->_CalcToTimestamp){
+				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0]; 
+				//echo "calc year else<br>";
 			}	
 			$z++;
 		}		
@@ -173,14 +184,18 @@ class time_jahr{
 						if(date("n", $this->_timestamp)>$z){
 							$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
 							//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+							//echo "calc cum if Monat<br>";
 						}
+						//echo "calc cum if Yahr<br>";
 					}else{
 						$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
 						//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+						//echo "calc cum else Yahr<br>";
 					}
 				}else{
 					$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
 					//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+					//echo "calc cum else Yahr<br>";
 				}				
 				//echo $this->_summe_t ."<br>";
 				//echo "Jahr $i.$z = ". $this->_summe_t. "<hr>";			 
