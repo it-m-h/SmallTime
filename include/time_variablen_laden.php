@@ -63,5 +63,4 @@ if(in_array(12,$show)){
 	txt("<hr color=red>");
 }
 
-
 ?>

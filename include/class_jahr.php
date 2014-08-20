@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.872
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -10,12 +10,13 @@
 class time_jahr{
 		
 	public $_jahr 			= NULL;		// Startjahr des Users
-	public $_timestamp	= NULL;		// welches jahr wurde gewählt, bzw Monat wurde gewählt
+	public $_timestamp		= NULL;		// welches jahr wurde gewählt, bzw Monat wurde gewählt
 	public $_summe_t		= NULL;		// Summe seit Beginn inkl. Übertrag
 	public $_modell 		= NULL;		// Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
-	public $_summe_F	= NULL;		// Feriensumme
+	public $_summe_F		= NULL;		// Feriensumme
 	public $_summe_vorholzeit;
 	
+	public $_CalcToTimestamp	=TRUE;
 	
 	public $_saldo_t		= NULL;		// Zeitsaldo
 	public $_saldo_F		= NULL;		// Feriensaldo
@@ -24,7 +25,7 @@ class time_jahr{
 		
 	public $_ordnerpfad	= NULL;		// Pfad zu den Daten
 	public $_startjahr 		= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
-	public $_startmonat	= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
+	public $_startmonat		= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_array			= NULL;		// Array des Jahres
 	public $_data			= NULL;		// Array der Daten
 	
@@ -37,19 +38,20 @@ class time_jahr{
 	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp){	
 		
 		//echo $Ferienguthaben_uebertrag."hhhhhhhhhhh";
-		
-		$this->_ordnerpfad 				= $ordnerpfad;
+		$this->_ordnerpfad 			= $ordnerpfad;
 		$this->_timestamp 				= $_timestamp;
 		// Jahr auf aktuell setzten falls kein Endjahr angegeben ist
 		if($jahr==0) $this->_jahr = date("Y", time());
-		$this->_startjahr 					= date("Y",$startjahr);
+		$this->_startjahr 				= date("Y",$startjahr);
 		$this->_startmonat 				= date("n",$startjahr);
-		$this->_Stunden_uebertrag 			= $Stunden_uebertrag;
-		$this->_Ferienguthaben_uebertrag 	= $Ferienguthaben_uebertrag;
-		$this->_Ferien_pro_Jahr 			= $Ferien_pro_Jahr;
+		$this->_Stunden_uebertrag 		= $Stunden_uebertrag;
+		$this->_Ferienguthaben_uebertrag = $Ferienguthaben_uebertrag;
+		$this->_Ferien_pro_Jahr 		= $Ferien_pro_Jahr;
 		$this->_Vorholzeit_pro_Jahr 		= $Vorholzeit_pro_Jahr;	
-		$this->_modell 					= $modell;
+		$this->_modell 				= $modell;
 		
+		$this->_CalcToTimestamp = $_SESSION['calc'] ;
+	
 		$this->calc_feriensumme();
 		// ---------------------------------------------------------------------------------------
 		// Falls jeden Monat die Überzeit auf 0 gestellt wird:
@@ -72,9 +74,17 @@ class time_jahr{
 	function get_auszahlung($monat, $jahr){
 		$anz = 0;
 		for($i=0; $i< count($this->_arr_ausz);$i++){
-				if (strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
+			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
+			if($this->_CalcToTimestamp && date("n", $this->_timestamp)>trim($monat)){
+				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
+			}else{
+				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
+					//$anz =  $this->_arr_ausz[$i][2];
+				}
+			}
+				
 		}
 		return $anz;
 	}
@@ -85,7 +95,10 @@ class time_jahr{
 			$this->_arr_ausz = file($file);
 			for($i=0; $i< count($this->_arr_ausz);$i++){
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
-				$this->_tot_ausz += $this->_arr_ausz[$i][2];
+				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
+				if($this->_CalcToTimestamp && date("n", $this->_timestamp)>=$this->_arr_ausz[$i][0] && date("Y", $this->_timestamp)>=$this->_arr_ausz[$i][1]){
+					$this->_tot_ausz += $this->_arr_ausz[$i][2];
+				}
 			}
 		}
 		//print_r ($this->_arr_ausz);
@@ -118,11 +131,14 @@ class time_jahr{
 		$this->_data[$i] = file($file);
 		$z=0;
 		foreach($this->_data[$i] as $zeile){
-				$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
+			$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
+			//echo "calc year $z<br>";
+			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
+			if($this->_CalcToTimestamp && date("n", $this->_timestamp)>$z){
 				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0]; 
-				$z++;
-			}
-			
+			}	
+			$z++;
+		}		
 		// $this->_summe_t = $this->_summe_t - $this->_tot_ausz;
 		// Jährliche Vorholzeit - Summe hinzurechnen
 		//echo $this->_Vorholzeit_pro_Jahr. "<hr>";
@@ -149,7 +165,23 @@ class time_jahr{
 			foreach($this->_data[$i] as $zeile){
 				$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
 				//echo "Monat : $i.$z / ".$this->_summe_t . " + " . $this->_data[$i][$z][0] . " = <br>";
-				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+				//echo "kumuliert berechnet " . $htis->_CalcToTimestamp . " / ". $z. " / " . date("n", $this->_timestamp)."<br>";
+				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
+				if($this->_CalcToTimestamp){
+					// Jahr ist gleich, dann nur bis zum aktuellen Monat
+					if(date("Y", $this->_timestamp) == $i){
+						if(date("n", $this->_timestamp)>$z){
+							$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+							//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+						}
+					}else{
+						$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+						//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+					}
+				}else{
+					$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+					//echo "$z wird berechnet $this->_summe_t / $this->_data[$i][$z][0] <hr>";
+				}				
 				//echo $this->_summe_t ."<br>";
 				//echo "Jahr $i.$z = ". $this->_summe_t. "<hr>";			 
 				$z++;
@@ -180,7 +212,20 @@ class time_jahr{
 			// Schleife - Monats Daten in der Jahres Datei 
 			foreach($this->_data[$i] as $zeile){
 				$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
-				$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
+				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
+				if($this->_CalcToTimestamp){
+					// Jahr ist gleich, dann nur bis zum aktuellen Monat
+					if(date("Y", $this->_timestamp) == $i){
+						if(date("n", $this->_timestamp)>$z){
+							$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
+						}
+					}else{
+						$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
+					}
+				}else{
+					$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
+				}
+
 				$z++;
 			}
 			// Jährliches Ferienguthaben hinzufügen oder bei Startjahr prozentual hinzufügen
@@ -219,18 +264,18 @@ class time_jahr{
 	
 	function set_ueberschriften($jahr){
 		//Erweiterung für Jahresübersicht --- in Planung
-		$this->_array[$jahr][0][0] = "Monat";
-		$this->_array[$jahr][0][1] = "Saldo";	
-		$this->_array[$jahr][0][2]	= "Soll";
-		$this->_array[$jahr][0][3] = "Work";
-		$this->_array[$jahr][0][4] = "Absenz";
-		$this->_array[$jahr][0][5] = "F";
-		$this->_array[$jahr][0][6] = "K";
-		$this->_array[$jahr][0][7] = "U";
-		$this->_array[$jahr][0][8] = "M";
-		$this->_array[$jahr][0][9] = "I";
-		$this->_array[$jahr][0][10]= "W";
-		$this->_array[$jahr][0][11]= "E";
+		$this->_array[$jahr][0][0] 	= "Monat";
+		$this->_array[$jahr][0][1] 	= "Saldo";	
+		$this->_array[$jahr][0][2] 	= "Soll";
+		$this->_array[$jahr][0][3] 	= "Work";
+		$this->_array[$jahr][0][4] 	= "Absenz";
+		$this->_array[$jahr][0][5] 	= "F";
+		$this->_array[$jahr][0][6] 	= "K";
+		$this->_array[$jahr][0][7] 	= "U";
+		$this->_array[$jahr][0][8] 	= "M";
+		$this->_array[$jahr][0][9] 	= "I";
+		$this->_array[$jahr][0][10]	= "W";
+		$this->_array[$jahr][0][11]	= "E";
 	}
 	
 }

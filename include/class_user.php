@@ -8,12 +8,12 @@
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_user{
-	public $_loginname 				= NULL;
+	public $_loginname 			= NULL;
 	public $_password 				= NULL;
 	public $_ordnerpfad 			= NULL;	
 	public $_name					= NULL;	
 	public $_SollZeitProWoche		= NULL;
-	public $_SollZeitProzent		= NULL;
+	public $_SollZeitProzent			= NULL;
 	public $_WochenArbeiztsZeit		= NULL;
 	//So = 0, Sa = 7
 	public $_arbeitstage 			= array(0,0,0,0,0,0,0);
@@ -27,7 +27,7 @@ class time_user{
 	public $_feiertage 				= array(0,0,0,0,0,0,0,0,0,0,0);
 	public $_absenzen				= array();
 	public $_zuschlag				= array();
-	public $_modell					= NULL;
+	public $_modell				= NULL;
 	
 	function __construct(){
 		$this->check_htaccess();

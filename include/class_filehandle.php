@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.872
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -68,6 +68,18 @@ class time_filehandle{
 		fputs($fp, $text);
 		fputs($fp, $_zeilenvorschub);
 		fclose($fp);	
+	}
+	
+	function insert_user($text){
+		$_zeilenvorschub = "\r\n";
+		$_file = $this->_filepfad.$this->_filename;		
+		$tmp = file($_file);
+		for($x=0; $x< count($tmp); $x++){ $tmp = str_replace($_zeilenvorschub, "", $tmp); }
+		$tmp[] = $text;
+		$neu =implode($_zeilenvorschub,$tmp);	
+		$open = fopen($_file,"w+");
+		fwrite ($open, $neu);
+		fclose($open);
 	}
 
 	function add_user($_a){

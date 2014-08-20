@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.876
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -122,6 +122,14 @@ if(in_array(11,$show)){
 	$zeig = new time_show($_GET);
 	echo "POST : ";
 	$zeig = new time_show($_POST);
+}
+// ----------------------------------------------------------------------------
+// Im Admin - Bereich bis zum gewählten Monat berechnen (für Druck und Anzeige)
+// ----------------------------------------------------------------------------
+if($_GET['calc']){
+	$_SESSION['calc'] = $_GET['calc'];
+}else{
+	$_SESSION['calc'] = false;
 }
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden

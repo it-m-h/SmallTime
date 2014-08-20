@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -18,7 +18,7 @@ if (strstr($_template->_bootstrap,'true')){
                 <li<?php echo $_action=="show_pdf" ?  ' class="active"':''; ?>><a id="PDF" title="PDF anzeigen" href="?action=show_pdf">PDF</a></li>
               <?php if($_settings->_array[20][1]==0){ ?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>
-			<a id="Drucken" title="Monatsübersicht drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0">Drucken</a>
+			<a id="Drucken" title="Monats&uuml;bersicht drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0&calc=1">Drucken</a>
 		 </li>
 		<?php } elseif($_settings->_array[20][1] >= date("j", time())){	?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>

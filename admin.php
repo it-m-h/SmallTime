@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -122,6 +122,14 @@ if(in_array(11,$show)){
 	$zeig = new time_show($_GET);
 	echo "POST : ";
 	$zeig = new time_show($_POST);
+}
+// ----------------------------------------------------------------------------
+// Im Admin - Bereich bis zum gewählten Monat berechnen
+// ----------------------------------------------------------------------------
+if($_GET['calc']){
+	$_SESSION['calc'] = $_GET['calc'];
+}else{
+	$_SESSION['calc'] = true;
 }
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
@@ -507,12 +515,12 @@ switch($_action){
 	$_template->_user04 = "sites_time/time_addlist_04.php";
 	break;
 	case "show_time":
-	if(in_array(2,$show)) txt("User - Anzeige seiner Daten");			
-	$_template->_user01 = "sites_admin/admin01.php";
-	$_template->_user03 = "sites_admin/admin03.php";
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	//$_template->_user03 = "user03_stat.php";
+		if(in_array(2,$show)) txt("User - Anzeige seiner Daten");			
+		$_template->_user01 = "sites_admin/admin01.php";
+		$_template->_user03 = "sites_admin/admin03.php";
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		//$_template->_user03 = "user03_stat.php";
 	break;
 	case "show_pdf":
 	$_infotext = getinfotext( "PDF anzeigen" ,"td_background_top");
@@ -690,7 +698,7 @@ switch($_action){
 				$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>".$_a."</b> existiert bereits!</font></td></tr></table>";
 				$_infotext = getinfotext( $_infotext ,"td_background_heute");	
 			}else{
-				$_users->insert_line($_a.";".$_b.";".$_c);
+				$_users->insert_user($_a.";".$_b.";".$_c);
 				$_users->add_user($_a);
 				header("Location: admin.php?action=user_edit&admin_id=". $_users->get_anzahl());
 						

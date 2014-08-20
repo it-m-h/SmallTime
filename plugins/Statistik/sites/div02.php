@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time - Plugin : Statistik der Mitarbeiter (Überzeit, Ferien usw.)
 /*******************************************************************************
-* Version 0.872
+* Version 0.877
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -87,6 +87,11 @@ for($z=1; $z<count($_users->_array ) ; $z++){
 			$abstxt[] = $spalte[1];
 		}
 	}	
+	//-------------------------------------------------------------------------------------------
+	// anzahl der Absenzen für die anzahl Spaltenberechnung
+	//-------------------------------------------------------------------------------------------
+	$AnzahlAbsenzen = count($tmparr);
+	//-------------------------------------------------------------------------------------------
 	$_data[$uz][0][0] = $wahljahr;
 	$_data[$uz][0][1] 	= "Saldo";
 	for($c=2;($c-2)<count($abstxt);$c++){
@@ -140,7 +145,12 @@ $html .=  "<tr>";
 $html .=  "<td class=td_background_info width=30px>";
 $html .=  $wahljahr;
 $html .=  "</td>";
-for($i=1; $i < count($_data[0][0]); $i++){
+//-------------------------------------------------------------------------------------------
+// rote Spaltenüberschriften / Jahr / Saldo / Absenzen
+//-------------------------------------------------------------------------------------------
+//$AnzahlAbsenzen;
+for($i=1; $i < ($AnzahlAbsenzen+2); $i++){
+//for($i=1; $i < count($_data[0][0]); $i++){
 	$html .=  "<td width=40 align=middle class=td_background_info>";
 	$html .=  "" .$_data[0][0][$i] . "";
 	$html .=  "</td>";
@@ -156,7 +166,11 @@ for($a=0; $a < count($_data); $a++){
 	$html .=   "<img border='0' src='images/icons/page_go.png'></img>";
 	$html .=   '</a>';
 	$html .=  "</td>";
-	for($i=1; $i < count($_data[$a][13]); $i++){
+	//-------------------------------------------------------------------------------------------
+	// Inhalte  / der Tabelle
+	//-------------------------------------------------------------------------------------------
+	for($i=1; $i <= ($AnzahlAbsenzen+1); $i++){
+	//for($i=1; $i <= count($_data[$a][13]); $i++){
 	
 		$html .=  "<td width=40 align=middle class=td_background_tag>";
 		if($_data[$a][13][$i]<>0){
@@ -179,6 +193,7 @@ echo $html;
 function view_jahr($a){
 	global $_data;
 	global $wahljahr;
+	global $AnzahlAbsenzen;
 	$anz =  count($_data[$a][13]);
 	$html = "";
 	$html .=  "<table width=100% hight=100% border=0 cellpadding=3 cellspacing=1>";
@@ -186,7 +201,11 @@ function view_jahr($a){
 	$html .=  "<td class=td_background_info width=30px>";
 	$html .=  $wahljahr;
 	$html .=  "</td>";
-	for($i=1; $i < count($_data[$a][0]); $i++){
+	//-------------------------------------------------------------------------------------------
+	// rote Spaltenüberschriften / Jahr / Saldo / Absenzen
+	//-------------------------------------------------------------------------------------------
+	for($i=1; $i < ($AnzahlAbsenzen+2); $i++){
+	//for($i=1; $i < count($_data[$a][0]); $i++){
 		$html .=  "<td width=40 align=middle class=td_background_info>";
 		$html .=  "" .$_data[$a][0][$i] . "";
 		$html .=  "</td>";
@@ -202,7 +221,11 @@ function view_jahr($a){
 		$html .=   $m;
 		$html .=   "</td></tr></table>";			
 		$html .=   "</td>";
-		for($mi=1; $mi < $anz; $mi++){	
+		//-------------------------------------------------------------------------------------------
+		// Inhalte  / der Tabelle
+		//-------------------------------------------------------------------------------------------
+		for($mi=1; $mi <= ($AnzahlAbsenzen+1); $mi++){
+		//for($mi=1; $mi <= $anz; $mi++){	
 			$html .=  "<td width=40 align=middle class=td_background_tag> ";
 			if($_data[$a][$m][$mi]<>0){
 				//$html .=  trim($_data[$a][$m][$mi]) ;
@@ -220,8 +243,12 @@ function view_jahr($a){
 	}
 	
 		$html .=   "<tr>";
+		//-------------------------------------------------------------------------------------------
+		// Summen in der Jahresansicht des MA unten
+		//-------------------------------------------------------------------------------------------
 		$html .=   "<td class=td_background_info>Summe:</td>";
-		for($mi=1; $mi < count($_data[$a][$m]); $mi++){	
+		for($mi=1; $mi <= ($AnzahlAbsenzen+1); $mi++){
+		//for($mi=1; $mi <= count($_data[$a][$m]); $mi++){	
 			$html .=  "<td width=40 align=middle class=td_background_info> ";
 			if($_data[$a][13][$mi]<>0){
 				$wert =  trim($_data[$a][13][$mi]);

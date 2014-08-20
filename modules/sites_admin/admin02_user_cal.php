@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.84
+* Version 0.87
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -26,7 +26,7 @@ if (strstr($_template->_bootstrap,'true')){
                 </a>
         </span>
         <span class="btn">
-                <a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0'><img src='images/icons/printer.png' border=0></a>
+                <a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0&calc=1'><img src='images/icons/printer.png' border=0></a>
                 | 
                 <a title='Monat <?php echo $_time->_monatname ?>' href='?action=show_time&timestamp=<?php echo $_time->_timestamp ?>'>
                         <img src='images/icons/calendar_edit.png' border=0>

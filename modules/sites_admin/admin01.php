@@ -11,7 +11,7 @@
 //echo "--".$_template->_bootstrap."--<br>";
 if (strstr($_template->_bootstrap,'true')){
 ?>
-	<ul class="nav nav-tabs adminmenu">
+	<ul class="nav nav-tabs adminmenu">    
                 <li<?php echo $_action=="anwesend" ?  ' class="active"':''; ?>><a id="Home" title="Home" href="?action=anwesend">Home</a></li>
                 <li<?php echo $_action=="user_add" ?  ' class="active"':''; ?>><a id="Mitarbeiter" title="Mitarbeiter erstellen" href="?action=user_add">new MA</a></li>
                 <li<?php echo $_action=="group" ?  ' class="active"':''; ?>><a id="Gruppen" title="Gruppen verwalten" href="?action=group">Gruppe</a></li>
