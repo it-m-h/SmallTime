@@ -2,47 +2,47 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.872
+* Version 0.8772
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_month{
-	private $_file	= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
-	private $_pfad = NULL;	// Ordnerpfad
-	private $_wochentage	= NULL;	// Bezeichnung der Wochentage
-	private $_arbeitstage	= NULL;	// User - Arbeitstage - Einstellungen
-	private $_letzterTag	= NULL;	// Anzahl der Tage im gewählen Monat
-	private $_u_feiertage	= NULL;	// User - Feiertage einstellungen
-	private $_feiertage	= NULL;	// Feiertage - Datum und Name in einem Array
-	private $_absenz	= NULL;	// Absenzen
-	private $_SollProTag = NULL;	// Soll Arbeitszeit pro Tag
-	private $_timeTable	= NULL;	// Zeiteinträge in einem array
-	private $_startzeit	= NULL;	// Beginn der Zeitrechnung
-	private $_arbeitszeit	= NULL;
-	private $_autopause	= NULL;
-	private $_setautopause	= "";
-	private $_zeitzuschlag	= NULL;
-	private $_absenzberechnung = NULL;
+	private $_file						= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
+	private $_pfad 					= NULL;	// Ordnerpfad
+	private $_wochentage				= NULL;	// Bezeichnung der Wochentage
+	private $_arbeitstage				= NULL;	// User - Arbeitstage - Einstellungen	
+	private $_u_feiertage				= NULL;	// User - Feiertage einstellungen
+	private $_feiertage					= NULL;	// Feiertage - Datum und Name in einem Array
+	private $_absenz					= NULL;	// Absenzen
+	private $_timeTable				= NULL;	// Zeiteinträge in einem array
+	private $_startzeit					= NULL;	// Beginn der Zeitrechnung
+	private $_arbeitszeit				= NULL;
+	private $_autopause				= NULL;
+	private $_setautopause				= "";
+	private $_zeitzuschlag				= NULL;
+	private $_absenzberechnung 		= NULL;
 	
-	public $_SummeSollProMonat = NULL;	// Summe der Soll - Stunden im Monat
-	public $_SummeWorkProMonat = NULL;	// Summe der gearbeiteten Stunden im Monat
-	public $_SummeAbsenzProMonat = NULL;
-	public $_SummeSaldoProMonat = NULL;	// Saldo in dem aktuellen Monat
-	public $_SummeStempelzeiten	= NULL;	// ungerade Zahl, heisst fehler in der Berechnung
+	public $_SollProTag 				= NULL;	// Soll Arbeitszeit pro Tag
+	public $_letzterTag				= NULL;	// Anzahl der Tage im gewählen Monat	
+	public $_SummeSollProMonat 		= NULL;	// Summe der Soll - Stunden im Monat
+	public $_SummeWorkProMonat 		= NULL;	// Summe der gearbeiteten Stunden im Monat
+	public $_SummeAbsenzProMonat 	= NULL;
+	public $_SummeSaldoProMonat 		= NULL;	// Saldo in dem aktuellen Monat
+	public $_SummeStempelzeiten		= NULL;	// ungerade Zahl, heisst fehler in der Berechnung
 
-	public $_SummeFerien	= NULL;
-	public $_SummeKrankheit	= NULL;
-	public $_SummeUnfall	= NULL;
-	public $_SummeMilitaer	= NULL;
-	public $_SummeIntern	= NULL;
-	public $_SummeWeiterbildung	= NULL;
-	public $_SummeExtern	= NULL;
+	public $_SummeFerien				= NULL;
+	public $_SummeKrankheit			= NULL;
+	public $_SummeUnfall				= NULL;
+	public $_SummeMilitaer			= NULL;
+	public $_SummeIntern				= NULL;
+	public $_SummeWeiterbildung		= NULL;
+	public $_SummeExtern				= NULL;
 
-	public $_MonatsArray = NULL;	// Array des Monats
+	public $_MonatsArray 				= NULL;	// Array des Monats
 
-	public $_modal	= NULL;
-	public $_modal_str	= NULL;
+	public $_modal					= NULL;
+	public $_modal_str				= NULL;
 	
 
 	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause, $absenzberechnung){	

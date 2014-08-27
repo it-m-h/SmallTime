@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.877
+* Version 0.8772
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -265,29 +265,29 @@ switch($_action){
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
 	case "plugins":
-	if($_POST['plugin']){
-		$_SESSION['plugin'] = $_POST['plugin'];
-	}
-	if($_POST['plugin']=="zeiterfassung") header("Location: admin.php");
-	$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : ".$_SESSION['plugin'] . " wird geladen.","td_background_top");
-	$_template->_modulpfad = "plugins/";
-	include("plugins/".$_SESSION['plugin']."/index.php");
-	break;
+		if($_POST['plugin']){
+			$_SESSION['plugin'] = $_POST['plugin'];
+		}
+		if($_POST['plugin']=="zeiterfassung") header("Location: admin.php");
+		$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : ".$_SESSION['plugin'] . " wird geladen.","td_background_top");
+		$_template->_modulpfad = "plugins/";
+		include("plugins/".$_SESSION['plugin']."/index.php");
+		break;
 	case "idtime-generate":
-	$_infotext = getinfotext("<b>QR-Codes/URLs/IDs zum direkten Stempeln via Barcode-Scanner(-App):</b>"  ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_idtime_generate.php";
-	break;
+		$_infotext = getinfotext("<b>QR-Codes/URLs/IDs zum direkten Stempeln via Barcode-Scanner(-App):</b>"  ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_idtime_generate.php";
+		break;
 	case "zip_user":
-	$_infotext = getinfotext( "ZIP-Archiv vom Mitarbeiter" ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_zip/sites04_zip_user.php";
-	break;
+		$_infotext = getinfotext( "ZIP-Archiv vom Mitarbeiter" ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_zip/sites04_zip_user.php";
+		break;
 	case "debug_info":
-	$_infotext = getinfotext("Status - Meldungen"  ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_debug/admin04_debuginfo.php";
-	break;
+		$_infotext = getinfotext("Status - Meldungen"  ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_debug/admin04_debuginfo.php";
+		break;
 	case "show_year2":
 		//include("./include/import_csv.php");
 		$_infotext = getinfotext("Jahres&uuml;bersicht Detaills"  ,"td_background_top");
@@ -370,132 +370,132 @@ switch($_action){
 		$_template->_user04 = "sites_login/login_mehr_04.php";
 		break;
 	case "login_einzel":
-	if(in_array(2,$show)) txt("Einzel - Login");
-	$_template->_user01 = "sites_time/null.php";
-	$_template->_user02 = "sites_login/login_einzel_02.php";
-	if($_GET['group']=="-1") $_template->_user03 = "login_einzel_03.php";
-	$_template->_user04 = "sites_login/login_einzel_04.php";
-	break;
+		if(in_array(2,$show)) txt("Einzel - Login");
+		$_template->_user01 = "sites_time/null.php";
+		$_template->_user02 = "sites_login/login_einzel_02.php";
+		if($_GET['group']=="-1") $_template->_user03 = "login_einzel_03.php";
+		$_template->_user04 = "sites_login/login_einzel_04.php";
+		break;
 	case "login":
-	if(in_array(2,$show)) txt("Login - Check");
-	$_logcheck = new time_login($_POST, $_users->_array);
-	break;
+		if(in_array(2,$show)) txt("Login - Check");
+		$_logcheck = new time_login($_POST, $_users->_array);
+		break;
 	case "logout":
-	if(in_array(2,$show)) txt("Logout und Formular anzeigen");
-	//$_SESSION['admin']=NULL;
-	//session_destroy();
-	//setcookie("lname","",time()-1);
-	//setcookie("lpass","",time()-1);
-	$_logcheck->logout();
-	$_grpwahl = 1;
-	$_group = new time_group($_grpwahl);
-	setLoginForm();
-	break;
+		if(in_array(2,$show)) txt("Logout und Formular anzeigen");
+		//$_SESSION['admin']=NULL;
+		//session_destroy();
+		//setcookie("lname","",time()-1);
+		//setcookie("lpass","",time()-1);
+		$_logcheck->logout();
+		$_grpwahl = 1;
+		$_group = new time_group($_grpwahl);
+		setLoginForm();
+		break;
 	case "anwesend":
-	if(in_array(2,$show)) txt("Anwesenheitsliste");
-	break;
+		if(in_array(2,$show)) txt("Anwesenheitsliste");
+		break;
 	case "add_rapport":
-	$_rapport = new time_rapport();
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_time/rapport_add_04.php";
-	break;
+		$_rapport = new time_rapport();
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_time/rapport_add_04.php";
+		break;
 	case "insert_rapport":
-	$_rapport = new time_rapport();
-	if($_POST['absenden'] == "UPDATE" and $_write){
-		$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
-	}elseif($_POST['absenden'] == "DELETE" and $_write){
-		$_rapport->delete_rapport($_user->_ordnerpfad, $_time->_timestamp);
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
-	case "add_absenz":
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_time/absenz_add_04.php";
-	break;
-	case "insert_absenz":
-	if($_POST['absenden'] == "OK" and $_write){
-		$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
-	case "delete_absenz":
-	$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
-	case "edit_time":
-	if(in_array(2,$show)) txt("Zeit editieren - Formular");
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_time/time_edit_04.php";
-	break;
-	case "update_time":
-	$_oldtime = $_GET['timestamp'];
-	$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-	//echo "<hr> \$_write = " . $_write;
-	if($_POST['absenden'] == "UPDATE" and $_write){
-		if(in_array(2,$show)) txt("Zeit updaten : ". $_oldtime);
-		// update oldtime, newtime, Ordner
-		$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
-	}elseif($_POST['absenden'] == "DELETE" and $_write){
-		if(in_array(2,$show)) txt("Zeit l&ouml;schen :".$_oldtime);
-		// delete //oldtime, Ordner
-		$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
-	}else{
-		if(in_array(2,$show)) txt("Zeit updaten und l&ouml;schen fehlgeschlagen");
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
-	case "insert_time_list":
-	if($_POST['absenden'] == "OK" and $_write){
-		$_timestamp                = $_GET['timestamp'];
-		$_w_tag                        = $_POST['_w_tag'];
-		$_w_monat                = $_POST['_w_monat'];
-		$_w_jahr                = $_POST['_w_jahr'];
-		$_zeitliste                = $_POST['_zeitliste'];
-		$_w_sekunde                = 0;
-		$_zeitliste = trim($_zeitliste);
-		$_zeitliste = str_replace(" ", "", $_zeitliste);
-		$_zeitliste = str_replace(" ", "", $_zeitliste);
-		$_zeitliste = str_replace(" ", "", $_zeitliste);
-		$_zeitliste = explode("-",$_zeitliste);
-		$_temptext = "";
-		foreach($_zeitliste as $_zeiten){
-			//$_zeiten = str($_zeiten);
-			//if(strstr(":",$_zeiten)){
-			$_tmp = explode(".",$_zeiten);
-			$_w_stunde = $_tmp[0];
-			$_w_minute = $_tmp[1];
-			if($_w_minute=="")$_w_minute=0;
-
-			$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
-			//} else {
-			//        $_w_stunde = $_zeiten;
-			//        $_w_minute = 0;
-			//}
-			//$_temptext = $_temptext . $_w_stunde. "." . $_w_minute . "#";
-			//echo $tmp;
-			$_time->save_time($tmp, $_user->_ordnerpfad);
-			//$_time->save_time_list($_user->_ordnerpfad);
+		$_rapport = new time_rapport();
+		if($_POST['absenden'] == "UPDATE" and $_write){
+			$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
+		}elseif($_POST['absenden'] == "DELETE" and $_write){
+			$_rapport->delete_rapport($_user->_ordnerpfad, $_time->_timestamp);
 		}
-		//$_temptext = $_zeitliste[0]. " bis ". $_zeitliste[1];
-		//echo "Variablen ".$_timestamp ." / ". $_w_tag ." / ".$_w_monat ." / ". $_w_jahr." / ". $_temptext ." / ".$_w_sekunde;
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
+	case "add_absenz":
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_time/absenz_add_04.php";
+		break;
+	case "insert_absenz":
+		if($_POST['absenden'] == "OK" and $_write){
+			$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
+		}
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
+	case "delete_absenz":
+		$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
+	case "edit_time":
+		if(in_array(2,$show)) txt("Zeit editieren - Formular");
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_time/time_edit_04.php";
+		break;
+	case "update_time":
+		$_oldtime = $_GET['timestamp'];
+		$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+		//echo "<hr> \$_write = " . $_write;
+		if($_POST['absenden'] == "UPDATE" and $_write){
+			if(in_array(2,$show)) txt("Zeit updaten : ". $_oldtime);
+			// update oldtime, newtime, Ordner
+			$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
+		}elseif($_POST['absenden'] == "DELETE" and $_write){
+			if(in_array(2,$show)) txt("Zeit l&ouml;schen :".$_oldtime);
+			// delete //oldtime, Ordner
+			$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
+		}else{
+			if(in_array(2,$show)) txt("Zeit updaten und l&ouml;schen fehlgeschlagen");
+		}
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
+	case "insert_time_list":
+		if($_POST['absenden'] == "OK" and $_write){
+			$_timestamp                = $_GET['timestamp'];
+			$_w_tag                        = $_POST['_w_tag'];
+			$_w_monat                = $_POST['_w_monat'];
+			$_w_jahr                = $_POST['_w_jahr'];
+			$_zeitliste                = $_POST['_zeitliste'];
+			$_w_sekunde                = 0;
+			$_zeitliste = trim($_zeitliste);
+			$_zeitliste = str_replace(" ", "", $_zeitliste);
+			$_zeitliste = str_replace(" ", "", $_zeitliste);
+			$_zeitliste = str_replace(" ", "", $_zeitliste);
+			$_zeitliste = explode("-",$_zeitliste);
+			$_temptext = "";
+			foreach($_zeitliste as $_zeiten){
+				//$_zeiten = str($_zeiten);
+				//if(strstr(":",$_zeiten)){
+				$_tmp = explode(".",$_zeiten);
+				$_w_stunde = $_tmp[0];
+				$_w_minute = $_tmp[1];
+				if($_w_minute=="")$_w_minute=0;
+
+				$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
+				//} else {
+				//        $_w_stunde = $_zeiten;
+				//        $_w_minute = 0;
+				//}
+				//$_temptext = $_temptext . $_w_stunde. "." . $_w_minute . "#";
+				//echo $tmp;
+				$_time->save_time($tmp, $_user->_ordnerpfad);
+				//$_time->save_time_list($_user->_ordnerpfad);
+			}
+			//$_temptext = $_zeitliste[0]. " bis ". $_zeitliste[1];
+			//echo "Variablen ".$_timestamp ." / ". $_w_tag ." / ".$_w_monat ." / ". $_w_jahr." / ". $_temptext ." / ".$_w_sekunde;
+		}
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
 	case "insert_time":
-	if(in_array(2,$show)) txt("Zeit speichern");
-	if($_POST['absenden'] == "OK" and $_write){
-		$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-		$_time->set_timestamp($tmp);
-		$_time->save_time($tmp, $_user->_ordnerpfad);
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
+		if(in_array(2,$show)) txt("Zeit speichern");
+		if($_POST['absenden'] == "OK" and $_write){
+			$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+			$_time->set_timestamp($tmp);
+			$_time->save_time($tmp, $_user->_ordnerpfad);
+		}
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
 	case "quick_time":
 		if(in_array(2,$show)) txt("Quick Time wird gestempelt");
 		$_time->set_runden((int) $_settings->_array[25][1]);	
@@ -505,15 +505,15 @@ switch($_action){
 		header("Location: admin.php");
 		break;
 	case "add_time":
-	if(in_array(2,$show)) txt("Zeit eintragen - Formular");
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_time/time_add_04.php";
-	break;
+		if(in_array(2,$show)) txt("Zeit eintragen - Formular");
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_time/time_add_04.php";
+		break;
 	case "add_time_list":
-	if(in_array(2,$show)) txt("Zeit eintragen - Formular");
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_time/time_addlist_04.php";
-	break;
+		if(in_array(2,$show)) txt("Zeit eintragen - Formular");
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_time/time_addlist_04.php";
+		break;
 	case "show_time":
 		if(in_array(2,$show)) txt("User - Anzeige seiner Daten");			
 		$_template->_user01 = "sites_admin/admin01.php";
@@ -521,41 +521,41 @@ switch($_action){
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		//$_template->_user03 = "user03_stat.php";
-	break;
+		break;
 	case "show_pdf":
-	$_infotext = getinfotext( "PDF anzeigen" ,"td_background_top");
-	if(in_array(2,$show)) txt("PDF - Anzeigen");
-	//$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_user/user04_pdf.php";
-	break;
+		$_infotext = getinfotext( "PDF anzeigen" ,"td_background_top");
+		if(in_array(2,$show)) txt("PDF - Anzeigen");
+		//$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_user/user04_pdf.php";
+		break;
 	case "show_jear":
-	if(in_array(2,$show)) txt("Jahres&uuml;bersicht - Anzeigen");
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/user04_jear.php";
-	break;
+		if(in_array(2,$show)) txt("Jahres&uuml;bersicht - Anzeigen");
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/user04_jear.php";
+		break;
 	case "print_month":
-	if(in_array(2,$show)) txt("PDF - Drucken");
-	include ("./include/time_funktion_pdf.php");
-	check_htaccess_pdf($_user->_ordnerpfad);
-	$_print = $_GET['print'];
-	$_druck = $_print;
-	$_jahr = date("Y", time());
-	$_monat = date("n", time());
-	$_tag = date("j", time());
-	if($_druck){
-		erstelle_pdf_more($_MonatsArray);
-	}else{
-		erstelle_neu(0); 
-	}
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/user04_pdf_show.php";
-	break;
+		if(in_array(2,$show)) txt("PDF - Drucken");
+		include ("./include/time_funktion_pdf.php");
+		check_htaccess_pdf($_user->_ordnerpfad);
+		$_print = $_GET['print'];
+		$_druck = $_print;
+		$_jahr = date("Y", time());
+		$_monat = date("n", time());
+		$_tag = date("j", time());
+		if($_druck){
+			erstelle_pdf_more($_MonatsArray);
+		}else{
+			erstelle_neu(0); 
+		}
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/user04_pdf_show.php";
+		break;
 	case "design":
-	$_infotext = getinfotext("Design ausw&auml;hlen"  ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_user/user04_design.php";
-	break;
+		$_infotext = getinfotext("Design ausw&auml;hlen"  ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_user/user04_design.php";
+		break;
 	case "setdesign":
 		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neues Design gew&auml;hlt</td></tr></table>" ,"td_background_heute");
 		$_template         = new time_template("index.php");
@@ -566,122 +566,122 @@ switch($_action){
 		$_template->_user03 = "sites_admin/admin03.php";
 		$_template->_user04 = "sites_user/user04_design.php";
 		header('Location: admin.php?action=design');	
-	break;
+		break;
 	case "show_admin":
-	$_template->_user01 = "sites_admin/admin01.php";
-	$_template->_user02 = "sites_login/login_mehr_02.php";
-	$_template->_user04 = "sites_login/login_mehr_04.php";
-	$_template->_user03 = "sites_admin/admin03.php";
-	break;
+		$_template->_user01 = "sites_admin/admin01.php";
+		$_template->_user02 = "sites_login/login_mehr_02.php";
+		$_template->_user04 = "sites_login/login_mehr_04.php";
+		$_template->_user03 = "sites_admin/admin03.php";
+		break;
 	case "user_einstellungen":
-	$_infotext = getinfotext( "Userdaten editieren" ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_user_einstellungen.php";
-	break;
+		$_infotext = getinfotext( "Userdaten editieren" ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_user_einstellungen.php";
+		break;
 	case "user_einstellungen_update":
-	$_a = $_POST['_a'];
-	$_b = $_POST['_b'];
-	$_c = $_POST['_c'];
-	$_d = $_POST['_d'];
-	$_user->set_user_data($_id,$_a,$_b,$_c,$_d);
-	$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	$_template->_user04 = "sites_user/admin04_timetable.php";
-	//$_template->_user04 = "sites_admin/admin04_user_einstellungen.php";
-	break;
+		$_a = $_POST['_a'];
+		$_b = $_POST['_b'];
+		$_c = $_POST['_c'];
+		$_d = $_POST['_d'];
+		$_user->set_user_data($_id,$_a,$_b,$_c,$_d);
+		$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		$_template->_user04 = "sites_user/admin04_timetable.php";
+		//$_template->_user04 = "sites_admin/admin04_user_einstellungen.php";
+		break;
 	case "user_edit":
-	$_infotext = getinfotext("User editieren"  ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_user_edit.php";
-	break;
+		$_infotext = getinfotext("User editieren"  ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_user_edit.php";
+		break;
 	case "user_update":
-	if($_POST['absenden'] == "OK"){
-		$_user->set_user_details();
-	}
-	$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Userdaten wurden aktualisiert</td></tr></table>" ,"td_background_heute");
-	$_template->_user02 = "sites_admin/admin02.php";
-	//$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	//$_template->_user04 = "sites_user/admin04_timetable.php";
-	$_template->_user04 = "sites_admin/admin04_user_edit.php";
-	break;
+		if($_POST['absenden'] == "OK"){
+			$_user->set_user_details();
+		}
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Userdaten wurden aktualisiert</td></tr></table>" ,"td_background_heute");
+		$_template->_user02 = "sites_admin/admin02.php";
+		//$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		//$_template->_user04 = "sites_user/admin04_timetable.php";
+		$_template->_user04 = "sites_admin/admin04_user_edit.php";
+		break;
 	case "user_edit_absenzen":
-	$_infotext = getinfotext("Absenzen editieren"  ,"td_background_top");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
-	break;
-	case "user_update_absenzen":
-	if($_POST['absenden'] == "OK"){
-		$_user->set_user_absenzen();
-		$_user->load_data_session();		
-	}
-	$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Absenzen wurde aktualisiert</td></tr></table>" ,"td_background_heute");
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
-	break;
-	case "user_personalkarte":
-	if(in_array(2,$show)) txt("Personalkarte wird dargestellt");
-	if($_POST['update']){
-		$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ". $_user->_name ." wurde aktualisiert","td_background_heute");
-	}else{
-		$_infotext = getinfotext("Personalkarte von ". $_user->_name,"td_background_top");
-	}
-	$_personaldaten = new time_personalblatt();
-				
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_personalkarte.php";
-	//if (in_array(2,$show)) txt("Quick Time wird gestempelt");
-	//$_nr	= $_GET['nr'];
-	//$_time->save_quicktime($_user->_ordnerpfad);
-	//$_template->_user02 = "sites_admin/admin02_user_cal.php";
-	//$_template->_user04 = "sites_user/admin04_timetable.php";
-	break;
+		$_infotext = getinfotext("Absenzen editieren"  ,"td_background_top");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
+		break;
+		case "user_update_absenzen":
+		if($_POST['absenden'] == "OK"){
+			$_user->set_user_absenzen();
+			$_user->load_data_session();		
+		}
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Absenzen wurde aktualisiert</td></tr></table>" ,"td_background_heute");
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
+		break;
+		case "user_personalkarte":
+		if(in_array(2,$show)) txt("Personalkarte wird dargestellt");
+		if($_POST['update']){
+			$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ". $_user->_name ." wurde aktualisiert","td_background_heute");
+		}else{
+			$_infotext = getinfotext("Personalkarte von ". $_user->_name,"td_background_top");
+		}
+		$_personaldaten = new time_personalblatt();
+					
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_personalkarte.php";
+		//if (in_array(2,$show)) txt("Quick Time wird gestempelt");
+		//$_nr	= $_GET['nr'];
+		//$_time->save_quicktime($_user->_ordnerpfad);
+		//$_template->_user02 = "sites_admin/admin02_user_cal.php";
+		//$_template->_user04 = "sites_user/admin04_timetable.php";
+		break;
 	case "group";
-	$_infotext = getinfotext("Gruppen editieren"  ,"td_background_top");
-	$_group = new time_group(-1);
-	//-----------------------------------------------
-	//löschen einer Gruppe
-	//-----------------------------------------------
-	if($_GET['del']<>""){
-		$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>" ,"td_background_heute");
-		$_group->del_group($_GET['del']);	
-	}
-	//-----------------------------------------------
-	//aktualisieren oder Gruppen hinzufügen
-	//-----------------------------------------------	
-	if($_POST['senden']){
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>" ,"td_background_heute");
-		$_group->save_group();
-	}
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_group_edit.php";
-	break;
+		$_infotext = getinfotext("Gruppen editieren"  ,"td_background_top");
+		$_group = new time_group(-1);
+		//-----------------------------------------------
+		//löschen einer Gruppe
+		//-----------------------------------------------
+		if($_GET['del']<>""){
+			$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>" ,"td_background_heute");
+			$_group->del_group($_GET['del']);	
+		}
+		//-----------------------------------------------
+		//aktualisieren oder Gruppen hinzufügen
+		//-----------------------------------------------	
+		if($_POST['senden']){
+			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>" ,"td_background_heute");
+			$_group->save_group();
+		}
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_group_edit.php";
+		break;
 	case "settings";
-	$_infotext = "Settings editieren";
-	$_infotext = getinfotext( $_infotext ,"td_background_top");	
-	if($_POST['senden']){
-		$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>"  ,"td_background_heute");
-		$_settings->save_settings();
-	}
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_settings_edit.php";
-	break;
+		$_infotext = "Settings editieren";
+		$_infotext = getinfotext( $_infotext ,"td_background_top");	
+		if($_POST['senden']){
+			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>"  ,"td_background_heute");
+			$_settings->save_settings();
+		}
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_settings_edit.php";
+		break;
 	case "feiertage";
-	$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum"  ,"td_background_top");
-	$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
-	if(in_array(13,$show)){
-		txt("Feiertage - anzeigen : \$_feiertage");
-		showClassVar($_absenz);
-		txt("<hr color=red>");
-	}
-	if($_POST['senden']){
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>" ,"td_background_heute");
-		$_feiertage->save_feiertage();
-	}elseif($_GET['del']<>""){
-		$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>"  ,"td_background_heute");
-		$_feiertage->delete_feiertag($_GET['del']);
-	}
-	$_template->_user02 = "sites_admin/admin02.php";
-	$_template->_user04 = "sites_admin/admin04_feiertage_edit.php";
-	break;
+		$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum"  ,"td_background_top");
+		$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
+		if(in_array(13,$show)){
+			txt("Feiertage - anzeigen : \$_feiertage");
+			showClassVar($_absenz);
+			txt("<hr color=red>");
+		}
+		if($_POST['senden']){
+			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>" ,"td_background_heute");
+			$_feiertage->save_feiertage();
+		}elseif($_GET['del']<>""){
+			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>"  ,"td_background_heute");
+			$_feiertage->delete_feiertag($_GET['del']);
+		}
+		$_template->_user02 = "sites_admin/admin02.php";
+		$_template->_user04 = "sites_admin/admin04_feiertage_edit.php";
+		break;
 	case "user_add":
 	if($_POST['absenden'] == "OK"){
 		//echo "update";
