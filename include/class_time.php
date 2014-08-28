@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.872
+* Version 0.873
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -199,6 +199,7 @@ class time{
 			if(trim($_tmp) == trim($_oldtime)){
 				//echo "Vergleich " . $_tmp. " == ".$_timestamp ." wird nun zu " .        $_timestamp_new . "<br>";
 				$_timeTable[$i] = $_newtime.$_zeilenvorschub;
+				$_oldtime = NULL;
 			}elseif(trim($_tmp) == ""){
 				//Leere zeile wird gelöscht, falls vorhanden
 				unset($_timeTable[$i]);
@@ -225,6 +226,7 @@ class time{
 			if(trim($_tmp) == trim($_oldtime)){
 				//echo "Vergleich " . $_tmp. " == ".$_oldtime ." wird nun gelöscht<br>";
 				unset($_timeTable[$i]);
+				$_oldtime = NULL;
 				//$_timeTable[$i] = $_timestamp_new.$_zeilenvorschub;
 			}elseif(trim($_tmp) == ""){
 				//Leere zeile wird gelöscht, falls vorhanden

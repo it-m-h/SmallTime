@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.8772
+* Version 0.873
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -450,16 +450,18 @@ switch($_action){
 		break;
 	case "insert_time_list":
 		if($_POST['absenden'] == "OK" and $_write){
-			$_timestamp                = $_GET['timestamp'];
-			$_w_tag                        = $_POST['_w_tag'];
-			$_w_monat                = $_POST['_w_monat'];
-			$_w_jahr                = $_POST['_w_jahr'];
-			$_zeitliste                = $_POST['_zeitliste'];
-			$_w_sekunde                = 0;
+			$_timestamp		= $_GET['timestamp'];
+			$_w_tag			= $_POST['_w_tag'];
+			$_w_monat		= $_POST['_w_monat'];
+			$_w_jahr			= $_POST['_w_jahr'];
+			$_zeitliste		= $_POST['_zeitliste'];
+			$_w_sekunde		= 0;
 			$_zeitliste = trim($_zeitliste);
 			$_zeitliste = str_replace(" ", "", $_zeitliste);
 			$_zeitliste = str_replace(" ", "", $_zeitliste);
 			$_zeitliste = str_replace(" ", "", $_zeitliste);
+			$_zeitliste = str_replace(":", ".", $_zeitliste);
+			$_zeitliste = str_replace(",", ".", $_zeitliste);
 			$_zeitliste = explode("-",$_zeitliste);
 			$_temptext = "";
 			foreach($_zeitliste as $_zeiten){
