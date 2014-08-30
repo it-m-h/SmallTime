@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.873
+* Version 0.88
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -23,7 +23,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 //header("Content-Type: text/html; charset=iso-8859-1"); 
-header("Content-Type: text/html; charset=utf-8"); 
+//header("Content-Type: text/html; charset=utf-8"); 
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
 // Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
@@ -270,8 +270,17 @@ switch($_action){
 		}
 		if($_POST['plugin']=="zeiterfassung") header("Location: admin.php");
 		$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : ".$_SESSION['plugin'] . " wird geladen.","td_background_top");
-		$_template->_modulpfad = "plugins/";
-		include("plugins/".$_SESSION['plugin']."/index.php");
+		if(isset($_GET['excel'])){	
+			$_datei = $_GET['excel'];
+			$_datei = $_datei . "-" . $_time->_jahr;
+			$_datei = $_datei . "-" . $_time->_monat;
+			$_datei = $_datei . ".xls";
+			$_call = $_GET['excel'];
+			$_template->_user04 = "sites_admin/export_xls_".$_call.".php";
+		}else{
+			$_template->_modulpfad = "plugins/";
+			include("plugins/".$_SESSION['plugin']."/index.php");	
+		}
 		break;
 	case "idtime-generate":
 		$_infotext = getinfotext("<b>QR-Codes/URLs/IDs zum direkten Stempeln via Barcode-Scanner(-App):</b>"  ,"td_background_top");
@@ -522,7 +531,13 @@ switch($_action){
 		$_template->_user03 = "sites_admin/admin03.php";
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
-		//$_template->_user03 = "user03_stat.php";
+		if(isset($_GET['excel'])){	
+			$_datei = str_ireplace(" ", "-", trim($_user->_name));
+			$_datei = $_datei . "-" . $_time->_jahr;
+			$_datei = $_datei . "-" . $_time->_monat;
+			$_datei = $_datei . ".xls";
+			$_template->_user04 = "sites_admin/export_xls_monat.php";
+		}
 		break;
 	case "show_pdf":
 		$_infotext = getinfotext( "PDF anzeigen" ,"td_background_top");
@@ -831,7 +846,12 @@ include ('./include/_debug_data.php');
 //echo "--".$_GET[timestamp] ."--".$_GET[modal] ."---------------------<hr>";
 if(isset($_GET[modal])){
 	// bei Modal nur DIV04 anzeigen
-	include($_template->get_user04()); 
+	include($_template->get_user04());
+}elseif(isset($_GET['excel'])){
+	if(!$_datei)  $_datei = 'excel.xls';
+	header("Content-type: application/vnd-ms-excel");
+	header("Content-Disposition: attachment; filename=". $_datei);
+	include($_template->get_user04());
 }else{
 	include ($_template->get_template());
 }

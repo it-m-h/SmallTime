@@ -12,6 +12,7 @@
                 <meta name="description" content="<?php echo $_settings->_array[8][1] ?>">
                 <meta name="keywords" content="<?php echo $_settings->_array[9][1] ?>">
                 <meta name="copyright" content="<?php echo $_settings->_array[10][1] ?>">
+                <meta http-equiv="content-type" content="text/html; charset=utf-8">
                 <link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
                 <script type="text/javascript" src="js/jquery.js" ></script>
                 <script type="text/javascript" src="js/jquery-ui.js"></script>

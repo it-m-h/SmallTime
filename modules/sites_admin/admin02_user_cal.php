@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.87
+* Version 0.88
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -26,8 +26,10 @@ if (strstr($_template->_bootstrap,'true')){
                 </a>
         </span>
         <span class="btn">
-                <a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0&calc=1'><img src='images/icons/printer.png' border=0></a>
+                <a title='Monats&uuml;bersicht drucken (PDF)' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0&calc=1'><img src='images/icons/printer.png' border=0></a>
                 | 
+                <a title='Excel - Export' href='?action=show_time&timestamp=<?php echo $_time->_timestamp ?>&excel=true'><img src='images/icons/page_excel.png' border=0></a>
+                 | 
                 <a title='Monat <?php echo $_time->_monatname ?>' href='?action=show_time&timestamp=<?php echo $_time->_timestamp ?>'>
                         <img src='images/icons/calendar_edit.png' border=0>
                         <u><?php echo $_time->_monatname ?> <?php echo $_time->_jahr ?></u>
@@ -50,8 +52,8 @@ if (strstr($_template->_bootstrap,'true')){
 			<a title='Monat <?php echo $_last->_monatname ?>' href='?action=show_time&timestamp=<?php echo $_last->_timestamp ?>'>
 				<?php echo $_last->_monatname ?> <?php echo $_last->_jahr ?>	
 			</a>&nbsp;&nbsp;
-		</td><td valign='middle' class='td_background_info' align='right'>
-			<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0'><img src='images/icons/printer.png' border=0></a>&nbsp;&nbsp;
+		</td><td valign='middle' class='td_background_info' align='right'>	
+			<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0'><img src='images/icons/printer.png' border=0></a>&nbsp;&nbsp;		
 			<img src='images/icons/calendar_edit.png' border=0>
 		</td><td valign='middle' class='td_background_info' align='left'>
 			<a title='Monat <?php echo $_time->_monatname ?>' href='?action=show_time&timestamp=<?php echo $_time->_timestamp ?>'>

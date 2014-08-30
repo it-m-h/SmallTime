@@ -82,7 +82,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		// Anzeige von Zeit fehlt, wenn ungerade Stempelzeiten
 		//-------------------------------------------------------------------------
 		if($_monat->_MonatsArray[$z][11]%2==1) {
-			$tmp = $tmp ."<a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit zuf&uuml;gen'>";	
+			$tmp = $tmp ."<a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'>";	
 			$tmp = $tmp . " - <font class=timefehlt>Zeit fehlt!</font>";
 			$tmp = $tmp . "</a>";
 		}
