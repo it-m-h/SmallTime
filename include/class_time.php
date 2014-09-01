@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.873
+* Version 0.89
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -109,7 +109,7 @@ class time{
 		return $_arr;	
 	}
 	function mktime($_w_stunde,$_w_minute,$_w_sekunde,$_w_monat,$_w_tag,$_w_jahr){
-		if ($_w_stunde == '24' and $_w_minute == '00'){
+		if($_w_stunde == '24' and $_w_minute == '00'){
 			$_w_stunde = '23';
 			$_w_minute = '59';
 			$_w_sekunde = '59';
@@ -156,7 +156,7 @@ class time{
 		//$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $_w_jahr . "." . $_w_monat;
 		// runden der Quicktime stempelzeit auf Minuten die in den Settings eingestellt ist
-		if ($this->_runden){
+		if($this->_runden){
 			//echo "Minuten : " . $_w_minute . "<br>"; 							// Beispiel : 58
 			$_neu = round($_w_minute / $this->_runden,0)*$this->_runden; 		// Beispiel : 60
 			$_von = $_neu - ($this->_runden/2); 								// Beispiel : 55
@@ -246,7 +246,7 @@ class time{
 		$jahr = date("Y", $_timestamp);
 		$monat = date("n", $_timestamp);
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;
-		echo "schreibe in :". $_file. " / Wert: ". $_timestamp . "<br>"; 
+		//echo "schreibe in :". $_file. " / Wert: ". $_timestamp . "<br>"; 
 		$fp = fopen($_file,"a+");
 		fputs($fp, $_timestamp);
 		fputs($fp, $_zeilenvorschub);
@@ -254,19 +254,71 @@ class time{
 	}
 	function checktime($_stunde,$_minute,$_monat,$_tag,$_jahr){
 		$_sekunde=0;
-		echo "<hr>";
-		echo "ALT : ".$_tag . "/" . $_monat . "/" . $_jahr . " - " . $_stunde . ":" . $_minute. ":". $_sekunde. "<br>";
-		if ($_stunde == '24' && $_minute == '00'){
+		//echo "<hr>";
+		//echo "ALT : ".$_tag . "/" . $_monat . "/" . $_jahr . " - " . $_stunde . ":" . $_minute. ":". $_sekunde. "<br>";
+		if($_stunde == '24' && $_minute == '00'){
 			$_stunde = 23;
 			$_minute = 59;
 			$_sekunde = 59;
 			$_eintragen = mktime($_stunde, $_minute, $_sekunde, $_monat, $_tag, $_jahr);
-			echo "NEU : ".$_tag . "/" . $_monat . "/" . $_jahr . " - " . $_stunde . ":" . $_minute. ":". $_sekunde. "<br>";
+			//echo "NEU : ".$_tag . "/" . $_monat . "/" . $_jahr . " - " . $_stunde . ":" . $_minute. ":". $_sekunde. "<br>";
 			//echo "Timestamp alt". $_timestamp . " / Timestamp neu : ". $_timestampn . "<hr>";
 		}
-		echo "<hr>";
+		//echo "<hr>";
 		//echo "<hr>Timestamp alt". $_timestamp . " / Timestamp neu : ". $_timestamp . "<hr>";
 		return $_eintragen;
+	}
+	function lasttime($_timestamp, $_ordnerpfad){
+		$_zeilenvorschub = "\r\n";
+		$jahr = date("Y", $_timestamp);
+		$monat = date("n", $_timestamp);
+		$_timeTable = NULL;
+		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;	
+		// diesen Monat überprüfen
+		if(file_exists($_file)){
+			$_timeTable = file($_file);
+			//falls kein Eintrag. letzten Monat überprüfen
+			//echo "File existiert, wird überprüft<br>";
+			$datum = $this->timecount($_timeTable);
+			//echo $_datum . " - " . $_lastday . "<hr>";
+		}
+		// letzten Monat überprüfen falls in diesem keine Einträge drin sind
+		if(count($_timeTable)<1){
+			//echo "File lastmonth existiert, wird überprüft<br>";
+			$monat = $monat-1;
+			$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;
+			if(file_exists($_file)){
+				$_timeTable = file($_file);
+				$datum = $this->timecount($_timeTable);
+			}
+		}
+		if($datum){
+			return mktime(0, 0, 0, $monat, $datum,  date("Y", $_timestamp));
+		}else{
+			return NULL;
+		}		
+	}
+	private function timecount($_timeTable){
+		$_lastday = NULL;
+		rsort($_timeTable);
+		foreach($_timeTable as $_tmp){
+			//echo date("Y", $_tmp).".".date("n", $_tmp).".".date("j", $_tmp)."<br>";
+			if(!$_lastday){
+				$_lastday = date("j", $_tmp);
+				$_count++;
+			}elseif($_lastday == date("j", $_tmp)){ 
+				$_count++;
+			}
+				
+		}
+		if($_count % 2){
+			//wenn eine Zeit fehlt den Tag zurückgeben
+			return $_lastday;
+		}else{
+			//falls keien Zeit fehlt
+			return NULL;
+		}
+		
 	}
 }
 ?>

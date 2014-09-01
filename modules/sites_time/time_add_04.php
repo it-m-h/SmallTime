@@ -14,9 +14,10 @@ $(function() {
         $('#datetimepicker1').datetimepicker({
             language: 'de-DE',
             pickSeconds: false,
+            pickDate: false,
         });
         var now = new Date();
-        var seldate = new Date(<?php echo$_GET[timestamp];?>*1000);
+        var seldate = new Date(<?php echo $_GET[timestamp];?>*1000);
         seldate.setHours(now.getHours());
         seldate.setMinutes(now.getMinutes());
         $('#datetimepicker1').data('datetimepicker').setLocalDate(seldate);
@@ -29,7 +30,7 @@ $(function() {
         });
 });
 </script>
-<?php } ?>
+<?php }  ?>
 <Form name="insert" action="?action=insert_time&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" target="_self" method="post">
         <table width="100%" border="0" cellpadding="5" cellspacing="2">
                 <tr style="display: none">
@@ -40,7 +41,14 @@ $(function() {
                                 <input type="text" name="_w_jahr" value="<?php echo $_time->_jahr; ?>" size="4">
                         </td>
                 </tr>
-<?php if (strstr($_template->_jquery,'true')){ ?>
+<?php if (strstr($_template->_jquery,'true')){ ?>            
+<?php
+	//Falls eine Zeit fehlt - Auswahlmöglichkeiten anzeigen
+	$_fehlzeit =  $_time->lasttime($_time->_timestamp, $_user->_ordnerpfad);
+	if($_fehlzeit  && $_fehlzeit <$_time->_timestamp && strstr($_template->_jquery,'true')){	
+		include("time_last_add.php");
+	}
+?>   
                 <tr style="display: none">
                         <td class=td_background_wochenende align=left>Zeit : (Stunde:Minute)</td>
                         <td class=td_background_tag align=left>
@@ -67,6 +75,9 @@ $(function() {
                             	<input type="submit" name="absenden" value="OK" >
                         </td>
                 </tr>
+                        
+      
+        
 <?php }else{ ?>
                 <tr>
                         <td class=td_background_wochenende align=left>Zeit : (Stunde:Minute)</td>
@@ -105,4 +116,8 @@ $(function() {
                 </tr>                
 <?php } ?>	
         </table>
+        
+
+        
+        
 </Form>

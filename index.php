@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.88
+* Version 0.89
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -455,7 +455,21 @@ switch($_action){
 		break;
 	case "insert_time":
 		if(in_array(2,$show)) txt("Zeit speichern");
-		if($_POST['absenden'] == "OK" and $_write){
+		if($_POST['absenden'] == "OK" and $_write){			
+			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
+			if($_POST['oldtime']==1){
+				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+				$_time->set_timestamp($tmp2);
+				$_time->save_time($tmp2, $_user->_ordnerpfad);
+			} elseif($_POST['oldtime']==2){
+				$tmp3 = $_time->mktime(23,59,59,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+				$_time->set_timestamp($tmp3);
+				$_time->save_time($tmp3, $_user->_ordnerpfad);
+				
+				$tmp2 = $_time->mktime(0,0,0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+				$_time->set_timestamp($tmp2);
+				$_time->save_time($tmp2, $_user->_ordnerpfad);		
+			}		
 			$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
 			$_time->set_timestamp($tmp);
 			$_time->save_time($tmp, $_user->_ordnerpfad);
@@ -675,6 +689,7 @@ $_ver = file("./include/Settings/smalltime.txt");
 $_copyright .="";
 foreach($_arr as $_zeile){
 	$_tmp = str_replace("##ver##",$_ver[0], $_zeile);
+	$_tmp = str_replace("##phpver##", phpversion(), $_tmp);
 	$_copyright .= $_tmp;
 }
 $_copyright .= "</div>";

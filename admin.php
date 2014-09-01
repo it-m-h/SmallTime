@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.88
+* Version 0.89
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -27,6 +27,14 @@ date_default_timezone_set("Europe/Paris");
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
 // Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
+
+// ----------------------------------------------------------------------------
+// PHP - Version Check - Meldung, falls PHP - version kleiner als 5.4:
+// ----------------------------------------------------------------------------
+if (version_compare(phpversion(), '5.4', '<')) {
+    	echo " PHP Version : ".phpversion()." wird nicht unterst&uuml;tzt. (Version 5.4 oder h&ouml;her wird ben&ouml;tigt)";
+}
+
 $_start_time = explode(" ",microtime());
 $_start_time = $_start_time[1] + $_start_time[0];
 // ----------------------------------------------------------------------------
@@ -500,9 +508,23 @@ switch($_action){
 	case "insert_time":
 		if(in_array(2,$show)) txt("Zeit speichern");
 		if($_POST['absenden'] == "OK" and $_write){
+			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
+			if($_POST['oldtime']==1){
+				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+				$_time->set_timestamp($tmp2);
+				$_time->save_time($tmp2, $_user->_ordnerpfad);
+			} elseif($_POST['oldtime']==2){
+				$tmp3 = $_time->mktime(23,59,59,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+				$_time->set_timestamp($tmp3);
+				$_time->save_time($tmp3, $_user->_ordnerpfad);
+				
+				$tmp2 = $_time->mktime(0,0,0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+				$_time->set_timestamp($tmp2);
+				$_time->save_time($tmp2, $_user->_ordnerpfad);		
+			}
 			$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
 			$_time->set_timestamp($tmp);
-			$_time->save_time($tmp, $_user->_ordnerpfad);
+			$_time->save_time($tmp, $_user->_ordnerpfad);	
 		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
@@ -831,6 +853,7 @@ $_ver = file("./include/Settings/smalltime.txt");
 $_copyright .="";
 foreach($_arr as $_zeile){
 	$_tmp = str_replace("##ver##",$_ver[0], $_zeile);
+	$_tmp = str_replace("##phpver##", phpversion(), $_tmp);
 	$_copyright .= $_tmp;
 }
 $_copyright .= "</div>";
@@ -839,11 +862,13 @@ $_copyright .= "</div>";
 // Anzeige für Entwickler
 // ----------------------------------------------------------------------------
 include ('./include/_debug_data.php');
-
+//header("Location: index.php");
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
 //echo "--".$_GET[timestamp] ."--".$_GET[modal] ."---------------------<hr>";
+
+
 if(isset($_GET[modal])){
 	// bei Modal nur DIV04 anzeigen
 	include($_template->get_user04());
