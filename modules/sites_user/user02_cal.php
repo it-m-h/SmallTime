@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.84
+* Version 0.891
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -15,6 +15,7 @@ if(strstr($_template->_bootstrap,'true')){
 	foreach($monate as $_month){
 		$_timestamp = mktime(0, 0, 0, $i, 1, $_time->_jahr);
 		$month = htmlspecialchars($month);
+		$month = iconv("UTF-8","ISO-8859-1",$month);
 		if($i==$_time->_monat){			
 			echo '		<li class="active"><a id="MonatAktiv" title="Monat '.$_month.'" href="?action=show_time&timestamp='.$_timestamp.'">'.$_month.'</a></li>';
 		}else{

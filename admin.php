@@ -2,13 +2,34 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.89
+* Version 0.891
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //Session starten
-session_start();
+//session_start();
+if ( !my_session_start() ) {
+    session_id( uniqid() );
+    session_start();
+    session_regenerate_id();
+}
+function my_session_start()
+{
+      $sn = session_name();
+      if (isset($_COOKIE[$sn])) {
+          $sessid = $_COOKIE[$sn];
+      } else if (isset($_GET[$sn])) {
+          $sessid = $_GET[$sn];
+      } else {
+          return session_start();
+      }
+
+     if (!preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid)) {
+          return false;
+      }
+      return session_start();
+}
 // Caching verhindern
 //header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 //header("Pragma: no-cache");
@@ -27,7 +48,6 @@ date_default_timezone_set("Europe/Paris");
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
 // Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
-
 // ----------------------------------------------------------------------------
 // PHP - Version Check - Meldung, falls PHP - version kleiner als 5.4:
 // ----------------------------------------------------------------------------
@@ -122,6 +142,25 @@ include_once ('./include/class_settings.php');
 require_once	('./include/class_table.php');
 include ("./include/time_funktionen.php");
 //$controller = new time_controller();
+
+/*
+// ----------------------------------------------------------------------------
+// Rapport - INFOS
+// ----------------------------------------------------------------------------
+$file = "./include/Settings/rapport.xml";
+$rapport= simplexml_load_file($file);
+if($rapport->login==true){
+	echo $rapport->login. "jaja<hr>";
+}else{
+	echo $rapport->login."nönö<hr>";
+}
+$_log = new time_filehandle("./debug/login/","adminlogin.txt",";");
+$_log->insert_line("Login admin.php : ");
+echo $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+*/
+
+
+
 // ----------------------------------------------------------------------------
 // MGET und POST Daten anzeigen
 // ----------------------------------------------------------------------------
@@ -187,6 +226,10 @@ $_logcheck->_admins = true; //Nur Admins dürfen sich einloggen (ID = 0 oder Pos.
 $_logcheck->checkadmin( $_users->_array);
 //echo "<hr>";
 // ----------------------------------------------------------------------------
+// falls eine Session exisitert und kein Action
+if($_SESSION['admin'] and !$_GET['action']){
+	$_logcheck->rapport($_SESSION['admin'] ,"korrekt", "Session");
+}	
 // keine Session vorhanden
 if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
 	if(in_array(2,$show)) txt("keine Session, Login durchf&uuml;hren");
@@ -223,6 +266,8 @@ if($_SESSION['admin'] and !$_GET['action']){
 		txt("User: ". $_SESSION['admin']);
 	}
 	$_action = "show_admin";
+	//rapport($U,$P,$typ)
+	
 	//$_logcheck->login($_POST, $_users->_array);
 }elseif($_GET['action'] && $_SESSION['admin']){
 	$_action = $_GET['action'];

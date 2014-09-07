@@ -2,13 +2,34 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.89
+* Version 0.891
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //Session starten
-session_start();
+if ( !my_session_start() ) {
+    session_id( uniqid() );
+    session_start();
+    session_regenerate_id();
+}
+function my_session_start()
+{
+      $sn = session_name();
+      if (isset($_COOKIE[$sn])) {
+          $sessid = $_COOKIE[$sn];
+      } else if (isset($_GET[$sn])) {
+          $sessid = $_GET[$sn];
+      } else {
+          return session_start();
+      }
+
+     if (!preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid)) {
+          return false;
+      }
+      return session_start();
+}
+//session_start();
 // Caching verhindern
 //header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 //header("Pragma: no-cache");
@@ -166,8 +187,12 @@ if(in_array(0,$show)){
 // Controller für Login
 // ----------------------------------------------------------------------------
 $_logcheck = new time_login();
+// falls eine Session exisitert und kein Action
+if($_SESSION['admin'] and !$_GET['action']){
+	$_logcheck->rapport($_SESSION['admin'] ,"korrekt", "Session");
+}
 // keine Session vorhanden
-if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
+if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	if(in_array(2,$show)) txt("keine Session, Login durchf&uuml;hren");
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";

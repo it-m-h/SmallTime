@@ -23,7 +23,7 @@ class time_template{
 	public  $_modulpfad     	= "modules/";
 	public  $_modal		= false;
 	public  $_jquery		= false;
-	public  $_bootstrap		= false;
+	public  $_bootstrap	= false;
 	public  $_portal_admin	= false;
 	public  $_portal_user	= false;
 

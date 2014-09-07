@@ -12,7 +12,6 @@
                 <meta name="description" content="<?php echo $_settings->_array[8][1] ?>">
                 <meta name="keywords" content="<?php echo $_settings->_array[9][1] ?>">
                 <meta name="copyright" content="<?php echo $_settings->_array[10][1] ?>">
-                <meta http-equiv="content-type" content="text/html; charset=utf-8">
                 <link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
                 <script type="text/javascript" src="js/jquery.js" ></script>
                 <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -21,6 +20,7 @@
                 <script type="text/javascript" src="js/qrcode.js"></script>
                 <script type="text/javascript" src="js/smalltime.js" ></script>
                 <script type="text/javascript" src="js/bootstrap.js" ></script>
+                <script type="text/javascript" src="jquery.tablesorter.js" ></script>
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">
