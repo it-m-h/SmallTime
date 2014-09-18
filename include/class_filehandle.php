@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.891
+* Version 0.892
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -18,14 +18,11 @@ class time_filehandle{
 		$this->mkfile();
 		if(file_exists($_filepfad.$_filename)){
 			$this->_array = file($_filepfad.$_filename);
-			//echo "jaja";
-			//print_r($this->_filearray);
 			if(!$this->_array ){
 				$this->_array[] = "keine Daten vorhanden!";
 			}
 			$i=0;
 			foreach($this->_array as $zeile){
-				//echo $zeile;
 				if(strpos($zeile, $_trennzeichen)){
 					$this->_array[$i] = explode($_trennzeichen, $this->_array[$i]);
 					$z=0;
@@ -74,8 +71,6 @@ class time_filehandle{
 	function insert_line($text){
 		$_zeilenvorschub = "\r\n";
 		$_file = $this->_filepfad.$this->_filename;
-		$_tmparr = 
-		
 		$fp = fopen($_file,"a+");
 		fputs($fp, $text);
 		fputs($fp, $_zeilenvorschub);
@@ -104,6 +99,12 @@ class time_filehandle{
 	
 	function insert_user($text){
 		$_zeilenvorschub = "\r\n";
+		$_file = $this->_filepfad.$this->_filename;	
+		$fp = fopen($_file,"a+");
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, $text);
+		fclose($fp);	
+/*		$_zeilenvorschub = "\r\n";
 		$_file = $this->_filepfad.$this->_filename;		
 		$tmp = file($_file);
 		for($x=0; $x< count($tmp); $x++){ $tmp = str_replace($_zeilenvorschub, "", $tmp); }
@@ -111,7 +112,7 @@ class time_filehandle{
 		$neu =implode($_zeilenvorschub,$tmp);	
 		$open = fopen($_file,"w+");
 		fwrite ($open, $neu);
-		fclose($open);
+		fclose($open);*/
 	}
 
 	function add_user($_a){
