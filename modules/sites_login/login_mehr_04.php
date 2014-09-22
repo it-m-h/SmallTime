@@ -7,38 +7,126 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-$_ShowUsername 			= TRUE;		// Anzeige des Usernamens
-$_ShowUserOnline 			= TRUE;		// Anzeige ob Anwesend oder Abwesend (grün oder rot)
-$_ShowUserLastTime 		= FALSE;	// letzte Stempelzeit von heute anzeigen
-$_ShowUserAllTime 		= FALSE;	// alle Stempelzeiten von heute anzeigen
-$_ShowUserPic 			= FALSE;	// Bid des users anzeigen
+$_ShowUsername 		= FALSE;		// Anzeige des Usernamens
+$_ShowUserOnline 		= FALSE;		// Anzeige ob Anwesend oder Abwesend (grün oder rot)
+$_ShowUserLastTime 		= FALSE;		// letzte Stempelzeit von heute anzeigen
+$_ShowUserAllTime 		= FALSE;		// alle Stempelzeiten von heute anzeigen
+$_ShowUserPic 			= FALSE;		// Bid des users anzeigen
+if(file_exists ("./include/Settings/multilogin.xml")){
+	$multilogin= simplexml_load_file("./include/Settings/multilogin.xml");
+}else{
+	create_mulitsettings();
+	$multilogin= simplexml_load_file("./include/Settings/multilogin.xml");
+}
+setGuest();
 // Falls Eingeloogt, dann User - Einstellungen laden 
-if(isset($_SESSION['admin'])){ setUser(); }
+if(isset($_SESSION['admin'])){ setUser();}
 // admin-Pannel? (admin.php), dann Admin - Einstellungen laden
-if($_logcheck->_admins){ setAdmin(); }
-function setUser(){
+if($_logcheck->_admins){ setAdmin();}
+
+function setGuest(){
+	global $multilogin;
 	global $_ShowUsername;
 	global $_ShowUserOnline;
 	global $_ShowUserLastTime;
 	global $_ShowUserAllTime;
 	global $_ShowUserPic;	
-	$_ShowUsername 		= TRUE;
-	$_ShowUserOnline 		= TRUE;
-	$_ShowUserLastTime 	= TRUE;
-	$_ShowUserAllTime 	= FALSE;
-	$_ShowUserPic 		= FALSE;
+
+	if($multilogin->guest->ShowUsername=="true"){
+		$_ShowUsername = TRUE; 
+	}else{
+		$_ShowUsername = FALSE; 
+	}
+	if($multilogin->guest->ShowUserOnline=="true"){
+		$_ShowUserOnline = TRUE; 
+	}else{
+		$_ShowUserOnline = FALSE; 
+	}
+	if($multilogin->guest->ShowUserLastTime=="true"){
+		$_ShowUserLastTime = TRUE; 
+	}else{
+		$_ShowUserLastTime = FALSE; 
+	}
+	if($multilogin->guest->ShowUserAllTime=="true"){
+		$_ShowUserAllTime = TRUE; 
+	}else{
+		$_ShowUserAllTime = FALSE; 
+	}
+	if($multilogin->guest->ShowUserPic=="true"){
+		$_ShowUserPic = TRUE; 
+	}else{
+		$_ShowUserPic = FALSE; 
+	}
+}
+
+function setUser(){
+	global $multilogin;
+	global $_ShowUsername;
+	global $_ShowUserOnline;
+	global $_ShowUserLastTime;
+	global $_ShowUserAllTime;
+	global $_ShowUserPic;	
+
+	if($multilogin->user->ShowUsername=="true"){
+		$_ShowUsername = TRUE; 
+	}else{
+		$_ShowUsername = FALSE; 
+	}
+	if($multilogin->user->ShowUserOnline=="true"){
+		$_ShowUserOnline = TRUE; 
+	}else{
+		$_ShowUserOnline = FALSE; 
+	}
+	if($multilogin->user->ShowUserLastTime=="true"){
+		$_ShowUserLastTime = TRUE; 
+	}else{
+		$_ShowUserLastTime = FALSE; 
+	}
+	if($multilogin->user->ShowUserAllTime=="true"){
+		$_ShowUserAllTime = TRUE; 
+	}else{
+		$_ShowUserAllTime = FALSE; 
+	}
+	if($multilogin->user->ShowUserPic=="true"){
+		$_ShowUserPic = TRUE; 
+	}else{
+		$_ShowUserPic = FALSE; 
+	}
 }
 function setAdmin(){
+	global $multilogin;
 	global $_ShowUsername;
 	global $_ShowUserOnline;
 	global $_ShowUserLastTime;
 	global $_ShowUserAllTime;
 	global $_ShowUserPic;	
-	$_ShowUsername 		= TRUE;
-	$_ShowUserOnline 		= TRUE;
-	$_ShowUserLastTime 	= TRUE;
-	$_ShowUserAllTime 	= TRUE;
-	$_ShowUserPic 		= TRUE;
+
+	if($multilogin->admin->ShowUsername=="true"){
+		$_ShowUsername = TRUE; 
+	}else{
+		$_ShowUsername = FALSE; 
+	}
+	if($multilogin->admin->ShowUserOnline=="true"){
+		$_ShowUserOnline = TRUE; 
+	}else{
+		$_ShowUserOnline = FALSE; 
+	}
+	if($multilogin->admin->ShowUserLastTime=="true"){
+		$_ShowUserLastTime = TRUE; 
+	}else{
+		$_ShowUserLastTime = FALSE; 
+	}
+	if($multilogin->admin->ShowUserAllTime=="true"){
+		$_ShowUserAllTime = TRUE; 
+	}else{
+		$_ShowUserAllTime = FALSE; 
+	}
+	if($multilogin->admin->ShowUserPic=="true"){
+		$_ShowUserPic = TRUE; 
+	}else{
+		$_ShowUserPic = FALSE; 
+	}
+
 }
 
 //Settings - Einstellungen : Anwesenheitsliste anzeigen

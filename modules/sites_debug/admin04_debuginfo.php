@@ -50,9 +50,9 @@ function show($array){
 ?>
 <div id="kn">
 	<ul id="myTab" class="nav nav-tabs">
-		<li  class="active"  ><a data-toggle="tab" href="#s1">Userlogin</a></li>
-		<li><a data-toggle="tab" href="#s2">Adminlogin</a></li>
-		<li ><a data-toggle="tab" href="#s3">Bugs</a></li>
+		<li  class="active"  ><a data-toggle="tab" href="#s1"><img src="./images/icons/bug_go.png" alt="" /> Userlogin</a></li>
+		<li><a data-toggle="tab" href="#s2"><img src="./images/icons/bug_go.png" alt="" /> Adminlogin</a></li>
+		<li ><a data-toggle="tab" href="#s3"><img src="./images/icons/bug_go.png" alt="" /> Bugs</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div id="s1" class="tab-pane fade active in">
