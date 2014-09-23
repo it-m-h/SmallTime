@@ -118,18 +118,17 @@ class time{
 			$_w_minute = '00';
 			$_w_sekunde = '01';	
 		}
-		return mktime($_w_stunde,$_w_minute,$_w_sekunde,$_w_monat,$_w_tag,$_w_jahr);;
+		return mktime($_w_stunde,$_w_minute,$_w_sekunde,$_w_monat,$_w_tag,$_w_jahr);
 	}
 	
 	function save_time_list($_ordnerpfad){
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
 		$fp = fopen($_file,"a+");
-		fputs($fp, mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr));
+		fputs($fp, mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr)); //FIXME: undefined variables
 		fputs($fp, $_zeilenvorschub);
 		fclose($fp);
-		$_timestamp = mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr);
-	}	
+	}
 	function save_time($_timestamp, $_ordnerpfad){	
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
@@ -301,6 +300,7 @@ class time{
 	private function timecount($_timeTable){
 		$_lastday = NULL;
 		rsort($_timeTable);
+		$_count = 0;
 		foreach($_timeTable as $_tmp){
 			//echo date("Y", $_tmp).".".date("n", $_tmp).".".date("j", $_tmp)."<br>";
 			if(!$_lastday){
@@ -309,13 +309,12 @@ class time{
 			}elseif($_lastday == date("j", $_tmp)){ 
 				$_count++;
 			}
-				
 		}
 		if($_count % 2){
 			//wenn eine Zeit fehlt den Tag zurückgeben
 			return $_lastday;
 		}else{
-			//falls keien Zeit fehlt
+			//falls keine Zeit fehlt
 			return NULL;
 		}
 		

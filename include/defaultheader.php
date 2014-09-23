@@ -1,6 +1,4 @@
-                <title>
-                        <?php echo $_settings->_array[0][1] ?>
-                </title>
+                <title><?php echo $_settings->_array[0][1] ?></title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta name="author" content="<?php echo $_settings->_array[1][1] ?>">
                 <meta name="editor" content="<?php echo $_settings->_array[2][1] ?>">
@@ -13,14 +11,14 @@
                 <meta name="keywords" content="<?php echo $_settings->_array[9][1] ?>">
                 <meta name="copyright" content="<?php echo $_settings->_array[10][1] ?>">
                 <link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
-                <script type="text/javascript" src="js/jquery.js" ></script>
+                <script type="text/javascript" src="js/jquery.js"></script>
                 <script type="text/javascript" src="js/jquery-ui.js"></script>
                 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
                 <script type="text/javascript" src="js/jquery.qrcode.js"></script>
                 <script type="text/javascript" src="js/qrcode.js"></script>
-                <script type="text/javascript" src="js/smalltime.js" ></script>
-                <script type="text/javascript" src="js/bootstrap.js" ></script>
-                <script type="text/javascript" src="jquery.tablesorter.js" ></script>
+                <script type="text/javascript" src="js/smalltime.js"></script>
+                <script type="text/javascript" src="js/bootstrap.js"></script>
+                <script type="text/javascript" src="js/jquery.tablesorter.js"></script>
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">

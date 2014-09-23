@@ -56,7 +56,7 @@ class inputfeld{
 	}
 	
 	function get(){
-		return  array($beschreibung, '<input type="'. $this->type . '" name="' . $this->name . '" value="' . $this->value . '"" size="' . $this->size . '">');
+		return  array($this->beschreibung, '<input type="'. $this->type . '" name="' . $this->name . '" value="' . $this->value . '"" size="' . $this->size . '">');
 	}
 }
 
@@ -76,7 +76,7 @@ class checkbox{
 	}
 	
 	function get(){
-		return  array($beschreibung, '<input type="'. $this->type . '" name="' . $this->name . '" value="' . $this->value . '"" size="' . $this->size . '">');
+		return  array($this->beschreibung, '<input type="'. $this->type . '" name="' . $this->name . '" value="' . $this->value . '"" size="' . $this->size . '">');
 	}
 }
 
@@ -97,7 +97,7 @@ class Formular_old{
 			$editor = new CKEditor();
 			$editor->basePath = 'ckeditor/';
 			$editor->returnOutput = true;
-			$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einfügen des ckeditors
+			$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einfï¿½gen des ckeditors
 		} else {
 			$this->inputs[] = array($beschreibung, "<input type=\"$type\" name=\"$name\" value=\"$value\" size=$size />");
 		}

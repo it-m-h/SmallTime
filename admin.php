@@ -47,7 +47,7 @@ date_default_timezone_set("Europe/Paris");
 //header("Content-Type: text/html; charset=utf-8"); 
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
-// Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
+// Microtime fï¿½r die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
 // ----------------------------------------------------------------------------
 // PHP - Version Check - Meldung, falls PHP - version kleiner als 5.4:
 // ----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ $rapport= simplexml_load_file($file);
 if($rapport->login==true){
 	echo $rapport->login. "jaja<hr>";
 }else{
-	echo $rapport->login."nönö<hr>";
+	echo $rapport->login."nï¿½nï¿½<hr>";
 }
 $_log = new time_filehandle("./debug/login/","adminlogin.txt",";");
 $_log->insert_line("Login admin.php : ");
@@ -171,7 +171,7 @@ if(in_array(11,$show)){
 	$zeig = new time_show($_POST);
 }
 // ----------------------------------------------------------------------------
-// Im Admin - Bereich bis zum gewählten Monat berechnen
+// Im Admin - Bereich bis zum gewï¿½hlten Monat berechnen
 // ----------------------------------------------------------------------------
 if($_GET['calc']){
 	$_SESSION['calc'] = $_GET['calc'];
@@ -214,12 +214,12 @@ if(in_array(0,$show)){
 	echo "\$_COOKIE['lname']".$_COOKIE["lname"]."<br>";
 }
 // ----------------------------------------------------------------------------
-// Controller für Login
+// Controller fï¿½r Login
 // ----------------------------------------------------------------------------
 $_logcheck = new time_login();
-$_logcheck->_admins = true; //Nur Admins dürfen sich einloggen (ID = 0 oder Pos. 3 ein 1 oder in der ersten Gruppe die nicht angezeigt wird in der Gruppenansicht)
+$_logcheck->_admins = true; //Nur Admins dï¿½rfen sich einloggen (ID = 0 oder Pos. 3 ein 1 oder in der ersten Gruppe die nicht angezeigt wird in der Gruppenansicht)
 // ----------------------------------------------------------------------------
-// Sicherheitsüberprüfung, gehört die Session zu einem Admin 
+// Sicherheitsï¿½berprï¿½fung, gehï¿½rt die Session zu einem Admin 
 // (falls bei index.php eingeloggt, existiert eine Session)
 // ----------------------------------------------------------------------------
 //echo "<hr>";
@@ -236,13 +236,13 @@ if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";
 }
-// Login über Cookie mit Datenüberprüfung
+// Login ï¿½ber Cookie mit Datenï¿½berprï¿½fung
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
 	//$_action = "";
 }
-// Loginformular - Datenüberprüfung
+// Loginformular - Datenï¿½berprï¿½fung
 if($_POST['login']){
 	if(in_array(2,$show)) txt("Formular - Login geklickt");
 	$_logcheck->login($_POST, $_users->_array);
@@ -257,7 +257,7 @@ if($_GET['action']=="logout"){
 }
 if(in_array(2,$show)) showClassVar($_logcheck);
 // ----------------------------------------------------------------------------
-// Controller für Action
+// Controller fï¿½r Action
 // ----------------------------------------------------------------------------
 // Session  vorhanden - Daten anzeigen
 if($_SESSION['admin'] and !$_GET['action']){
@@ -553,7 +553,7 @@ switch($_action){
 	case "insert_time":
 		if(in_array(2,$show)) txt("Zeit speichern");
 		if($_POST['absenden'] == "OK" and $_write){
-			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
+			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit ï¿½ber Mitternacht geht
 			if($_POST['oldtime']==1){
 				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
 				$_time->set_timestamp($tmp2);
@@ -628,7 +628,7 @@ switch($_action){
 		$_monat = date("n", time());
 		$_tag = date("j", time());
 		if($_druck){
-			erstelle_pdf_more($_MonatsArray);
+			erstelle_pdf_more($_MonatsArray); // FIXME: undefined function
 		}else{
 			erstelle_neu(0); 
 		}
@@ -722,14 +722,14 @@ switch($_action){
 		$_infotext = getinfotext("Gruppen editieren"  ,"td_background_top");
 		$_group = new time_group(-1);
 		//-----------------------------------------------
-		//löschen einer Gruppe
+		//lï¿½schen einer Gruppe
 		//-----------------------------------------------
 		if($_GET['del']<>""){
 			$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>" ,"td_background_heute");
 			$_group->del_group($_GET['del']);	
 		}
 		//-----------------------------------------------
-		//aktualisieren oder Gruppen hinzufügen
+		//aktualisieren oder Gruppen hinzufï¿½gen
 		//-----------------------------------------------	
 		if($_POST['senden']){
 			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>" ,"td_background_heute");
@@ -813,7 +813,7 @@ switch($_action){
 // Logion - Formular darstellen
 // ----------------------------------------------------------------------------
 function setLoginForm(){
-	global $_template;
+	global $_template, $_settings;
 	if($_settings->_array[19][1]==0){
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/admin_login_einzel_02.php";
@@ -904,7 +904,7 @@ foreach($_arr as $_zeile){
 $_copyright .= "</div>";
 
 // ----------------------------------------------------------------------------
-// Anzeige für Entwickler
+// Anzeige fï¿½r Entwickler
 // ----------------------------------------------------------------------------
 include ('./include/_debug_data.php');
 //header("Location: index.php");
