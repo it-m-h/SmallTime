@@ -47,7 +47,7 @@ date_default_timezone_set("Europe/Paris");
 //header("Content-Type: text/html; charset=utf-8"); 
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
-// Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
+// Microtime fï¿½r die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
 $_start_time = explode(" ",microtime());
 $_start_time = $_start_time[1] + $_start_time[0];
 // ----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ if(in_array(11,$show)){
 	$zeig = new time_show($_POST);
 }
 // ----------------------------------------------------------------------------
-// Im Admin - Bereich bis zum gewählten Monat berechnen (für Druck und Anzeige)
+// Im Admin - Bereich bis zum gewï¿½hlten Monat berechnen (fï¿½r Druck und Anzeige)
 // ----------------------------------------------------------------------------
 if($_GET['calc']){
 	$_SESSION['calc'] = $_GET['calc'];
@@ -184,7 +184,7 @@ if(in_array(0,$show)){
 	echo "\$_COOKIE['lname']".$_COOKIE["lname"]."<br>";
 }
 // ----------------------------------------------------------------------------
-// Controller für Login
+// Controller fï¿½r Login
 // ----------------------------------------------------------------------------
 $_logcheck = new time_login();
 // falls eine Session exisitert und kein Action
@@ -197,13 +197,13 @@ if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	$_Userpfad = $_SESSION['admin']."/";
 	//$_action = "";
 }
-// Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
+// Login ï¿½ber Cookie mit Datenï¿½berprï¿½fung - bei Mehrbenutzerbetrieb sollte nicht ï¿½ber sookie eingeloggt werden
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
 	//$_action = "";
 }
-// Loginformular - Datenüberprüfung
+// Loginformular - Datenï¿½berprï¿½fung
 if($_POST['login']){
 	if(in_array(2,$show)) txt("Formular - Login geklickt");
 	$_logcheck->login($_POST, $_users->_array);
@@ -219,7 +219,7 @@ if($_GET['action']=="logout"){
 
 if(in_array(2,$show)) showClassVar($_logcheck);
 // ----------------------------------------------------------------------------
-// Controller für Action
+// Controller fï¿½r Action
 // ----------------------------------------------------------------------------
 // Session  vorhanden - Daten anzeigen
 if($_SESSION['admin'] and !$_GET['action']){
@@ -234,7 +234,7 @@ if($_SESSION['admin'] and !$_GET['action']){
 	$_grpwahl = $_GET['group']-1;
 	if(array_search(2,$show)) txt("GET_Action gew&auml;hlt : ". $_action);
 }elseif($_GET['group']){
-	if(in_array(2,$show)) txt("GET Group gewählt : ". $_GET['group']);
+	if(in_array(2,$show)) txt("GET Group gewï¿½hlt : ". $_GET['group']);
 	$_grpwahl = $_GET['group']-1;
 	$_action = "login_mehr";
 	if($_GET['group']=="-1"){
@@ -257,7 +257,7 @@ if($_SESSION['admin']){
 if(in_array(2,$show)) txt("SWITCH von \$_action = ". $_action);
 switch($_action){
 	//case "show_year2":
-	//$_infotext = "Jahresübersicht Variante2";
+	//$_infotext = "Jahresï¿½bersicht Variante2";
 	//$_template->_user02 = "sites_year/sites02_year.php";
 	//$_template->_user04 = "sites_year/sites04_year.php";
 	//break;
@@ -373,9 +373,6 @@ switch($_action){
 		$_group = new time_group($_grpwahl);
 		setLoginForm();
 		break;
-	case "anwesend":
-		if(in_array(2,$show)) txt("Anwesenheitsliste");
-		break;
 	case "add_rapport":
 		$_rapport = new time_rapport();
 		$_template->_user02 = "sites_user/user02_cal.php";
@@ -481,7 +478,7 @@ switch($_action){
 	case "insert_time":
 		if(in_array(2,$show)) txt("Zeit speichern");
 		if($_POST['absenden'] == "OK" and $_write){			
-			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
+			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit ï¿½ber Mitternacht geht
 			if($_POST['oldtime']==1){
 				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
 				$_time->set_timestamp($tmp2);
@@ -557,7 +554,7 @@ switch($_action){
 		$_monat 	= date("n", time())-1;
 		$_tag 	= date("j", time());
 		if($_druck){
-			erstelle_pdf_more($_MonatsArray);
+			erstelle_pdf_more($_MonatsArray); // FIXME: undefined function
 		}else{
 			//erstelle_neu();
 			if($_settings->_array[20][1] >= $_tag){
@@ -635,7 +632,7 @@ switch($_action){
 // Logion - Formular darstellen
 // ----------------------------------------------------------------------------
 function setLoginForm(){
-	global $_template;
+	global $_template, $_settings;
 	if($_settings->_array[19][1]==0){
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_einzel_02.php";
@@ -720,7 +717,7 @@ foreach($_arr as $_zeile){
 $_copyright .= "</div>";
   
 // ----------------------------------------------------------------------------
-// Anzeige für Entwickler
+// Anzeige fï¿½r Entwickler
 // ----------------------------------------------------------------------------
 include ('./include/_debug_data.php');
                                                                                            

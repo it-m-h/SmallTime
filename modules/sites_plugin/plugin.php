@@ -23,7 +23,7 @@ $anz=count($pfile);
 	<table width="100%">
 		<tr>
 			<td width="100%" align="left">
-				<select class=pluginselect name="plugin" onchange="document.plugin.submit()">
+				<select class="pluginselect" name="plugin" onchange="document.plugin.submit()">
 				<option value="zeiterfassung" <?php if($_SESSION['plugin'] == "zeiterfassung" ) echo " selected "?>>Zeiterfassung</option>
 					<?php
 					for($i=0;$i<$anz;$i++){
