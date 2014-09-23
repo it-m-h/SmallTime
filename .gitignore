@@ -1,1 +1,23 @@
+#PHP - Storm
 .idea
+
+#Codelobster - IDE
+*.clpprj
+
+# Can also ignore all directories and files in a directory.
+Data/*
+Data/administrator/*
+debug/*
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db

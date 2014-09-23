@@ -2,7 +2,7 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.872
+* Version 0.895
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -105,6 +105,10 @@ class time_user{
 		$_users= file("./Data/users.txt");
 		if($_POST['absenden'] == "OK"){
 			Global $_id;
+			if (count($_users) == ($_id+1)){
+				$_zeilenvorschub = "";
+			}
+			//echo count($_users);
 			//echo $_users[$_id];
 			//$_user = $_users[$_id];
 			//echo $_user;
