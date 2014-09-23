@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.876
+* Version 0.894
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -41,7 +41,7 @@ if($_POST['login']){
 }
 ?>
 <a style="float:left; margin: 2px; padding: 3px; background-color: #bebebe; width: 45%" href="admin.php">
-        <img style="width: 100%%;" src="images/ico/admin.png" alt="" />
+        <img style="width: 100%;" src="images/ico/admin.png" alt="" />
         <br>
         Admin - Login
 </a>

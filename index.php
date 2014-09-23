@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.891
+* Version 0.894
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -29,22 +29,10 @@ function my_session_start()
       }
       return session_start();
 }
-//session_start();
-// Caching verhindern
-//header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-//header("Pragma: no-cache");
-//header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Datum in der Vergangenheit
-//header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-//header("Cache-Control: no-store, no-cache, must-revalidate");
-//header("Cache-Control: post-check=0, pre-check=0", false);
-//header("Pragma: no-cache");
-//error_reporting(0);
 error_reporting(E_ALL ^ E_NOTICE);
 // Zeitzone setzten , damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
-//header("Content-Type: text/html; charset=iso-8859-1"); 
-//header("Content-Type: text/html; charset=utf-8"); 
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
 // Microtime f�r die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
@@ -66,22 +54,6 @@ if(trim($_SESSION['last'])== trim($_now ) and isset($_SESSION['last'])){
 	$_write = false;
 }
 $_SESSION['last'] = $token;
-/*
-$_SESSION['now'] = $_now;
-//echo  $_SESSION['now'];
-//echo "<br>";
-if(!isset($_SESSION['last'])) {
-$_SESSION['last']= $_SESSION['now'];
-
-}
-echo "Formtoken = ". $_SESSION['now'] . "<br>";
-echo "Session = ". $_SESSION['last'] . "<br>";
-
-echo  $_SESSION['last'] . " - " . $_SESSION['now'] ;
-echo "<br>";
-$_SESSION['last'] = $_SESSION['now'];
-
-echo "write = ".$_write."<hr>";*/
 // ----------------------------------------------------------------------------
 // Debugg - Ionformationen
 // ----------------------------------------------------------------------------
@@ -100,15 +72,11 @@ echo "write = ".$_write."<hr>";*/
 // 13 = feiertage anzeigen
 // eingabe : array(1,2,9)
 $show = array();
-
 // ----------------------------------------------------------------------------
-// DEKLARATION DER VARIABLEN
+// Anzeige Bootstrap -  Modal
 // ----------------------------------------------------------------------------
-//include ('./include/time_variablen_deklaration.php');
-
 global $_modal;
 $_modal = (isset($_GET['modal']) == true ? true : false);
-
 // ----------------------------------------------------------------------------
 // Modler laden
 // ----------------------------------------------------------------------------
@@ -249,6 +217,9 @@ if($_SESSION['admin'] and !$_GET['action']){
 // Modler Userdaten laden
 // ----------------------------------------------------------------------------
 if($_SESSION['admin']){
+	// ----------------------------------------------------------------------------
+	// DEKLARATION DER VARIABLEN
+	// ----------------------------------------------------------------------------
 	include ('./include/time_variablen_laden.php');
 }
 // ----------------------------------------------------------------------------
@@ -451,25 +422,13 @@ switch($_action){
 			$_zeitliste = explode("-",$_zeitliste);
 			$_temptext = "";
 			foreach($_zeitliste as $_zeiten){
-				//$_zeiten = str($_zeiten);
-				//if(strstr(":",$_zeiten)){
 				$_tmp = explode(".",$_zeiten);
 				$_w_stunde = $_tmp[0];
 				$_w_minute = $_tmp[1];
 				if($_w_minute=="")$_w_minute=0;
-
 				$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
-				//} else {
-				//        $_w_stunde = $_zeiten;
-				//        $_w_minute = 0;
-				//}
-				//$_temptext = $_temptext . $_w_stunde. "." . $_w_minute . "#";
-				//echo $tmp;
 				$_time->save_time($tmp, $_user->_ordnerpfad);
-				//$_time->save_time_list($_user->_ordnerpfad);
 			}
-			//$_temptext = $_zeitliste[0]. " bis ". $_zeitliste[1];
-			//echo "Variablen ".$_timestamp ." / ". $_w_tag ." / ".$_w_monat ." / ". $_w_jahr." / ". $_temptext ." / ".$_w_sekunde;
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -537,40 +496,22 @@ switch($_action){
 		if(in_array(2,$show)) txt("PDF - Drucken");
 	include ("./include/time_funktion_pdf.php");
 		check_htaccess_pdf($_user->_ordnerpfad);
-		$_print = $_GET['print'];
-		$_druck = $_print;
-		/*
-		if($_druck){
-		erstelle_pdf_more($_MonatsArray);
-		} else{
-		erstelle_neu();
-		//erstelle_pdf_small($_MonatsArray);
-		}
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_user/user04_pdf_show.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
-		*/
 		$_jahr 	= date("Y", time());
 		$_monat 	= date("n", time())-1;
 		$_tag 	= date("j", time());
-		if($_druck){
-			erstelle_pdf_more($_MonatsArray); // FIXME: undefined function
+		if($_settings->_array[20][1] >= $_tag){
+			$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
+			$_time->set_timestamp($_drucktime);
+			$_time->set_monatsname($_settings->_array[11][1]);
+			//$_infotext04 =  "darf drucken....". $_settings->_array[20][1];
+			erstelle_neu($_drucktime);
+			$_template->_user04 = "sites_user/user04_pdf_show.php";
+		}elseif($_settings->_array[20][1]==0 ){
+			erstelle_neu(0);
+			$_template->_user04 = "sites_user/user04_pdf_show.php";
 		}else{
-			//erstelle_neu();
-			if($_settings->_array[20][1] >= $_tag){
-				$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
-				$_time->set_timestamp($_drucktime);
-				$_time->set_monatsname($_settings->_array[11][1]);
-				//$_infotext04 =  "darf drucken....". $_settings->_array[20][1];
-				erstelle_neu($_drucktime);
-				$_template->_user04 = "sites_user/user04_pdf_show.php";
-			}elseif($_settings->_array[20][1]==0 ){
-				erstelle_neu(0);
-				$_template->_user04 = "sites_user/user04_pdf_show.php";
-			}else{
-				$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
-				$_template->_user04 = "sites_user/user04.php";
-			}
+			$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
+			$_template->_user04 = "sites_user/user04.php";
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
@@ -581,47 +522,15 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "setdesign":
-		//headers_sent() ;
 		$_design = $_GET['designname'];
-		//setcookie ("designname", "", time() -1);
-		//unset($_COOKIE["designname"]);
 		setcookie ("designname", $_design, time()+2592000);
 		$_template 	= NULL;
 		unset($_template);
 		$_template	= new time_template("index.php");
-		$_template->set_templatepfad($_design);				
-						
-
-										
-		//echo "<div id=debug>";
-		//echo "WAHL = " . $_design;
-		//echo "<hr>";
-		//echo "Design = " . $_COOKIE["designname"];
-		//echo "<hr>";
-		//echo "design = ".$_template->get_template()."<hr>";
-		//echo "pfad = ". $_template->get_templatepfad()."<hr>";
-		//echo "</div>";
-		//header("Location: index.php?time=". time());		
-		//header("Location: index.php?action=design");
-		//$_template->set_templatepfad($_design);
-
-
-		                
-		//echo $_template->get_template();
-		//$_template->set_plugin("sites_plugin/plugin_null.php");
-		//$_template->set_user01("sites_user/user01.php");
-		//$_template->_user02 = "sites_user/user02_cal.php";
-		//$_template->_user04 = "sites_user/user04_timetable.php";
-		//$_template->_user03 = "sites_user/user03_stat.php";
-						
+		$_template->set_templatepfad($_design);						
 		$_template->set_user02("sites_user/user02_cal.php");
 		$_template->set_user03("sites_user/user03_stat.php");
-		$_template->set_user04("sites_user/user04_design.php");
-		//$_template->_user01 = "sites_user/user01.php";
-		//$_template->_user02 = "sites_user/user02_cal.php";
-		//$_template->_user04 = "sites_user/user04_design.php";
-		//$_template->_user03 = "sites_user/user03_stat.php";
-						
+		$_template->set_user04("sites_user/user04_design.php");			
 		break;
 	default:
 		if(in_array(2,$show)) txt("Defaultanzeige");

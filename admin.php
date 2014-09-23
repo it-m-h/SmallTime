@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.891
+* Version 0.894
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -30,33 +30,22 @@ function my_session_start()
       }
       return session_start();
 }
-// Caching verhindern
-//header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-//header("Pragma: no-cache");
-//header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Datum in der Vergangenheit
-//header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-//header("Cache-Control: no-store, no-cache, must-revalidate");
-//header("Cache-Control: post-check=0, pre-check=0", false);
-//header("Pragma: no-cache");
-//error_reporting(0);
 error_reporting(E_ALL ^ E_NOTICE);
 // Zeitzone setzten , damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
-//header("Content-Type: text/html; charset=iso-8859-1"); 
-//header("Content-Type: text/html; charset=utf-8"); 
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
 // Microtime f�r die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
-// ----------------------------------------------------------------------------
-// PHP - Version Check - Meldung, falls PHP - version kleiner als 5.4:
-// ----------------------------------------------------------------------------
-if (version_compare(phpversion(), '5.4', '<')) {
-    	echo " PHP Version : ".phpversion()." wird nicht unterst&uuml;tzt. (Version 5.4 oder h&ouml;her wird ben&ouml;tigt)";
-}
-
 $_start_time = explode(" ",microtime());
 $_start_time = $_start_time[1] + $_start_time[0];
+
+// ----------------------------------------------------------------------------
+// PHP - Version Check - Meldung, falls PHP - version kleiner als 5.3:
+// ----------------------------------------------------------------------------
+if (version_compare(phpversion(), '5.3', '<')) {
+    	echo " PHP Version : ".phpversion()." wird nicht unterst&uuml;tzt. (Version 5.4 oder h&ouml;her wird ben&ouml;tigt)";
+}
 // ----------------------------------------------------------------------------
 // F5 verhindern dass daten zwei mal gespeichert werden kann
 // ----------------------------------------------------------------------------
@@ -73,22 +62,6 @@ if(trim($_SESSION['last'])== trim($_now ) and isset($_SESSION['last'])){
 	$_write = false;
 }
 $_SESSION['last'] = $token;
-/*
-$_SESSION['now'] = $_now;
-//echo  $_SESSION['now'];
-//echo "<br>";
-if(!isset($_SESSION['last'])) {
-$_SESSION['last']= $_SESSION['now'];
-
-}
-echo "Formtoken = ". $_SESSION['now'] . "<br>";
-echo "Session = ". $_SESSION['last'] . "<br>";
-
-echo  $_SESSION['last'] . " - " . $_SESSION['now'] ;
-echo "<br>";
-$_SESSION['last'] = $_SESSION['now'];
-
-echo "write = ".$_write."<hr>";*/
 // ----------------------------------------------------------------------------
 // Debugg - Ionformationen
 // ----------------------------------------------------------------------------
@@ -109,14 +82,10 @@ echo "write = ".$_write."<hr>";*/
 $show = array();
 if(!empty($_GET['debug']) and $_SESSION['admin']) $show = array($_GET['debug']); 
 // ----------------------------------------------------------------------------
-// DEKLARATION DER VARIABLEN
+// Anzeige Bootstrap -  Modal
 // ----------------------------------------------------------------------------
-//include ('./include/time_variablen_deklaration.php');
-
 global $_modal;
 $_modal = (isset($_GET['modal']) == true ? true : false);
-
-
 // ----------------------------------------------------------------------------
 // Modler laden
 // ----------------------------------------------------------------------------
@@ -142,7 +111,6 @@ include_once ('./include/class_settings.php');
 require_once	('./include/class_table.php');
 include ("./include/time_funktionen.php");
 //$controller = new time_controller();
-
 /*
 // ----------------------------------------------------------------------------
 // Rapport - INFOS
@@ -158,9 +126,6 @@ $_log = new time_filehandle("./debug/login/","adminlogin.txt",";");
 $_log->insert_line("Login admin.php : ");
 echo $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 */
-
-
-
 // ----------------------------------------------------------------------------
 // MGET und POST Daten anzeigen
 // ----------------------------------------------------------------------------
@@ -289,6 +254,9 @@ if($_SESSION['admin'] and !$_GET['action']){
 // Modler Userdaten laden
 // ----------------------------------------------------------------------------
 if($_SESSION['admin']){
+	// ----------------------------------------------------------------------------
+	// DEKLARATION DER VARIABLEN
+	// ----------------------------------------------------------------------------
 	include ('./include/time_variablen_laden.php');
 	$_template->_plugin	= "modules/sites_plugin/plugin.php";
 }
@@ -527,25 +495,13 @@ switch($_action){
 			$_zeitliste = explode("-",$_zeitliste);
 			$_temptext = "";
 			foreach($_zeitliste as $_zeiten){
-				//$_zeiten = str($_zeiten);
-				//if(strstr(":",$_zeiten)){
 				$_tmp = explode(".",$_zeiten);
 				$_w_stunde = $_tmp[0];
 				$_w_minute = $_tmp[1];
 				if($_w_minute=="")$_w_minute=0;
-
 				$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
-				//} else {
-				//        $_w_stunde = $_zeiten;
-				//        $_w_minute = 0;
-				//}
-				//$_temptext = $_temptext . $_w_stunde. "." . $_w_minute . "#";
-				//echo $tmp;
 				$_time->save_time($tmp, $_user->_ordnerpfad);
-				//$_time->save_time_list($_user->_ordnerpfad);
 			}
-			//$_temptext = $_zeitliste[0]. " bis ". $_zeitliste[1];
-			//echo "Variablen ".$_timestamp ." / ". $_w_tag ." / ".$_w_monat ." / ". $_w_jahr." / ". $_temptext ." / ".$_w_sekunde;
 		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
@@ -622,16 +578,10 @@ switch($_action){
 		if(in_array(2,$show)) txt("PDF - Drucken");
 		include ("./include/time_funktion_pdf.php");
 		check_htaccess_pdf($_user->_ordnerpfad);
-		$_print = $_GET['print'];
-		$_druck = $_print;
 		$_jahr = date("Y", time());
 		$_monat = date("n", time());
 		$_tag = date("j", time());
-		if($_druck){
-			erstelle_pdf_more($_MonatsArray); // FIXME: undefined function
-		}else{
-			erstelle_neu(0); 
-		}
+		erstelle_neu(0); 
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/user04_pdf_show.php";
 		break;
@@ -813,18 +763,11 @@ switch($_action){
 // Logion - Formular darstellen
 // ----------------------------------------------------------------------------
 function setLoginForm(){
-	global $_template, $_settings;
-	if($_settings->_array[19][1]==0){
-		$_template->_user01 = "sites_time/null.php";
-		$_template->_user02 = "sites_login/admin_login_einzel_02.php";
-		$_template->_user03 = "sites_login/admin_login_einzel_03.php";
-		$_template->_user04 = "sites_login/admin_login_einzel_04.php";
-	}else{
-		$_template->_user01 = "sites_time/null.php";
-		$_template->_user02 = "sites_login/login_mehr_02.php";
-		$_template->_user03 = "sites_login/login_mehr_03.php";
-		$_template->_user04 = "sites_login/login_mehr_04.php";
-	}
+	global $_template;
+	$_template->_user01 = "sites_time/null.php";
+	$_template->_user02 = "sites_login/admin_login_einzel_02.php";
+	$_template->_user03 = "sites_login/admin_login_einzel_03.php";
+	$_template->_user04 = "sites_login/admin_login_einzel_04.php";
 }
 
 

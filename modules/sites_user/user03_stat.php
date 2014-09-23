@@ -1,16 +1,16 @@
 <?php
 /*******************************************************************************
-* Version 0.872
+* Version 0.894
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //-----------------------------------------------------------------------------
-// Quick Time - Schnelle zeiterfassung
+// Quick Time - schnelle Zeiterfassung
 //-----------------------------------------------------------------------------
 //echo "--".$_time->_timestamp."--";
 echo "<a title='Quick Time erfassung' href='?action=quick_time&timestamp=".$_time->_timestamp."'>";
-echo "<img src='./".$_template->get_templatepfad() ."images/quicktime.jpg' border=0>";
+echo "<img id='quicktime' src='./".$_template->get_templatepfad() ."images/quicktime.jpg' border=0>";
 echo "</a>";
 echo "<br>";
 echo "<br>";
@@ -147,5 +147,4 @@ echo $_copyright;*/
 </br>
 <link rel="stylesheet" media="screen" href="./css/calendar_js.css" type="text/css" />
 <script type="text/javascript" src="./js/calendar_js.js"></script>
-<div id="calendar"></div>
- 
+<div id="calendar"></div> 

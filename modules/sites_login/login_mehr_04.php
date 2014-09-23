@@ -22,7 +22,7 @@ setGuest();
 // Falls Eingeloogt, dann User - Einstellungen laden 
 if(isset($_SESSION['admin'])){ setUser();}
 // admin-Pannel? (admin.php), dann Admin - Einstellungen laden
-if($_logcheck->_admins){ setAdmin();}
+if($_logcheck->_admins && isset($_SESSION['admin'])){ setAdmin();}
 
 function setGuest(){
 	global $multilogin;

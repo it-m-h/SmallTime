@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.8772
+* Version 0.894
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -53,7 +53,7 @@ class time_month{
 		$this->_SollProTag = $_SollProTag;
 		$this->_wochentage = array("So","Mo","Di","Mi","Do","Fr","Sa");
 		$this->_startzeit	= $_startzeit;
-		$this->set_Monatsueberschrift($SettingMonate); // FIXME undefined variable
+		$this->set_Monatsueberschrift();
 		$this->set_letzterTag($lastday);
 		$this->set_timetable_daten($ordnerpfad, $jahr, $monat);
 		$tmp = new time_feiertage($jahr, $SettingCountry, $this->_u_feiertage);

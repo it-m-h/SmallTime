@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.89
+* Version 0.894
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -120,15 +120,7 @@ class time{
 		}
 		return mktime($_w_stunde,$_w_minute,$_w_sekunde,$_w_monat,$_w_tag,$_w_jahr);
 	}
-	
-	function save_time_list($_ordnerpfad){
-		$_zeilenvorschub = "\r\n";
-		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
-		$fp = fopen($_file,"a+");
-		fputs($fp, mktime($_w_stunde, $_w_minute, $_w_sekunde, $_w_monat, $_w_tag, $_w_jahr)); //FIXME: undefined variables
-		fputs($fp, $_zeilenvorschub);
-		fclose($fp);
-	}
+
 	function save_time($_timestamp, $_ordnerpfad){	
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
