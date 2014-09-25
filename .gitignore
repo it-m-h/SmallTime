@@ -9,12 +9,6 @@ Data/*
 Data/administrator/*
 debug/*
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 

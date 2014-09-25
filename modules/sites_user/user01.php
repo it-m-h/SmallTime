@@ -2,13 +2,11 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.877
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-// Settings des Templates mit Bootstrap
-//echo "--". $_template->_bootstrap ."--";
 if (strstr($_template->_bootstrap,'true')){
 ?>
 	<ul class="nav nav-tabs adminmenu">	
@@ -38,7 +36,7 @@ if (strstr($_template->_bootstrap,'true')){
 		<table height='35'  border='0' cellpadding='0' cellspacing='0'>
 		<tr>";
 		$_startjahr = date("Y",$_user->_BeginnDerZeitrechnung);		// User - Einstellungen
-		$_w_jahr	= $_time->_jahr;								// Gewähltes Jahr
+		$_w_jahr	= $_time->_jahr;									// gewähltes Jahr
 		$_nextjahr	= date("Y",time());								// nächstes Jahr
 		if ($_startjahr<$_w_jahr) {
 			$_timestampv = mktime(0, 0, 0, 1, 1, $_w_jahr-1);
@@ -65,6 +63,7 @@ if (strstr($_template->_bootstrap,'true')){
 		</li>
         </ul>
 <?php 
+//TODO : Template ohne Bootstrap -> löschen
 }else{ 
 	echo "<table width='400'  border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
 	if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
@@ -80,20 +79,10 @@ if (strstr($_template->_bootstrap,'true')){
 	echo "</td><td valign='middle'>";
 	echo " | ";
 	echo "</td><td valign='middle'>";
-
-	//----- INFO wurde entfernt - PDF
-	//echo "<a title='Information' href='?action=info'><img src='images/icons/information.png' border=0></a> ";
-	//echo "</td><td valign='middle'>";
-	//echo " | ";
-	//echo "</td><td valign='middle'>";
 	echo "<a title='Vorhandene PDF' href='?action=show_pdf'><img src='images/icons/page_white_acrobat.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
-
 	if($_settings->_array[20][1]==0){	
-	//--------------------------------------------------------------------------------------------------------
-	//Druck auf 2 Seiten print=1, bei Druck auf einer Seite nur 4 Stempelzeiten anzeigbar (breite der Spalte)
-	//--------------------------------------------------------------------------------------------------------
 	echo "</td><td valign='middle'>";
 	echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
@@ -113,21 +102,18 @@ if (strstr($_template->_bootstrap,'true')){
 	echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	}
-	//in Entwicklung ----------------------------------------------------------
-	//Mehrfacheinträge
+	// TODO : in Entwicklung Mehrfacheinträge für Abwesenheiten z.B. 2 Wochen Ferien
 	//echo " | ";
 	//echo "</td><td valign='middle'>";
 	//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheinträge für Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
 	//echo "</td><td width=100 valign='middle'>";
-	//in Entwicklung ----------------------------------------------------------
 	echo "&nbsp;";
 	echo "</td>";
-
 	// ----------------------------------------------------------------------------
 	// Jahresanzeige und Wahl
 	// ---------------------------------------------------------------------------- 
 	$_startjahr = date("Y",$_user->_BeginnDerZeitrechnung);		// User - Einstellungen
-	$_w_jahr	= $_time->_jahr;								// Gewähltes Jahr
+	$_w_jahr	= $_time->_jahr;									// gewähltes Jahr
 	$_nextjahr	= date("Y",time());								// nächstes Jahr
 	if ($_startjahr<$_w_jahr) {
 		$_timestampv = mktime(0, 0, 0, 1, 1, $_w_jahr-1);

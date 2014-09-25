@@ -1,14 +1,12 @@
 <?php
 /********************************************************************************
-* Small Time
+* Login - Formular
 /*******************************************************************************
-* Version 0.8723
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-//Login - Anzeige
-//-----------------------------------------------------------------------------
 $_color['td_background_top']	= "#f9fd9f"; 	//Überschriften
 $_color['td_background_tag']	= "#e3f3dd"; 	//Normal,Arbeitstag
 $_CheckCode = "<br>

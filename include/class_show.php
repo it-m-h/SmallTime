@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Anzeige eines Arrays für Debug
 /*******************************************************************************
-* Version 0.891
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -20,12 +20,10 @@ class time_show{
 						if(is_array($spalte)){
 							echo "<td>";
 							print_r($spalte);
-							//echo $spalte;
 							echo "</td>";
 						}else{
 							echo "<td>".htmlspecialchars($spalte)."</td>";
-						}
-					
+						}	
 					}				
 				}elseif(count($zeile) == 0){
 					echo "<td>FEHLER : keine Daten</td>";

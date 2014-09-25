@@ -2,27 +2,27 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.895
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_user{
 	public $_loginname 			= NULL;
-	public $_password 				= NULL;
+	public $_password 			= NULL;
 	public $_ordnerpfad 			= NULL;	
-	public $_name					= NULL;	
+	public $_name				= NULL;	
 	public $_SollZeitProWoche		= NULL;
-	public $_SollZeitProzent			= NULL;
-	public $_WochenArbeiztsZeit		= NULL;
+	public $_SollZeitProzent		= NULL;
+	public $_WochenArbeiztsZeit	= NULL;
 	//So = 0, Sa = 7
 	public $_arbeitstage 			= array(0,0,0,0,0,0,0);
-	public $_SummeArbeitstage 		= NULL;
-	public $_SollZeitProTag			= NULL;
+	public $_SummeArbeitstage 	= NULL;
+	public $_SollZeitProTag		= NULL;
 	public $_BeginnDerZeitrechnung	= NULL;	
 	public $_Vorholzeit_pro_Jahr	= NULL;
 	public $_Ferien_pro_Jahr		= NULL;		
-	public $_Stunden_uebertrag 		= NULL;
+	public $_Stunden_uebertrag 	= NULL;
 	public $_Ferienguthaben_uebertrag 	= NULL;
 	public $_feiertage 				= array(0,0,0,0,0,0,0,0,0,0,0);
 	public $_absenzen				= array();
@@ -34,7 +34,6 @@ class time_user{
 	}
 	function load_data_pfad($datenpfad){
 		$_userdaten = file("./Data/".$datenpfad."/userdaten.txt");
-		//print_r($daten);
 		$this->_loginname 	= $_SESSION['username'];
 		$this->_password 	= $_SESSION['passwort'];
 		$this->_ordnerpfad	= $_SESSION['datenpfad'];
@@ -68,7 +67,6 @@ class time_user{
 	function load_data_session(){
 		if($_SESSION['datenpfad']){
 			$_userdaten = file("./Data/".$_SESSION['datenpfad']."/userdaten.txt");
-			//print_r($daten);
 			$this->_loginname 	= $_SESSION['username'];
 			$this->_password 	= $_SESSION['passwort'];
 			$this->_ordnerpfad	= $_SESSION['datenpfad'];
@@ -108,20 +106,12 @@ class time_user{
 			if (count($_users) == ($_id+1)){
 				$_zeilenvorschub = "";
 			}
-			//echo count($_users);
-			//echo $_users[$_id];
-			//$_user = $_users[$_id];
-			//echo $_user;
 			$passwort    = sha1($passwort);
 			$_users[$_id] = $pfad.";".$loginname.";".$passwort.";".$rfid.$_zeilenvorschub;
-			//echo $_id . "<br>";
-			//print_r($_users);
 			$neu = implode( "", $_users);
 			$open = fopen("./Data/users.txt","w+");
 			fwrite ($open, $neu);
 			fclose($open);
-		}else{
-			//echo "cancle";
 		}		
 	}
 	function set_user_details(){
@@ -137,8 +127,8 @@ class time_user{
 		$_d				= $_POST['_d'];
 		$_e				= $_POST['_e'];
 		$_f				= $_POST['_f'];
-		$_g1				= $_POST['_g1'];
-		$_g2				= $_POST['_g2'];
+		$_g1			= $_POST['_g1'];
+		$_g2			= $_POST['_g2'];
 		$_tag 			= array();
 		$_tag[]			= $_POST['wotag0'];
 		$_tag[]			= $_POST['wotag1'];
@@ -147,7 +137,6 @@ class time_user{
 		$_tag[]			= $_POST['wotag4'];
 		$_tag[]			= $_POST['wotag5'];
 		$_tag[]			= $_POST['wotag6'];
-		
 		$_anzahlFT		= $_POST['anzahlFT'];		
 		$_FT 			= array();
 		for ($u=1; $u<=$_anzahlFT; $u++){
@@ -161,17 +150,14 @@ class time_user{
 				$_FT[$x]=0;
 			}
 			$x++;
-		}
-		
+		}	
 		$_ZT[]	= $_POST['zutagvon0'].";".$_POST['zutagbis0'].";".$_POST['zutagporzent0'];
 		$_ZT[]	= $_POST['zutagvon1'].";".$_POST['zutagbis1'].";".$_POST['zutagporzent1'];
 		$_ZT[]	= $_POST['zutagvon2'].";".$_POST['zutagbis2'].";".$_POST['zutagporzent2'];
 		$_ZT[]	= $_POST['zutagvon3'].";".$_POST['zutagbis3'].";".$_POST['zutagporzent3'];
 		$_ZT[]	= $_POST['zutagvon4'].";".$_POST['zutagbis4'].";".$_POST['zutagporzent4'];
 		$_ZT[]	= $_POST['zutagvon5'].";".$_POST['zutagbis5'].";".$_POST['zutagporzent5'];
-		$_ZT[]	= $_POST['zutagvon6'].";".$_POST['zutagbis6'].";".$_POST['zutagporzent6'];
-
-		
+		$_ZT[]	= $_POST['zutagvon6'].";".$_POST['zutagbis6'].";".$_POST['zutagporzent6'];	
 		$fp = fopen($_file,"w+");
 		fputs($fp, $_a.$_zeilenvorschub);
 		fputs($fp, $_tmp.$_zeilenvorschub);
@@ -189,23 +175,12 @@ class time_user{
 		fputs($fp, $_m.$_zeilenvorschub);
 		fclose($fp);
 		$this->load_data_pfad($_SESSION['datenpfad']);
-		//$this->load_data_session();
 	}
 	function set_user_absenzen(){
 		$i = $_POST['anzahl'];
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$this->_ordnerpfad."/absenz.txt";
-		//echo "------------------------<hr>". $_file . "<hr>";
 		$fp = fopen($_file,"w+");
-		/*
-		for ($z=0; $z<=$i; $z++){
-		$ab0 = "ab0_".$z;
-		$ab1 = "ab1_".$z;
-		$ab2 = "ab2_".$z;
-		echo "$z = ".$_POST[$ab0].";".$_POST[$ab1].";".$_POST[$ab2]."<br>".$_zeilenvorschub;
-		}
-		//echo $_POST['ab0_".$i."'];
-		*/
 		for($z=0; $z<=$i; $z++){
 			$ab0 = "ab0_".$z;
 			$ab1 = "ab1_".$z;

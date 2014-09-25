@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Template - Klasse 
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -38,13 +38,12 @@ class time_template{
 		$this->_startseite = $_start;
 		$this->_template = $this->_templatepfad.$this->_startseite;
 		
-		//Settings des Templates laden
-		// wird JQuery benutzt, werden andere module geladen
+		// Settings des Templates laden
+		// wird JQuery benutzt, werden andere Module geladen
 		$xmlfile = $this->_templatepfad."settings.xml"; 
 		if(file_exists($xmlfile)){
-			//echo 'Settings :'.$xmlfile . ', existiert und wird geladen<hr>';
-			$xml = simplexml_load_file($xmlfile);
-			//echo $xml->modal; 				
+			//TODO : Template ohne Bootstrap -> löschen
+			$xml = simplexml_load_file($xmlfile);			
 			if($xml->bootstrap) $this->_bootstrap = $xml->bootstrap;	
 			if($xml->jquery) $this->_jquery = $xml->jquery;
 			if($xml->modal) $this->_modal = $xml->modal;
@@ -68,25 +67,20 @@ class time_template{
 	}
 	
 	function set_portal($i){
-		// $i=0 -> index.php //$i=1 -> admin.php
 		if($i){
 			$this->_startseite = $this->_portal_user;
 			$this->_template = $this->_templatepfad.$this->_startseite;
-			//echo "setzte : ".$this->_startseite ."<hr>";
 		}else{
 			$this->_startseite = $this->_portal_admin;
 			$this->_template = $this->_templatepfad.$this->_startseite;
-			//echo "setzte : ".$this->_startseite ."<hr>";
 		}	
 	}
 
 	function set_templatepfad($pfad){
-		//neues gewähltes Design im Cookie speichern
-		//setcookie("designname", $pfad, time()+2592000);
+		// neues gewähltes Design im Cookie speichern
 		setcookie("designname", $pfad, time()+2592000);
-		//setcookie("designname", $pfad, time()+2592000);
 		$this->_templatepfad = "./templates/".$pfad."/";
-		//index.php Template laden
+		// index.php Template laden
 		$this->_template = $this->_templatepfad.$this->_startseite;
 	}
 

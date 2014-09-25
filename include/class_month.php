@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.894
+* Version 0.896
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -12,25 +12,23 @@ class time_month{
 	private $_pfad 					= NULL;	// Ordnerpfad
 	private $_wochentage				= NULL;	// Bezeichnung der Wochentage
 	private $_arbeitstage				= NULL;	// User - Arbeitstage - Einstellungen	
-	private $_u_feiertage				= NULL;	// User - Feiertage einstellungen
+	private $_u_feiertage				= NULL;	// User - Feiertage Einstellungen
 	private $_feiertage					= NULL;	// Feiertage - Datum und Name in einem Array
 	private $_absenz					= NULL;	// Absenzen
-	private $_timeTable				= NULL;	// Zeiteinträge in einem array
+	private $_timeTable				= NULL;	// Zeiteinträge in einem Array
 	private $_startzeit					= NULL;	// Beginn der Zeitrechnung
 	private $_arbeitszeit				= NULL;
 	private $_autopause				= NULL;
 	private $_setautopause				= "";
 	private $_zeitzuschlag				= NULL;
-	private $_absenzberechnung 		= NULL;
-	
+	private $_absenzberechnung 		= NULL;	
 	public $_SollProTag 				= NULL;	// Soll Arbeitszeit pro Tag
 	public $_letzterTag				= NULL;	// Anzahl der Tage im gewählen Monat	
 	public $_SummeSollProMonat 		= NULL;	// Summe der Soll - Stunden im Monat
 	public $_SummeWorkProMonat 		= NULL;	// Summe der gearbeiteten Stunden im Monat
 	public $_SummeAbsenzProMonat 	= NULL;
 	public $_SummeSaldoProMonat 		= NULL;	// Saldo in dem aktuellen Monat
-	public $_SummeStempelzeiten		= NULL;	// ungerade Zahl, heisst fehler in der Berechnung
-
+	public $_SummeStempelzeiten		= NULL;	// ungerade Zahl, damit existiert ein Fehler in der Berechnung
 	public $_SummeFerien				= NULL;
 	public $_SummeKrankheit			= NULL;
 	public $_SummeUnfall				= NULL;
@@ -38,13 +36,10 @@ class time_month{
 	public $_SummeIntern				= NULL;
 	public $_SummeWeiterbildung		= NULL;
 	public $_SummeExtern				= NULL;
-
 	public $_MonatsArray 				= NULL;	// Array des Monats
-
 	public $_modal					= NULL;
 	public $_modal_str				= NULL;
 	
-
 	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause, $absenzberechnung){	
 		$this->_file = "./Data/".$ordnerpfad."/Rapport/";
 		$this->_pfad = "./Data/".$ordnerpfad."/";
@@ -59,17 +54,14 @@ class time_month{
 		$tmp = new time_feiertage($jahr, $SettingCountry, $this->_u_feiertage);
 		$this->_feiertage = $tmp->_feiertage;
 		$this->_absenz = new time_absenz($ordnerpfad, $jahr);
-		$this->_arbeitszeit = $arbeitszeit;
-		
+		$this->_arbeitszeit = $arbeitszeit;	
 		$this->_autopause	= $autopause;
 		$this->_absenzberechnung = $absenzberechnung;
-		//Absenzenberechnung nur bis heute in den Settings?
+		//Absenzenberechnung nur bis Heute in den Settings?
 		if($absenzberechnung){ $this->absenzsetting(); }
-		//$zeig = new time_show($this->_feiertage);
-		//echo $ordnerpfad;
-		//$zeig = new time_show($this->_absenz->_filetext);
 		//Monatsdaten berechnen und im Array speichern
 		$this->set_monatsdaten($monat,$jahr);
+		// Monatssummen, Zeit und Ferien speichern in der Jahresdatei
 		$this->save_data($monat,$jahr);
 	}
 	function __destruct(){
@@ -105,32 +97,26 @@ class time_month{
 		}else{
 			$_year_data = file($_file);
 		}
-		/*
-		//Beim ersten Monat ein Überzeitguthaben eingetragen? dann hinzuzählen($_userdaten[6])
-		$_startmonat = date("m",$_userdaten[1]);
-		if(date("Y.m", $_Day) == date("Y.m", $_userdaten[1])){
-		$_SummeSaldoProMonat = $_SummeSaldoProMonat + $_userdaten[6];
-		//echo date("Y.m", $_Day)."<HR><HR><HR><HR><HR><HR><HR><HR><HR>------------".date("Y.m", $_userdaten[1]);
-		} ELSE {
-		//echo date("Y.m", $_Day)."<HR>+++++++++".date("Y.m", $_userdaten[1]);
+		// Saldo; Ferien; Sollstunden; Work
+		// (Sollstunden und Work mit Jahresanzeige berechnen und eintragen lassen)
+		$_stunden = explode(";", $_year_data[$monat-1] );
+		if((!strstr($_stunden[0] , trim($this->_SummeSaldoProMonat)) && $this->_SummeSaldoProMonat <>0) || count($_stunden)<>4){
+			$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
+			$_str = $this->_SummeSaldoProMonat.";";
+			$_str .= $this->_SummeFerien.";";
+			$_str .= $this->_SummeSollProMonat.";";
+			$_str .= $this->_SummeWorkProMonat;
+			$_str .= $_zeilenvorschub;
+			$_year_data[$monat-1]  = $_str;
+			$_FT = implode("", $_year_data);
+			$fp = fopen($_file,"w+");
+			fwrite ($fp, $_FT);
+			fclose($fp);
 		}
-		//$_SummeSaldoProMonat = $_SummeSaldoProMonat + $_startmonat;
-		*/
-
-		$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
-		$_FT = implode("", $_year_data);
-		$fp = fopen($_file,"w+");
-		fwrite ($fp, $_FT);
-		fclose($fp);
 	}
 	private function set_monatsdaten($monat,$jahr){	
 		$this->_modal_str = "&modal";
 		for($i=1; $i<=$this->_letzterTag; $i++){
-
-			//for ($q=0;$q<=35;$q++){
-			// $this->_MonatsArray[$i][$q] = "-";
-			//}
-
 			$_Day = mktime(0, 0, 0, $monat, $i, $jahr);	
 			$this->_MonatsArray[$i][0] = $_Day;
 			$this->_MonatsArray[$i][1] = date("d.m", $_Day);
@@ -138,28 +124,11 @@ class time_month{
 			$this->_MonatsArray[$i][2] = $_tagNR;
 			$this->_MonatsArray[$i][3] = $this->_wochentage[$_tagNR];
 			$this->_MonatsArray[$i][4] = $this->_arbeitstage[$_tagNR];
-
-
 			$this->_MonatsArray[$i][5] = $this->is_feiertag($_Day, $i);
 			$tmp = $this->_MonatsArray[$i][5];
-			/* DEBUGG ---
-			if ($tmp>0){
-			echo "Feiertag - Nummmer: ". $this->_MonatsArray[$i][5] . "<br>";
-			echo " - ";
-			$meinarray = array_keys($this->_feiertage);
-			print_r(array_keys($this->_feiertage));
-			echo "<br>";
-			echo $meinarray[$tmp];
-			echo "<hr>";
-			$this->_MonatsArray[$i][6] = array_keys($this->_feiertage)[$tmp];
-			}else{
-			$this->_MonatsArray[$i][6] = "";
-			}
-			*/
 			$wahl = $this->_MonatsArray[$i][5];
 			$tmparr = array_keys($this->_feiertage);
 			$this->_MonatsArray[$i][6] = $tmparr[$wahl];
-
 			$this->_MonatsArray[$i][7] = ($this->_MonatsArray[$i][4]>'0' && $this->_MonatsArray[$i][5] == -1)? "1":"0";
 			// Falls das Datum in der Zukunft liegt, noch kein Arbeitstag und keine Zeitrechnung
 			if($_Day > time()) $this->_MonatsArray[$i][7]=0;	
@@ -174,9 +143,8 @@ class time_month{
 			$this->_MonatsArray[$i][13] = $this->get_time($i);
 			// Falls das Datum in der Zukunft liegt Arbeitsstunden nicht berechnen
 			if($_Day>time()) $this->_MonatsArray[$i][13] = 0;
-			// Falls das Datum vor der zeitrechung ist - keine Sollzeit
-			if($_Day<$this->_startzeit) $this->_MonatsArray[$i][8] = 0;	
-			
+			// Falls das Datum vor der Zeitrechung ist - keine Sollzeit
+			if($_Day<$this->_startzeit) $this->_MonatsArray[$i][8] = 0;				
 			// check, ob Absenzen vorhanden sind
 			if(is_array($this->_absenz->_array)){
 				$tmp = $this->get_absenz($_Day);
@@ -199,7 +167,6 @@ class time_month{
 			// saldo pro Tag = arbeitszeit(13) plus absenzzeit(18) minus soll(8)
 			$saldo = 0;
 			$saldo = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
-			//$saldo = round($saldo,2);
 			// wenn gearbeitet grösser als soll, dann Absenzen ignorieren
 			if($this->_MonatsArray[$i][13] > $this->_SollProTag and $this->_MonatsArray[$i][15] == 1){
 				$this->_MonatsArray[$i][15] = 0;
@@ -208,21 +175,15 @@ class time_month{
 			}
 			//wenn absenz(15) == 1 und $saldo > 0, Prozentual ausrechnen
 			if($this->_MonatsArray[$i][15] == 1 and $tmp1==1){
-
 				$this->_MonatsArray[$i][18] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
 				$this->_MonatsArray[$i][15] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])/$this->_SollProTag,2);
-				//$this->_MonatsArray[$i][20] = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13];
-				//$saldo = 0;
 			}
 			if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
 				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
 				$this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
-				//$this->_MonatsArray[$i][20] = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
-				//$saldo = 0;
 			}
-			//if($this->_MonatsArray[$i][15]) $this->_MonatsArray[$i][15] = $this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4];
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
 			if($i>0){
@@ -238,7 +199,6 @@ class time_month{
 			if($this->_MonatsArray[$i][6]<>"") $this->_MonatsArray[$i][30] = "class=td_background_feiertag";
 			if(date("Y.m.d", $this->_MonatsArray[$i][0]) == date("Y.m.d", time())) $this->_MonatsArray[$i][30] = "class=td_background_heute";	
 			// Links
-			//if($this->_MonatsArray[$i][4]<>0 and $this->_MonatsArray[$i][5]== -1){
 			if($this->_MonatsArray[$i][14]<>""){
 				$this->_MonatsArray[$i][31] = "<a title='Absenz l&ouml;schen' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
 				// Info bezüglich Absenz
@@ -248,18 +208,12 @@ class time_month{
 				$this->_MonatsArray[$i][31] = "<a href='?action=add_absenz&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."' title='Absenz hinzuf&uuml;gen'><img border='0' src='images/icons/date_add.png'></img></a>";
 				$this->_MonatsArray[$i][32] = " ";
 			}
-			//}else{
-			// $this->_MonatsArray[$i][31] = " ";
-			// $this->_MonatsArray[$i][32] = " ";
-			//}
 			// Rapport - hinzufügen oder löschen falls vorhanden
 			$this->_MonatsArray[$i][34] = $this->get_rapport($this->_MonatsArray[$i][0]);	
 
 			$_file = $this->_pfad."Rapport/" . date("Y.m.d", $this->_MonatsArray[$i][0]);
 			if(file_exists($_file)){
-				//$this->_MonatsArray[$i][33] = "<a title='".$this->_MonatsArray[$i][34]."' onmouseout='close();' onmouseover='show(''".$this->_MonatsArray[$i][34]."'');' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_edit.png' border=0></a> ";
 				// DIV, das sich öffnet und den Text anzeigt im Rapport
-
 				$text = $this->_MonatsArray[$i][34];
 				$text = str_replace("\n", "<br>", $text);
 				$text = str_replace("\r", "", $text);
@@ -281,30 +235,21 @@ class time_month{
 				$this->_MonatsArray[$i][37] .= '<img src="images/icons/application_edit.png" border="0">';
 				$this->_MonatsArray[$i][37] .= '';
 				$this->_MonatsArray[$i][37] .= '</div>';
-				//$this->_MonatsArray[$i][33] .= '<div id="' . $this->_MonatsArray[$i][0] . '" >';
-				//$this->_MonatsArray[$i][33] .= $this->_MonatsArray[$i][34];
-				//$this->_MonatsArray[$i][33] .= '</div>';
-
 			}else{
 				$this->_MonatsArray[$i][33] = "<a title='Rapport hinzuf&uuml;gen' href='?action=add_rapport&timestamp=".$this->_MonatsArray[$i][0].$this->_modal_str."'><img src='images/icons/application_add.png' border=0></a> ";
 			}
-
 			$this->_MonatsArray[$i][35] = "";
 			if($this->_setautopause){
 				$_temptext = "Die automatische Pause von " . $this->_autopause . " wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;
 				$this->_MonatsArray[$i][35] = "<img title='$_temptext' src='images/icons/clock_pause.png' border=0>";
 				$this->_setautopause ="";
 			}
-
-
 			if($this->_zeitzuschlag){
 				$this->_MonatsArray[$i][36] = "<img title='".$this->_zeitzuschlag."' src='images/icons/clock_red.png' border=0>";
 				$this->_zeitzuschlag="";
 			}else{
 				$this->_MonatsArray[$i][36] = "";
 			}
-
-
 			//-------------------------------------------------------------------------
 			// Summen berechnen
 			//-------------------------------------------------------------------------
@@ -317,8 +262,6 @@ class time_month{
 			// Summen der Absenzen berechnen
 			//-------------------------------------------------------------------------
 			// Array mit Daten - Summen in der Spalte 3 
-			// $this->_absenz->_calc()
-			// $zeile = new time_show($this->_absenz->_calc);
 			$a=0;
 			foreach ($this->_absenz->_calc as $zeile){
 				if($this->_MonatsArray[$i][14]==$zeile[1]) {
@@ -326,8 +269,6 @@ class time_month{
 				}	
 				$a++;
 			}
-			//$zeile = new time_show($this->_absenz->_calc);
-			//print_r ($this->_absenz->define());
 			//-------------------------------------------------------------alte Abwesenheitsberechnungen
 			if($this->_MonatsArray[$i][14]=="F") $this->_SummeFerien = $this->_SummeFerien + $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="K") $this->_SummeKrankheit = $this->_SummeKrankheit+ $this->_MonatsArray[$i][15];
@@ -336,11 +277,9 @@ class time_month{
 			if($this->_MonatsArray[$i][14]=="I") $this->_SummeIntern = $this->_SummeIntern+ $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="W") $this->_SummeWeiterbildung = $this->_SummeWeiterbildung+ $this->_MonatsArray[$i][15];
 			if($this->_MonatsArray[$i][14]=="E") $this->_SummeExtern = $this->_SummeExtern+ $this->_MonatsArray[$i][15];
-		//------------------------------------------------------------------alte Abwesenheitsberechnungen
-		
+			//------------------------------------------------------------------alte Abwesenheitsberechnungen	
 		}	
 	}
-
 	private function get_absenz($_Day){
 		foreach($this->_absenz->_array as $string){
 			if($string[0] == $_Day){
@@ -372,18 +311,10 @@ class time_month{
 		$z=0;
 		foreach(array_values($this->_feiertage) as $feiertag){
 			if($feiertag == $_Day){
-				//if(strstr($feiertag,$_Day)) {
-				//echo "Gleich : -" .$feiertag ."-".$_Day."-<hr>";
 				return $z;
-
-			}else{
-				//echo "nicht gleich : ";
 			}
-			//print_r($this->_feiertage)."<br><br>";
-			//echo "-" . $feiertag ."-".$_Day."-<br>";
 			$z++;
 		}
-		//echo "<hr>";
 		return -1;
 	}
 	function get_wochentage($i){
@@ -400,7 +331,7 @@ class time_month{
 		$_debug	= 0;
 		$_debug_berechnung = 0;
 		// Falls eine ungerade anzahl, nur die geraden berechnen
-		//Debug bei Berechnungen-----------------------------------------
+		// Debug bei Berechnungen-----------------------------------------
 		if($_debug){
 			echo "<hr>";
 			echo "Zeit berechnen : ";
@@ -408,10 +339,8 @@ class time_month{
 			echo "<br>". $_stempelzeit [0] ;
 			echo "<br>". $_stempelzeit [1] ;
 		}
-		//-------------------------------------------------------------------------
-
+		// -------------------------------------------------------------------------
 		$_count = count($_stempelzeit);
-		// if($_count%2==1) $_count = $_count-1;
 		for($h=0; $h<$_count; $h=$h+2){
 			$_anzeige[$h]	= date("H:i",$_stempelzeit[$h]);
 			//Anzeige bei 59 Min und 59 Sek runden
@@ -438,7 +367,7 @@ class time_month{
 				$_saldo = $_ende-$_start;
 				$_dezimal = $_saldo*100;
 				$_h = $_dezimal;
-				//$_h = (date("H",$_stempelzeit[$h+1] - $_stempelzeit[$h])-1)*100;
+				// $_h = (date("H",$_stempelzeit[$h+1] - $_stempelzeit[$h])-1)*100;
 				// Minuten die gearbeitet wurden und nun in Dezimal
 				/* ---------------------------------------------------------------------------------
 				// Test nur mit Minuten rechnen, ist ungenauer bei alten Stempelzeiten
@@ -459,28 +388,19 @@ class time_month{
 					echo "<br>rechnen unterschied : ". $_stempelzeit[$h+1];
 					echo "<br>rechnen unterschied : ". $_stempelzeit[$h];
 					echo "<br>rechnen unterschied : ". ($_stempelzeit[$h+1] - $_stempelzeit[$h])/60/60;
-					//$min = date("i",($_stempelzeit[$h+1] - $_stempelzeit[$h]));
 					$min = date("i",$_stempelzeit[$h]+1) - date("i",$_stempelzeit[$h]);
 					echo "<br>rechnen unterschied min : ". $min ;
 					echo "<br>rechnen unterschied min : ". round($min *100/60,2);
 					echo "<br>rechnen unterschied min...... : ". $_minuten;
 					echo "<br>rechnen unterschied min...... : ". $_dezimal;
-
 					echo "<br><br> minute 2: ". $_minuten1. " - " . $_minuten2 ;
 					echo "<hr color = gray>";	
 				}
-				// Arbeits - Zeit in Dezimal und gerundet auf 2 Stellen
-				//Falls Endstempelzeit Minuten gleich, aber Sekunden Start göser als Sekunden Ende, dann minute -1 rechnen
-				/*
-				if(date("s",$_stempelzeit[$h+1])=='59' and date("s",$_stempelzeit[$h])=='01') {
-				$_min = $_min+1.5;
-				}*/
 				//--------------------------------------------------------------------------------------------------------------------------------------------
 				// Falls Sekunden = 59 und Minuten 59, dann Dezimalkorrektur anwenden auf 60 Sekunden
 				//--------------------------------------------------------------------------------------------------------------------------------------------
 				if(date("s",$_stempelzeit[$h+1])=='59' and date("i",$_stempelzeit[$h+1])=='59'){
 					$_min = $_min+1.5;
-					//echo "L0";
 					if($_debug_berechnung) echo ".....Dezimal korrektur 23:59:59<br>";
 				}
 				//--------------------------------------------------------------------------------------------------------------------------------------------
@@ -490,14 +410,12 @@ class time_month{
 					$_min = $_min+1.5;
 					$_h = $_h-100;
 					if($_debug_berechnung) echo ".....Stunde abz&auml;hlen<br>";
-					//echo "L1";
 				}
 				//--------------------------------------------------------------------------------------------------------------------------------------------
 				// Falls Minuten gehen < Minuten kommen, dann Stunden -1 rechnen
 				//--------------------------------------------------------------------------------------------------------------------------------------------
 				elseif(date("i",$_stempelzeit[$h+1])<date("i",$_stempelzeit[$h])){
 					$_h = $_h-100;
-					//echo "L3";
 					if($_debug_berechnung) echo ".....Stunde abz&auml;hlen 2<br>";
 				}
 				//--------------------------------------------------------------------------------------------------------------------------------------------
@@ -505,14 +423,11 @@ class time_month{
 				//--------------------------------------------------------------------------------------------------------------------------------------------
 				elseif(date("s",$_stempelzeit[$h+1])<date("s",$_stempelzeit[$h]) and date("i",$_stempelzeit[$h+1])<>date("i",$_stempelzeit[$h])){
 					$_min = $_min+1.5;
-					//echo "L2";
 					if($_debug_berechnung) echo ".....Dezimalkorrektur 2<br>";
 				}
-
 				$_zeit = round(($_h+$_min)/100,2);
-				//$_zeit = ($_h+$_min)/100;
 				// Arbeitszeit por Tag
-				//Debug bei Berechnungen-----------------------------------------
+				// Debug bei Berechnungen-----------------------------------------
 				if($_debug){	
 					echo "<br> Zeit start : " . $_start ;
 					echo "<br> Zeit ende : " . $_ende ;
@@ -540,7 +455,6 @@ class time_month{
 				// Autopause berechnen
 				//------------------------------------------------------------------------------------
 				if($this->_arbeitszeit > 0 && $_zeit >= $this->_arbeitszeit){
-					//echo "<hr> $h . ".$_zeit. " ist mehr als ". $this->_arbeitszeit ." pause wird abgerechnet : ". $this->_autopause. " Saldo : ". ($_zeit-$this->_autopause);
 					$_zeit = ($_zeit - $this->_autopause);	
 					if($this->_setautopause){
 						$this->_setautopause = $this->_setautopause. " & ". $_anz;
@@ -552,7 +466,6 @@ class time_month{
 				//------------------------------------------------------------------------------------
 				// Zeitzuschlag berechnen
 				//------------------------------------------------------------------------------------
-
 				$this->_file = $this->_pfad . "/userdaten.txt";
 				$_userdaten = file($this->_file);
 				$_tmptag = 9+$this->_MonatsArray[$i][2];
@@ -561,16 +474,10 @@ class time_month{
 				$Start = $tmp[0];
 				$Ende = $tmp[1];
 				$zuschlag = ($tmp[2]-100)/100;	
-				//print_r($_stempelzeit);
-				//echo " Zeiten : " . $_stempelzeit[$h] . " - ". $_stempelzeit[$h+1];
 				$Stempel1 = (date("H",$_stempelzeit[$h])*100 + date("i",$_stempelzeit[$h])*100/60)/100;
 				$Stempel2 = (date("H",$_stempelzeit[$h+1])*100 + date("i",$_stempelzeit[$h+1])*100/60)/100;	
 				if($_debug) echo " Zeiten : " . $Stempel1 . " - ". $Stempel2;
 				if($_debug) echo " Stempel : " . $Stempel1 . " - ". $Stempel2 . " / Zuschlag von ". $Start . " - ". $Ende;
-				// Stempel1 < Start && Stempel2 >= Start && Stempel2 < Ende // Stempel2-Start
-				// Stempel1 >= Start && Stempel2 <= Ende // Stempel2-Stempel1
-				// else Stempel1 <= Start && Stempel2 >= Ende // Ende - Start
-				// Stempel1 > Start && Stempel1 <= Ende && Stempel2 > Ende // Ende -Stempel1
 				$_tmptime = 0;
 				if($Stempel1 < $Start && $Stempel2 >= $Start && $Stempel2 < $Ende){
 					//$this->_zeitzuschlag = "Logik 1 : ". ($Stempel2-$Start) ." Std.";
@@ -597,13 +504,9 @@ class time_month{
 					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr , ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
 					if($_debug) echo " - Logik 4:".$_tmptime;
 				}
-
 				if($_debug) echo "<hr>";
-
 				$_h_pro_day = $_h_pro_day + $_zeit+ $_tmptime;	
 			}
-			//echo date("i",$_stempelzeit[$h+1] - $_stempelzeit[$h]) . " / ";
-			//echo (($_h+$_min)/100) . "<br>";
 		}	
 		$this->_MonatsArray[$i][12] = $_anzeige;
 		//Debug bei Berechnungen-----------------------------------------
@@ -638,9 +541,9 @@ class time_month{
 	private function set_timetable_daten($ordnerpfad, $jahr, $monat){
 		$this->_file = "./Data/".$ordnerpfad."/Timetable/" . $jahr . "." . $monat;
 		if(!file_exists($this->_file)){
-			//echo "keine Daten vorhanden";
+			// echo "keine Daten vorhanden";
+			// TODO : if umschreiben und testen 
 		}else{
-			//echo "file existiert : " . $_file ;
 			$this->_timeTable = file($this->_file);
 			sort($this->_timeTable);
 		}
@@ -649,48 +552,46 @@ class time_month{
 		$this->_letzterTag = $tag;
 	}
 	private function set_Monatsueberschrift(){
-		$this->_MonatsArray[0][0] = "(0)<br>Timestamp";	// Timestamp vom Tag
-		$this->_MonatsArray[0][1] = "(1)<br>Datum";	// Datum
-		$this->_MonatsArray[0][2] = "(2)<br>Nr-Tag";	// Wochentagnummer
-		$this->_MonatsArray[0][3] = "(3)<br>Tag";	// Wochentag
-		$this->_MonatsArray[0][4] = "(4)<br>Arbeitstag";	// User Arbeitstag
-		$this->_MonatsArray[0][5] = "(5)<br>Feiertag";	// User Feiertag
-		$this->_MonatsArray[0][6] = "(6)<br>Feiertagname"; // Name des Feiertages
-		$this->_MonatsArray[0][7] = "(7)<br>Arbeitstag";	// Arbeitstag 0 oder 1
-		$this->_MonatsArray[0][8] = "(8)<br>Soll";	// Sollarbeitszeit pro Tag
+		$this->_MonatsArray[0][0] = "(0)<br>Timestamp";		// Timestamp vom Tag
+		$this->_MonatsArray[0][1] = "(1)<br>Datum";			// Datum
+		$this->_MonatsArray[0][2] = "(2)<br>Nr-Tag";			// Wochentagnummer
+		$this->_MonatsArray[0][3] = "(3)<br>Tag";				// Wochentag
+		$this->_MonatsArray[0][4] = "(4)<br>Arbeitstag";		// User Arbeitstag
+		$this->_MonatsArray[0][5] = "(5)<br>Feiertag";			// User Feiertag
+		$this->_MonatsArray[0][6] = "(6)<br>Feiertagname"; 		// Name des Feiertages
+		$this->_MonatsArray[0][7] = "(7)<br>Arbeitstag";		// Arbeitstag 0 oder 1
+		$this->_MonatsArray[0][8] = "(8)<br>Soll";				// Sollarbeitszeit pro Tag
 
 		$this->_MonatsArray[0][9] = " ";
-		$this->_MonatsArray[0][10] = "(10)<br>timestamps";	// Timestamps
+		$this->_MonatsArray[0][10] = "(10)<br>timestamps";		// Timestamps
 		$this->_MonatsArray[0][11] = "(11)<br>anzahl times";	// bein ungerade fehlt eine Zeit
 		$this->_MonatsArray[0][12] = "(12)<br>Stempelzeiten";	// Stempelzeiten in einem Array
-		$this->_MonatsArray[0][13] = "(13)<br>Arbeitszeit";	// gearbeitete Zeit anhand der Stempelzeiten
+		$this->_MonatsArray[0][13] = "(13)<br>Arbeitszeit";		// gearbeitete Zeit anhand der Stempelzeiten
 
-		$this->_MonatsArray[0][14] = "(14)<br>Abs. KZ";	// Kurzbezeichnung der Abwensenheit
-		$this->_MonatsArray[0][15] = "(15)<br>Abs. Tag";	// Absenz in Tagen (z. 0.5 Tag)
+		$this->_MonatsArray[0][14] = "(14)<br>Abs. KZ";		// Kurzbezeichnung der Abwensenheit
+		$this->_MonatsArray[0][15] = "(15)<br>Abs. Tag";		// Absenz in Tagen (z. 0.5 Tag)
 		$this->_MonatsArray[0][16] = "(16)<br>Abs. Beschr.";	// Absenz Beschreibung
-		$this->_MonatsArray[0][17] = "(17)<br>Abs. %";	// Prozentualer Anteil, der die Firma bei einer Absenz übernimmt
-		$this->_MonatsArray[0][18] = "(18)<br>Abs. h";	// Absenz in Stunden
+		$this->_MonatsArray[0][17] = "(17)<br>Abs. %";		// Prozentualer Anteil, der die Firma bei einer Absenz übernimmt
+		$this->_MonatsArray[0][18] = "(18)<br>Abs. h";			// Absenz in Stunden
 
-		$this->_MonatsArray[0][19] = "(19)<br>";	//
-		$this->_MonatsArray[0][20] = "(20)<br>Saldo";	// Saldo am Tag
-		$this->_MonatsArray[0][21] = "(21)<br>Summe";	// Summe bis zum vorherigen Tag
+		$this->_MonatsArray[0][19] = "(19)<br>";				//
+		$this->_MonatsArray[0][20] = "(20)<br>Saldo";			// Saldo am Tag
+		$this->_MonatsArray[0][21] = "(21)<br>Summe";		// Summe bis zum vorherigen Tag
 
-		$this->_MonatsArray[0][30] = "(30)<br>class";	// Tabellen - Hintergrundfarbe
-		$this->_MonatsArray[0][31] = "(31)<br>absenz";	// Absenzt einfügen
-		$this->_MonatsArray[0][32] = "(32)<br>info";	// Absenz Info
-		$this->_MonatsArray[0][33] = "(33)<br>rapport";	// Rapport - Hyperlink
-		$this->_MonatsArray[0][34] = "(34)<br>text";	// Rapport - text
-		$this->_MonatsArray[0][35] = "(35)<br>ap";	// automatische Pause
-		$this->_MonatsArray[0][36] = "(36)<br>az";	// Arbeits zeit spezial vergütung
+		$this->_MonatsArray[0][30] = "(30)<br>class";			// Tabellen - Hintergrundfarbe
+		$this->_MonatsArray[0][31] = "(31)<br>absenz";		// Absenzt einfügen
+		$this->_MonatsArray[0][32] = "(32)<br>info";			// Absenz Info
+		$this->_MonatsArray[0][33] = "(33)<br>rapport";			// Rapport - Hyperlink
+		$this->_MonatsArray[0][34] = "(34)<br>text";			// Rapport - text
+		$this->_MonatsArray[0][35] = "(35)<br>ap";			// automatische Pause
+		$this->_MonatsArray[0][36] = "(36)<br>az";				// Arbeitszeit spezial Vergütung
 		$this->_MonatsArray[0][33] = "(37)<br>rapport popup";	// Rapport - Nur popup
 	}
 
 	public function check_autopause($zeit,$pause){
 		for($i=1; $i<=$this->_letzterTag; $i++){
-
-
+			// TODO : function veraltet - > bereinigen
 		}
 	}
-
 }
 ?>

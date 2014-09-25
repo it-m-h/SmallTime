@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.89
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -34,22 +34,13 @@ $_txt = $_w2_tag.'.'.$_w2_monat.'.'.$_w2_jahr;
 		});
 	function oldshow(){
 		wert = 0;
-		//wert = document.getElementById("oldtime"). ;
-		//wert1 = document.forms["form"].elements["oldtime"].options[1].Eigenschaft;
-		//wert2 = document.forms["form"].elements["oldtime"].options[2].Eigenschaft;
-		//wert3 = document.forms["form"].elements["oldtime"].options[3].Eigenschaft;
-		//wert = document.getElementById("oldtime").options[#].innerText;
-		//alert('test : ' + wert1 + wert2 + wert3); 
 		wert = document.getElementById("oldtime").value;
 		if (wert==1){
 			$('#datetimepicker2').css("visibility", "visible") ;  	
 		}else{
 			$('#datetimepicker2').css("visibility", "hidden") ; 
 		}
-		//alert('test : ' + wert); 
-	}
-	
-	
+	}	
 </script>	
 <tr style="display: none">
 	<td class=td_background_info width="200" align=left>Datum:</td>

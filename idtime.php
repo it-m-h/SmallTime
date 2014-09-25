@@ -11,12 +11,11 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.872
+	* Version 0.896
 	* Author:  IT-Master GmbH
 	* www.it-master.ch / info@it-master.ch
 	* Copyright (c) , IT-Master GmbH, All rights reserved
-	*******************************************************************************/
-	
+	********************************************************************************
 	// -----------------------------------------------------------------------------
 	// idtime - Stempelzeit via Direkt-URL eintragen, z.B. ID oder
 	//          komplette URL von einem Barcode-Scanner
@@ -32,16 +31,15 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	//          Wenn das "secret" hier geändert wird, muss es auch in
 	//          ./include/idtime-generate.php angepasst werden!
 	//
-	$idtime_secret = 'CHANGEME'; // [./0-9A-Za-z] Mehr als 21 Zeichen führen dazu, dass das Benutzer-Passwort nicht mehr in die ID-Generierung einfließt.	// -----------------------------------------------------------------------------
+	$idtime_secret = 'CHANGEME'; // [./0-9A-Za-z] Mehr als 21 Zeichen führen dazu, dass das Benutzer-Passwort nicht mehr in die ID-Generierung einfließt.	
+	// -----------------------------------------------------------------------------
 	// Benutzerdaten in Array ( ID => Pfad ) lesen:
-	//
 	$_stempelid = array();
 	$fp = @fopen('./Data/users.txt', 'r');
 	@fgets($fp); // erste Zeile überspringen
 	while (($logindata = fgetcsv($fp, 0, ';')) != false) {
 		if(isset($_GET['rfid'])) {
 			if(@$logindata[3]==@$_GET['rfid']){
-				//echo "<hr>$logindata[3] $logindata[0]<hr>";
 				$user = $logindata[0];
 			}
 		}elseif(isset($_GET['id'])){
@@ -49,12 +47,10 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 			$ID = substr($hash, 0, 16);
 			$_stempelid[$ID] = $logindata[0];
 			}
-		
 	}
 	fclose($fp);
 	// -----------------------------------------------------------------------------
 	// Übergebene ID Benutzer zuordnen und Stempelzeit eintragen:
-	//
 	if (isset($_GET['id'])) {
 		$ID = substr($_GET['id'], 0, 16);
 		echo $_stempelid[$ID];
@@ -71,7 +67,6 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 		}
 		else txt("Fehler – unbekannte ID!", false);
 	}elseif(isset($_GET['rfid'])){
-		//echo "<hr>$user<hr>";
 		if(isset($user)){
 			$_timestamp = time();
 			$_zeilenvorschub= "\r\n";

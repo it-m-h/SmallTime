@@ -2,20 +2,16 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.86
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-
-//echo "<hr>". $_settings->_array[13][0] . $_settings->_array[13][1] . $_settings->_array[13][2] ."<hr>";
-
 if($_settings->_array[13][1]){
 	get_gruppen();
 }else{
 	echo $_infotext02;
 }
-
 function get_gruppen(){
 	global $_groups;
 	global $_grpwahl;
@@ -23,7 +19,7 @@ function get_gruppen(){
 	$y=1;
 	$breite = round((100 / count($_groups->_array)),1);
 	foreach($_groups->_array as $_group){
-		// Administratorengruppe nicht anzeigen, dann sit $y ==1
+		// Administratorengruppe nicht anzeigen, dann ist $y ==1
 		if($y>1){
 			//$_group = explode(";", $_group);
 			if($_grpwahl==-1)$_grpwahl = 1;

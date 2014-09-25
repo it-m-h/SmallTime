@@ -2,13 +2,13 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.894
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
-// PDF erstellen mit merhreren Stempelzeiten und Kommentaren auf gleicher Seite
+// PDF erstellen mit mehreren Stempelzeiten und Kommentaren auf gleicher Seite
 // ----------------------------------------------------------------------------
 function erstelle_neu($_drucktime){
         global $_user;
@@ -32,7 +32,7 @@ function erstelle_neu($_drucktime){
                 $_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell,$_time->_timestamp);
         }
 
-        // Neues PDF erstellen
+        // PDF erstellen
         $pdf=new PDF();
         // Schrift auf Fett stellen (B)
         $pdf->SetFont('Arial','B',10);
@@ -52,9 +52,9 @@ function erstelle_neu($_drucktime){
         $pdf->Ln();
         $pdf->Ln(1);
         // -------------------------------------------------------------------------
-        // Monatsveränderungen - Berechnungen und anzeige
+        // Monatsveränderungen - Berechnungen und anzeigen
         // -------------------------------------------------------------------------
-        //Hintergrund weiss setzten und Schriftart Arial, normal , 10px
+        // Hintergrund weiss setzten und Schriftart Arial, normal , 10px
         $_ferien=0;
         $_absenzenvorhanden =0;
         $_ftxt = "";
@@ -73,7 +73,7 @@ function erstelle_neu($_drucktime){
                         $_absenzenvorhanden=1;
                 }
         }
-        //$_ferienstart = $_jahr->_saldo_F+$_ferien;
+        // $_ferienstart = $_jahr->_saldo_F+$_ferien;
         $_ferienstart =0;
         $_ferienstart = round($_jahr->_saldo_F,2);
         $_ferienstart = $_ferienstart+ round($_ferien,2);
@@ -166,7 +166,7 @@ function erstelle_neu($_drucktime){
                                 $tmp = $tmp . $trenn;
                                 $tmp = $tmp . $zeile[12][$x];
                         }
-                        $pdf->Cell(72,5,$tmp,1,'','L','1'); //stempelzeiten in einer Schleife....
+                        $pdf->Cell(72,5,$tmp,1,'','L','1'); 	// Stempelzeiten in einer Schleife....
                         if($zeile[13]==0)$zeile[13]="";
                         $pdf->Cell(13,5,$zeile[13],1,'','C','1');
                         if($zeile[20]==0 && $zeile[13]==0)$zeile[20]="";
@@ -240,7 +240,6 @@ function erstelle_neu($_drucktime){
                 $pdf->Cell(11,5,'',0,'','C');
                 $pdf->Cell(178,5,$datum,0,'','L');
         $pdf->Ln();
-        //echo '..............................'.$_user->_ordnerpfad.' - '.date("Y.m", $_time->_timestamp).'<br>';
         //$pdf->_checkoutput();
         $pdf->Output("./Data/".$_user->_ordnerpfad."/Dokumente/".date("Y.m", $_time->_timestamp).".pdf");
 }

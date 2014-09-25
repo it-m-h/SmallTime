@@ -2,13 +2,12 @@
 /*******************************************************************************
 * Rapport
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_rapport{
-	
 	function __construct(){	
 	}
 	function __destruct(){
@@ -36,11 +35,9 @@ class time_rapport{
 			$_txt = "Rapport f&uuml;r den " . date("d.m.Y",$_timestamp). "\n-";
 			$_txt = "";
 		}else{
-			//$_txt = file($_file);
 			$_txt = file_get_contents($_file);
 		}
 		return $_txt;
 	}
-	
 }
 ?>

@@ -2,22 +2,22 @@
 /********************************************************************************
 * Small Time - Plugin - Kalender als XLS ausgeben
 /*******************************************************************************
-* Version 0.88
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-$_datenarr=array();
-$_farbe = array();
-$_datenarr[0][0] = "ID";
-$_farbe[0][0] = "95ade8";
-$_datenarr[0][1] = "Name";
-$_farbe[0][1] = "95ade8";
-$_datenarr[0][2] = "Total - Std.";
-$_farbe[0][2] = "95ade8";
-$_datenarr[0][3] = "Jahres - Std.";
-$_farbe[0][3] = "d89696";
-$_benutzer = file("./Data/users.txt");
+$_datenarr		= array();
+$_farbe 			= array();
+$_datenarr[0][0] 	= "ID";
+$_farbe[0][0] 		= "95ade8";
+$_datenarr[0][1] 	= "Name";
+$_farbe[0][1] 		= "95ade8";
+$_datenarr[0][2] 	= "Total - Std.";
+$_farbe[0][2] 		= "95ade8";
+$_datenarr[0][3] 	= "Jahres - Std.";
+$_farbe[0][3] 		= "d89696";
+$_benutzer 		= file("./Data/users.txt");
 unset($_benutzer[0]);
 $i=1;
 foreach($_benutzer as $string){	
@@ -43,7 +43,6 @@ foreach($_benutzer as $string){
 		$tmparr = file($_file_abstxt);
 		foreach($tmparr as $zeile){
 			$spalte = explode(";", $zeile);
-			//$abstxt[] = $spalte[1];
 			//-------------------------------------------------------------------------------------------
 			// Spaltenüberschriften Absenzen
 			//-------------------------------------------------------------------------------------------

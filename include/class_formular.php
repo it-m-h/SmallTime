@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time Formulargenerator
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -13,13 +13,10 @@ class Formular{
 	public $action;
 	public $method;
 	public $result;
-	
-	
 	function __construct($action, $method){
 		$this->action 		= $action;
 		$this->method 	= $method;
 	}
-	
 	// Formular erstellen
 	function get(){	
 		$result = '<form method='.$this->method.' action='.$this->action.'>';
@@ -93,6 +90,7 @@ class Formular_old{
 	}
 	
 	function AddInput($beschreibung="", $type="", $editor, $name="", $value="", $size=null) {
+		// TODO : ckeditor fehlt,  ev. Probleme mit sonderzeichen, darum entfernt
 		if($editor == true){
 			$editor = new CKEditor();
 			$editor->basePath = 'ckeditor/';
@@ -130,7 +128,7 @@ class Formular_old{
 	 public function getmethod() {
 			 return $this->method;
 	}
-	// Formular erstellen
+	// Formular ausgeben
 	function ausgeben($toReturn=false)
 	{	
 		$result = "<form method=\"$this->method\" action=\"$this->action\">";

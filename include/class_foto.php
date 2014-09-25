@@ -2,13 +2,11 @@
 /*******************************************************************************
 * Fotoklasse , verkleinert das Bild
 /*******************************************************************************
-* Version 0.8
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-
-
 class foto{
         //Speicherorte der Bilder
         public $BildPfad;
@@ -21,7 +19,7 @@ class foto{
         private $ServerBildName;
 
         function __construct($BildName,$BildBreite, $BildHoehe){
-                //Pfade setzten
+                //Pfade setzen
                 $this->BildName	= $BildName;
 		$BildDestBreite	= $BildBreite;
 		$BildDestHoehe	= $BildHoehe;

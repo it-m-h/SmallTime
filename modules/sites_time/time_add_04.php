@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.873
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -69,15 +69,11 @@ $(function() {
                 </tr>
                 <tr>
                         <td class=td_background_heute align=left width="50%" align="center">
-                        	<!--<input type='submit'  name='absenden' value='CANCEL' > !-->
                         </td>
                         <td class=td_background_heute align=left width="50%" align="center">
                             	<input type="submit" name="absenden" value="OK" >
                         </td>
                 </tr>
-                        
-      
-        
 <?php }else{ ?>
                 <tr>
                         <td class=td_background_wochenende align=left>Zeit : (Stunde:Minute)</td>
@@ -115,9 +111,5 @@ $(function() {
                         </td>
                 </tr>                
 <?php } ?>	
-        </table>
-        
-
-        
-        
+        </table>     
 </Form>

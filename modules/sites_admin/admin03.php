@@ -2,20 +2,15 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<table width=100% border=0 cellpadding=5 cellspacing=1>";
-//echo "<tr>";
-//echo "<td class=td_background_top width=100 align=left>&nbsp;</td>";
-//echo "<td colspan=5 class=td_background_top align=left>&nbsp;</td>";
-//echo "</tr>";
 $_file = "./Data/users.txt";
 $_benutzer = file($_file);
 unset($_benutzer[0]);
-//unset($_benutzer[1]);
 $i=1;
 foreach($_benutzer as $string){
 	$string = explode(";", $string);
@@ -23,33 +18,21 @@ foreach($_benutzer as $string){
 	echo "<tr>";
 	if($_user->_loginname == $string[1]){
 		echo "<td class='td_background_info' width=100 align=left>";
-		//echo $_user->_loginname.$string[1];
 	}else{
 		echo "<td class='td_background_top' width=100 align=left>";
-		//echo $_user->_loginname.$string[1];
 	}
 	echo "<a title='Userdaten anzeigen von diesem Monat' href='?action=user_personalkarte&admin_id=".$i."'><img src='images/icons/user.png' border=0> ";
 	echo "Nr. ". $i . " / " ;
-	//echo $string[1];
-	//echo "<br>";
 	echo $_userdaten_tmp[0];
 	echo "</a>";
-	//echo '</td><td class="td_background_top" align="center">';
-	//$openseite = "'admin04_personalkarte'";
-	//echo '<img border="0" title="Info" src="images/icons/information.png" onclick="opendetails('.$openseite.')"></img>';
-	
 	//-----------------------------------------------------------------------------
 	// menue
-	//-----------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------
-	// Löschen
 	//-----------------------------------------------------------------------------
 	if($i > 1){
 		$tmpstr= "<span class='btn'><a title='L&ouml;schen eines Users' href='?action=delete_user&delete_user_id=".$i."'><img src='images/icons/delete.png' border=0></a></span>";
 	}else{
 		$tmpstr= "";
 	}	
-	//echo $_action;
 	echo "</td></tr><tr><td>";
 	echo "
 	<div class='btn-group'>
@@ -107,46 +90,29 @@ if($show_user){
 	//-----------------------------------------------------------------------------
 	// Anzeige der Summen aus Statistik
 	//-----------------------------------------------------------------------------
-
 	echo "<table class='table' border=0 cellpadding=3 cellspacing=1>";
-
 	echo "<tr>";
 	echo "<td class='td_background_top' align=left colspan=2>Mitarbeiterdaten</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Name</td>";
 	echo "<td class=td_background_tag align=left>$_user->_name</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Start - Datum</td>";
 	echo "<td class=td_background_tag align=left>".date("d.m.Y",$_user->_BeginnDerZeitrechnung)."</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Anstellung</td>";
 	echo "<td class=td_background_tag align=left>$_user->_SollZeitProzent %</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Sollstd. / Wo</td>";
 	echo "<td class=td_background_tag align=left>$_user->_SollZeitProWoche h</td>";
 	echo "</tr>";
-
-
 	echo "<tr>";
 	echo "<td class='td_background_top' align=left colspan=2>Aktuelle Total - Saldi</td>";
 	echo "</tr>";
-
-	/*
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100>Vorholzeit</td>";
-	echo "<td class=td_background_tag >$user->_Vorholzeit_pro_Jahr h</td>";
-	echo "</tr>";
-	
-	*/
-	
 	if($_user->_modell==2) {
 	$str = "Monatssaldo";
 }elseif($_user->_modell==1) {
@@ -154,45 +120,36 @@ if($show_user){
 }else {
 	$str = "Zeitsaldo";
 }
-
-
 	echo "<tr>";
 	echo "<td class='alert";
 	echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
 	echo "' align=left>".$str."</td>";
 	echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class='alert";
 	echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
 	echo "' align=left>Feriensaldo</td>";
 	echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class='td_background_top' align=left colspan=2>Monats - Summen</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Monat&nbsp;</td>";
 	echo "<td class=td_background_tag align=left>";
 	echo $_time->_monatname . " ". $_time->_jahr. "</td>";
 	echo "</tr>";
-
-
 	echo "<tr>";
 	echo "<td class='alert";
 	echo $_monat->_SummeSaldoProMonat >= 0 ? " alert-success" : " alert-error";
 	echo "' align=left>Saldo</td>";
 	echo "<td class=td_background_tag align=left>$_monat->_SummeSaldoProMonat Std.</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Soll</td>";
 	echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
 	echo "</tr>";
-
 	//-------------------------------------------------------------------------
 	// Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
 	//-------------------------------------------------------------------------
@@ -209,7 +166,6 @@ if($show_user){
 	echo "</table>";
 }
 
-
 $_show_userdata=false;
 if($_show_userdata){
 	//-----------------------------------------------------------------------------
@@ -217,30 +173,24 @@ if($_show_userdata){
 	//-----------------------------------------------------------------------------
 	echo "<hr>";
 	echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
-
 	$_temp = explode(";", $_users[$_userid]);
 	$_SESSION['admin']= $_temp[0];
-
 	echo "<tr>";
 	echo "<td class=td_background_info width=100 align=left>$_userid</td>";
 	echo "<td class=td_background_wochenende align=left>".$_SESSION['admin']." &nbsp;</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag width=100 align=left>Name</td>";
 	echo "<td class=td_background_tag align=left>$_userdaten[0]</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag width=100 align=left>Start - Datum</td>";
 	echo "<td class=td_background_tag align=left>".date("d.m.Y",$_userdaten[1])."</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag width=100 align=left>Anstellung</td>";
 	echo "<td class=td_background_tag align=left>".$_userdaten[2]." %</td>";
 	echo "</tr>";
-
 	echo "<tr>";
 	echo "<td class=td_background_tag width=100 align=left>Sollstd. / Wo</td>";
 	echo "<td class=td_background_tag align=left>".($_userdaten[3]*$_userdaten[2]/100)." h</td>";
@@ -249,7 +199,6 @@ if($_show_userdata){
 	echo "<td class=td_background_tag width=100 align=left>Monat&nbsp;</td>";
 	echo "<td class=td_background_tag align=left>".$_monate[date("n", $_timestamp)] ." ".date("Y", $_timestamp)."</td>";
 	echo "</tr>";
-
 	if(!$_SummeSollProMonat==0){
 		echo "<tr>";
 		echo "<td class=td_background_tag width=100 align=left>Soll / Monat</td>";
@@ -282,5 +231,4 @@ if($_show_userdata){
 	}
 	echo "</table>";
 }
-//echo $_copyright;
 ?>

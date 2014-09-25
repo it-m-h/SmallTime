@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.89
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -17,7 +17,6 @@
 				echo "    <select name='_grund' size='1'>\n";
 				foreach($_absenz->_filetext as $_tmp){
 					$_tmp = explode(";", $_tmp);
-					//print_r ($_tmp);
 					echo "       <option value='$_tmp[1]'>$_tmp[0]</option>\n";
 				}
 				echo "      </select>\n";

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -43,7 +43,6 @@ function getinfotext($str,$css){
 	$_infotext .= "</td></tr></table>";	
 	return $_infotext;
 }
-
 // ----------------------------------------------------------------------------
 // Berechtigung, für Userzugriff auf PDF
 // ----------------------------------------------------------------------------
@@ -66,13 +65,10 @@ function check_htaccess_pdf($datenpfad){
 		$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" .$datenpfad.";htaccess nicht vorhanden, wurde erstellt.");
 	}
 }
-
 // ----------------------------------------------------------------------------
 // Meldungen in die Datei schreiben
 // ----------------------------------------------------------------------------
-
 function check_htaccess($_file,$_rwo,$_text){
-	//$_file = "./Data/".$datenpfad."/Dokumente/.htaccess";
 	if(!file_exists($_file)){
 		$_zeilenvorschub = "\r\n";
 		$fp = fopen($_file,"a+");
@@ -94,11 +90,9 @@ function check_htaccess($_file,$_rwo,$_text){
 		$_debug->insert_line("Time;".$_datetime.";Fehler in;".$_file.";".$_text);
 	}
 }
-
 // ----------------------------------------------------------------------------
 // Stunden oder Dezimal anzeigen
 // ----------------------------------------------------------------------------
-
 function dec2time($number, $format = "%h:%i"){
 	$h = floor($number);
 	$i = ($number - $h) * 60;
@@ -107,15 +101,12 @@ function dec2time($number, $format = "%h:%i"){
 	$format = preg_replace("/%i/", $i, $format);
 	return $format;
 }
-
 // ----------------------------------------------------------------------------
 // Funktionen für Debug
 // ----------------------------------------------------------------------------
-
 function txt($txt){
 	echo "<p style='color:red'>$txt</p>";
 }
-
 function showController($c){
 	$cVars = get_class_vars(get_class($c));
 	foreach($cVars as $cname => $cvalue){
@@ -141,7 +132,6 @@ function showClassVar($class){
 		}else{
 			echo "<p style='color:blue'>" . $class->$name . "</p></td></tr>";
 		}
-
 	}
 	echo '<tr><td colspan=3><strong>'.get_class($class).' - Methoden:</strong></td><tr>';
 	$aMethods = get_class_methods(get_class($class));
@@ -155,8 +145,6 @@ function showClassVar($class){
 	echo '</p>';
 	echo "</table>";
 }
-
-
 function monatskalender($tmp){
 	global $_color ;
 	$_ausgabe = "";

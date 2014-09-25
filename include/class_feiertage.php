@@ -2,20 +2,20 @@
 /*******************************************************************************
 * Feiertage für das gewählte Jahr
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_feiertage
 {
-	public	$_w_jahr = NULL;
-	public	$_country = NULL;
-	public	$_easter = NULL;
+	public	$_w_jahr 	= NULL;
+	public	$_country 	= NULL;
+	public	$_easter 	= NULL;
 	public	$_feiertageUSER = NULL;
-	public  $_feiertage = array();	//Feiertage die gültig sind
-	private $_defineFT = array();	// definition der Feiertage
-	private $_file = "./include/Settings/feiertage.txt";
+	public  	$_feiertage 	= array();			// Feiertage die gültig sind
+	private 	$_defineFT 	= array();			// definition der Feiertage
+	private 	$_file 		= "./include/Settings/feiertage.txt";
 	function __construct($_w_jahr, $_country, $_feiertageUSER)
 	{
 		$this->_w_jahr = $_w_jahr;
@@ -24,8 +24,6 @@ class time_feiertage
 		$this->_easter = $this->easter2($_w_jahr);
 		$this->_defineFT = $this->defineFeiertag($_w_jahr, $_country);
 		$this->_feiertage = $this->getFeiertage($_w_jahr,$_country);
-
-
 	}
 	function __destruct()
 	{
@@ -56,7 +54,6 @@ class time_feiertage
 	}
 	function easter($year = null)
 	{
-		//if(is_null($year)) $year = $this->getYear();
 		if(strlen(strval($year)) == 2){
 			if($year < 70) $year += 2000;
 			else $year += 1900;
@@ -69,7 +66,6 @@ class time_feiertage
 	}
 	function easter2($year)
 	{
-		//if(is_null($year)) $year = $this->getYear();
 		if(strlen(strval($year)) == 2){
 			if($year < 70) $year += 2000;
 			else $year += 1900;

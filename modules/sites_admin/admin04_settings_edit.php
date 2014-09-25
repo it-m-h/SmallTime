@@ -2,38 +2,54 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.893
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 $active 	= '  class="active"';
-$fade 	= ' active in';
-$s01 	= $active;
-$s011 	= $fade;
-$s02 	= '';
-$s021 	= '';
-$s03 	= '';
-$s031 	= '';
-if(isset($_GET['menue'])){
-	if($_GET['menue'] == "multilogin"){
-		$s01 	= '';
-		$s011 	= '';;
-		$s02 	= $active;	
-		$s021 	= $fade;
-	}elseif($_GET['menue'] == "logoundfarben"){
-		$s01 	= '';
-		$s011 	= '';;
-		$s03 	= $active;	
-		$s031 	= $fade;
+$fade  	= ' active in';
+$s01    	= $active;
+$s011   	= $fade;
+$s02    	= '';
+$s021   	= '';
+$s03    	= '';
+$s031   	= '';
+if(isset($_GET['menue']))
+{
+	if($_GET['menue'] == "multilogin")
+	{
+		$s01 = '';
+		$s011= '';;
+		$s02 = $active;
+		$s021= $fade;
+	}
+	elseif($_GET['menue'] == "logoundfarben")
+	{
+		$s01 = '';
+		$s011= '';;
+		$s03 = $active;
+		$s031= $fade;
 	}
 }
 ?>
 <div id="kn">
 	<ul id="myTab" class="nav nav-tabs">
-		<li<?php echo $s01; ?>><a data-toggle="tab" href="#s1"><img src="./images/icons/cog_go.png" alt="" /> Settings</a></li>
-		<li<?php echo $s02; ?>><a data-toggle="tab" href="#s2"><img src="./images/icons/cog_go.png" alt="" /> Multilogin</a></li>
-		<li<?php echo $s03; ?>><a data-toggle="tab" href="#s3"><img src="./images/icons/cog_go.png" alt="" /> Logo</a></li>
+		<li<?php echo $s01; ?>>
+			<a data-toggle="tab" href="#s1">
+				<img src="./images/icons/cog_go.png" alt="" /> Settings
+			</a>
+		</li>
+		<li<?php echo $s02; ?>>
+			<a data-toggle="tab" href="#s2">
+				<img src="./images/icons/cog_go.png" alt="" /> Multilogin
+			</a>
+		</li>
+		<li<?php echo $s03; ?>>
+			<a data-toggle="tab" href="#s3">
+				<img src="./images/icons/cog_go.png" alt="" /> Logo
+			</a>
+		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div id="s1" class="tab-pane fade<?php echo $s011; ?>">

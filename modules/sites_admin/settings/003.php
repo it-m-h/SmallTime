@@ -2,14 +2,13 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.893
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if(@$_POST['upload']=="Hochladen"){	
 	$uploaddir = './images/';
-	//$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 	$uploadfile = $uploaddir . 'smalltime.jpg';
 	if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
 		$bildtemp = $_template->get_templatepfad() . "./images/smalltime.jpg";
@@ -18,7 +17,6 @@ if(@$_POST['upload']=="Hochladen"){
 		}
 	}	 
 }
-
 ?>
 <form  enctype="multipart/form-data" method="POST" action="?action=settings&menue=logoundfarben">
 	<table width="100%" border="0">

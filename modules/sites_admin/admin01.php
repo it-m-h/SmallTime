@@ -2,13 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Settings des Templates mit Bootstrap
-//echo "--".$_template->_bootstrap."--<br>";
 if (strstr($_template->_bootstrap,'true')){
 ?>
 	<ul class="nav nav-tabs adminmenu">    
@@ -23,7 +22,9 @@ if (strstr($_template->_bootstrap,'true')){
                 <li<?php echo $_action=="idtime-generate" ?  ' class="active"':''; ?>><a id="Codes" title="QR-Codes" href="?action=idtime-generate">QR-Codes</a></li>
                 <li<?php echo $_action=="logout" ?  ' class="active"':''; ?>><a id="Logout" title="Logout" href="?action=logout">Logout</a></li>
         </ul>
-<?php }else{ ?>
+<?php 
+//TODO : Template ohne Bootstrap -> löschen
+}else{ ?>
 	<div class="pagination">
 	<ul>
 		<li><a id="Home" title="Home" href="?action=anwesend">Home</a></li>

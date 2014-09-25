@@ -2,13 +2,11 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.874
+* Version 0.896
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-?>
-<?php
 // ----------------------------------------------------------------------------
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
@@ -36,10 +34,8 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		// Settings Einstellungen - Anzahl Tage zurück editierbar für User
 		//-------------------------------------------------------------------------
 		$edit = $_time->edit_accept($_monat->_MonatsArray[$z][0],$_settings->_array[23][1]);
-
-
 		//-------------------------------------------------------------------------
-		//Feiertag - Textanzeige
+		// Feiertag - Textanzeige
 		//-------------------------------------------------------------------------
 		if($_monat->_MonatsArray[$z][6]<>""){
 			$_txt0 = "<img title='".$_monat->_MonatsArray[$z][6]."' src='images/icons/bullet_star.png' border=0>";
@@ -57,12 +53,12 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		if($_settings->_array[15][1]==1 && $edit) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
 		if($_settings->_array[15][1]==1 && !$edit) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
 		//-------------------------------------------------------------------------
-		// Falls User mehrere zeiten eintragen darf - anzeigen
+		// Falls User mehrere Zeiten eintragen darf - anzeigen
 		//-------------------------------------------------------------------------
 		if($_settings->_array[16][1]==1 && $edit) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
 		if($_settings->_array[16][1]==1 && !$edit) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
 		//-------------------------------------------------------------------------
-		// Stempelzeiten anzeigen mit Link zum editieren falls in den Settings true
+		// Stempelzeiten anzeigen mit Link zum editieren falls in den Settings aktiviert
 		//-------------------------------------------------------------------------
 		echo " <td ". $_monat->_MonatsArray[$z][30]." align = left>";
 		$tmp = "";
@@ -107,7 +103,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		}
 		echo "</td>\n";
 		//-------------------------------------------------------------------------
-		// Absenzen enzeigen
+		// Absenzen anzeigen
 		//-------------------------------------------------------------------------
 		if($_settings->_array[17][1] && $edit){
 			echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";	
@@ -125,7 +121,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 			</tr>
 			</table>\n";
 		}
-		//-------------------------------------------------------------------------
 		echo " </td>\n";	
 		//-------------------------------------------------------------------------
 		// Rapport editieren oder erstellen
@@ -138,7 +133,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		}
 		echo " </tr>\n";	
 	}
-
 	//-------------------------------------------------------------------------
 	// Fusszeile mit den Summen
 	//-------------------------------------------------------------------------

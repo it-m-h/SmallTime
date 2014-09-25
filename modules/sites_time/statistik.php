@@ -2,13 +2,11 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-?>
-<?php
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
 echo "	<tr>";
 echo "		<td class=td_background_top width=100 align=left colspan=2>Mitarbeiterdaten</td>";
@@ -32,12 +30,6 @@ echo "	</tr>";
 echo "	<tr>";
 echo "		<td class=td_background_top width=100 align=left colspan=2>Summen total</td>";
 echo "	</tr>";
-/*
-echo "	<tr>";
-echo "		<td class=td_background_tag width=100>Vorholzeit</td>";
-echo "		<td class=td_background_tag >$user->_Vorholzeit_pro_Jahr h</td>";
-echo "	</tr>";
-*/
 echo "	<tr>";
 echo "		<td class=td_background_info width=100 align=left>Zeitsaldo</td>";
 echo "		<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";

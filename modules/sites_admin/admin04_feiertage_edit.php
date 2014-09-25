@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.83
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -20,14 +20,9 @@ echo '<td class="td_background_top">';
 echo 'Datum (Tag.Monat)';
 echo '</td>';
 echo '</tr>';
-
-//$_userdaten = file("./include/Settings/feiertage.txt");
-//print_r($_userdaten);
-
-$i=0;
-foreach($_feiertage->get_firmenfeiertage() as $_eintrag){	
-	//$_eintrag = explode(";", $_eintrag);	
-	//$_datum = date('d.n', $_eintrag[1]);
+$i = 0;
+foreach($_feiertage->get_firmenfeiertage() as $_eintrag)
+{
 	echo '<tr>';
 	echo '<td class="td_background_tag"widht=20>';
 	echo '<a title="delete" href="?action=feiertage&del='.$i.'"><img src="images/icons/delete.png" border=0> delete</a>';
@@ -39,9 +34,8 @@ foreach($_feiertage->get_firmenfeiertage() as $_eintrag){
 	echo '<input type="text" name="v'.$i.'" value="'.$_eintrag[1].'">';
 	echo '</td>';
 	echo '</tr>';
-	$i++;		
+	$i++;
 }
-//$i++;
 echo '<tr>';
 echo '<td class="td_background_tag" widht=20>';
 echo '<img src="images/icons/add.png" border=0>';
@@ -53,7 +47,7 @@ echo '<td class="td_background_tag">';
 echo '<input type="text" name="v'.$i.'" value=""> <img src="images/icons/information.png" title="Eingabe: Tag.Monat" border=0>';
 echo '</td>';
 echo '</tr>';
-//$i;		
+
 echo '<tr>';
 echo '<td class="td_background_top" align=center colspan=3>';
 echo '<input type="hidden" name="anzahl" value="'.$i.'" titel="anzahl">';

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.88
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -44,7 +44,9 @@ if (strstr($_template->_bootstrap,'true')){
 </div>
 <div class="clearfix"></div> 
 
-<?php }else{ ?>
+<?php 
+//TODO : Template ohne Bootstrap -> löschen
+}else{ ?>
 <table width='390' height='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='middle'>
 		</td><td valign='middle' align='right'>
 			<img src='images/icons/calendar_view_month.png' border=0>

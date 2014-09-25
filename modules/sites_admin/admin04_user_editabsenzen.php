@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -24,7 +24,6 @@
 				? % wird von der Firma &uumlbernommen
 			</td>
 		</tr>
-		
 		<?php
 		$i=0;
 		foreach($_user->get_user_absenzen() as $string){

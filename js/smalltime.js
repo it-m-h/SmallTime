@@ -1,10 +1,5 @@
  $( document ).ready(function() {
 		console.log( "document loaded" );
-                
-		//Test -------------------------------------------
-		//$('#div_user04').on("click", "a", function() {
-		//       alert($(this).attr('text'));
-		//});
 	});
 
 
@@ -44,10 +39,3 @@ function RapportMouseout(){
 	console.log( "Rapport onmouseout" );
 	document.getElementById('InfoBox').style.visibility = "hidden";
 }
-
-function smalltime(){
-	alert("es geht");
-}
-
-
-

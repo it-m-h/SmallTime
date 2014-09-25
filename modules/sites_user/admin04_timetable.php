@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.874
+* Version 0.896
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -30,7 +30,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 	</tr>
 	<?php
 	for($z=1; $z< count($_monat->_MonatsArray); $z++){
-
 		//-------------------------------------------------------------------------
 		//Feiertag - Textanzeige
 		//-------------------------------------------------------------------------
@@ -68,7 +67,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 				$tmp = $tmp . ' '.$_monat->_MonatsArray[$z][12][$x].' ';
 			}
 		}
-
 		$tmp = $tmp . " ". $_monat->_MonatsArray[$z][35] . " " . $_monat->_MonatsArray[$z][36];
 		//-------------------------------------------------------------------------
 		// Anzeige von Zeit fehlt, wenn ungerade Stempelzeiten
@@ -126,7 +124,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		}
 		echo " </tr>\n";	
 	}
-
 	//-------------------------------------------------------------------------
 	// Fusszeile mit den Summen
 	//-------------------------------------------------------------------------
@@ -151,7 +148,9 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		?>
 	</tr>
 </table>
-<?php if(strstr($_template->_modal,'true')){ ?>
+<?php 
+//TODO : Template ohne Bootstrap -> löschen
+if(strstr($_template->_modal,'true')){ ?>
 	<script type="text/javascript">
 		$('#div_user04 a').click(function(e){
 				e.preventDefault();

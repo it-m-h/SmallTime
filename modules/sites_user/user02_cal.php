@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.891
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-
+//TODO : Template ohne Bootstrap -> löschen
 if(strstr($_template->_bootstrap,'true')){
 	$i=1;
 	$monate = explode(";",$_settings->_array[11][1]);

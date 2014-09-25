@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.877
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -19,7 +19,7 @@ if(file_exists ("./include/Settings/multilogin.xml")){
 	$multilogin= simplexml_load_file("./include/Settings/multilogin.xml");
 }
 setGuest();
-// Falls Eingeloogt, dann User - Einstellungen laden 
+// falls eingeloogt, dann User - Einstellungen laden 
 if(isset($_SESSION['admin'])){ setUser();}
 // admin-Pannel? (admin.php), dann Admin - Einstellungen laden
 if($_logcheck->_admins && isset($_SESSION['admin'])){ setAdmin();}
@@ -129,7 +129,7 @@ function setAdmin(){
 
 }
 
-//Settings - Einstellungen : Anwesenheitsliste anzeigen
+//vSettings - Einstellungen : Anwesenheitsliste anzeigen
 if($_settings->_array[13][1] OR $_SESSION['admin']){
 	//template unsterstützt Bootstrap
 	if(strstr($_template->_bootstrap,'true')){
@@ -152,19 +152,19 @@ if($_settings->_array[13][1] OR $_SESSION['admin']){
 				$alertclass = $anwesend ? "alert alert-error" : "alert alert-error";
 			}
 			echo '<tr>';
-			//Miratbeiter - Bild anzeigen
+			// Mitarbeiter - Bild anzeigen
 			if($_ShowUserPic){
 				if(file_exists("./Data/".$_group->_array[2][$_grpwahl][$x]."/img/bild.jpg")){
 					echo '<td class="'.$alertclass.'" width="50">';
-					echo '<img src="./Data/' . $_group->_array[2][$_grpwahl][$x] . '/img/bild.jpg" alt="" width="50"/>';
+					echo '<img src="./Data/' . $_group->_array[2][$_grpwahl][$x] . '/img/bild.jpg" alt="" width="50" />' ;
 					echo '</td>';
 				}else{
 					echo '<td class="'.$alertclass.'" width="50">';
-					echo '<img src="./images/ico/user-icon.png" alt="" width="50"/>';
+					echo '<img src="./images/ico/user-icon.png" alt="" width="50" />';
 					echo '</td>';
 				}
 			}	
-			//Mitarbeitername
+			// Mitarbeiter - Name
 			if($_ShowUsername){
 				echo '<td class="'.$alertclass.'">';
 				echo $_group->_array[4][$_grpwahl][$x];
@@ -194,6 +194,7 @@ if($_settings->_array[13][1] OR $_SESSION['admin']){
 			echo '</tr>';
 		}
 		echo '</table>';			
+	// TODO : Template ohne Bootstrap -> löschen
 	}else{
 		if(!isset($_SESSION['admin'])){
 			//-------------------------------------------------------------------------------------------------------------
@@ -253,4 +254,5 @@ if($_settings->_array[13][1] OR $_SESSION['admin']){
 }else{
 	echo $_infotext04;
 }
+$_group = NULL;
 ?>

@@ -2,27 +2,23 @@
 session_start();
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
-//header("Content-Type: text/html; charset=iso-8859-1"); 
 header("Content-Type: text/html; charset=utf-8"); 
 error_reporting(E_ALL ^ E_NOTICE);
-
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-	
-	
 $login = false;
 if(isset($_GET['rfid'])){	
 	// Mac Adresse = RFID
 	// in den Settings einzustellen bei jedem Mitarbeiter, damit er mit seinem Android - Gerät stempeln kann
 	$rfid =$_GET['rfid'];
 	// Test ohne rfid
-	//$rfid = bcf5acfaf028;
+	// $rfid = bcf5acfaf028;
 	// ----------------------------------------------------------------------------------------------
 	// Benutzerdaten in Array ( RFID => Pfad ) lesen:
 	// Mac - Adresse des Gerätes ist die RFID
@@ -76,48 +72,7 @@ if($login){
 	$_user->load_data_session();
 	$_absenz = new time_absenz($_user->_ordnerpfad, $_time->_jahr);	
 	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
-	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
-	
-	// ----------------------------------------------------------------------------------------------
-	// Debugg - Ionformationen
-	// ----------------------------------------------------------------------------------------------
-	// 3 = USER - Daten anzeigen
-	// 4 = TIME - Daten anzeigen
-	// 5 = Monat - Daten anzeigen
-	// 6 = Jahres - Daten anzeigen
-	// 9 = alle Variablen anzeigen lassen
-	// eingabe : array(3,4,5)
-	$show = array();
-	
-	if(in_array(3,$show)){
-		showClassVar($_users);
-	}
-	if(in_array(4,$show)){
-		showClassVar($_time);
-	}
-	if(in_array(5,$show)){
-		showClassVar($_monat);
-		txt("Daten : \$_monat->_MonatsArray");
-		$zeig = new time_show($_monat->_MonatsArray);
-	}
-	if(in_array(6,$show)){
-		showClassVar($_jahr);
-		txt("Daten : \$_jahr->_data");
-		print_r(array_keys($_jahr->_data));
-		$zeig = new time_show($_jahr->_data);
-		txt("<hr color=red>");
-		txt("Daten : \$_jahr->_array");
-		$zeig = new time_show($_jahr->_array);
-		txt("<hr color=red>");
-	}
-	if(in_array(9,$show)){
-		// Alle Variablen auflisten
-		echo '<pre>';
-		print_r($GLOBALS);
-		echo '</pre>';
-	}
-	
-	
+	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);	
 	// ----------------------------------------------------------------------------------------------
 	// Controller action - Handling
 	// ----------------------------------------------------------------------------------------------	
@@ -165,12 +120,9 @@ function get_var(){
 	global $_absenz;
 	global $_monat;
 	global $_jahr;
-	if(isset($_GET['class']) && isset($_GET['var'])){
-		
+	if(isset($_GET['class']) && isset($_GET['var'])){		
 		if(isset($_GET['arr'])){
 			$koordinaten = explode(",", $_GET['arr']);
-			//echo "array = [" . $koordinaten[0] . "][" . $koordinaten[1]."]";
-			//$string = "";
 			$referenz =&  ${$_GET['class']}->$_GET['var'];
 			$temp =  $referenz[$koordinaten[0]][$koordinaten[1]];
 			if(is_array($temp)){
@@ -179,18 +131,11 @@ function get_var(){
 				}
 			}else{
 				echo $temp;
-			}
-			
-			
-			//print_r($referenz);
-			
-			//echo "\$referenz\";	
-			
+			}	
 		}else{
 			$referenz =&  ${$_GET['class']}->$_GET['var'];
 			echo $referenz;
-		}
-			
+		}		
 	}
 }
 
@@ -234,7 +179,6 @@ function get_tag(){
 	$_zeiten = $_monat->_MonatsArray[$_heute][12];
 	$_anzehlzeiten =  $_monat->_MonatsArray[$_heute][11];
 	$x=0;
-	//echo "Tagesansicht: " . $_monat->_MonatsArray[$_heute][3]. " / " .$_monat->_MonatsArray[$_heute][1]. "." . $_time->_jahr;
 	echo $_monat->_MonatsArray[$_heute][3]. " / " .$_monat->_MonatsArray[$_heute][1]. "." . $_time->_jahr;
 	if($_monat->_MonatsArray[$_heute][11]>0){
 		foreach($_zeiten as $einzel){		
@@ -251,8 +195,6 @@ function get_tag(){
 			echo " - ";
 			echo "Zeit fehlt!";
 		}
-		//echo "\nWork: " . $stempelzeiten = $_monat->_MonatsArray[$_heute][13] . " Std.";
-		//echo "\nSaldo: " . $stempelzeiten = $_monat->_MonatsArray[$_heute][20] . " Std.";
 	}else{
 		echo "\nkeine Stempelzeiten.";
 	}
@@ -264,24 +206,14 @@ function get_statistik(){
 	global $_time;
 	global $_user;
 	global $_jahr;
-	
-	//echo "Hallo : ". trim($_user->_name);
-	//echo "\n";
-	//echo "Zeitsaldo total: ". $_jahr->_saldo_t . " Std.";
-	//echo "\n";
-	//echo "Feriensaldo total: ". $_jahr->_saldo_F . " Tage";
-	//echo "\n";
 	echo "Monats - Summen : ";
-	echo "\n";
-	
+	echo "\n";	
 	echo "Sollstunden : ". $_monat->_SummeSollProMonat . " Std.";
 	echo "\n";
 	echo "Gearbeitet : ". $_monat->_SummeWorkProMonat . " Std.";
 	echo "\n";
 	echo "Saldo : ". $_monat->_SummeSaldoProMonat . " Std.";
-	echo "\n";
-	
-	
+	echo "\n";	
 	if($_monat->_SummeFerien > 0){
 		echo "Ferienbezug : ". $_monat->_SummeFerien  . "  Tage (F)";
 		echo "\n";
@@ -325,6 +257,7 @@ function get_mitarbeiter(){
 		$anwesend = $count_time%2;
 		if($anwesend) $pic = "anw.";else $pic = "----";
 		echo $pic . " | ". $_group->_array[4][$_grpwahl][$x];
+		// TODO : erweitern damit die Mitarbeiter - Liste angezeigt werden kann im Android
 		/*
 		f($anwesend){
 		echo " /  " . $_group->_array[5][$_grpwahl][$x][count($_group->_array[5][$_grpwahl][$x])-1];

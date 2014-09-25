@@ -2,19 +2,13 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if(strstr($_template->_bootstrap,'true')){
-	
-	
-}else{
-	
-}
 //-----------------------------------------------------------------------------
-//Login - Anzeige
+//Login - Formular
 //-----------------------------------------------------------------------------
 $_color['td_background_top']	= "#f9fd9f"; 	//Überschriften
 $_color['td_background_tag']	= "#e3f3dd"; 	//Normal,Arbeitstag

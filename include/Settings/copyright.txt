@@ -13,6 +13,7 @@ Weitere Infos entnehmen Sie bitte unserer Webseite.
 <hr color=#DFDFDF size=1>
 SMALL - Time Version : ##ver##<br>
 PHP - Version : ##phpver##<br>
+Memory : ##memory## MB<br>
 <br>
 IT-Master GmbH<br>
 <a target='_new' href='http://www.it-master.ch'>www.it-master.ch</a><br>

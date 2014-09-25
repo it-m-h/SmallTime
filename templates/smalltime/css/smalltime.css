@@ -1,5 +1,7 @@
 img { 
 	border: none;
+	width: !important;
+	height: !important;
 }
 a img { 
 	border: none;

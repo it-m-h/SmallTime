@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.892
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -33,8 +33,6 @@ class time_filehandle{
 				}
 				$i++;
 			}
-		}else{
-			//echo "File existiert nicht";
 		}	
 	}
 	function mkfile(){
@@ -58,7 +56,6 @@ class time_filehandle{
 		foreach($inhalt as $temp){
 			$temp = explode(";",$temp);
 			if (strstr($temp[1], $name)) return true;
-			//echo "vergleiche : " . $temp[1]." mit ".$name. "<br>";
 			$i++;		
 		}
 		return false;
@@ -76,6 +73,7 @@ class time_filehandle{
 		fputs($fp, $_zeilenvorschub);
 		fclose($fp);	
 	}
+	
 	function insert_line_top($text){
 		$_max = 49;
 		$_zeilenvorschub = "\r\n";
@@ -99,27 +97,22 @@ class time_filehandle{
 	
 	function insert_user($text){
 		$_zeilenvorschub = "\r\n";
-		$_file = $this->_filepfad.$this->_filename;	
-		$fp = fopen($_file,"a+");
-		fputs($fp, $_zeilenvorschub);
-		fputs($fp, $text);
-		fclose($fp);	
-/*		$_zeilenvorschub = "\r\n";
-		$_file = $this->_filepfad.$this->_filename;		
+		$_file = $this->_filepfad.$this->_filename;
 		$tmp = file($_file);
-		for($x=0; $x< count($tmp); $x++){ $tmp = str_replace($_zeilenvorschub, "", $tmp); }
+		for($x=0; $x< count($tmp); $x++){ 
+			$tmp = str_replace($_zeilenvorschub, "", $tmp); 
+		}
 		$tmp[] = $text;
-		$neu =implode($_zeilenvorschub,$tmp);	
+		$neu =implode($_zeilenvorschub,$tmp);
 		$open = fopen($_file,"w+");
 		fwrite ($open, $neu);
-		fclose($open);*/
+		fclose($open);
 	}
 
 	function add_user($_a){
+		// TODO : neuer User erstellen ohne Vorlagen - Dateien
 		$_zeilenvorschub = "\r\n";
 		if(!file_exists ("./Data/".$_a) || !is_dir("./Data/".$_a)){
-			//echo " / Ordner noch nicht vorhanden";
-			//echo "./Data/". $_a;
 			mkdir ("./Data/". $_a);
 			mkdir ("./Data/". $_a. "/Dokumente");
 			mkdir ("./Data/". $_a. "/Rapport");
@@ -128,7 +121,6 @@ class time_filehandle{
 			copy("./Data/vorlage/userdaten.txt","./Data/". $_a. "/userdaten.txt");
 		}
 		//Start-Datum auf den jetztigen Monat setzten
-		//$_w_monat, $_w_jahr
 		$_t_jahr = date("Y", time());
 		$_t_monat = date("n", time());
 		$_file = "./Data/".$_a."/userdaten.txt";
@@ -139,10 +131,9 @@ class time_filehandle{
 		foreach($inhalt as &$value){
 			fputs($fp, $value);
 		}
-		fclose($fp);
+		fclose($fp);	
 	}
 	function delete_user($id, $pfad){
-		//echo "gelöscht wird : " . $id . " - " .  $pfad . "<br>";
 		$_tmpusers= file("./Data/users.txt");
 		unset($_tmpusers[$id]);
 		$neu = implode( "", $_tmpusers);
@@ -155,8 +146,6 @@ class time_filehandle{
 		$_txt = $_txt.   "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
 		$_txt = $_txt.   "<br>Falls einmal ein gleicher Benutzer erstellt und dieser wieder gel&ouml;scht wird k&ouml;nnte es zu einer Fehlermeldung kommen.";
 		return $_txt;
-	}
-	
-	
+	}	
 }
 ?>

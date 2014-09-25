@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -25,9 +25,6 @@ echo "<a title='Vorhandene PDF' href='?action=show_pdf'><img src='images/icons/p
 echo "</td><td valign='middle'>";
 echo " | ";
 echo "</td><td valign='middle'>";
-//--------------------------------------------------------------------------------------------------------
-//Druck auf 2 Seiten print=1, bei Druck auf einer Seite nur 4 Stempelzeiten anzeigbar (breite der Spalte)
-//--------------------------------------------------------------------------------------------------------
 echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=$_timestamp&print=0'><img src='images/icons/printer.png' border=0></a> ";
 echo "</td><td valign='middle'>";
 echo " | ";
@@ -35,13 +32,11 @@ echo " | ";
 echo "</td><td valign='middle'>";
 echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";
 echo "</td><td valign='middle'>";
-//in Entwicklung ----------------------------------------------------------
-//Mehrfacheinträge
+//TODO : in Entwicklung Mehrfacheinträge für Abwesenheiten
 //echo " | ";
 //echo "</td><td valign='middle'>";
 //echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheinträge für Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
 //echo "</td><td width=100 valign='middle'>";
-//in Entwicklung ----------------------------------------------------------
 echo "&nbsp;";
 echo "</td>";
 if ($_startjahr<$_w_jahr) {

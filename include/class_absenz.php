@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Absenzen - Klasse
 /*******************************************************************************
-* Version 0.872
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -16,7 +16,6 @@ class time_absenz{
 		$this->ordnerpfad = $ordnerpfad;
 		$_file = "./Data/".$this->ordnerpfad."/Timetable/A" . $jahr;
 		$this->_filetext = file("./Data/".$this->ordnerpfad."/absenz.txt");
-		//print_r($this->_text);
 		if(file_exists($_file)){
 			$this->_array = file($_file);
 			$i=0;
@@ -25,15 +24,11 @@ class time_absenz{
 				
 				foreach($this->_filetext as $_zeile){
 					$_zeile = explode(";", $_zeile);
-					//echo "Vergleich : ". trim($string[1])." == ". trim($_zeile[1]);
 					if (trim($string[1]) == trim($_zeile[1])){	
-						//echo "---------------ja";
 						$string[3] = trim($_zeile[0]);
-						//echo "-".trim($string[2])."-";
 						if (!trim($string[2])<>0) $string[2]=1;
 						$string[4] = trim($_zeile[2]);
 					}	
-					//echo "<br>";
 				}
 				$this->_array[$i] = $string;
 				$i++;
@@ -54,7 +49,6 @@ class time_absenz{
 				$o++;
 			}		
 		}
-		//return 	$this->_calc;
 	}
 	function get_absenztext(){
 		return $this->_filetext;
@@ -65,7 +59,6 @@ class time_absenz{
         if (!file_exists($_file)) {
              $_meldung=  "Keine Daten vorhanden, folgende Datei wurde versucht zu &ouml;ffnen ". $_file;
         }else{
-        	//$_meldung = "Datei vorhanden : ". $_file;
         	$_abwesenheit = file($_file);
         }
         $_timestamp 	= $_GET['timestamp'];
@@ -92,7 +85,7 @@ class time_absenz{
         fwrite ($open, $neu);
         fclose($open);
 	}
-	function __destruct(){
-	}
+	public function __destruct() {
+   	}
 }
 ?>

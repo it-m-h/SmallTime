@@ -2,15 +2,14 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.8
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_personalblatt{
 	public  $_personaldaten	= NULL;
-	private $_file 			= NULL;
-	
+	private $_file 				= NULL;
 	function __construct(){
 		$this->_personaldaten[0][0] 	= "Personal-ID";
 		$this->_personaldaten[1][0] 	= "AHV-Nr.:";
@@ -35,7 +34,6 @@ class time_personalblatt{
 	}
 	function load_data(){
 		if($_SESSION['datenpfad']){
-			//$file = "./Data/".$_SESSION['datenpfad']."/personaldaten.txt";
 			if(!file_exists($this->_file)){
 				$fp = fopen($this->_file, "w");
 				fclose($fp); 

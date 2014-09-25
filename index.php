@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.894
+* Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -55,24 +55,6 @@ if(trim($_SESSION['last'])== trim($_now ) and isset($_SESSION['last'])){
 }
 $_SESSION['last'] = $token;
 // ----------------------------------------------------------------------------
-// Debugg - Ionformationen
-// ----------------------------------------------------------------------------
-// 0 = Session - Daten anzeigen
-// 1 = alle Daten - Array werden angezeigt
-// 2 = Controller - Informationen
-// 3 = USER - Daten anzeigen
-// 4 = TIME - Daten anzeigen
-// 5 = Monat - Daten anzeigen
-// 6 = Jahres - Daten anzeigen
-// 7 = Template - Daten anzeigen (Gruppen????)
-// 8 = Settings - Daten anzeigen
-// 9 = ALLE VARIABLEN AUSGEBEN
-// 11 = GET und POST anzeigen
-// 12 = absenz anzeigen
-// 13 = feiertage anzeigen
-// eingabe : array(1,2,9)
-$show = array();
-// ----------------------------------------------------------------------------
 // Anzeige Bootstrap -  Modal
 // ----------------------------------------------------------------------------
 global $_modal;
@@ -99,19 +81,7 @@ include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
 require_once ('./include/class_table.php');
 include ("./include/time_funktionen.php");
-
 //$controller = new time_controller();
-
-
-// ----------------------------------------------------------------------------
-// GET und POST Daten anzeigen
-// ----------------------------------------------------------------------------
-if(in_array(11,$show)){
-	echo "GET : ";
-	$zeig = new time_show($_GET);
-	echo "POST : ";
-	$zeig = new time_show($_POST);
-}
 // ----------------------------------------------------------------------------
 // Im Admin - Bereich bis zum gew�hlten Monat berechnen (f�r Druck und Anzeige)
 // ----------------------------------------------------------------------------
@@ -125,32 +95,10 @@ if($_GET['calc']){
 // ----------------------------------------------------------------------------
 $_users		= new time_filehandle("./Data/","users.txt",";");
 $_groups	= new time_filehandle("./Data/","group.txt",";");
-//$_absenz	= new time_filehandle("./Data/","absenz.txt",";");
 $_settings	= new time_settings();
-if(in_array(8,$show)){
-	txt("Settings - Daten f&uuml;llen und anzeigen : \$_settings");
-	showClassVar($_settings);
-	txt("<hr color=red>");
-}
 $_template	= new time_template("index.php");
 $_template->set_portal(1);
-//include ('./include/setting.php');
-//echo $_template->get_template();
 $_favicon = "./images/favicon.ico";
-// ----------------------------------------------------------------------------
-// Session - Variablen anzeigen
-// ----------------------------------------------------------------------------
-if(in_array(0,$show)){
-	txt("Session und Cookie - Daten:");
-	echo "\$_SESSION['admin'] : ". $_SESSION['admin'] . "<br>";
-	echo "\$_SESSION['id']".$_SESSION['id']."<br>";
-	echo "\$_SESSION['datenpfad']".$_SESSION['datenpfad']."<br>";
-	echo "\$_SESSION['username']".$_SESSION['username']."<br>";
-	echo "\$_SESSION['passwort']".$_SESSION['passwort']."<br>";
-	echo "\$_SESSION['login']".$_SESSION['login']."<br>";
-	echo "\$_COOKIE['lpass']".$_COOKIE["lpass"]."<br>";
-	echo "\$_COOKIE['lname']".$_COOKIE["lname"]."<br>";
-}
 // ----------------------------------------------------------------------------
 // Controller f�r Login
 // ----------------------------------------------------------------------------
@@ -161,55 +109,38 @@ if($_SESSION['admin'] and !$_GET['action']){
 }
 // keine Session vorhanden
 if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
-	if(in_array(2,$show)) txt("keine Session, Login durchf&uuml;hren");
 	$_Userpfad = $_SESSION['admin']."/";
-	//$_action = "";
 }
 // Login �ber Cookie mit Daten�berpr�fung - bei Mehrbenutzerbetrieb sollte nicht �ber sookie eingeloggt werden
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
-	if(in_array(2,$show)) txt("Cookie gesetzt - Autologin pr&uuml;fen");
 	$_logcheck->login($_POST, $_users->_array);
-	//$_action = "";
 }
 // Loginformular - Daten�berpr�fung
 if($_POST['login']){
-	if(in_array(2,$show)) txt("Formular - Login geklickt");
 	$_logcheck->login($_POST, $_users->_array);
-	//$_action = "";
 }
 if($_GET['action']=="logout"){
-	if(in_array(2,$show)) txt("Formular - Logout geklickt");
 	$_logcheck->logout();
-	//$_action = "";
 	header("Location: index.php");
 	exit();
 }
 
-if(in_array(2,$show)) showClassVar($_logcheck);
+//if(in_array(2,$show)) showClassVar($_logcheck);
 // ----------------------------------------------------------------------------
 // Controller f�r Action
 // ----------------------------------------------------------------------------
 // Session  vorhanden - Daten anzeigen
 if($_SESSION['admin'] and !$_GET['action']){
-	if(in_array(2,$show)){
-		txt("Session vorhanden - normale Anzeige");
-		txt("User: ". $_SESSION['admin']);
-	}
 	$_action = "show_time";
-	//$_logcheck->login($_POST, $_users->_array);
 }elseif($_GET['action'] && $_SESSION['admin']){
 	$_action = $_GET['action'];
 	$_grpwahl = $_GET['group']-1;
-	if(array_search(2,$show)) txt("GET_Action gew&auml;hlt : ". $_action);
 }elseif($_GET['group']){
-	if(in_array(2,$show)) txt("GET Group gew�hlt : ". $_GET['group']);
-	$_grpwahl = $_GET['group']-1;
 	$_action = "login_mehr";
 	if($_GET['group']=="-1"){
 		$_action = "login_einzel";
 	}
 }elseif($_settings->_array[19][1]=="1"){
-	if(in_array(2,$show)) txt("Mehrbenutzersystem aktiviert : ". $_settings->_array[19][1]);
 	//Falls Mehrbenutzersystem eingestellt wurde
 	$_action = "login_mehr";
 }
@@ -225,13 +156,7 @@ if($_SESSION['admin']){
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
-if(in_array(2,$show)) txt("SWITCH von \$_action = ". $_action);
 switch($_action){
-	//case "show_year2":
-	//$_infotext = "Jahres�bersicht Variante2";
-	//$_template->_user02 = "sites_year/sites02_year.php";
-	//$_template->_user04 = "sites_year/sites04_year.php";
-	//break;
 	case "password":
 		$_infotext = "";	
 		if($_POST['senden']){
@@ -261,13 +186,11 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;		
 	case "show_year":
-		if(in_array(2,$show)) txt("Jahres&uuml;bersicht - Anzeigen");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_year/user04_year.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "anwesend":
-		if(in_array(2,$show)) txt("Anwesenheitsliste");
 		if($_grpwahl==0) $_grpwahl = 1;
 		$_group = new time_group($_grpwahl);
 		if($id) $_grpwahl = $_group->get_usergroup($id);
@@ -276,19 +199,11 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "login_mehr":
-		if(in_array(2,$show)) txt("Mehrbenutzer - Login");
 		if (isset($_SESSION['save'])) $_SESSION['save'] = 8;
-		//echo $_SESSION['save'] . "<hr>";
-		//echo "<hr> login, daten schreiben, logout";
-		//if ($_SESSION['admin'] ) echo "<hr>  erfolgreich eingeloggt";
 		if($_POST['login'] == "Stempelzeit eintragen" and $_write){
 			$_logcheck->login($_POST, $_users->_array);
-			//echo "<hr>" . $_SESSION['admin'];
 			if($_SESSION['admin']){
 				$id = $_logcheck->_id;
-				//echo "<hr>";
-				//echo $id;
-				//echo "<hr>";
 				// Fehlerhandling bei F5 und dann sendenklick
 				if($_POST['_n']<>"" and $_POST['_p']<>""){
 					$_time->set_timestamp(time());
@@ -302,12 +217,6 @@ switch($_action){
 			}
 			exit();
 		}
-		//if($_grpwahl==0) $_grpwahl = 1;
-		//$_group = new time_group($_grpwahl);
-		//echo " - ist in Gruppe : " . $_group->get_usergroup($id);
-		//if($id) $_grpwahl = $_group->get_usergroup($id);
-		//echo "<hr> Logout";
-		
 		$_infotext02 = getinfotext( "Stempel - Pannel"  ,"td_background_top");
 		if($_GET['tmp']=="1"){
 			$_infotext04 = getinfotext( "Stempelzeit erfasst!"  ,"td_background_heute");
@@ -315,30 +224,22 @@ switch($_action){
 			$_infotext04 = getinfotext( "Falscher Benutzername oder Passwort!"  ,"td_background_top");
 		}else{
 			$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!"  ,"td_background_top");
-		}
-		
+		}		
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_mehr_02.php";
 		$_template->_user03 = "sites_login/login_mehr_03.php";
 		$_template->_user04 = "sites_login/login_mehr_04.php";
 		break;
 	case "login_einzel":
-		if(in_array(2,$show)) txt("Einzel - Login");
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_einzel_02.php";
 		if($_GET['group']=="-1") $_template->_user03 = "sites_login/login_einzel_03.php";
 		$_template->_user04 = "sites_login/login_einzel_04.php";
 		break;
 	case "login":
-		if(in_array(2,$show)) txt("Login - Check");
 		$_logcheck = new time_login($_POST, $_users->_array);
 		break;
 	case "logout":
-		if(in_array(2,$show)) txt("Logout und Formular anzeigen");
-		//$_SESSION['admin']=NULL;
-		//session_destroy();
-		//setcookie("lname","",time()-1);
-		//setcookie("lpass","",time()-1);
 		$_logcheck->logout();
 		$_grpwahl = 1;
 		$_group = new time_group($_grpwahl);
@@ -381,7 +282,6 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "edit_time":
-		if(in_array(2,$show)) txt("Zeit editieren - Formular");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_time/time_edit_04.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
@@ -389,17 +289,12 @@ switch($_action){
 	case "update_time":
 		$_oldtime = $_GET['timestamp'];
 		$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-		//echo "<hr> \$_write = " . $_write;
 		if($_POST['absenden'] == "UPDATE" and $_write){
-			if(in_array(2,$show)) txt("Zeit updaten : ". $_oldtime);
 			// update oldtime, newtime, Ordner
 			$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
 		}elseif($_POST['absenden'] == "DELETE" and $_write){
-			if(in_array(2,$show)) txt("Zeit l&ouml;schen :".$_oldtime);
 			// delete //oldtime, Ordner
 			$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
-		}else{
-			if(in_array(2,$show)) txt("Zeit updaten und l&ouml;schen fehlgeschlagen");
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -435,7 +330,6 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "insert_time":
-		if(in_array(2,$show)) txt("Zeit speichern");
 		if($_POST['absenden'] == "OK" and $_write){			
 			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit �ber Mitternacht geht
 			if($_POST['oldtime']==1){
@@ -460,7 +354,6 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "quick_time":
-		if(in_array(2,$show)) txt("Quick Time wird gestempelt");
 		$_time->set_runden((int) $_settings->_array[25][1]);	
 		$_time->save_quicktime($_user->_ordnerpfad);
 		$_template->_user02 = "sites_user/user02_cal.php";
@@ -469,31 +362,27 @@ switch($_action){
 		header("Location: index.php");
 		break;
 	case "add_time":
-		if(in_array(2,$show)) txt("Zeit eintragen - Formular");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_time/time_add_04.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "add_time_list":
-		if(in_array(2,$show)) txt("Zeit eintragen - Formular");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_time/time_addlist_04.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "show_time":
-		if(in_array(2,$show)) txt("User - Anzeige seiner Daten");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "show_pdf":
-		if(in_array(2,$show)) txt("PDF - Anzeigen");
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_pdf.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "print_month":
-		if(in_array(2,$show)) txt("PDF - Drucken");
+		break;
 	include ("./include/time_funktion_pdf.php");
 		check_htaccess_pdf($_user->_ordnerpfad);
 		$_jahr 	= date("Y", time());
@@ -503,7 +392,6 @@ switch($_action){
 			$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
 			$_time->set_timestamp($_drucktime);
 			$_time->set_monatsname($_settings->_array[11][1]);
-			//$_infotext04 =  "darf drucken....". $_settings->_array[20][1];
 			erstelle_neu($_drucktime);
 			$_template->_user04 = "sites_user/user04_pdf_show.php";
 		}elseif($_settings->_array[20][1]==0 ){
@@ -533,7 +421,6 @@ switch($_action){
 		$_template->set_user04("sites_user/user04_design.php");			
 		break;
 	default:
-		if(in_array(2,$show)) txt("Defaultanzeige");
 		setLoginForm();
 		break;
 }
@@ -560,43 +447,13 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	//define('user2','<hr>--------------------------------------------------------bla<hr>');
-	//echo user2;
 	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
-	if(in_array(5,$show)){
-		txt("Monatsdaten - Daten f&uuml;llen und anzeigen : \$_monat");
-		showClassVar($_monat);
-		//txt("Daten : \$_monat->_monate");
-		//$zeig = new time_show($_monat->_monate);
-		//echo "<hr>";
-		//txt("Daten : \$_monat->_wochentag");
-		//$zeig = new time_show($_monat->_wochentage);
-		txt("Daten : \$_monat->_MonatsArray");
-		$zeig = new time_show($_monat->_MonatsArray);
-		txt("<hr color=red>");
-	}
 	// ----------------------------------------------------------------------------
 	// Jahresdaten berechnen
 	// ----------------------------------------------------------------------------
 	// berechnung Endjahr = aktuelles jahr, dann 0 sonst $_time->_jahr
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
-	if(in_array(6,$show)){
-		txt("Jahres - Daten f&uuml;llen und anzeigen : \$_jahr");
-		showClassVar($_jahr);
-		//txt("Daten : \$_monat->_monate");
-		//$zeig = new time_show($_monat->_monate);
-		//echo "<hr>";
-		//txt("Daten : \$_monat->_wochentag");
-		//$zeig = new time_show($_monat->_wochentage);
-		txt("Daten : \$_jahr->_data");
-		print_r(array_keys($_jahr->_data));
-		$zeig = new time_show($_jahr->_data);
-		txt("<hr color=red>");
-		txt("Daten : \$_jahr->_array");
-		$zeig = new time_show($_jahr->_array);
-		txt("<hr color=red>");
-	}
 }
 
 $_copyright = "<div class=copyright>";
@@ -609,7 +466,6 @@ $_time_end = $_time_end[1] + $_time_end[0];
 $_zeitmessung = $_time_end - $_start_time;
 // ^^ Endzeit minus Startzeit = die Differenz der beiden Zeiten
 $_zeitmessung = substr($_zeitmessung,0,4);
-//echo "-----------------".$_time_end." - ".$_start_time." = ". $_zeitmessung. " Sekunden";
 // ^^ Die Zeit wird auf X Kommastellen gekürzt
 $_copyright .= "<hr color=#DFDFDF size=1>Ladezeit der Seite: $_zeitmessung Sekunden.<br>";
 // ----------------------------------------------------------------------------
@@ -618,22 +474,22 @@ $_copyright .= "<hr color=#DFDFDF size=1>Ladezeit der Seite: $_zeitmessung Sekun
 $_arr = file("./include/Settings/copyright.txt");
 $_ver = file("./include/Settings/smalltime.txt");
 $_copyright .="";
+$_mem_usage = round((memory_get_peak_usage(true)/1048576), 3);
+if($_mem_usage > 19.9){
+	$_debug 	= new time_filehandle("./debug/","time.txt",";");
+	$_seite = explode('?', $_SERVER['HTTP_REFERER']);
+	$_debug->insert_line("Memory Fehler ;". date('d.m.Y', time()) ."; File:  admin.php?".$_seite[1]."; RAM:".$_mem_usage);
+}		
 foreach($_arr as $_zeile){
 	$_tmp = str_replace("##ver##",$_ver[0], $_zeile);
 	$_tmp = str_replace("##phpver##", phpversion(), $_tmp);
+	$_tmp = str_replace("##memory##", $_mem_usage, $_tmp);
 	$_copyright .= $_tmp;
 }
-$_copyright .= "</div>";
-  
-// ----------------------------------------------------------------------------
-// Anzeige f�r Entwickler
-// ----------------------------------------------------------------------------
-include ('./include/_debug_data.php');
-                                                                                           
+$_copyright .= "</div>";                                                                                
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
-//echo "--".$_GET[timestamp] ."--".$_GET[modal] ."---------------------<hr>";
 if(isset($_GET[modal])){
 	// bei Modal nur DIV04 anzeigen
 	include($_template->get_user04()); 
