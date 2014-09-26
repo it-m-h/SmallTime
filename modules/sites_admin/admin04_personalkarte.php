@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -56,7 +56,7 @@ if(!file_exists($_bild))
 <form action="?action=user_personalkarte&admin_id=<?php echo $_SESSION['id'] ?>" method="post" enctype="multipart/form-data">
 	<table border=0 height="100%" width="100%" cellpadding=3 cellspacing=1>
 		<tr>
-			<td valign="top" width="280" align="left" rowspan="<?php echo $_count ?>">
+			<td valign="top" width="250" align="left" rowspan="<?php echo $_count ?>">
 			<img src="<?php echo $_bild ."?".  time()   ?>" alt="" id="foto" width="250"/><br/><br/><hr	>
 			<input type="file" name="datei"><br/>
 			<input type="submit" name='submit' value="Hochladen">

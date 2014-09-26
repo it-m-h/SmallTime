@@ -499,8 +499,6 @@ switch($_action){
 		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 		break;
 		case "user_personalkarte":
-		// TODO : $show entfernen .....wird nicht benötigt mit IDE
-		//if(in_array(2,$show)) txt("Personalkarte wird dargestellt");
 		if($_POST['update']){
 			$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ". $_user->_name ." wurde aktualisiert","td_background_heute");
 		}else{

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -167,5 +167,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 				$("#mainModal").modal('show');
 			});
 		$('a[title="Absenz l&ouml;schen"]').unbind();
+		$('a[title="Absenz löschen"]').unbind();
 	</script>
 <?php } ?>

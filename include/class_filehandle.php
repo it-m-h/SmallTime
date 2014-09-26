@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -110,28 +110,97 @@ class time_filehandle{
 	}
 
 	function add_user($_a){
-		// TODO : neuer User erstellen ohne Vorlagen - Dateien
 		$_zeilenvorschub = "\r\n";
 		if(!file_exists ("./Data/".$_a) || !is_dir("./Data/".$_a)){
 			mkdir ("./Data/". $_a);
 			mkdir ("./Data/". $_a. "/Dokumente");
+			$file = "./Data/". $_a. "/Dokumente/.htaccess";
+			$this->htaccess_txt($file);
 			mkdir ("./Data/". $_a. "/Rapport");
 			mkdir ("./Data/". $_a. "/Timetable");
-			copy("./Data/vorlage/absenz.txt","./Data/". $_a. "/absenz.txt");
-			copy("./Data/vorlage/userdaten.txt","./Data/". $_a. "/userdaten.txt");
+			mkdir ("./Data/". $_a. "/img");
+			$file = "./Data/". $_a. "/img/.htaccess";
+			$this->htaccess_txt($file);
+			$file = "./Data/". $_a. "/absenz.txt";
+			$this->absenz_txt($file);
+			$file = "./Data/". $_a. "/userdaten.txt";
+			$this->userdaten_txt($file);
 		}
-		//Start-Datum auf den jetztigen Monat setzten
-		$_t_jahr = date("Y", time());
-		$_t_monat = date("n", time());
-		$_file = "./Data/".$_a."/userdaten.txt";
-		$_tmp = mktime(0, 0, 0, $_t_monat, 1, $_t_jahr);
-		$inhalt = file($_file);
-		$inhalt[1] = $_tmp.$_zeilenvorschub;
+	}
+	function write_file($text, $file){
 		$fp = fopen($_file,"w+");
-		foreach($inhalt as &$value){
-			fputs($fp, $value);
-		}
+		fputs($fp, $text);
 		fclose($fp);	
+	}
+	function htaccess_txt($_file){
+		$_zeilenvorschub = "\r\n";
+		$fp = fopen($_file,"w+");
+		$text = 'Order deny,allow';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Allow from all' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Allow from <127.0.0.1>';
+		fputs($fp, $text.$_zeilenvorschub);
+		fclose($fp);
+	}
+	function absenz_txt($_file){
+		$_zeilenvorschub = "\r\n";
+		$fp = fopen($_file,"w+");
+		$text = 'Ferien;F;100';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Krankheit;K;100' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Unfall;U;100';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Militär;M;100';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Intern;I;100';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Weiterbildung;W;50';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Extern;E;50';
+		fputs($fp, $text.$_zeilenvorschub);
+		fclose($fp);
+	}
+	function userdaten_txt($_file){
+		$_zeilenvorschub = "\r\n";
+		$fp = fopen($_file,"w+");
+		$text = 'Vorname Nachname' ; 
+		fputs($fp, $text.$_zeilenvorschub);
+		//Start-Datum auf den jetztigen Monat setzten
+		$text = mktime(0, 0, 0, date("n", time()), 1, date("Y", time())); ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '100' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '42.5' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0' ; 
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '20' ; 
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;1;1;1;1;1;0' ; 
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '1;0;0;0;1;1;1;1;1;1;1;0;1;0;0;1;1;1;0;1;1;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0;0;0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = '0' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		fclose($fp);
 	}
 	function delete_user($id, $pfad){
 		$_tmpusers= file("./Data/users.txt");

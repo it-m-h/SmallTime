@@ -1,7 +1,7 @@
 img { 
 	border: none;
-	width: !important;
-	height: !important;
+	width: inherit;
+	height: inherit;
 }
 a img { 
 	border: none;
