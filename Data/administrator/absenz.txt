@@ -1,7 +1,7 @@
 Ferien;F;100
 Krankheit;K;100
 Unfall;U;100
-Militär;M;100
+MilitÃ¤r;M;100
 Intern;I;100
 Weiterbildung;W;50
 Extern;E;50

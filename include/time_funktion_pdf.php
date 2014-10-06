@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -171,8 +171,10 @@ function erstelle_neu($_drucktime){
                         $pdf->Cell(13,5,$zeile[13],1,'','C','1');
                         if($zeile[20]==0 && $zeile[13]==0)$zeile[20]="";
                         $pdf->Cell(13,5,$zeile[20],1,'','C','1');
-                        $pdf->Cell(14,5,$zeile[14],1,'','L','1');
-                        $_txt = iconv("UTF-8","ISO-8859-1",$zeile[34]);
+                        $pdf->Cell(14,5,$zeile[14],1,'','L','1');    
+                       	$_txt = iconv("UTF-8", "ISO-8859-1", $zeile[34]);
+                        $zeile[6] = iconv("UTF-8", "ISO-8859-1", $zeile[6]);
+			$zeile[16] = iconv("UTF-8", "ISO-8859-1", $zeile[16]);	
                         $pdf->MultiCell(48,5,$zeile[6].$zeile[16].$_txt,1,'','L','1');
                         //$pdf->MultiCell(48,5,'',1,'','L','1');
                 }

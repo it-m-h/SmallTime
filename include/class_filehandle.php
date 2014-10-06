@@ -100,7 +100,10 @@ class time_filehandle{
 		$_file = $this->_filepfad.$this->_filename;
 		$tmp = file($_file);
 		for($x=0; $x< count($tmp); $x++){ 
+			$tmp[$x]  = trim($tmp[$x]);
 			$tmp[$x] = str_replace($_zeilenvorschub, "", $tmp[$x]); 
+			$tmp[$x] = str_replace("\r", "", $tmp[$x]); 
+			$tmp[$x] = str_replace("\n", "", $tmp[$x]); 
 		}
 		$tmp[] = $text;
 		$neu =implode($_zeilenvorschub,$tmp);
@@ -118,8 +121,11 @@ class time_filehandle{
 			$this->htaccess_txt($file);
 			mkdir ("./Data/". $_a. "/Rapport");
 			mkdir ("./Data/". $_a. "/Timetable");
+			$file = "./Data/". $_a. "/Timetable/" . date('Y', time());
+			$this->timetable_txt($file, 12, '0;;0;0');
+			$file = "./Data/". $_a. "/Timetable/total.txt";
+			$this->timetable_txt($file, 0, '0');
 			mkdir ("./Data/". $_a. "/img");
-			$file = "./Data/". $_a. "/img/.htaccess";
 			$this->htaccess_txt($file);
 			$file = "./Data/". $_a. "/absenz.txt";
 			$this->absenz_txt($file);
@@ -127,6 +133,18 @@ class time_filehandle{
 			$this->userdaten_txt($file);
 		}
 	}
+	function timetable_txt($_file, $_i, $_txt){
+		$_zeilenvorschub = "\r\n";
+		$_zeilen = array();
+		for($x=1; $x<=$_i; $x++){
+			$_zeilen[] = $_txt;
+		}
+		$neu =implode($_zeilenvorschub,$_zeilen);
+		$open = fopen($_file,"w+");
+		fwrite ($open, $neu);
+		fclose($open);
+	}
+	
 	function write_file($text, $file){
 		$fp = fopen($_file,"w+");
 		fputs($fp, $text);

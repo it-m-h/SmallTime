@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time - Plugin : Statistik der Mitarbeiter (Überzeit, Ferien usw.)
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -133,6 +133,7 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 		$tmparr = file($_file_absenz);
 		$arrabs = NULL;
 		$u = 0;
+		
 		foreach($tmparr as $zeile)
 		{
 			$werte = explode(";", $zeile);
@@ -143,7 +144,7 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 			$arrabs[$u][3] = $monat;
 			for($c = 0;$c < count($abstxt);$c++)
 			{
-				if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 2)] += $werte[2];
+				if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 4)] += $werte[2];
 			}
 			$u++;
 		}
@@ -171,6 +172,7 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 	}
 	$uz++;
 }
+
 $html = "";
 $html .= "<table width=100% hight=100% border=0 cellpadding=3 cellspacing=1>";
 $html .= "<tr>";
@@ -201,6 +203,7 @@ for($a = 0; $a < count($_data); $a++)
 	//-------------------------------------------------------------------------------------------
 	// Inhalte / der Tabelle
 	//-------------------------------------------------------------------------------------------
+
 	for($i = 1; $i <= ($AnzahlAbsenzen + 3); $i++)
 	{
 		$html .= "<td width=40 align=middle class=td_background_tag>";
@@ -216,7 +219,7 @@ for($a = 0; $a < count($_data); $a++)
 		{
 			$html .= "";
 			if($i==1 || $i==2){
-				$html .= '<img title="Jahres&uuml;bersicht des Mitarbeiters &ouml;ffnen, damit die Werte berechnet werden. (neue Spalten ab Ver. 0.896)" src="images/icons/information.png" border="0">';
+				$html .= '<img title="Jahres&uuml;bersicht des Mitarbeiters &ouml;ffnen, damit die Werte berechnet werden. (neue Spalten ab Ver. 0.896) Diese Info erscheint auch, wenn noch keine Stempelzeiten vorhanden sind." src="images/icons/information.png" border="0">';
 			}
 		}
 		$html .= "</td>";
