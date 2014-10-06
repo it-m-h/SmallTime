@@ -15,6 +15,7 @@ if($_settings->_array[13][1]){
 function get_gruppen(){
 	global $_groups;
 	global $_grpwahl;
+	global $_action;
 	echo "        <table width='100%' hight='100%' border='0' cellpadding='3' cellspacing='1'  ><tr>";
 	$y=1;
 	$breite = round((100 / count($_groups->_array)),1);

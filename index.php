@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -129,12 +129,12 @@ if($_GET['action']=="logout"){
 // ----------------------------------------------------------------------------
 // Controller f�r Action
 // ----------------------------------------------------------------------------
+$_grpwahl = $_GET['group']-1;
 // Session  vorhanden - Daten anzeigen
 if($_SESSION['admin'] and !$_GET['action']){
 	$_action = "show_time";
 }elseif($_GET['action'] && $_SESSION['admin']){
-	$_action = $_GET['action'];
-	$_grpwahl = $_GET['group']-1;
+	$_action = $_GET['action'];	
 }elseif($_GET['group']){
 	$_action = "login_mehr";
 	if($_GET['group']=="-1"){
