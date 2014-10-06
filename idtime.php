@@ -11,11 +11,11 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.896
+	* Version 0.897
 	* Author:  IT-Master GmbH
 	* www.it-master.ch / info@it-master.ch
 	* Copyright (c) , IT-Master GmbH, All rights reserved
-	********************************************************************************
+	********************************************************************************/
 	// -----------------------------------------------------------------------------
 	// idtime - Stempelzeit via Direkt-URL eintragen, z.B. ID oder
 	//          komplette URL von einem Barcode-Scanner
@@ -39,7 +39,10 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	@fgets($fp); // erste Zeile überspringen
 	while (($logindata = fgetcsv($fp, 0, ';')) != false) {
 		if(isset($_GET['rfid'])) {
-			if(@$logindata[3]==@$_GET['rfid']){
+			$tempid=trim(@$logindata[3]);
+			$tempid = str_ireplace('\r','',$tempid);
+			$tempid = str_ireplace('\n','',$tempid);
+			if($tempid==@$_GET['rfid']){
 				$user = $logindata[0];
 			}
 		}elseif(isset($_GET['id'])){
