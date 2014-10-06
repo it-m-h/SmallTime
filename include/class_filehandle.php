@@ -100,7 +100,7 @@ class time_filehandle{
 		$_file = $this->_filepfad.$this->_filename;
 		$tmp = file($_file);
 		for($x=0; $x< count($tmp); $x++){ 
-			$tmp = str_replace($_zeilenvorschub, "", $tmp); 
+			$tmp[$x] = str_replace($_zeilenvorschub, "", $tmp[$x]); 
 		}
 		$tmp[] = $text;
 		$neu =implode($_zeilenvorschub,$tmp);
