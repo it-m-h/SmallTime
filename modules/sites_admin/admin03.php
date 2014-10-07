@@ -26,7 +26,7 @@ foreach($_benutzer as $string){
 	echo $_userdaten_tmp[0];
 	echo "</a>";
 	//-----------------------------------------------------------------------------
-	// menue
+	// Mitarbeiter - Menu
 	//-----------------------------------------------------------------------------
 	if($i > 1){
 		$tmpstr= "<span class='btn'><a title='L&ouml;schen eines Users' href='?action=delete_user&delete_user_id=".$i."'><img src='images/icons/delete.png' border=0></a></span>";
@@ -83,8 +83,7 @@ foreach($_benutzer as $string){
 }
 echo "</table>";
 
-$show_user=true;
-if($show_user){
+if(!$show_user){
 
 	echo "<hr>";
 	//-----------------------------------------------------------------------------
@@ -110,124 +109,58 @@ if($show_user){
 	echo "<td class=td_background_tag align=left>Sollstd. / Wo</td>";
 	echo "<td class=td_background_tag align=left>$_user->_SollZeitProWoche h</td>";
 	echo "</tr>";
-	echo "<tr>";
-	echo "<td class='td_background_top' align=left colspan=2>Aktuelle Total - Saldi</td>";
-	echo "</tr>";
-	if($_user->_modell==2) {
-	$str = "Monatssaldo";
-}elseif($_user->_modell==1) {
-	$str = "Jahressaldo";
-}else {
-	$str = "Zeitsaldo";
-}
-	echo "<tr>";
-	echo "<td class='alert";
-	echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
-	echo "' align=left>".$str."</td>";
-	echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class='alert";
-	echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
-	echo "' align=left>Feriensaldo</td>";
-	echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class='td_background_top' align=left colspan=2>Monats - Summen</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag align=left>Monat&nbsp;</td>";
-	echo "<td class=td_background_tag align=left>";
-	echo $_time->_monatname . " ". $_time->_jahr. "</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class='alert";
-	echo $_monat->_SummeSaldoProMonat >= 0 ? " alert-success" : " alert-error";
-	echo "' align=left>Saldo</td>";
-	echo "<td class=td_background_tag align=left>$_monat->_SummeSaldoProMonat Std.</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag align=left>Soll</td>";
-	echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
-	echo "</tr>";
-	//-------------------------------------------------------------------------
-	// Summen der Absenzen anzeigen (ab 0.87 erweiterbar pro Mitarbeiter)
-	//-------------------------------------------------------------------------
-	foreach ($_monat->get_calc_absenz() as $werte){
-		if($werte[3]<>0){
-			echo "<tr>";
-			echo "<td class=td_background_wochenende width=100 align=left>$werte[0]</td>";
-			echo "<td class=td_background_wochenende align=left>";	
-			echo "$werte[3] Tage ($werte[1])";		
-			echo "</td>";
-			echo "</tr>";			
+	if(!$show_user_only){
+		echo "<tr>";
+		echo "<td class='td_background_top' align=left colspan=2>Aktuelle Total - Saldi</td>";
+		echo "</tr>";
+		if($_user->_modell==2) {
+			$str = "Monatssaldo";
+		}elseif($_user->_modell==1) {
+			$str = "Jahressaldo";
+		}else {
+			$str = "Zeitsaldo";
 		}
-	}
-	echo "</table>";
-}
+		echo "<tr>";
+		echo "<td class='alert";
+		echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
+		echo "' align=left>".$str."</td>";
+		echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td class='alert";
+		echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
+		echo "' align=left>Feriensaldo</td>";
+		echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td class='td_background_top' align=left colspan=2>Monats - Summen</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td class=td_background_tag align=left>Monat&nbsp;</td>";
+		echo "<td class=td_background_tag align=left>";
+		echo $_time->_monatname . " ". $_time->_jahr. "</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td class='alert";
+		echo $_monat->_SummeSaldoProMonat >= 0 ? " alert-success" : " alert-error";
+		echo "' align=left>Saldo</td>";
+		echo "<td class=td_background_tag align=left>$_monat->_SummeSaldoProMonat Std.</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td class=td_background_tag align=left>Soll</td>";
+		echo "<td class=td_background_tag align=left>$_monat->_SummeSollProMonat Std.</td>";
+		echo "</tr>";
 
-$_show_userdata=false;
-if($_show_userdata){
-	//-----------------------------------------------------------------------------
-	// Anzeige von Userdaten
-	//-----------------------------------------------------------------------------
-	echo "<hr>";
-	echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
-	$_temp = explode(";", $_users[$_userid]);
-	$_SESSION['admin']= $_temp[0];
-	echo "<tr>";
-	echo "<td class=td_background_info width=100 align=left>$_userid</td>";
-	echo "<td class=td_background_wochenende align=left>".$_SESSION['admin']." &nbsp;</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100 align=left>Name</td>";
-	echo "<td class=td_background_tag align=left>$_userdaten[0]</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100 align=left>Start - Datum</td>";
-	echo "<td class=td_background_tag align=left>".date("d.m.Y",$_userdaten[1])."</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100 align=left>Anstellung</td>";
-	echo "<td class=td_background_tag align=left>".$_userdaten[2]." %</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100 align=left>Sollstd. / Wo</td>";
-	echo "<td class=td_background_tag align=left>".($_userdaten[3]*$_userdaten[2]/100)." h</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td class=td_background_tag width=100 align=left>Monat&nbsp;</td>";
-	echo "<td class=td_background_tag align=left>".$_monate[date("n", $_timestamp)] ." ".date("Y", $_timestamp)."</td>";
-	echo "</tr>";
-	if(!$_SummeSollProMonat==0){
-		echo "<tr>";
-		echo "<td class=td_background_tag width=100 align=left>Soll / Monat</td>";
-		echo "<td class=td_background_tag align=left>$_SummeSollProMonat Std.</td>";
-		echo "</tr>";
-	}
-	if(!$_SummeSaldoProMonat==0){
-		echo "<tr>";
-		echo "<td class=td_background_tag width=100 align=left>Saldo / Monat</td>";
-		echo "<td class=td_background_tag align=left>$_SummeSaldoProMonat Std.</td>";
-		echo "</tr>";
-	}
-	if(!$_Feriensaldo==0){
-		echo "<tr>";
-		echo "<td class=td_background_tag width=100 align=left>Feriensaldo</td>";
-		echo "<td class=td_background_tag align=left>$_Feriensaldo Tage</td>";
-		echo "</tr>";
-	}
-	$i=0;
-	foreach($_abwesenheit as $_tmp){
-		if(!$_SummeAbsenzenProMonat[$i][2] == 0){
-			echo "<tr>";
-			echo "<td class=td_background_tag width=100 align=left>$_tmp[0]</td>";
-			echo "<td class=td_background_tag align=left>";
-			echo $_SummeAbsenzenProMonat[$i][2];
-			echo " Tage   ($_tmp[1])</td>";
-			echo "</tr>";
+		foreach ($_monat->get_calc_absenz() as $werte){
+			if($werte[3]<>0){
+				echo "<tr>";
+				echo "<td class=td_background_wochenende width=100 align=left>$werte[0]</td>";
+				echo "<td class=td_background_wochenende align=left>";	
+				echo "$werte[3] Tage ($werte[1])";		
+				echo "</td>";
+				echo "</tr>";			
+			}
 		}
-		$i++;
 	}
 	echo "</table>";
 }

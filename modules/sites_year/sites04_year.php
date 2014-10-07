@@ -10,30 +10,6 @@
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus der Statistik
 //-----------------------------------------------------------------------------
-// TODO : Zeitsaldo und feriensaldo werden falsch angezeigt wenn ein vergangenes Jahr angewählt wird
-// Auch im Div03 Links werden die Falschen Zeiten berechnet (scheinbar nur bis zum Jan. des Jahres)
-
-echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
-echo "<tr>";
-echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
-echo "</tr>";
-
-echo "<tr>";
-echo "<td class='alert";
-echo $_jahr->_saldo_t >= 0 ? " alert-success" : " alert-error";
-echo "'  width=100 align=left>Zeitsaldo</td>";
-echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
-echo "</tr>";
-
-echo "<tr>";
-echo "<td class='alert";
-echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
-echo "' width=100 align=left>Feriensaldo</td>";
-echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
-echo "</tr>";
-echo "</table>";
-echo "<br>";
-
 $_data[0][0] = "SummeSollProMonat";
 $_data[1][0] = "SummeWorkProMonat";
 $_data[2][0] = "SummeAbsenzProMona";
@@ -75,6 +51,40 @@ for($i = 0; $i < 12;$i++)
 		}
 	}
 }
+for($i = 0; $i < 12;$i++){
+	$_SummeSollProMonat += $_jahres_berechnung[$i]->_SummeSollProMonat;
+	$_SummeWorkProMonat += $_jahres_berechnung[$i]->_SummeWorkProMonat;
+	$_SummeAbsenzProMonat += $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
+	$_SummeSaldoProMonat += $_jahres_berechnung[$i]->_SummeSaldoProMonat;
+	$_SummeStempelzeiten += $_jahres_berechnung[$i]->_SummeStempelzeiten;
+	//-----------------------------------------------------------------------alt
+	$_SummeFerien += $_jahres_berechnung[$i]->_SummeFerien;
+	$_SummeKrankheit += $_jahres_berechnung[$i]->_SummeKrankheit;
+	$_SummeUnfall += $_jahres_berechnung[$i]->_SummeUnfall;
+	$_SummeMilitaer += $_jahres_berechnung[$i]->_SummeMilitaer;
+	$_SummeIntern += $_jahres_berechnung[$i]->_SummeIntern;
+	$_SummeWeiterbildung += $_jahres_berechnung[$i]->_SummeWeiterbildung;
+	$_SummeExtern += $_jahres_berechnung[$i]->_SummeExtern;
+	//--------------------------------------------------------------------alt
+}
+echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
+echo "<tr>";
+echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<td class='alert";
+echo $_SummeSaldoProMonat  >= 0 ?  " alert-success" : " alert-error";
+echo "'  width=100 align=left>Zeitsaldo</td>";
+echo "<td class=td_background_tag align=left>". $_SummeSaldoProMonat . " Std.</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<td class='alert";
+echo $_SummeFerien >= 0 ? " alert-success" : " alert-error";
+echo "' width=100 align=left>Ferientotal</td>";
+echo "<td class=td_background_tag align=left>$_SummeFerien Tage</td>";
+echo "</tr>";
+echo "</table>";
+echo "<br>";
 // ----------------------------------------------------------------------------
 // Viewer für die Jahresansicht
 // ----------------------------------------------------------------------------
@@ -108,20 +118,7 @@ foreach($_absenz->_filetext as $spalten)
 }
 echo "</tr>";
 
-$_SummeSollProMonat += $_jahres_berechnung[$i]->_SummeSollProMonat;
-$_SummeWorkProMonat += $_jahres_berechnung[$i]->_SummeWorkProMonat;
-$_SummeAbsenzProMonat += $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
-$_SummeSaldoProMonat += $_jahres_berechnung[$i]->_SummeSaldoProMonat;
-$_SummeStempelzeiten += $_jahres_berechnung[$i]->_SummeStempelzeiten;
-//-----------------------------------------------------------------------alt
-$_SummeFerien += $_jahres_berechnung[$i]->_SummeFerien;
-$_SummeKrankheit += $_jahres_berechnung[$i]->_SummeKrankheit;
-$_SummeUnfall += $_jahres_berechnung[$i]->_SummeUnfall;
-$_SummeMilitaer += $_jahres_berechnung[$i]->_SummeMilitaer;
-$_SummeIntern += $_jahres_berechnung[$i]->_SummeIntern;
-$_SummeWeiterbildung += $_jahres_berechnung[$i]->_SummeWeiterbildung;
-$_SummeExtern += $_jahres_berechnung[$i]->_SummeExtern;
-//--------------------------------------------------------------------alt
+
 for($i = 0; $i < 12;$i++)
 {
 	$_timestamp = mktime(0, 0, 0, $i + 1, 1, $_time->_jahr);

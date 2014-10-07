@@ -382,6 +382,32 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "print_month":
+		include ("./include/time_funktion_pdf.php");
+		check_htaccess_pdf($_user->_ordnerpfad);
+		$_print = $_GET['print'];
+		$_druck = $_print;
+		$_jahr 	= date("Y", time());
+		$_monat 	= date("n", time())-1;
+		$_tag 	= date("j", time());
+		if($_druck){
+			erstelle_pdf_more($_MonatsArray);
+		}else{
+			if($_settings->_array[20][1] >= $_tag){
+				$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
+				$_time->set_timestamp($_drucktime);
+				$_time->set_monatsname($_settings->_array[11][1]);
+				erstelle_neu($_drucktime);
+				$_template->_user04 = "sites_user/user04_pdf_show.php";
+			}elseif($_settings->_array[20][1]==0 ){
+				erstelle_neu(0);
+				$_template->_user04 = "sites_user/user04_pdf_show.php";
+			}else{
+				$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
+				$_template->_user04 = "sites_user/user04.php";
+			}
+		}
+		$_template->_user02 = "sites_user/user02_cal.php";
+		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	include ("./include/time_funktion_pdf.php");
 		check_htaccess_pdf($_user->_ordnerpfad);

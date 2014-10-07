@@ -100,7 +100,7 @@ class time_month{
 		// Saldo; Ferien; Sollstunden; Work
 		// (Sollstunden und Work mit Jahresanzeige berechnen und eintragen lassen)
 		$_stunden = explode(";", $_year_data[$monat-1] );
-		if((!strstr($_stunden[0] , trim($this->_SummeSaldoProMonat)) && $this->_SummeSaldoProMonat <>0) || count($_stunden)<>4){
+		if((!strstr($_stunden[0] , trim($this->_SummeSaldoProMonat)))){
 			$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
 			$_str = $this->_SummeSaldoProMonat.";";
 			$_str .= $this->_SummeFerien.";";

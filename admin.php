@@ -215,8 +215,10 @@ switch($_action){
 		$_template->_user04 = "sites_debug/admin04_debuginfo.php";
 		break;
 	case "show_year2":
+		$show_user_only = true;
 		$_infotext = getinfotext("Jahres&uuml;bersicht Detaills"  ,"td_background_top");
 		$_template->_user02 = "sites_year/sites02_year.php";
+		$_template->_user03 = "sites_admin/admin03.php";
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
 	case "show_year":
