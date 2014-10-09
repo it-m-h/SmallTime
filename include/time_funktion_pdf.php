@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.897
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -89,10 +89,17 @@ function erstelle_neu($_drucktime){
         }else{
                 $_ftxtE = " Tage";
         }
+        //Falls der Startmonat gewählt wurde Monatsanfang aus den Settings laden
         $_saldo_start =0;
-        $_saldo_start = round($_jahr->_saldo_t,2);
-        $_saldo_start = $_saldo_start- round($_monat->_SummeSaldoProMonat,2);
-        $_saldo_start = round($_saldo_start,2);
+        
+        if( $_time->_jahr == time_user::get_user_startyear() && $_time->_monat == time_user::get_user_startmonth()){
+		$_saldo_start =$_user->_Stunden_uebertrag;
+		$_ferienstart =$_user->_Ferienguthaben_uebertrag;
+	}else{
+		$_saldo_start = round($_jahr->_saldo_t,2);
+		$_saldo_start = $_saldo_start- round($_monat->_SummeSaldoProMonat,2);
+		$_saldo_start = round($_saldo_start,2);
+	}
 
         $pdf->SetFont('Arial','',10);
         //$pdf->Line(21, 44, 199, 44);

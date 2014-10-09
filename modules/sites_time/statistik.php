@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -28,7 +28,7 @@ echo "		<td class=td_background_tag width=100 align=left>Sollstd. / Wo</td>";
 echo "		<td class=td_background_tag align=left>$_user->_SollZeitProWoche h</td>";
 echo "	</tr>";
 echo "	<tr>";
-echo "		<td class=td_background_top width=100 align=left colspan=2>Summen total</td>";
+echo "		<td class=td_background_top width=100 align=left colspan=2>Total - Saldi ende Monat</td>";
 echo "	</tr>";
 echo "	<tr>";
 echo "		<td class=td_background_info width=100 align=left>Zeitsaldo</td>";

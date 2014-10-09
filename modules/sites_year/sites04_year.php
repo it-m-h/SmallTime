@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -69,7 +69,7 @@ for($i = 0; $i < 12;$i++){
 }
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";
 echo "<tr>";
-echo "<td class='td_background_top' width=100 align=left colspan=2>Aktuelle Total - Saldo</td>";
+echo "<td class='td_background_top' width=100 align=left colspan=2>Jahres - Saldo:</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td class='alert";

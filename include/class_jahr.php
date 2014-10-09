@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.896
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -51,7 +51,7 @@ class time_jahr{
 			// ---------------------------------------------------------------------------------------
 			// Falls jedes Jahr die Überzeit auf 0 gestellt wird:
 		}elseif($this->_modell ==1){ 
-			$this->calc_auszahlungen();
+			$this->calc_auszahlungen_year();
 			$this->calc_year();
 			// ---------------------------------------------------------------------------------------
 			// kumuliert
@@ -65,8 +65,7 @@ class time_jahr{
 	function get_auszahlung($monat, $jahr){
 		$anz = 0;
 		for($i=0; $i< count($this->_arr_ausz);$i++){
-			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
-			if($this->_CalcToTimestamp && date("n", $this->_timestamp)>trim($monat)){
+			if($this->_CalcToTimestamp && date("Y", $this->_timestamp)>trim($monat)){
 				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
@@ -74,10 +73,33 @@ class time_jahr{
 				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
-			}
-				
+			}	
 		}
 		return $anz;
+	}
+	function calc_auszahlungen_year(){
+		// Auszahlungen berechnen (Datei ./Data/username/Timetable/auszahlungen : Monat;Jahr;Anzahl)
+		$file = "./Data/".$_SESSION['datenpfad'] ."/Timetable/auszahlungen";
+		if(file_exists($file)){
+			$this->_arr_ausz = file($file);
+			for($i=0; $i< count($this->_arr_ausz);$i++){
+				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
+				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
+				if($this->_CalcToTimestamp && date("n", $this->_timestamp)>=$this->_arr_ausz[$i][0] && date("Y", $this->_timestamp)>=$this->_arr_ausz[$i][1]){
+					if ($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
+						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					}elseif(!$this->_modell ==1){
+						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					}
+				}elseif(!$this->_CalcToTimestamp){
+					if ($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
+						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					}elseif(!$this->_modell ==1){
+						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					}
+				}
+			}
+		}
 	}
 	function calc_auszahlungen(){
 		// Auszahlungen berechnen (Datei ./Data/username/Timetable/auszahlungen : Monat;Jahr;Anzahl)
@@ -138,7 +160,11 @@ class time_jahr{
 	
 	function calc_kumuliert(){
 		// Schleife - Startjahr bis Heute
-		for($i=$this->_startjahr; $i<=$this->_jahr; $i++){
+		$_year_start = $this->_startjahr;
+		$_year_heute = $this->_jahr;
+		$_year_wahl = date('Y',$this->_timestamp);
+		$_month_wahl = date('m',$this->_timestamp);
+		for($i=$this->_startjahr; $i<=$_year_wahl ; $i++){
 			$this->set_ueberschriften($i);
 			$file = "./Data/".$this->_ordnerpfad ."/Timetable/" . $i;
 			// Falls die Datei nicht existiert eine leere Datei erstellen
@@ -154,6 +180,7 @@ class time_jahr{
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
 				if($this->_CalcToTimestamp){
 					// Jahr ist gleich, dann nur bis zum aktuellen Monat
+					$year = date("Y", $this->_timestamp);
 					if(date("Y", $this->_timestamp) == $i){
 						if(date("n", $this->_timestamp)>$z){
 							$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
@@ -175,7 +202,11 @@ class time_jahr{
 
 	function calc_feriensumme(){
 		// Schleife - Startjahr bis Heute
-		for($i=$this->_startjahr; $i<=$this->_jahr; $i++){
+		$_year_start = $this->_startjahr;
+		$_year_heute = $this->_jahr;
+		$_year_wahl = date('Y',$this->_timestamp);
+		$_month_wahl = date('m',$this->_timestamp);
+		for($i=$this->_startjahr; $i<=$_year_wahl; $i++){
 			$this->set_ueberschriften($i);
 			$file = "./Data/".$this->_ordnerpfad ."/Timetable/" . $i;
 			// Falls die Datei nicht existiert eine leere Datei erstellen

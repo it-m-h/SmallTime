@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.897
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -67,6 +67,7 @@ if(!defined('FPDF_FONTPATH')) define('FPDF_FONTPATH', FPDF_INSTALLDIR.'/font/');
 include_once(FPDF_INSTALLDIR.'/fpdf.php');
 //include_once ('./include/class_controller.php');
 include_once ('./include/class_absenz.php');
+include_once ('./include/class_auszahlung.php');
 include_once ('./include/class_user.php');
 include_once ('./include/class_group.php');
 include_once ('./include/class_login.php');
@@ -186,6 +187,7 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;		
 	case "show_year":
+		$auszahlung = new auszahlung(1,2000);
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_year/user04_year.php";
 		$_template->_user03 = "sites_user/user03_stat.php";

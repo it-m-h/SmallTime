@@ -2,7 +2,7 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.896
+* Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -218,6 +218,22 @@ class time_user{
 			$_debug 	= new time_filehandle("./debug/","time.txt",";");
 			$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_user;213;" .$this->_file.";htaccess nicht vorhanden, wurde erstellt.");
 		}
+	}
+	public static function get_user_startyear(){
+		return date('Y', time_user::get_user_starttime());
+	}
+	public static function get_user_startmonth(){
+		return date('m', time_user::get_user_starttime());
+	}
+	public static function get_user_startdaty(){
+		return date('d', time_user::get_user_starttime());
+	}
+	public static function get_user_starttime(){
+		$_userdaten = file("./Data/".$_SESSION['datenpfad']."/userdaten.txt");
+		$tmp = trim($_userdaten[1]);
+		$tmp = str_ireplace('\r','', $tmp);
+		$tmp = str_ireplace('\n','', $tmp);
+		return $tmp;
 	}
 }
 ?>
