@@ -73,19 +73,16 @@ $_to    = $_jahr->_startjahr;
 $anzeige = array();
 for($year = $_now; $year >= $_to; $year--){
 	for($month=0; $month<12;$month++){
-		
 		//Zeiten eintragen
 		$anzeige[$year]['Saldo'][$month] 	= $_jahr->_data[$year][$month][0];	// Saldo im Monat
 		$anzeige[$year]['Ferien'][$month] 	= $_jahr->_data[$year][$month][1];	// Ferien im Monat
 		$anzeige[$year]['Work'][$month] 	= $_jahr->_data[$year][$month][2];	// Gearbeitet
-		$anzeige[$year]['Soll'][$month] 	= $_jahr->_data[$year][$month][3];	// Sollstunden
-		
+		$anzeige[$year]['Soll'][$month] 	= $_jahr->_data[$year][$month][3];	// Sollstunden	
 		//Summen eintragen
 		$anzeige[$year]['Saldo'][12] 	+= $_jahr->_data[$year][$month][0];	
 		$anzeige[$year]['Ferien'][12] 	+= $_jahr->_data[$year][$month][1];	
 		$anzeige[$year]['Work'][12] 	+= $_jahr->_data[$year][$month][2];	
 		$anzeige[$year]['Soll'][12] 	+= $_jahr->_data[$year][$month][3];	
-		
 		//Monatsname und Link
 		$_tempstamp = mktime(0, 0, 0, $month + 1, 1, $year);
 		$monatslink = "
@@ -217,12 +214,11 @@ for($year = $_now; $year >= $_to; $year--){
 	<td class=td_background_tag align=right>".$anzeige[$year]['Summ']['feriengutschrift']." Tage</td>
 	<td class=td_background_tag align=right></td>
 	</tr>";
-	
 	if($year != $_jahr->_startjahr ){
-	if (!strstr($_user->_modell, '1')){
-		// Vorjahr bei Jährlich =0
+	if (strstr(trim($_user->_modell), '0') ){	
 		$v = $anzeige[$year-1]['Summ']['Saldo'];
 	}else{
+		// Vorjahr bei Jährlich =0
 		$v = '';
 	}
 	$s = $anzeige[$year]['Saldo'][12] - $anzeige[$year]['Summ']['vorholzeit']-$anzeige[$year]['Summ']['Auszahlung'];
