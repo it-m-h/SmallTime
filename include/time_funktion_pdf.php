@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // PDF erstellen mit mehreren Stempelzeiten und Kommentaren auf gleicher Seite
@@ -25,10 +25,10 @@ function erstelle_neu($_drucktime){
                         $tmp_jahr = $tmp_jahr-1;
                 }
                 // Falls der Mitarbeiter Drucken darf ist das nur der letzte Monat
-                $_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
+                $_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
                 $_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_drucktime);
         }else{
-                $_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
+                $_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
                 $_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell,$_time->_timestamp);
         }
 
@@ -52,9 +52,9 @@ function erstelle_neu($_drucktime){
         $pdf->Ln();
         $pdf->Ln(1);
         // -------------------------------------------------------------------------
-        // Monatsveränderungen - Berechnungen und anzeigen
+        // Monatsverï¿½nderungen - Berechnungen und anzeigen
         // -------------------------------------------------------------------------
-        // Hintergrund weiss setzten und Schriftart Arial, normal , 10px
+        // Hintergrund weiss setzten und Schriftart Arial, normal, 10px
         $_ferien=0;
         $_absenzenvorhanden =0;
         $_ftxt = "";
@@ -89,7 +89,7 @@ function erstelle_neu($_drucktime){
         }else{
                 $_ftxtE = " Tage";
         }
-        //Falls der Startmonat gewählt wurde Monatsanfang aus den Settings laden
+        //Falls der Startmonat gewï¿½hlt wurde Monatsanfang aus den Settings laden
         $_saldo_start =0;
         
         if( $_time->_jahr == time_user::get_user_startyear() && $_time->_monat == time_user::get_user_startmonth()){
@@ -116,7 +116,7 @@ function erstelle_neu($_drucktime){
         $pdf->Ln();
 
         $pdf->Cell(11,6,'',0,'','L');
-        $pdf->Cell(30,6,'Veränderung : ',0,0,'L');
+        $pdf->Cell(30,6,'Verï¿½nderung : ',0,0,'L');
         $pdf->Cell(30,6,'',0,0,'L');
         $pdf->Cell(30,6,$_monat->_SummeSaldoProMonat." Std.",0,0,'L');
         $pdf->Cell(30,6,'',0,0,'L');
@@ -206,7 +206,7 @@ function erstelle_neu($_drucktime){
 
 
         // -------------------------------------------------------------------------
-        // Absenzen anzeigen wenn Einträge vorhanden sind
+        // Absenzen anzeigen wenn Eintrï¿½ge vorhanden sind
         // -------------------------------------------------------------------------
         if ($_absenzenvorhanden){
                         $pdf->SetFillColor(240, 240, 240);
@@ -342,6 +342,4 @@ class PDF extends FPDF{
                 }
                 $this->Cell(array_sum($w),0,'','T');
         }
-
 }
-?>

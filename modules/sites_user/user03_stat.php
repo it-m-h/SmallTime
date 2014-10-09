@@ -3,7 +3,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //-----------------------------------------------------------------------------
 // Quick Time - schnelle Zeiterfassung
@@ -16,7 +16,7 @@ echo "<br>";
 //-----------------------------------------------------------------------------
 // Logout - Button anzeigen
 //-----------------------------------------------------------------------------
-echo "<Form action='?action=logout' method='post' target='_self'>";
+echo "<form action='?action=logout' method='post' target='_self'>";
 echo "<input id='logout_button' src='./".$_template->get_templatepfad() ."images/logout.jpg' type='image' name='logout' value='Logout' >";
 echo "</form>";
 //-----------------------------------------------------------------------------

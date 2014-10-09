@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time{
 	public $_jahr;
@@ -27,7 +27,7 @@ class time{
 		$this->_minute = date("i", time());
 		$this->_sekunde=0;
 		$this->_timestamp = mktime($this->_stunde, $this->_minute, $this->_sekunde, $this->_monat, $this->_tag, $this->_jahr);
-		$this->_letzterTag = idate(d,mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));
+		$this->_letzterTag = idate('d', mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));
 		$this->_runden = 0;
 	}
 	function edit_accept($time,$settingday){
@@ -52,7 +52,7 @@ class time{
 			$this->_stunde = $this->_stunde+1;	
 		}
 		$this->_timestamp = $time;
-		$this->_letzterTag = idate(d,mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));	
+		$this->_letzterTag = idate('d', mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));	
 	}
 	function set_monatsname($strnamen){
 		$strnamen = explode(";",$strnamen);
@@ -68,24 +68,21 @@ class time{
 		return date("i", time());
 	}
 	function get_lastmonth(){
-		$_arr = 0;
 		if($this->_monat==1){
 			$_arr = mktime(0, 0, 0, 12, 1, $this->_jahr-1);	
 		}else{
 			$_arr = mktime(0, 0, 0, $this->_monat-1, 1, $this->_jahr);	
 		}
-		//Monat - Zahl, Timestamp, , Jahreszahl
+		//Monat - Zahl, Timestamp,, Jahreszahl
 		return $_arr;
 	}
 	function get_nextmonth(){
-		$_arr = 0;
-		global $_monate;
 		if($this->_monat==12){
 			$_arr = mktime(0, 0, 0, 1, 1, $this->_jahr+1);	
 		}else{
 			$_arr = mktime(0, 0, 0, $this->_monat+1, 1, $this->_jahr);
 		}
-		//Monat - Zahl, Timestamp, , Jahreszahl
+		//Monat - Zahl, Timestamp,, Jahreszahl
 		return $_arr;	
 	}
 	function mktime($_w_stunde,$_w_minute,$_w_sekunde,$_w_monat,$_w_tag,$_w_jahr){
@@ -209,7 +206,6 @@ class time{
 		fclose($fp);		        
 	}
 	function checktime($_stunde,$_minute,$_monat,$_tag,$_jahr){
-		$_sekunde=0;
 		if($_stunde == '24' && $_minute == '00'){
 			$_stunde = 23;
 			$_minute = 59;
@@ -219,7 +215,6 @@ class time{
 		return $_eintragen;
 	}
 	function lasttime($_timestamp, $_ordnerpfad){
-		$_zeilenvorschub = "\r\n";
 		$jahr = date("Y", $_timestamp);
 		$monat = date("n", $_timestamp);
 		$_timeTable = NULL;
@@ -264,7 +259,5 @@ class time{
 			//falls keine Zeit fehlt
 			return NULL;
 		}
-		
 	}
 }
-?>

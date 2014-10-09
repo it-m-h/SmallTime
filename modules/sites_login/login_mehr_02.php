@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if($_settings->_array[13][1]){
 	get_gruppen();
@@ -43,6 +43,3 @@ function get_gruppen(){
 	}
 	echo "        </tr></table>";
 }
-
-
-?>

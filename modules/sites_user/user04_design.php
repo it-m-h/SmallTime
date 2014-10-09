@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if($_GET["designname"] == "mobile")
 {
@@ -21,7 +21,7 @@ if($_GET["designname"] == "mobile")
 	</script>
 <?php
 }
-echo getinfotext( "Eventuell die Seite nach der Auswahl des Designs mit F5 neu laden." ,"td_background_top");
+echo getinfotext( "Eventuell die Seite nach der Auswahl des Designs mit F5 neu laden.","td_background_top");
 echo "<hr>";
 echo '<div id="designwahl">';
 $ordner = "./templates";

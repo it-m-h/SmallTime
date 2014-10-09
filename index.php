@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //Session starten
 if ( !my_session_start() ) {
@@ -30,7 +30,7 @@ function my_session_start()
       return session_start();
 }
 error_reporting(E_ALL ^ E_NOTICE);
-// Zeitzone setzten , damit die Stunden richtig ausgerechnet werden
+// Zeitzone setzten, damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
@@ -106,7 +106,7 @@ $_favicon = "./images/favicon.ico";
 $_logcheck = new time_login();
 // falls eine Session exisitert und kein Action
 if($_SESSION['admin'] and !$_GET['action']){
-	$_logcheck->rapport($_SESSION['admin'] ,"korrekt", "Session");
+	$_logcheck->rapport($_SESSION['admin'],"korrekt", "Session");
 }
 // keine Session vorhanden
 if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
@@ -219,13 +219,13 @@ switch($_action){
 			}
 			exit();
 		}
-		$_infotext02 = getinfotext( "Stempel - Pannel"  ,"td_background_top");
+		$_infotext02 = getinfotext( "Stempel - Pannel","td_background_top");
 		if($_GET['tmp']=="1"){
-			$_infotext04 = getinfotext( "Stempelzeit erfasst!"  ,"td_background_heute");
+			$_infotext04 = getinfotext( "Stempelzeit erfasst!","td_background_heute");
 		}elseif($_GET['tmp']=="2"){
-			$_infotext04 = getinfotext( "Falscher Benutzername oder Passwort!"  ,"td_background_top");
+			$_infotext04 = getinfotext( "Falscher Benutzername oder Passwort!","td_background_top");
 		}else{
-			$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!"  ,"td_background_top");
+			$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!","td_background_top");
 		}		
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_mehr_02.php";
@@ -307,9 +307,9 @@ switch($_action){
 			$_timestamp		= $_GET['timestamp'];
 			$_w_tag			= $_POST['_w_tag'];
 			$_w_monat 		= $_POST['_w_monat'];
-			$_w_jahr			= $_POST['_w_jahr'];
+			$_w_jahr		= $_POST['_w_jahr'];
 			$_zeitliste		= $_POST['_zeitliste'];
-			$_w_sekunde                = 0;
+			$_w_sekunde     = 0;
 			$_zeitliste = trim($_zeitliste);
 			$_zeitliste = str_replace(" ", "", $_zeitliste);
 			$_zeitliste = str_replace(" ", "", $_zeitliste);
@@ -389,10 +389,10 @@ switch($_action){
 		$_print = $_GET['print'];
 		$_druck = $_print;
 		$_jahr 	= date("Y", time());
-		$_monat 	= date("n", time())-1;
+		$_monat = date("n", time())-1;
 		$_tag 	= date("j", time());
 		if($_druck){
-			erstelle_pdf_more($_MonatsArray);
+			//erstelle_pdf_more($_MonatsArray); // TODO: undefined function
 		}else{
 			if($_settings->_array[20][1] >= $_tag){
 				$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
@@ -407,27 +407,6 @@ switch($_action){
 				$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
 				$_template->_user04 = "sites_user/user04.php";
 			}
-		}
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
-		break;
-	include ("./include/time_funktion_pdf.php");
-		check_htaccess_pdf($_user->_ordnerpfad);
-		$_jahr 	= date("Y", time());
-		$_monat 	= date("n", time())-1;
-		$_tag 	= date("j", time());
-		if($_settings->_array[20][1] >= $_tag){
-			$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
-			$_time->set_timestamp($_drucktime);
-			$_time->set_monatsname($_settings->_array[11][1]);
-			erstelle_neu($_drucktime);
-			$_template->_user04 = "sites_user/user04_pdf_show.php";
-		}elseif($_settings->_array[20][1]==0 ){
-			erstelle_neu(0);
-			$_template->_user04 = "sites_user/user04_pdf_show.php";
-		}else{
-			$_infotext04 =  "Leider ist ein Drucken nicht mehr m&ouml;glich, wende Dich bitte an den Admin.";
-			$_template->_user04 = "sites_user/user04.php";
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
@@ -475,7 +454,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
+	$_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
 	// ----------------------------------------------------------------------------
 	// Jahresdaten berechnen
@@ -518,7 +497,7 @@ $_copyright .= "</div>";
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
-if(isset($_GET[modal])){
+if(isset($_GET['modal'])){
 	// bei Modal nur DIV04 anzeigen
 	include($_template->get_user04()); 
 }elseif(isset($_GET['excel'])){	
@@ -533,4 +512,3 @@ if(isset($_GET[modal])){
 }else{
 	include ($_template->get_template());
 }
-?>

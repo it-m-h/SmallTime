@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Falls Template jquery benutzt (im XML - File), dann kann datetimepicker verwendet werden
 if (strstr($_template->_jquery,'true')){ ?>
@@ -17,7 +17,7 @@ if (strstr($_template->_jquery,'true')){ ?>
 					pickDate: false
 				});
 			var now = new Date();
-			var seldate = new Date(<?php echo$_GET[timestamp];?>*1000);
+			var seldate = new Date(<?php echo$_GET['timestamp'];?>*1000);
 			$('#datetimepicker2').data('datetimepicker').setLocalDate(seldate);
 			$('#datetimepicker2').on('changeDate', function(e) {
 					$('input[name=_w_stunde]').val(e.localDate.getHours());
@@ -27,7 +27,7 @@ if (strstr($_template->_jquery,'true')){ ?>
 		});
 </script>
 <?php } ?>
-<Form name="insert" action="?action=update_time&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
+<form name="insert" action="?action=update_time&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="2">
 		<tr>
 			<td class=td_background_wochenende width="200" align=left>Datum : (Tag / Monat / Jahr)</td>
@@ -47,10 +47,9 @@ if (strstr($_template->_jquery,'true')){ ?>
 		<tr>
 			<td class=td_background_top>
 				<div id="datetimepicker2" class="input-append" style="margin-top: 6px;">
-					<input id="newtimestamp" data-format="hh:mm" type="text"></input>
+					<input id="newtimestamp" data-format="hh:mm" type="text" />
 					<span class="add-on">
-						<i data-time-icon="icon-time" data-date-icon="icon-calendar">
-						</i>
+						<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 					</span>
 				</div>
 			</td>
@@ -102,4 +101,4 @@ if (strstr($_template->_jquery,'true')){ ?>
 			</td>
 		</tr>
 	</table>
-</Form>
+</form>

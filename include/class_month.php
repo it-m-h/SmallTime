@@ -5,7 +5,7 @@
 * Version 0.896
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_month{
 	private $_file						= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
@@ -100,7 +100,7 @@ class time_month{
 		// Saldo; Ferien; Sollstunden; Work
 		// (Sollstunden und Work mit Jahresanzeige berechnen und eintragen lassen)
 		$_stunden = explode(";", $_year_data[$monat-1] );
-		if((!strstr($_stunden[0] , trim($this->_SummeSaldoProMonat)))){
+		if((!strstr($_stunden[0], trim($this->_SummeSaldoProMonat)))){
 			$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
 			$_str = $this->_SummeSaldoProMonat.";";
 			$_str .= $this->_SummeFerien.";";
@@ -483,25 +483,25 @@ class time_month{
 					//$this->_zeitzuschlag = "Logik 1 : ". ($Stempel2-$Start) ." Std.";
 					$_tmptime = round(($Stempel2-$Start)* $zuschlag,2);
 					//$this->_zeitzuschlag = $this->_zeitzuschlag."-" . $_tmptime . "-";
-					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr , ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
+					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr, ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
 					if($_debug) echo " - Logik 1:".$_tmptime;
 				}elseif($Stempel1 >= $Start && $Stempel2 <= $Ende){
 					//$this->_zeitzuschlag = "Logik 2 : " . $_zeit ." Std.";
 					$_tmptime = round(($_zeit)*$zuschlag,2);
 					//$this->_zeitzuschlag = $this->_zeitzuschlag."-" . $_tmptime . "-";
-					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr , ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
+					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr, ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
 					if($_debug) echo " - Logik 2: ".$_zeit." - ".$_tmptime;
 				}elseif($Stempel1 <= $Start && $Stempel2 >= $Ende){
 					//$this->_zeitzuschlag = "Logik 3 : " . ($Ende - $Start) ." Std.";
 					$_tmptime = round(($Ende - $Start)* $zuschlag,2);
 					//$this->_zeitzuschlag = $this->_zeitzuschlag."-" . $_tmptime . "-";
-					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr , ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
+					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr, ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
 					if($_debug) echo " - Logik 3:".$_tmptime;
 				}elseif($Stempel1 > $Start && $Stempel1 <= $Ende && $Stempel2 > $Ende){
 					//$this->_zeitzuschlag = "Logik 4 : " . ($Ende -$Stempel1) . " Std.";
 					$_tmptime = round(($Ende-$Stempel1)* $zuschlag,2);
 					//$this->_zeitzuschlag = $this->_zeitzuschlag."-" . $_tmptime . "-";
-					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr , ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
+					$this->_zeitzuschlag = "Zuschlag von ". $Start . " - ". $Ende ." Uhr, ".trim($tmp[2])."% / Berechnet : ".$_tmptime." Std.";
 					if($_debug) echo " - Logik 4:".$_tmptime;
 				}
 				if($_debug) echo "<hr>";
@@ -594,4 +594,3 @@ class time_month{
 		}
 	}
 }
-?>

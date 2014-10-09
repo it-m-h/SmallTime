@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Settings des Templates mit Bootstrap
 if (strstr($_template->_bootstrap,'true')){
@@ -23,7 +23,7 @@ if (strstr($_template->_bootstrap,'true')){
                 <li<?php echo $_action=="logout" ?  ' class="active"':''; ?>><a id="Logout" title="Logout" href="?action=logout">Logout</a></li>
         </ul>
 <?php 
-//TODO : Template ohne Bootstrap -> löschen
+//TODO : Template ohne Bootstrap -> lï¿½schen
 }else{ ?>
 	<div class="pagination">
 	<ul>
@@ -32,7 +32,7 @@ if (strstr($_template->_bootstrap,'true')){
 		<li><a id="Gruppen" title="Gruppen verwalten" href="?action=group">Gruppe</a></li>
 		<li><a id="Design" title="Design" href="?action=design">Design</a></li>
 		<li><a id="Settings" title="Settings" href="?action=settings">Setting</a></li>
-		<li><a id="Feiertag" title="Zusätzlicher Feiertag" href="?action=feiertage">Feiertage</a></li>
+		<li><a id="Feiertag" title="Zusï¿½tzlicher Feiertag" href="?action=feiertage">Feiertage</a></li>
 		<li><a id="Import" title="Import von csv" href="?action=import">CSV Import</a></li>
 		<li><a id="Status" title="Status / Meldungen" href="?action=debug_info">Status</a></li>
 		<li><a id="Codes" title="QR-Codes" href="?action=idtime-generate">QR-Codes</a></li>

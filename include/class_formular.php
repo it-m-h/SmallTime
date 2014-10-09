@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class Formular{
 	// Die einzelnen Felder werden in der Variable $inputs gespeichert
@@ -90,15 +90,15 @@ class Formular_old{
 	}
 	
 	function AddInput($beschreibung="", $type="", $editor, $name="", $value="", $size=null) {
-		// TODO : ckeditor fehlt,  ev. Probleme mit sonderzeichen, darum entfernt
-		if($editor == true){
-			$editor = new CKEditor();
-			$editor->basePath = 'ckeditor/';
-			$editor->returnOutput = true;
-			$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einf�gen des ckeditors
-		} else {
+		// TODO : ckeditor fehlt, ev. Probleme mit sonderzeichen, darum entfernt
+		#if($editor == true){
+		#	$editor = new CKEditor();
+		#	$editor->basePath = 'ckeditor/';
+		#	$editor->returnOutput = true;
+		#	$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einf�gen des ckeditors
+		#} else {
 			$this->inputs[] = array($beschreibung, "<input type=\"$type\" name=\"$name\" value=\"$value\" size=$size />");
-		}
+		#}
 	}
 	function getInputs() {
 		while(list($name, $value) = each($_POST)) {
@@ -131,7 +131,7 @@ class Formular_old{
 	// Formular ausgeben
 	function ausgeben($toReturn=false)
 	{	
-		$result = "<form method=\"$this->method\" action=\"$this->action\">";
+		$result = '<form method="'.$this->method.'" action="'.$this->action.'">';
 		$result .= "<table>";
 		foreach($this->inputs as $what) {
 			$result .= "<tr>";
@@ -156,6 +156,3 @@ class Formular_old{
 			echo $result;
 	}
 }
-
-
-?>

@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if($_POST['delete'])
 {
@@ -93,7 +93,7 @@ function show($array)
 		</div>
 		<div id="s3" class="tab-pane fade">
 			<p id="content">
-				<Form name='login' action='?action=debug_info' method='post' target='_self'>
+				<form name='login' action='?action=debug_info' method='post' target='_self'>
 					<input type='submit' name='delete' value='alle Meldungen l&ouml;schen' >
 				</form>
 				<hr>
@@ -118,7 +118,7 @@ function show($array)
 						if(strstr($_zeile[5],"Leerzeile entdeckt"))
 						{
 							echo "</td>";
-							echo "<Form name='login' action='?action=debug_info' method='post' target='_self'>";
+							echo "<form name='login' action='?action=debug_info' method='post' target='_self'>";
 							echo "<td>";
 							echo "<input type='hidden' name='datei' value='".$_zeile[4]."' >";
 							echo "</td>";

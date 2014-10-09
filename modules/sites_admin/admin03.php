@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<table width=100% border=0 cellpadding=5 cellspacing=1>";
 $_file = "./Data/users.txt";
@@ -164,4 +164,3 @@ if(!$show_user){
 	}
 	echo "</table>";
 }
-?>
