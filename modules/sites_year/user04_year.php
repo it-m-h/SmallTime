@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.898
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -199,18 +199,20 @@ for($year = $_now; $year >= $_to; $year--){
 	<td class=td_background_wochenende align=right>".$a."</td>
 	</tr>";
 	//Auszahlung
+	 if($a) { $a =  '- '. $a; }
 	echo "
 	<tr>
 	<td class=td_background_tag align = left>Auszahlung:</td>
-	<td class=td_background_tag align=right>- ".format($_sum_ausz)."</td>
+	<td class=td_background_tag align=right>".$a."</td>
 	<td class=td_background_tag align=right></td>
 	<td class=td_background_tag align=right></td>
 	</tr>";
 	// Vorholzeiten
+	if($anzeige[$year]['Summ']['vorholzeit']) $v = '- '. $anzeige[$year]['Summ']['vorholzeit']; 
 	echo "
 	<tr>
 	<td class=td_background_tag align = left>Vorholzeit / Ferien</td>
-	<td class=td_background_tag align=right>- ".$anzeige[$year]['Summ']['vorholzeit']."</td>
+	<td class=td_background_tag align=right>".$v."</td>
 	<td class=td_background_tag align=right>".$anzeige[$year]['Summ']['feriengutschrift']." Tage</td>
 	<td class=td_background_tag align=right></td>
 	</tr>";

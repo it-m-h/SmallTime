@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.898
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -75,7 +75,7 @@ echo "<tr>";
 echo "<td class='alert";
 echo $_SummeSaldoProMonat  >= 0 ?  " alert-success" : " alert-error";
 echo "'  width=100 align=left>Zeitsaldo</td>";
-echo "<td class=td_background_tag align=left>". $_SummeSaldoProMonat . " Std.</td>";
+echo "<td class=td_background_tag align=left>". round($_SummeSaldoProMonat,2) . " Std.</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td class='alert";

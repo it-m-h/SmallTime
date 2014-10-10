@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Feiertage f�r das gew�hlte Jahr
 /*******************************************************************************
-* Version 0.896
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -43,7 +43,6 @@ class time_feiertage
 		}
 		//Individuelle Feiertage laden
 		$_userfeiertage = file($this->_file);
-		$holidays = array();
 		foreach($_userfeiertage as $_eintrag){
 			$_eintrag = explode(";", $_eintrag);
 			$_datum   = date('d.n', $_eintrag[1]);

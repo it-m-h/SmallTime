@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.896
+* Version 0.899
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -76,7 +76,7 @@ class time_month{
 			}	
 		}
 	}
-	private function save_data($monat,$jahr){
+	public function save_data($monat,$jahr){
 		$_zeilenvorschub = "\r\n";
 		$_file = $this->_pfad ."Timetable/" . $jahr;
 		if(!file_exists($_file)){
@@ -99,8 +99,17 @@ class time_month{
 		}
 		// Saldo; Ferien; Sollstunden; Work
 		// (Sollstunden und Work mit Jahresanzeige berechnen und eintragen lassen)
-		$_stunden = explode(";", $_year_data[$monat-1] );
-		if((!strstr($_stunden[0], trim($this->_SummeSaldoProMonat)))){
+		$_stunden = str_ireplace('\n','',$_year_data[$monat-1] );
+		$_stunden = str_ireplace('\r', '', $_stunden);
+		$_stunden = trim($_stunden);
+		$_stunden = explode(";", $_stunden);
+		if(
+		($_stunden[0]!=trim($this->_SummeSaldoProMonat))
+		or
+		($_stunden[2]!=trim($this->_SummeSollProMonat))
+		or
+		($_stunden[3]!=trim($this->_SummeWorkProMonat))
+		){
 			$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
 			$_str = $this->_SummeSaldoProMonat.";";
 			$_str .= $this->_SummeFerien.";";

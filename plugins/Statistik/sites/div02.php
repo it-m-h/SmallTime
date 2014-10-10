@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time - Plugin : Statistik der Mitarbeiter (Überzeit, Ferien usw.)
 /*******************************************************************************
-* Version 0.897
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -96,6 +96,7 @@ $uz = 0;
 for($z = 1; $z < count($_users->_array ) ; $z++)
 {
 	$_file        		= "./Data/" .$_users->_array[$z][0] . "/Timetable/" .$wahljahr;
+	
 	$_file_absenz 	= "./Data/".$_users->_array[$z][0]."/Timetable/A" . $wahljahr;
 	$_file_abstxt 		= "./Data/".$_users->_array[$z][0]."/absenz.txt";
 	$abstxt       		= array();
@@ -268,7 +269,7 @@ function view_jahr($a)
 		for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
 		{
 			$html .= "<td width=40 align=middle class=td_background_tag> ";
-			if($_data[$a][$m][$mi] <> 0)
+			if($_data[$a][$m][$mi] <> NULL)
 			{
 				$wert = trim($_data[$a][$m][$mi]);
 				if($wert < 0)
