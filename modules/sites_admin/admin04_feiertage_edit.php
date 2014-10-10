@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo '<form action="?action=feiertage" method="post">';
 echo '<table border="0" width="100%" cellpadding=3 cellspacing=1>';
@@ -56,5 +56,3 @@ echo '</td>';
 echo '</tr>';
 echo '</table>';
 echo '</form>';
-?>
-

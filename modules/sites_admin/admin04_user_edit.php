@@ -5,10 +5,10 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<div id='meineid'>";
-echo "<Form action='?action=user_update&admin_id=". $_id."' method='post' target='_self'>";
+echo "<form action='?action=user_update&admin_id=". $_id."' method='post' target='_self'>";
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
 echo "<tr>";
 echo "<td align=left COLSPAN=3 class=td_background_top width=60>Userdaten Editieren</td>";
@@ -24,7 +24,7 @@ echo "<td align=left class=td_background_tag ><input type='text' name='_b' value
 echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterst&uuml;tzt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------
-// Zeitberechnungsmodell (0 = normal, alle kumuliert, 1 = jährlich, 2 monatlich) (datei ./Data / user / userdaten.txt zeile 16 erweitern mit 0,1,2)
+// Zeitberechnungsmodell (0 = normal, alle kumuliert, 1 = jï¿½hrlich, 2 monatlich) (datei ./Data / user / userdaten.txt zeile 16 erweitern mit 0,1,2)
 //------------------------------------------------------------------------------------
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Zeitberechnungsmodell</td>";
@@ -132,7 +132,7 @@ echo "<tr>";
 echo "<td COLSPAN=3 class=td_background_top width=60>Zeitzuschlag</td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------
-//Arbeitszuschlag bei Abendeinsätzen oder Wochenenden
+//Arbeitszuschlag bei Abendeinsï¿½tzen oder Wochenenden
 //------------------------------------------------------------------------------------
 echo "<tr>";
 echo "<td align=left class=td_background_tag valign='top'>Arbeitszuschlag :
@@ -180,4 +180,3 @@ echo "</tr>";
 echo "</table>";
 echo "</form>";
 echo "</div>";
-?>

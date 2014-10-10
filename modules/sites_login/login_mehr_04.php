@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 $_ShowUsername 		= FALSE;		// Anzeige des Usernamens
 $_ShowUserOnline 		= FALSE;		// Anzeige ob Anwesend oder Abwesend (grün oder rot)
@@ -255,4 +255,3 @@ if($_settings->_array[13][1] OR $_SESSION['admin']){
 	echo $_infotext04;
 }
 $_group = NULL;
-?>

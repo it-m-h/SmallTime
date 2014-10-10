@@ -5,10 +5,10 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<Form action="?action=user_update_absenzen&admin_id=<?php echo $_id ?>" method="post" target="_self">
+<form action="?action=user_update_absenzen&admin_id=<?php echo $_id ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="1 	">
 		<tr>
 			<td colspan=3 class=td_background_wochenende width="100%" align=left>Absenz - Auswahl einstellen (Bezeichnung, Kurzzeichen, &Uuml;bernommen wird in ?% von der Firma)
@@ -49,4 +49,4 @@
 			</td>
 		</tr>
 	</table>
-</Form>
+</form>

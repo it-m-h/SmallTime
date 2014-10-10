@@ -5,7 +5,7 @@
 * Version 0.897
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_filehandle{
 	public $_filename 	= ""; 
@@ -146,7 +146,7 @@ class time_filehandle{
 	}
 	
 	function write_file($text, $file){
-		$fp = fopen($_file,"w+");
+		$fp = fopen($file,"w+");
 		fputs($fp, $text);
 		fclose($fp);	
 	}
@@ -235,4 +235,3 @@ class time_filehandle{
 		return $_txt;
 	}	
 }
-?>

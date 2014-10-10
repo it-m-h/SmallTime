@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //Session starten
 if ( !my_session_start() ) {
@@ -30,7 +30,7 @@ function my_session_start()
       return session_start();
 }
 error_reporting(E_ALL ^ E_NOTICE);
-// Zeitzone setzten , damit die Stunden richtig ausgerechnet werden
+// Zeitzone setzten, damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
@@ -119,7 +119,7 @@ $_logcheck->checkadmin( $_users->_array);
 // ----------------------------------------------------------------------------
 // falls eine Session exisitert und kein Action
 if($_SESSION['admin'] and !$_GET['action']){
-	$_logcheck->rapport($_SESSION['admin'] ,"korrekt", "Session");
+	$_logcheck->rapport($_SESSION['admin'],"korrekt", "Session");
 }	
 // keine Session vorhanden
 if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
@@ -177,7 +177,7 @@ switch($_action){
 	case "update_ausz":
 		$auszahlung = new auszahlung($_GET['monat'],$_GET['jahr']);
 		$auszahlung->save_auszahlung($_POST['anzahl']);		
-		$_infotext = getinfotext("Jahres&uuml;bersicht"  ,"td_background_top");
+		$_infotext = getinfotext("Jahres&uuml;bersicht","td_background_top");
 		$_template->_user02 = "sites_year/sites02_year.php";
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
@@ -200,30 +200,30 @@ switch($_action){
 		}
 		break;
 	case "idtime-generate":
-		$_infotext = getinfotext("<b>QR-Codes/URLs/IDs zum direkten Stempeln via Barcode-Scanner(-App):</b>"  ,"td_background_top");
+		$_infotext = getinfotext("<b>QR-Codes/URLs/IDs zum direkten Stempeln via Barcode-Scanner(-App):</b>","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_idtime_generate.php";
 		break;
 	case "zip_user":
-		$_infotext = getinfotext( "ZIP-Archiv vom Mitarbeiter" ,"td_background_top");
+		$_infotext = getinfotext( "ZIP-Archiv vom Mitarbeiter","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_zip/sites04_zip_user.php";
 		break;
 	case "debug_info":
-		$_infotext = getinfotext("Status - Meldungen"  ,"td_background_top");
+		$_infotext = getinfotext("Status - Meldungen","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_debug/admin04_debuginfo.php";
 		break;
 	case "show_year2":
 		$show_user_only = true;
-		$_infotext = getinfotext("Jahres&uuml;bersicht Detaills"  ,"td_background_top");
+		$_infotext = getinfotext("Jahres&uuml;bersicht Detaills","td_background_top");
 		$_template->_user02 = "sites_year/sites02_year.php";
 		$_template->_user03 = "sites_admin/admin03.php";
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
 	case "show_year":
 		$auszahlung = new auszahlung(1,2000);
-		$_infotext = getinfotext("Jahres&uuml;bersicht"  ,"td_background_top");
+		$_infotext = getinfotext("Jahres&uuml;bersicht","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_year/user04_year.php";
 		break;
@@ -233,11 +233,11 @@ switch($_action){
 			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
 			header("Location: admin.php?action=delete_user&show=delete");		
 		}elseif($_POST['absenden'] == "CANCEL"){
-			$_infotext = getinfotext( "User wurde nicht gel&ouml;scht."  ,"td_background_heute"); 
+			$_infotext = getinfotext( "User wurde nicht gel&ouml;scht.","td_background_heute"); 
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04.php";
 		}elseif(@$_GET['show']=="delete"){
-			$_infotext = getinfotext("User wurde gel&ouml;scht."  ,"td_background_heute");
+			$_infotext = getinfotext("User wurde gel&ouml;scht.","td_background_heute");
 			$_infotext04 = "";	
 			$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_XXXXXXX!";
 			$_infotext04 .= "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
@@ -245,13 +245,13 @@ switch($_action){
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04.php";		
 		}else{
-			$_infotext = getinfotext("User l&ouml;schen?"  ,"td_background_heute");
+			$_infotext = getinfotext("User l&ouml;schen?","td_background_heute");
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04_user_del.php";
 		}			
 		break;
 	case "import":
-		$_infotext = getinfotext("CSV - Import (z.B.IPhone APP TimeOrg - timeorg.zimco.com)"  ,"td_background_top");		
+		$_infotext = getinfotext("CSV - Import (z.B.IPhone APP TimeOrg - timeorg.zimco.com)","td_background_top");		
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_csv_import.php";
 		break;
@@ -423,7 +423,7 @@ switch($_action){
 		}
 		break;
 	case "show_pdf":
-		$_infotext = getinfotext( "PDF anzeigen" ,"td_background_top");
+		$_infotext = getinfotext( "PDF anzeigen","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_user/user04_pdf.php";
 		break;
@@ -438,12 +438,12 @@ switch($_action){
 		$_template->_user04 = "sites_user/user04_pdf_show.php";
 		break;
 	case "design":
-		$_infotext = getinfotext("Design ausw&auml;hlen"  ,"td_background_top");
+		$_infotext = getinfotext("Design ausw&auml;hlen","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_user/user04_design.php";
 		break;
 	case "setdesign":
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neues Design gew&auml;hlt</td></tr></table>" ,"td_background_heute");
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neues Design gew&auml;hlt</td></tr></table>","td_background_heute");
 		$_template         = new time_template("index.php");
 		$_template->set_templatepfad($_GET['designname']);	
 		$_template->_plugin	= "modules/sites_plugin/plugin.php";
@@ -460,7 +460,7 @@ switch($_action){
 		$_template->_user03 = "sites_admin/admin03.php";
 		break;
 	case "user_einstellungen":
-		$_infotext = getinfotext( "Userdaten editieren" ,"td_background_top");
+		$_infotext = getinfotext( "Userdaten editieren","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_einstellungen.php";
 		break;
@@ -474,7 +474,7 @@ switch($_action){
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "user_edit":
-		$_infotext = getinfotext("User editieren"  ,"td_background_top");
+		$_infotext = getinfotext("User editieren","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_edit.php";
 		break;
@@ -482,12 +482,12 @@ switch($_action){
 		if($_POST['absenden'] == "OK"){
 			$_user->set_user_details();
 		}
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Userdaten wurden aktualisiert</td></tr></table>" ,"td_background_heute");
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Userdaten wurden aktualisiert</td></tr></table>","td_background_heute");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_edit.php";
 		break;
 	case "user_edit_absenzen":
-		$_infotext = getinfotext("Absenzen editieren"  ,"td_background_top");
+		$_infotext = getinfotext("Absenzen editieren","td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 		break;
@@ -496,7 +496,7 @@ switch($_action){
 			$_user->set_user_absenzen();
 			$_user->load_data_session();		
 		}
-		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Absenzen wurde aktualisiert</td></tr></table>" ,"td_background_heute");
+		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Absenzen wurde aktualisiert</td></tr></table>","td_background_heute");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 		break;
@@ -511,20 +511,20 @@ switch($_action){
 		$_template->_user04 = "sites_admin/admin04_personalkarte.php";
 		break;
 	case "group";
-		$_infotext = getinfotext("Gruppen editieren"  ,"td_background_top");
+		$_infotext = getinfotext("Gruppen editieren","td_background_top");
 		$_group = new time_group(-1);
 		//-----------------------------------------------
 		//l�schen einer Gruppe
 		//-----------------------------------------------
 		if($_GET['del']<>""){
-			$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>" ,"td_background_heute");
+			$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>","td_background_heute");
 			$_group->del_group($_GET['del']);	
 		}
 		//-----------------------------------------------
 		//aktualisieren oder Gruppen hinzuf�gen
 		//-----------------------------------------------	
 		if($_POST['senden']){
-			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>" ,"td_background_heute");
+			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>","td_background_heute");
 			$_group->save_group();
 		}
 		$_template->_user02 = "sites_admin/admin02.php";
@@ -532,22 +532,22 @@ switch($_action){
 		break;
 	case "settings";
 		$_infotext = "Settings editieren";
-		$_infotext = getinfotext( $_infotext ,"td_background_top");	
+		$_infotext = getinfotext( $_infotext,"td_background_top");	
 		if($_POST['senden']){
-			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>"  ,"td_background_heute");
+			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>","td_background_heute");
 			$_settings->save_settings();
 		}
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_settings_edit.php";
 		break;
 	case "feiertage";
-		$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum"  ,"td_background_top");
+		$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum","td_background_top");
 		$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
 		if($_POST['senden']){
-			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>" ,"td_background_heute");
+			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>","td_background_heute");
 			$_feiertage->save_feiertage();
 		}elseif($_GET['del']<>""){
-			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>"  ,"td_background_heute");
+			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>","td_background_heute");
 			$_feiertage->delete_feiertag($_GET['del']);
 		}
 		$_template->_user02 = "sites_admin/admin02.php";
@@ -562,23 +562,23 @@ switch($_action){
 			if($_a<>"" && $_b<>"" && $_POST['_c']<>""){
 				if($_users->user_exist($_a)){
 					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>".$_a."</b> existiert bereits!</font></td></tr></table>";
-					$_infotext = getinfotext( $_infotext ,"td_background_heute");	
+					$_infotext = getinfotext( $_infotext,"td_background_heute");	
 				}else{
 					$_users->insert_user($_a.";".$_b.";".$_c. ";".$_d);
 					$_users->add_user($_a);
 					header("Location: admin.php?action=user_edit&admin_id=". $_users->get_anzahl());		
 					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Mitarbeiter <b>".$_a."</b> wurde erfolgreich erstellt.</td></tr></table>";
-					$_infotext = getinfotext( $_infotext ,"td_background_heute");	
+					$_infotext = getinfotext( $_infotext,"td_background_heute");	
 					break;	
 				}	
 			}else{
 				//echo "Daten falsch";
 				$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Mitarbeiter konnte NICHT erstellt werden.</td></tr></table>";
-				$_infotext = getinfotext( $_infotext ,"td_background_heute");		
+				$_infotext = getinfotext( $_infotext,"td_background_heute");		
 			}				 	
 		}else{
 			$_infotext = "Neuer Mitarbeiter erfassen.";	
-			$_infotext = getinfotext( $_infotext ,"td_background_top");	
+			$_infotext = getinfotext( $_infotext,"td_background_top");	
 		}
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_add.php";		
@@ -601,7 +601,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
+	$_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_monat->_modal = $_template->_modal;
 	// Falls automatische Pause eingestellt
 	// TODO : wurde anderst gelöst, entfernen
@@ -613,7 +613,7 @@ if($_SESSION['admin']){
 	// Berechnung Endjahr = aktuelles Jahr, dann 0 sonst $_time->_jahr
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 }
-$_copyright = "<div class=copyright>";
+$_copyright = '<div class="copyright">';
 //-----------------------------------------------------------------------------
 //Seitenladezeit 
 //-----------------------------------------------------------------------------
@@ -624,7 +624,7 @@ $_zeitmessung = $_time_end - $_start_time;
 // ^^ Endzeit minus Startzeit = die Differenz der beiden Zeiten
 $_zeitmessung = substr($_zeitmessung,0,4);
 // ^^ Die Zeit wird auf X Kommastellen gekürzt
-$_copyright .= "<hr color=#DFDFDF size=1>Ladezeit der Seite: $_zeitmessung Sekunden.<br>";
+$_copyright .= '<hr color="#DFDFDF" size="1">Ladezeit der Seite: '.$_zeitmessung.' Sekunden.<br>';
 // ----------------------------------------------------------------------------
 // copyright Text
 // ----------------------------------------------------------------------------
@@ -647,7 +647,7 @@ $_copyright .= "</div>";
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
-if(isset($_GET[modal])){
+if(isset($_GET['modal'])){
 	// bei Modal nur DIV04 anzeigen
 	include($_template->get_user04());
 }elseif(isset($_GET['excel'])){
@@ -658,4 +658,3 @@ if(isset($_GET[modal])){
 }else{
 	include ($_template->get_template());
 }
-?>

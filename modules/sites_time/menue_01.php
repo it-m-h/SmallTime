@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<table width='100%' hight='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
 if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
@@ -28,14 +28,14 @@ echo "</td><td valign='middle'>";
 echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=$_timestamp&print=0'><img src='images/icons/printer.png' border=0></a> ";
 echo "</td><td valign='middle'>";
 echo " | ";
-//Version 0.6 Desing wählen - wird in Cookie gespeichert
+//Version 0.6 Desing wï¿½hlen - wird in Cookie gespeichert
 echo "</td><td valign='middle'>";
 echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";
 echo "</td><td valign='middle'>";
-//TODO : in Entwicklung Mehrfacheinträge für Abwesenheiten
+//TODO : in Entwicklung Mehrfacheintrï¿½ge fï¿½r Abwesenheiten
 //echo " | ";
 //echo "</td><td valign='middle'>";
-//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheinträge für Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
+//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheintrï¿½ge fï¿½r Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
 //echo "</td><td width=100 valign='middle'>";
 echo "&nbsp;";
 echo "</td>";
@@ -49,4 +49,3 @@ if ($_endejahr >= $_w_jahr){
         $_timestampn = mktime(0, 0, 0, 1, 1, $_w_jahr+1);
 echo "<td valign='middle' class='td_background_menue'><a title='vorw&auml;rts' href='?action=show_time&timestamp=$_timestampn'><img src='images/icons/control_fastforward.png' border=0></a></td>";}
 echo "</tr></table>";
-?>

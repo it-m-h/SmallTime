@@ -5,19 +5,19 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<Form action='?action=user_einstellungen_update&admin_id=<?php echo $_id; ?>' method='post' target='_self'>
+<form action='?action=user_einstellungen_update&admin_id=<?php echo $_id; ?>' method='post' target='_self'>
 	<table width=100% border=0 cellpadding=3 cellspacing=1>
 		<tr>
 			<td align=left COLSPAN=3 class=td_background_top width=60>Userdaten Editieren, neuer User erstellen</td>
 		</tr>
-		<!-- Nach dem erstellen eines Users sollte der Ordnerpfad nicht mehr verändert werden
+		<!-- Nach dem erstellen eines Users sollte der Ordnerpfad nicht mehr verï¿½ndert werden
 		<tr>
 			<td align=left class=td_background_tag width=300>Pfad (Ordnername ./Data/XXXXX)</td>
 			<td align=left class=td_background_tag><input type='text' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'></td>
-			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten f&uuml;r diesen Benutzer. Ohne Sonderzeichen, leerschläge oder Umlaute!' src='images/icons/information.png' border=0></td>
+			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten f&uuml;r diesen Benutzer. Ohne Sonderzeichen, leerschlï¿½ge oder Umlaute!' src='images/icons/information.png' border=0></td>
 		</tr> !-->
 		<input type='hidden' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'>
 		<tr>

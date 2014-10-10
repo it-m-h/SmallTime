@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if(strstr($_template->_bootstrap,'true'))
 {
@@ -60,7 +60,7 @@ if(strstr($_template->_bootstrap,'true'))
 else
 {
 	?>
-	<Form name="login" action='index.php?action=login_mehr&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>&group=<?php echo $_grpwahl + 1; ?>' method='post' target='_self'>
+	<form name="login" action='index.php?action=login_mehr&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>&group=<?php echo $_grpwahl + 1; ?>' method='post' target='_self'>
 		<table width=100% border=0 cellpadding=3 cellspacing=1>
 			<tr>
 				<td align=left COLSPAN=2 class=td_background_top width=60>

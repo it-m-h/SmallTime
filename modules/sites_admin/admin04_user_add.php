@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
 <script type="text/javascript">
@@ -66,7 +66,7 @@
 		if(str!='') return true;
 	}
 </script>
-<Form action='?action=user_add' method='post' target='_self' name="Formular" onsubmit="return check();">
+<form action='?action=user_add' method='post' target='_self' name="Formular" onsubmit="return check();">
 	<table width=100% border=0 cellpadding=3 cellspacing=1>
 		<tr>
 			<td align=left class=td_background_tag width=300>

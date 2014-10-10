@@ -1,11 +1,11 @@
 <?php
 /*******************************************************************************
-* Feiertage für das gewählte Jahr
+* Feiertage fï¿½r das gewï¿½hlte Jahr
 /*******************************************************************************
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_feiertage
 {
@@ -13,7 +13,7 @@ class time_feiertage
 	public	$_country 	= NULL;
 	public	$_easter 	= NULL;
 	public	$_feiertageUSER = NULL;
-	public  	$_feiertage 	= array();			// Feiertage die gültig sind
+	public  	$_feiertage 	= array();			// Feiertage die gï¿½ltig sind
 	private 	$_defineFT 	= array();			// definition der Feiertage
 	private 	$_file 		= "./include/Settings/feiertage.txt";
 	function __construct($_w_jahr, $_country, $_feiertageUSER)
@@ -43,6 +43,7 @@ class time_feiertage
 		}
 		//Individuelle Feiertage laden
 		$_userfeiertage = file($this->_file);
+		$holidays = array();
 		foreach($_userfeiertage as $_eintrag){
 			$_eintrag = explode(";", $_eintrag);
 			$_datum   = date('d.n', $_eintrag[1]);
@@ -94,6 +95,7 @@ class time_feiertage
 	function getFeiertageUserEdit()
 	{
 		$z = 0;
+		$holidays = array();
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
 			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> $this->_feiertageUSER[$z - 1], '_id' => $z);
@@ -161,7 +163,7 @@ class time_feiertage
 	}
 	function defineFeiertag($year = NULL, $_country)
 	{
-		// Feiertage können ergänzt werden (je nach Land oder Kanton usw.)
+		// Feiertage kï¿½nnen ergï¿½nzt werden (je nach Land oder Kanton usw.)
 		// Formular beim User wird automatisch erweitert (sortiert nach Datum)
 		// Speichern erfolgt ebenfalls automatisch
 		if($easter = $this->easter($year))
@@ -193,13 +195,12 @@ class time_feiertage
 			$holidays['Heiligabend'] = mktime(0,0,0,12,24,$year);
 			$holidays['Weihnachten'] = mktime(0,0,0,12,25,$year);
 			$holidays['Stephanstag'] = mktime(0,0,0,12,26,$year);
-			$holidays['Sylvester'] = mktime(0,0,0,12,31,$year);
+			$holidays['Silvester'] = mktime(0,0,0,12,31,$year);
 			//$holidays['Berchtoldstag'] = mktime(0,0,0,1,2,$year);
-			//$holidays['Mariä Himmelfahrt'] = mktime(0,0,0,8,15,$year);
+			//$holidays['Mariï¿½ Himmelfahrt'] = mktime(0,0,0,8,15,$year);
 			//$holidays['St. Leodegar'] = mktime(0,0,0,10,2,$year);
 			return $holidays;
 		}
 
 	}
 }
-?>

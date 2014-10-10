@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //-----------------------------------------------------------------------------
 // Anzeige der Summen aus der Statistik
@@ -23,15 +23,14 @@ for($i = 0; $i < 12;$i++)
 	// ----------------------------------------------------------------------------
 	$_temp_time = new time();
 	$_temp_time->set_timestamp(mktime(0,0,0,$i + 1,1,$_time->_jahr));
-	$_jahres_berechnung[$i] = new time_month( $_settings->_array[12][1] , $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
+	$time_month = new time_month( $_settings->_array[12][1], $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
 	
 	$_temp_time = NULL;
 	
-	
-	$_data[0][1] += $_jahres_berechnung[$i]->_SummeSollProMonat;
-	$_data[1][1] += $_jahres_berechnung[$i]->_SummeWorkProMonat;
-	$_data[2][1] += $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
-	$_data[3][1] += $_jahres_berechnung[$i]->_SummeSaldoProMonat;
+	$_data[0][1] += $time_month->_SummeSollProMonat;
+	$_data[1][1] += $time_month->_SummeWorkProMonat;
+	$_data[2][1] += $time_month->_SummeAbsenzProMonat;
+	$_data[3][1] += $time_month->_SummeSaldoProMonat;
 	$_data[4][1] += $_jahr->get_auszahlung(($i + 1), $_time->_jahr);
 
 	//-------------------------------------------------------------------------
@@ -39,17 +38,18 @@ for($i = 0; $i < 12;$i++)
 	//-------------------------------------------------------------------------
 	if(!$_summe_calc_absenz)
 	{
-		$_summe_calc_absenz = $_jahres_berechnung[$i]->get_calc_absenz();
+		$_summe_calc_absenz = $time_month->get_calc_absenz();
 	}
 	else
 	{
 		$tp = 0;
-		foreach($_jahres_berechnung[$i]->get_calc_absenz() as $werte)
+		foreach($time_month->get_calc_absenz() as $werte)
 		{
 			$_summe_calc_absenz[$tp][3] = $_summe_calc_absenz[$tp][3] + $werte[3];
 			$tp++;
 		}
 	}
+	$_jahres_berechnung[$i] = $time_month;
 }
 for($i = 0; $i < 12;$i++){
 	$_SummeSollProMonat += $_jahres_berechnung[$i]->_SummeSollProMonat;

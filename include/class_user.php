@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_user{
 	public $_loginname 			= NULL;
@@ -236,4 +236,3 @@ class time_user{
 		return $tmp;
 	}
 }
-?>

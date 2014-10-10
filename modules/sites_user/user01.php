@@ -5,14 +5,14 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if (strstr($_template->_bootstrap,'true')){
 ?>
 	<ul class="nav nav-tabs adminmenu">	
                 <?php  if($_settings->_array[13][1]) {?><li<?php echo $_action=="anwesend" ?  ' class="active"':''; ?>><a id="Liste" title="Anwesenheitsliste" href="?action=anwesend">Liste</a></li> <?php }?>
                 <li<?php echo $_action=="show_time" ?  ' class="active"':''; ?>><a id="Home" title="Home" href="?action=show_time">Home</a></li> 
-                <li<?php echo $_action=="show_year" ?  ' class="active"':''; ?>><a id="Jahr" title="Jahresübersicht" href="?action=show_year">Jahr</a></li>
+                <li<?php echo $_action=="show_year" ?  ' class="active"':''; ?>><a id="Jahr" title="Jahresï¿½bersicht" href="?action=show_year">Jahr</a></li>
                 <li<?php echo $_action=="show_pdf" ?  ' class="active"':''; ?>><a id="PDF" title="PDF anzeigen" href="?action=show_pdf">PDF</a></li>
               <?php if($_settings->_array[20][1]==0){ ?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>
@@ -20,7 +20,7 @@ if (strstr($_template->_bootstrap,'true')){
 		 </li>
 		<?php } elseif($_settings->_array[20][1] >= date("j", time())){	?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>
-		 	<a id="Drucken" title="Monatsübersicht vom letzten Monat drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0">Drucken</a>
+		 	<a id="Drucken" title="Monatsï¿½bersicht vom letzten Monat drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0">Drucken</a>
 		 </li>
 		<?php } ?>
 		 <?php  if($_settings->_array[24][1]){ ?>
@@ -36,13 +36,13 @@ if (strstr($_template->_bootstrap,'true')){
 		<table height='35'  border='0' cellpadding='0' cellspacing='0'>
 		<tr>";
 		$_startjahr = date("Y",$_user->_BeginnDerZeitrechnung);		// User - Einstellungen
-		$_w_jahr	= $_time->_jahr;									// gewähltes Jahr
-		$_nextjahr	= date("Y",time());								// nächstes Jahr
+		$_w_jahr	= $_time->_jahr;									// gewï¿½hltes Jahr
+		$_nextjahr	= date("Y",time());								// nï¿½chstes Jahr
 		if ($_startjahr<$_w_jahr) {
 			$_timestampv = mktime(0, 0, 0, 1, 1, $_w_jahr-1);
 			echo "
 			<td class='td_background_menue' valign='middle' align='center' width='35'>
-				<a title='zurück' href='?action=show_time&timestamp=$_timestampv'><img src='images/icons/control_rewind.png' border=0></a>
+				<a title='zurï¿½ck' href='?action=show_time&timestamp=$_timestampv'><img src='images/icons/control_rewind.png' border=0></a>
 			</td>";
 		}
 		echo "
@@ -63,7 +63,7 @@ if (strstr($_template->_bootstrap,'true')){
 		</li>
         </ul>
 <?php 
-//TODO : Template ohne Bootstrap -> löschen
+//TODO : Template ohne Bootstrap -> lï¿½schen
 }else{ 
 	echo "<table width='400'  border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
 	if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
@@ -97,15 +97,15 @@ if (strstr($_template->_bootstrap,'true')){
 	echo " | ";
 	}
 	 if($_settings->_array[24][1]){
-	//Version 0.6 Desing wählen - wird in Cookie gespeichert
+	//Version 0.6 Desing wï¿½hlen - wird in Cookie gespeichert
 	echo "</td><td valign='middle'>";
 	echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	}
-	// TODO : in Entwicklung Mehrfacheinträge für Abwesenheiten z.B. 2 Wochen Ferien
+	// TODO : in Entwicklung Mehrfacheintrï¿½ge fï¿½r Abwesenheiten z.B. 2 Wochen Ferien
 	//echo " | ";
 	//echo "</td><td valign='middle'>";
-	//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheinträge für Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
+	//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheintrï¿½ge fï¿½r Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
 	//echo "</td><td width=100 valign='middle'>";
 	echo "&nbsp;";
 	echo "</td>";
@@ -113,8 +113,8 @@ if (strstr($_template->_bootstrap,'true')){
 	// Jahresanzeige und Wahl
 	// ---------------------------------------------------------------------------- 
 	$_startjahr = date("Y",$_user->_BeginnDerZeitrechnung);		// User - Einstellungen
-	$_w_jahr	= $_time->_jahr;									// gewähltes Jahr
-	$_nextjahr	= date("Y",time());								// nächstes Jahr
+	$_w_jahr	= $_time->_jahr;									// gewï¿½hltes Jahr
+	$_nextjahr	= date("Y",time());								// nï¿½chstes Jahr
 	if ($_startjahr<$_w_jahr) {
 		$_timestampv = mktime(0, 0, 0, 1, 1, $_w_jahr-1);
 		echo "<td class='td_background_menue' valign='middle' align='center' width='20'><a title='zur&uuml;ck' href='?action=show_time&timestamp=$_timestampv'><img src='images/icons/control_rewind.png' border=0></a></td>";

@@ -5,7 +5,7 @@
 * Version 0.893
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 if(@$_POST['01'] ){
 	$dom = new DOMDocument('1.0', 'utf-8');

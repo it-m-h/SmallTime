@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // Multi - Settings - Anzeige XML erstellen
@@ -44,7 +44,7 @@ function getinfotext($str,$css){
 	return $_infotext;
 }
 // ----------------------------------------------------------------------------
-// Berechtigung, für Userzugriff auf PDF
+// Berechtigung, fï¿½r Userzugriff auf PDF
 // ----------------------------------------------------------------------------
 function check_htaccess_pdf($datenpfad){
 	$_file = "./Data/".$datenpfad."/Dokumente/.htaccess";
@@ -102,7 +102,7 @@ function dec2time($number, $format = "%h:%i"){
 	return $format;
 }
 // ----------------------------------------------------------------------------
-// Funktionen für Debug
+// Funktionen fï¿½r Debug
 // ----------------------------------------------------------------------------
 function txt($txt){
 	echo "<p style='color:red'>$txt</p>";
@@ -192,4 +192,3 @@ function monatskalender($tmp){
 	$_ausgabe = $_ausgabe. '</table>';
 	return $_ausgabe;
 }
-?>

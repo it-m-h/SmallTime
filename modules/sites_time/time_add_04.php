@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // Falls Template jquery benutzt (im XML - File), dann kann datetimepicker verwendet werden
 if (strstr($_template->_jquery,'true')){ ?>
@@ -14,10 +14,10 @@ $(function() {
         $('#datetimepicker1').datetimepicker({
             language: 'de-DE',
             pickSeconds: false,
-            pickDate: false,
+            pickDate: false
         });
         var now = new Date();
-        var seldate = new Date(<?php echo $_GET[timestamp];?>*1000);
+        var seldate = new Date(<?php echo $_GET['timestamp'];?>*1000);
         seldate.setHours(now.getHours());
         seldate.setMinutes(now.getMinutes());
         $('#datetimepicker1').data('datetimepicker').setLocalDate(seldate);
@@ -31,7 +31,7 @@ $(function() {
 });
 </script>
 <?php }  ?>
-<Form name="insert" action="?action=insert_time&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" target="_self" method="post">
+<form name="insert" action="?action=insert_time&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" target="_self" method="post">
         <table width="100%" border="0" cellpadding="5" cellspacing="2">
                 <tr style="display: none">
                         <td class=td_background_wochenende width="200" align=left>Datum : (Tag / Monat / Jahr)</td>
@@ -59,7 +59,7 @@ $(function() {
                         <td class=td_background_top colspan="2">
                                 <div id="datetimepicker1" class="input-append">
                                         <label for="newtimestamp">Neuer Zeitstempel: </label>
-                                    <input id="newtimestamp" data-format="dd.MM.yyyy hh:mm" type="text"></input>
+                                    <input id="newtimestamp" data-format="dd.MM.yyyy hh:mm" type="text" />
                                     <span class="add-on">
                                       <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                                       </i>
@@ -112,4 +112,4 @@ $(function() {
                 </tr>                
 <?php } ?>	
         </table>     
-</Form>
+</form>

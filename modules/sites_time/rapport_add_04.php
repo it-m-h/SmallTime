@@ -5,10 +5,10 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<Form action="?action=insert_rapport&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
+<form action="?action=insert_rapport&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="2">
 		<tr>
 			<td class=td_background_tag align=left>
@@ -27,4 +27,4 @@
 			</td>
 		</tr>
 	</table>
-</Form>
+</form>

@@ -5,10 +5,10 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<Form name="insert" action="?action=insert_time_list&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
+<form name="insert" action="?action=insert_time_list&timestamp=<?php echo $_time->_timestamp ?>&token=<?php echo $token ?>" method="post" target="_self">
 	<table width="100%" border="0" cellpadding="5" cellspacing="2">
 		<tr>
 			<td class=td_background_top width="200" align=left>Tag:</td>
@@ -47,4 +47,4 @@
 			</td>
 		</tr>		
 	</table>
-</Form>
+</form>

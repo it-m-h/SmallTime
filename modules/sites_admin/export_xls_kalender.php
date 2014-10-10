@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 $_datenarr		= array();
 $_farbe 			= array();
@@ -75,7 +75,7 @@ foreach($_benutzer as $string){
 				$z++;
 			} 
 		}			
-		//Arbeitstag , falls nein Wochenende anzeigen
+		//Arbeitstag, falls nein Wochenende anzeigen
 		$_arbeitstag = explode(";",$_userdaten_tmp[7]);
 		if($_arbeitstag[$_monat->_MonatsArray[$i][2]]==0 or $_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][5] >=0){
 			// Wochenende
@@ -122,4 +122,3 @@ foreach($_datenarr as $_zeilen){
 	$y++;
 }
 echo "</table>";
-?>

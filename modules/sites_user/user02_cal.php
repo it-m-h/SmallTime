@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //TODO : Template ohne Bootstrap -> löschen
 if(strstr($_template->_bootstrap,'true')){
@@ -14,7 +14,7 @@ if(strstr($_template->_bootstrap,'true')){
 	echo '	<ul class="nav nav-tabs jahresmenu">	';
 	foreach($monate as $_month){
 		$_timestamp = mktime(0, 0, 0, $i, 1, $_time->_jahr);
-		$month = htmlspecialchars($month);
+		$month = htmlspecialchars($_month);
 		$month = iconv("UTF-8","ISO-8859-1",$month);
 		if($i==$_time->_monat){			
 			echo '		<li class="active"><a id="MonatAktiv" title="Monat '.$_month.'" href="?action=show_time&timestamp='.$_timestamp.'">'.$_month.'</a></li>';
@@ -30,7 +30,7 @@ if(strstr($_template->_bootstrap,'true')){
 	echo "<table width='100%' height='100%' border='0' cellpadding='0' cellspacing='0'><tr>";
 	foreach($monate as $_month){
 		$_timestamp = mktime(0, 0, 0, $i, 1, $_time->_jahr);
-		$month = htmlspecialchars($month);
+		$month = htmlspecialchars($_month);
 		if($i==$_time->_monat){
 			echo "<td valign='middle'>";
 			echo "<img src='images/icons/calendar_view_month.png' border=0>";
@@ -48,4 +48,3 @@ if(strstr($_template->_bootstrap,'true')){
 	}
 	echo "</tr></table>";
 }
-?>

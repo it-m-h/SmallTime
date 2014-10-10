@@ -199,12 +199,7 @@ class HTML_Table {
                     $this->addAttribs( $row['atts'] ) . ">\n" . 
                     $this->getRowCells( $row['cells'] ) . "  </tr>\n";
         }
-        
         $str .= "</$tag>\n";
-        
         return $str;
     }
-    
 }
-
-?>

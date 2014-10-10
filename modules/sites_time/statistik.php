@@ -5,7 +5,7 @@
 * Version 0.898
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
 echo "	<tr>";
@@ -98,4 +98,3 @@ echo "		<td class=td_background_wochenende align=left>$_monat->_SummeExtern Tage
 echo "	</tr>";
 }
 echo "</table>";
-?>

@@ -10,7 +10,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 $login = false;
 if(isset($_GET['rfid'])){	
@@ -71,7 +71,7 @@ if($login){
 	$_user = new time_user();
 	$_user->load_data_session();
 	$_absenz = new time_absenz($_user->_ordnerpfad, $_time->_jahr);	
-	$_monat         = new time_month( $_settings->_array[12][1] , $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
+	$_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1]);
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);	
 	// ----------------------------------------------------------------------------------------------
 	// Controller action - Handling
@@ -94,7 +94,7 @@ if($login){
 		get_mitarbeiter();
 		break;
 		case "getvar":
-		// einzelne Variable abfragen und ausgeben , class und var (Klassenneme und Variablenname)
+		// einzelne Variable abfragen und ausgeben, class und var (Klassenneme und Variablenname)
 		// android.php?rfid=1234&action=getvar&class=_monat&var=_SummeSollProMonat
 		// MIt array - Angaben : (immer x und y)
 		// android.php?rfid=1234&action=getvar&class=_monat&var=_MonatsArray&arr=17,20
@@ -267,5 +267,3 @@ function get_mitarbeiter(){
 		echo "\n";
 	}
 }
-
-?>

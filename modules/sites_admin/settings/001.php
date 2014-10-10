@@ -5,7 +5,7 @@
 * Version 0.896
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
-* Copyright (c) , IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 $_info[0]="Title der Webseite";
 $_info[1]="meta:Author";
@@ -35,7 +35,7 @@ foreach($_settings->_array as $_zeile){
 		$_anzeige = $_anzeige . "<td class='td_background_tag'><img title='".$_zeile[2]."' src='images/icons/information.png' border=0></td></tr>";
 	}
 	//------------------------------------------------------------------------------------
-	//Landeseinstellung für Bundesfeiertag - Zeile 13
+	//Landeseinstellung fï¿½r Bundesfeiertag - Zeile 13
 	//------------------------------------------------------------------------------------
 	if($y==12){
 		$_anzeige = $_anzeige . "<tr><td colspan='3'><hr></td></tr>";
@@ -75,7 +75,7 @@ foreach($_settings->_array as $_zeile){
 	$y++;
 }
 //------------------------------------------------------------------------------------
-// Dürfen die Design gewählt werden
+// Dï¿½rfen die Design gewï¿½hlt werden
 //------------------------------------------------------------------------------------
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[24][0] . "</td>";
 if($_settings->_array[24][1]==1){ $check1=" checked ";}else{$check1="";}
@@ -101,13 +101,13 @@ $_anzeige = $_anzeige . '<td class="td_background_tag"><table border="0" cellspa
 		</tr></table></td>';
 $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[26][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
-//Zeit Edit - Einstellungen, wie lange zurück darf der User Zeiten editieren - Zeile 23
+//Zeit Edit - Einstellungen, wie lange zurï¿½ck darf der User Zeiten editieren - Zeile 23
 //------------------------------------------------------------------------------------
 $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Berechtigung f&uuml;r Zeit edit der Mitarbeiter. (inaktiv wenn oben nein eingestellt ist)</td></tr>";
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[23][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="23" value="'.$_settings->_array[23][1].'" size="2"> (Wie viele Tage zur&uuml;ck darf eine Zeit ver&auml;ndert werden)</td>';
-$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[23][2]."' src='images/icons/information.png' border=0></td></tr>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[23][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
 // Quick Time runden auf Minuten - Zeile 25
 //------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>QuickTime r
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[25][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="25" value="'.$_settings->_array[25][1].'" size="2"> (Minuten - Rundung)</td>';
-$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[25][2]."' src='images/icons/information.png' border=0></td></tr>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[25][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
 //Drucken - Einstellungen, bis zu welchem Datum der userDrucken darf - Zeile 20
 //------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Berechtigun
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[20][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="20" value="'.$_settings->_array[20][1].'" size="2"> (Bis zum XX. des folgenden Monats aktiv, sichtbar)</td>';
-$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[20][2]."' src='images/icons/information.png' border=0></td></tr>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[20][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
 //Automatische Pausen - Zeile 21 und 22
 //------------------------------------------------------------------------------------
@@ -131,11 +131,11 @@ $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Einstellung
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[21][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="21" value="'.$_settings->_array[21][1].'" size="2"> (Automatische Pause, 0=inaktiv, Dez. z.B. 3.75)</td>';
-$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[21][2]."' src='images/icons/information.png' border=0></td></tr>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[21][2]."' src='images/icons/information.png' border=0></td></tr>";
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[22][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="22" value="'.$_settings->_array[22][1].'" size="2"> (Dezimalangabe z.B. 0.75)</td>';
-$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[22][2]."' src='images/icons/information.png' border=0></td></tr>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[22][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
 // Absenzen - Berechnung (alle oder nur bis zum aktuellen Datum) (Zeile 28)
 //------------------------------------------------------------------------------------
@@ -163,4 +163,3 @@ $_anzeige = $_anzeige . "
 $_anzeige = $_anzeige . "</table>";
 $_anzeige = $_anzeige . "</form>";
 echo $_anzeige;
-?>
