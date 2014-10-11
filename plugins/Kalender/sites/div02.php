@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
 /*******************************************************************************
-* Version 0.896
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -25,6 +25,7 @@ foreach($_benutzer as $string){
 	echo '<tr>';
 	$string = explode(";", $string);
 	$_userdaten_tmp = file("./Data/".$string[0]."/userdaten.txt");
+	
 	//Absenzen laden
 	$_user_absenzen = array();
 	if (file_exists("./Data/".$string[0]."/Timetable/A". $_time->_jahr)){
@@ -48,6 +49,7 @@ foreach($_benutzer as $string){
 		}			
 		//Arbeitstag, falls nein Wochenende anzeigen
 		$_arbeitstag = explode(";",$_userdaten_tmp[7]);
+		$zeiten =  time_user::get_user_stempelzeiten($string[0], $_time->_jahr, $_time->_monat ,$i );
 		if($_arbeitstag[$_monat->_MonatsArray[$i][2]]==0 or $_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][5] >=0){
 			echo ' class="td_background_wochenende"';
 		}elseif($_text){
@@ -56,18 +58,21 @@ foreach($_benutzer as $string){
 			$_prozent = $_arbeitstag[$_monat->_MonatsArray[$i][2]];
 			if($_prozent <= 0.5){
 				echo ' class="td_background_tag50"';
+			}elseif(count($zeiten)){
+				// Mitarbeiter war Anwesend, es hat Stempelzeiten
+				echo ' class="alert alert-success"';
 			}else{
 			 	echo ' class="td_background_tag"';	
-			}
-				
+			}		
 		}
-		echo '>';	
+		echo '>';
 		// Arbeitstag - in Prozent wenn nicht 0 oder 1
 		if($_arbeitstag[$_monat->_MonatsArray[$i][2]]>0 && $_arbeitstag[$_monat->_MonatsArray[$i][2]]< 1 && !$_text){
 			echo '<font size="-6" color="#a6a6a6">'.$_arbeitstag[$_monat->_MonatsArray[$i][2]].'</font>';
 		}else{
 			echo '<font size="-6">'.$_text.'</font>';
-		}			
+		}		
+		
 		echo '</td>';
 	}
 	echo '</tr>';

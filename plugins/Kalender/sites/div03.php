@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
 /*******************************************************************************
-* Version 0.896
+* Version 0.899
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -13,7 +13,7 @@ $i=1;
 echo '<table cellpadding="2" cellspacing="1" border="0" width="100%">';
 echo '
 	<tr>
-		<td width="20" height="21" class="td_background_top">ID</td>
+		<td width="20" height="22" class="td_background_top">ID</td>
 		<td valign="middle" align="left" class="td_background_top">Name</td>
 		<td valign="middle" align="left" class="td_background_top">Std.</td>
 	</tr>';
@@ -32,7 +32,7 @@ foreach($_benutzer as $string){
 	$_userdaten_tmp = file("./Data/".$string[0]."/userdaten.txt");
 	echo '
 	<tr>
-		<td width="20" height="21" class="td_background_info">'.$i.'</td>
+		<td width="20" height="22" class="td_background_info">'.$i.'</td>
 		<td valign="middle" align="left" class="td_background_tag">'.$_userdaten_tmp[0].'</td>
 		<td valign="middle" align="left" class="td_background_tag">'.$time.'</td>
 	</tr>'; 

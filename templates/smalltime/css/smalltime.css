@@ -372,6 +372,17 @@ a:hover {
 	background-image: linear-gradient( #fafafa,#e8e8e8 ); 
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#fafafa', endColorstr='#e8e8e8');/*For IE7-8-9*/ 
 }
+.td_background_tag50 {
+	padding: 8px 8px 8px 8px;
+	background: #e8e8e8;
+	background-image: -webkit-gradient(linear,left top,left bottom,from( #e2e2e2 ),to( #cccccc )); 
+	background-image: -webkit-linear-gradient( #e2e2e2,#cccccc ); 
+	background-image: -moz-linear-gradient( #e2e2e2,#cccccc ); 
+	background-image: -ms-linear-gradient( #e2e2e2,#cccccc ); /*For IE10*/
+	background-image: -o-linear-gradient( #e2e2e2,#cccccc ); 
+	background-image: linear-gradient( #e2e2e2,#cccccc ); 
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e2e2e2', endColorstr='#cccccc');/*For IE7-8-9*/ 
+}
 .td_background_tag img {
 	width: 16px;
 }
