@@ -141,7 +141,7 @@ class time_month{
 			$this->_MonatsArray[$i][7] = ($this->_MonatsArray[$i][4]>'0' && $this->_MonatsArray[$i][5] == -1)? "1":"0";
 			// Falls das Datum in der Zukunft liegt, noch kein Arbeitstag und keine Zeitrechnung
 			if($_Day > time()) $this->_MonatsArray[$i][7]=0;	
-			$this->_MonatsArray[$i][8] = ($this->_MonatsArray[$i][7])? $this->_SollProTag*$this->_MonatsArray[$i][4]:0;;
+			$this->_MonatsArray[$i][8] = ($this->_MonatsArray[$i][7])? $this->_SollProTag*$this->_MonatsArray[$i][4]:0;
 			$this->_MonatsArray[$i][9] = " ";
 			$this->_MonatsArray[$i][10] = $this->get_timestamps($_Day);	
 			$this->_MonatsArray[$i][11] = count($this->_MonatsArray[$i][10]);
@@ -165,7 +165,12 @@ class time_month{
 			$this->_MonatsArray[$i][16] = $tmp[3];
 			$this->_MonatsArray[$i][17] = $tmp[4]; 
 			$tmp1=0;
-			if($this->_MonatsArray[$i][15]<>0 && ($this->_MonatsArray[$i][4]==0 || $this->_MonatsArray[$i][5]<> -1) && $_Day<time()){$tmp=$this->_SollProTag;$tmp1=1;}else{$tmp=$this->_MonatsArray[$i][8];$tmp1=0;}
+			// Liegen die Absenzen oder die Zeiten in der Zukunft, dann nicht berechnen
+			if($this->_MonatsArray[$i][15]<>0 && ($this->_MonatsArray[$i][4]==0 || $this->_MonatsArray[$i][5]<> -1) && $_Day<time()){
+				$tmp=$this->_SollProTag;$tmp1=1;
+			}else{
+				$tmp=$this->_MonatsArray[$i][8];$tmp1=0;
+			}
 			$tmp = round($tmp*$this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][17]/100, 2);
 			$this->_MonatsArray[$i][18] = $tmp;
 			$this->_MonatsArray[$i][19] = "";
@@ -173,24 +178,37 @@ class time_month{
 			//-------------------------------------------------------------------------
 			// Zeitberechnung
 			//-------------------------------------------------------------------------
+			// Arbeitszeit 	(13) 	in Stunden
+			// Sollzeit 	(8) 	in Stunden
+			// Absenz 	(15) 	in Tagen
+			// Absenzgew	(17) in Prozent
+			// Absenzstd	(18) in Stunden
+			// Arbeitstag 	(4) 	in Anzahl
+			// Wenn Absenz und keine Arbeitszeiten dann ist Absenz = Absenz (Anzahl) * Arbeitstag (Gewichtung)
+			if ($this->_MonatsArray[$i][15] and $this->_MonatsArray[$i][13] == 0){
+				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
+			}
 			// saldo pro Tag = arbeitszeit(13) plus absenzzeit(18) minus soll(8)
 			$saldo = 0;
 			$saldo = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
 			// wenn gearbeitet grösser als soll, dann Absenzen ignorieren
-			if($this->_MonatsArray[$i][13] > $this->_SollProTag and $this->_MonatsArray[$i][15] == 1){
+			if($this->_MonatsArray[$i][13] > $this->_MonatsArray[$i][8] and $this->_MonatsArray[$i][15] == 1){
 				$this->_MonatsArray[$i][15] = 0;
 				$this->_MonatsArray[$i][18] = 0;
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
 			}
-			//wenn absenz(15) == 1 und $saldo > 0, Prozentual ausrechnen
+			//wenn absenz(15) == 1 Prozentual ausrechnen sowie tmp=0(nicht in der Zukunft)
 			if($this->_MonatsArray[$i][15] == 1 and $tmp1==1){
-				$this->_MonatsArray[$i][18] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
-				$this->_MonatsArray[$i][15] = round(($this->_SollProTag - $this->_MonatsArray[$i][13])/$this->_SollProTag,2);
+				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
+				$this->_MonatsArray[$i][15] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8],2);
+				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13];
 			}
+			// wenn eine Absenz vorhanden ist und das saldo >0 sowie tmp=0(nicht in der Zukunft)
 			if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
 				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
 				$this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
+				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
 			}
 			$saldo = round($saldo,2);
@@ -596,7 +614,6 @@ class time_month{
 		$this->_MonatsArray[0][36] = "(36)<br>az";				// Arbeitszeit spezial Vergütung
 		$this->_MonatsArray[0][33] = "(37)<br>rapport popup";	// Rapport - Nur popup
 	}
-
 	public function check_autopause($zeit,$pause){
 		for($i=1; $i<=$this->_letzterTag; $i++){
 			// TODO : function veraltet - > bereinigen

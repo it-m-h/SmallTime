@@ -9,19 +9,19 @@
 *******************************************************************************/
 class time_jahr{		
 	public $_jahr 			= NULL;		// Startjahr des Users
-	public $_timestamp		= NULL;		// welches jahr wurde gewählt, bzw Monat wurde gewählt
+	public $_timestamp	= NULL;		// welches jahr wurde gewählt, bzw Monat wurde gewählt
 	public $_summe_t		= NULL;		// Summe seit Beginn inkl. Übertrag
 	public $_modell 		= NULL;		// Zeitberechnungsmodell (0=normal, alle kumuliertd, 1 = Jährlich, 2 Monatlich) (datei ./Data/user/userdaten.txt zeile 16 erweitern mit 0,1,2)
-	public $_summe_F		= NULL;		// Feriensumme
+	public $_summe_F	= NULL;		// Feriensumme
 	public $_summe_vorholzeit;
 	public $_CalcToTimestamp	=TRUE;	
 	public $_saldo_t		= NULL;		// Zeitsaldo
 	public $_saldo_F		= NULL;		// Feriensaldo
 	public $_arr_ausz		= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
 	public $_tot_ausz		= NULL;		// Auszahlungen summe
-	public $_ordnerpfad		= NULL;		// Pfad zu den Daten
+	public $_ordnerpfad	= NULL;		// Pfad zu den Daten
 	public $_startjahr 		= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
-	public $_startmonat		= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
+	public $_startmonat	= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_array			= NULL;		// Array des Jahres
 	public $_data			= NULL;		// Array der Daten	
 	public $_Ferien_pro_Jahr;
@@ -42,7 +42,7 @@ class time_jahr{
 		$this->_Ferien_pro_Jahr 		= $Ferien_pro_Jahr;
 		$this->_Vorholzeit_pro_Jahr 	= $Vorholzeit_pro_Jahr;	
 		$this->_modell 				= $modell;	
-		$this->_CalcToTimestamp = $_SESSION['calc'] ;
+		$this->_CalcToTimestamp 		= $_SESSION['calc'] ;
 		$this->calc_feriensumme();
 		// ---------------------------------------------------------------------------------------
 		// Falls jeden Monat die Überzeit auf 0 gestellt wird:
