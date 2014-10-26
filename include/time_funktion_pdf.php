@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.898
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -116,7 +116,8 @@ function erstelle_neu($_drucktime){
         $pdf->Ln();
 
         $pdf->Cell(11,6,'',0,'','L');
-        $pdf->Cell(30,6,'Ver�nderung : ',0,0,'L');
+        $txt = iconv("UTF-8","ISO-8859-1",'Veränderung');
+        $pdf->Cell(30,6,$txt .' : ',0,0,'L');
         $pdf->Cell(30,6,'',0,0,'L');
         $pdf->Cell(30,6,$_monat->_SummeSaldoProMonat." Std.",0,0,'L');
         $pdf->Cell(30,6,'',0,0,'L');
