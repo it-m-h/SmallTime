@@ -2,41 +2,41 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.899
+* Version 0.9
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_month{
-	private $_file						= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
-	private $_pfad 					= NULL;	// Ordnerpfad
-	private $_wochentage				= NULL;	// Bezeichnung der Wochentage
-	private $_arbeitstage				= NULL;	// User - Arbeitstage - Einstellungen	
-	private $_u_feiertage				= NULL;	// User - Feiertage Einstellungen
-	private $_feiertage					= NULL;	// Feiertage - Datum und Name in einem Array
-	private $_absenz					= NULL;	// Absenzen
+	private $_file					= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
+	private $_pfad 				= NULL;	// Ordnerpfad
+	private $_wochentage			= NULL;	// Bezeichnung der Wochentage
+	private $_arbeitstage			= NULL;	// User - Arbeitstage - Einstellungen	
+	private $_u_feiertage			= NULL;	// User - Feiertage Einstellungen
+	private $_feiertage				= NULL;	// Feiertage - Datum und Name in einem Array
+	private $_absenz				= NULL;	// Absenzen
 	private $_timeTable				= NULL;	// Zeiteinträge in einem Array
-	private $_startzeit					= NULL;	// Beginn der Zeitrechnung
-	private $_arbeitszeit				= NULL;
-	private $_autopause				= NULL;
-	private $_setautopause				= "";
-	private $_zeitzuschlag				= NULL;
+	private $_startzeit				= NULL;	// Beginn der Zeitrechnung
+	private $_arbeitszeit			= NULL;
+	private $_autopause			= NULL;
+	private $_setautopause			= "";
+	private $_zeitzuschlag			= NULL;
 	private $_absenzberechnung 		= NULL;	
-	public $_SollProTag 				= NULL;	// Soll Arbeitszeit pro Tag
+	public $_SollProTag 			= NULL;	// Soll Arbeitszeit pro Tag
 	public $_letzterTag				= NULL;	// Anzahl der Tage im gewählen Monat	
-	public $_SummeSollProMonat 		= NULL;	// Summe der Soll - Stunden im Monat
-	public $_SummeWorkProMonat 		= NULL;	// Summe der gearbeiteten Stunden im Monat
+	public $_SummeSollProMonat 	= NULL;	// Summe der Soll - Stunden im Monat
+	public $_SummeWorkProMonat 	= NULL;	// Summe der gearbeiteten Stunden im Monat
 	public $_SummeAbsenzProMonat 	= NULL;
-	public $_SummeSaldoProMonat 		= NULL;	// Saldo in dem aktuellen Monat
-	public $_SummeStempelzeiten		= NULL;	// ungerade Zahl, damit existiert ein Fehler in der Berechnung
-	public $_SummeFerien				= NULL;
-	public $_SummeKrankheit			= NULL;
-	public $_SummeUnfall				= NULL;
+	public $_SummeSaldoProMonat 	= NULL;	// Saldo in dem aktuellen Monat
+	public $_SummeStempelzeiten	= NULL;	// ungerade Zahl, damit existiert ein Fehler in der Berechnung
+	public $_SummeFerien			= NULL;
+	public $_SummeKrankheit		= NULL;
+	public $_SummeUnfall			= NULL;
 	public $_SummeMilitaer			= NULL;
-	public $_SummeIntern				= NULL;
+	public $_SummeIntern			= NULL;
 	public $_SummeWeiterbildung		= NULL;
-	public $_SummeExtern				= NULL;
-	public $_MonatsArray 				= NULL;	// Array des Monats
+	public $_SummeExtern			= NULL;
+	public $_MonatsArray 			= NULL;	// Array des Monats
 	public $_modal					= NULL;
 	public $_modal_str				= NULL;
 	
@@ -280,11 +280,17 @@ class time_month{
 			//-------------------------------------------------------------------------
 			// Summen berechnen
 			//-------------------------------------------------------------------------
-			$this->_SummeSollProMonat = $this->_SummeSollProMonat	+ $this->_MonatsArray[$i][8];
-			$this->_SummeWorkProMonat = $this->_SummeWorkProMonat	+ $this->_MonatsArray[$i][13];
-			$this->_SummeAbsenzProMonat = $this->_SummeAbsenzProMonat	+ $this->_MonatsArray[$i][18];
-			$this->_SummeSaldoProMonat = $this->_SummeSaldoProMonat + $this->_MonatsArray[$i][20];
-			$this->_SummeStempelzeiten = $this->_SummeStempelzeiten + $this->_MonatsArray[$i][11];
+			$this->_SummeSollProMonat 		= $this->_SummeSollProMonat	+ $this->_MonatsArray[$i][8];
+			$this->_SummeWorkProMonat 	= $this->_SummeWorkProMonat	+ $this->_MonatsArray[$i][13];
+			$this->_SummeAbsenzProMonat 	= $this->_SummeAbsenzProMonat	+ $this->_MonatsArray[$i][18];
+			$this->_SummeSaldoProMonat 	= $this->_SummeSaldoProMonat + $this->_MonatsArray[$i][20];
+			$this->_SummeStempelzeiten 		= $this->_SummeStempelzeiten + $this->_MonatsArray[$i][11];
+						
+			$this->_SummeWorkProMonat 	= round($this->_SummeWorkProMonat,2);
+			$this->_SummeAbsenzProMonat 	= round($this->_SummeAbsenzProMonat,2);
+			$this->_SummeSaldoProMonat 	= round($this->_SummeSaldoProMonat,2);
+			$this->_SummeStempelzeiten 		= round($this->_SummeStempelzeiten,2);
+			
 			//-------------------------------------------------------------------------
 			// Summen der Absenzen berechnen
 			//-------------------------------------------------------------------------
