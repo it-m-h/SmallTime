@@ -291,7 +291,7 @@ for($year = $_now; $year >= $_to; $year--)
 	// Total - Summen
 	echo "
 	<tr>
-	<td class=td_background_top align = left>Saldo:</td>
+	<td class=td_background_top align = left>Saldo ende Jahr:</td>
 	<td class=td_background_top align=right>" . format($anzeige[$year]['Summ']['Saldo']) . "</td>
 	<td class=td_background_top align=right>" . format($anzeige[$year]['Summ']['Ferien']) . " Tage</td>
 	<td class=td_background_top align=right></td>
