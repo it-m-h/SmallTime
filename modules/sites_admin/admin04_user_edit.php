@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -24,17 +24,17 @@ echo "<td align=left class=td_background_tag ><input type='text' name='_b' value
 echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterst&uuml;tzt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------
-// Zeitberechnungsmodell (0 = normal, alle kumuliert, 1 = j�hrlich, 2 monatlich) (datei ./Data / user / userdaten.txt zeile 16 erweitern mit 0,1,2)
+// Zeitberechnungsmodell (0 = normal, alle kumuliert, 1 = jährlich, 2 monatlich) (datei ./Data / user / userdaten.txt zeile 16 erweitern mit 0,1,2)
 //------------------------------------------------------------------------------------
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Zeitberechnungsmodell</td>";
-echo "<td align=left class=td_background_tag ><select name='_m' size='1'><option value='0";
+echo "<td align=left class=td_background_tag ><select name='_m' size='1'><option value='0'";   
 echo ($_user->_modell == 0) ? " selected " : "" ;
-echo "'>kumulierend</option><option value='1'";
+echo ">kumulierend</option><option value='1'";
 echo ($_user->_modell == 1) ? " selected " : "" ;
-echo "'>J&auml;hrlich</option><option value='2'";
+echo ">J&auml;hrlich</option><option value='2'";
 echo ($_user->_modell == 2) ?  " selected " : "" ;
-echo "'>Monatlich</option>	</select></td>
+echo ">Monatlich</option>	</select></td>
 ";
 echo "<td align=left class=td_background_tag width=16><img title='&Uuml;berstungen - Zeitberechnung kumuliert, jeden Monat oder jedes Jahr zur&uuml;cksetzend.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
@@ -132,7 +132,7 @@ echo "<tr>";
 echo "<td COLSPAN=3 class=td_background_top width=60>Zeitzuschlag</td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------
-//Arbeitszuschlag bei Abendeins�tzen oder Wochenenden
+//Arbeitszuschlag bei Abendeinsätzen oder Wochenenden
 //------------------------------------------------------------------------------------
 echo "<tr>";
 echo "<td align=left class=td_background_tag valign='top'>Arbeitszuschlag :

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Template - Klasse 
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -29,7 +29,7 @@ class time_template{
 
 	function __construct($_start){
 		if($_COOKIE["designname"]){
-			//ausgew�hltes Design vom Cookie laden
+			//ausgewähltes Design vom Cookie laden
 			$this->_templatepfad = "./templates/".$_COOKIE["designname"]."/";
 		}else{
 			$this->_templatepfad = "./templates/smalltime/";
@@ -42,7 +42,7 @@ class time_template{
 		// wird JQuery benutzt, werden andere Module geladen
 		$xmlfile = $this->_templatepfad."settings.xml"; 
 		if(file_exists($xmlfile)){
-			//TODO : Template ohne Bootstrap -> l�schen
+			//TODO : Template ohne Bootstrap -> löschen
 			$xml = simplexml_load_file($xmlfile);			
 			if($xml->bootstrap) $this->_bootstrap = $xml->bootstrap;	
 			if($xml->jquery) $this->_jquery = $xml->jquery;
@@ -77,7 +77,7 @@ class time_template{
 	}
 
 	function set_templatepfad($pfad){
-		// neues gew�hltes Design im Cookie speichern
+		// neues gewähltes Design im Cookie speichern
 		setcookie("designname", $pfad, time()+2592000);
 		$this->_templatepfad = "./templates/".$pfad."/";
 		// index.php Template laden

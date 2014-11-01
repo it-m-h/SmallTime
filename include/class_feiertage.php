@@ -1,8 +1,8 @@
 <?php
 /*******************************************************************************
-* Feiertage f�r das gew�hlte Jahr
+* Feiertage für das gewählte Jahr
 /*******************************************************************************
-* Version 0.899
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -13,7 +13,7 @@ class time_feiertage
 	public	$_country 	= NULL;
 	public	$_easter 	= NULL;
 	public	$_feiertageUSER = NULL;
-	public  	$_feiertage 	= array();			// Feiertage die g�ltig sind
+	public  	$_feiertage 	= array();			// Feiertage die gültig sind
 	private 	$_defineFT 	= array();			// definition der Feiertage
 	private 	$_file 		= "./include/Settings/feiertage.txt";
 	function __construct($_w_jahr, $_country, $_feiertageUSER)
@@ -162,7 +162,7 @@ class time_feiertage
 	}
 	function defineFeiertag($year = NULL, $_country)
 	{
-		// Feiertage k�nnen erg�nzt werden (je nach Land oder Kanton usw.)
+		// Feiertage kännen ergänzt werden (je nach Land oder Kanton usw.)
 		// Formular beim User wird automatisch erweitert (sortiert nach Datum)
 		// Speichern erfolgt ebenfalls automatisch
 		if($easter = $this->easter($year))
@@ -196,7 +196,7 @@ class time_feiertage
 			$holidays['Stephanstag'] = mktime(0,0,0,12,26,$year);
 			$holidays['Silvester'] = mktime(0,0,0,12,31,$year);
 			//$holidays['Berchtoldstag'] = mktime(0,0,0,1,2,$year);
-			//$holidays['Mari� Himmelfahrt'] = mktime(0,0,0,8,15,$year);
+			//$holidays['Mariä Himmelfahrt'] = mktime(0,0,0,8,15,$year);
 			//$holidays['St. Leodegar'] = mktime(0,0,0,10,2,$year);
 			return $holidays;
 		}

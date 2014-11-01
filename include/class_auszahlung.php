@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Auszahlung von Stunden
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class auszahlung{
         public $_ausz_jahr	= NULL;		// Auszahlungen summe
-        public $_ausz_monat= NULL;	// Auszahlungen summe
+        public $_ausz_monat= NULL;		// Auszahlungen summe
         public $_ausz_anz	= NULL;		// Auszahlungen summe
         public $_arr_ausz	= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
 	public $_tot_ausz	= NULL;		// Auszahlungen summe

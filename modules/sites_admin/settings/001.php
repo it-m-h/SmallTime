@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -35,7 +35,7 @@ foreach($_settings->_array as $_zeile){
 		$_anzeige = $_anzeige . "<td class='td_background_tag'><img title='".$_zeile[2]."' src='images/icons/information.png' border=0></td></tr>";
 	}
 	//------------------------------------------------------------------------------------
-	//Landeseinstellung f�r Bundesfeiertag - Zeile 13
+	//Landeseinstellung für Bundesfeiertag - Zeile 13
 	//------------------------------------------------------------------------------------
 	if($y==12){
 		$_anzeige = $_anzeige . "<tr><td colspan='3'><hr></td></tr>";
@@ -75,7 +75,7 @@ foreach($_settings->_array as $_zeile){
 	$y++;
 }
 //------------------------------------------------------------------------------------
-// D�rfen die Design gew�hlt werden
+// Dürfen die Design gewählt werden
 //------------------------------------------------------------------------------------
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[24][0] . "</td>";
 if($_settings->_array[24][1]==1){ $check1=" checked ";}else{$check1="";}
@@ -101,7 +101,7 @@ $_anzeige = $_anzeige . '<td class="td_background_tag"><table border="0" cellspa
 		</tr></table></td>';
 $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[26][2]."' src='images/icons/information.png' border=0></td></tr>";
 //------------------------------------------------------------------------------------
-//Zeit Edit - Einstellungen, wie lange zur�ck darf der User Zeiten editieren - Zeile 23
+//Zeit Edit - Einstellungen, wie lange zurück darf der User Zeiten editieren - Zeile 23
 //------------------------------------------------------------------------------------
 $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Berechtigung f&uuml;r Zeit edit der Mitarbeiter. (inaktiv wenn oben nein eingestellt ist)</td></tr>";
 $_anzeige = $_anzeige . "<tr width=50%>";

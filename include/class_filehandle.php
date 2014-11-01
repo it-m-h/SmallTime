@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.897
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -202,20 +202,14 @@ class time_filehandle{
 		fputs($fp, $text.$_zeilenvorschub);
 		$text = '1;0;0;0;1;1;1;1;1;1;1;0;1;0;0;1;1;1;0;1;1;0' ;
 		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
-		$text = '0;0;0' ;
-		fputs($fp, $text.$_zeilenvorschub);
+		$text = '-1;-1;0' ;
+		fputs($fp, $text.$_zeilenvorschub);	// Sonntag
+		fputs($fp, $text.$_zeilenvorschub);	// Montag
+		fputs($fp, $text.$_zeilenvorschub);	// Dienstag
+		fputs($fp, $text.$_zeilenvorschub);	// Mittwoch
+		fputs($fp, $text.$_zeilenvorschub);	// Donnerstag
+		fputs($fp, $text.$_zeilenvorschub);	// Freitag
+		fputs($fp, $text.$_zeilenvorschub);	// Samstag
 		$text = '0' ;
 		fputs($fp, $text.$_zeilenvorschub);
 		fclose($fp);

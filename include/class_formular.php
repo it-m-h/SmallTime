@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time Formulargenerator
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -95,7 +95,7 @@ class Formular_old{
 		#	$editor = new CKEditor();
 		#	$editor->basePath = 'ckeditor/';
 		#	$editor->returnOutput = true;
-		#	$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einf�gen des ckeditors
+		#	$this->inputs[] = array($beschreibung, $editor->editor($name, $value)); // Einfügen des ckeditors
 		#} else {
 			$this->inputs[] = array($beschreibung, "<input type=\"$type\" name=\"$name\" value=\"$value\" size=$size />");
 		#}

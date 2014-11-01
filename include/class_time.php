@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -246,9 +246,9 @@ class time{
 		$_count = 0;
 		foreach($_timeTable as $_tmp){
 			if(!$_lastday){
-				$_lastday = date("j", $_tmp);
+				$_lastday = date('j', (int)trim($_tmp));
 				$_count++;
-			}elseif($_lastday == date("j", $_tmp)){ 
+			}elseif($_lastday == date('j', (int)trim($_tmp))){ 
 				$_count++;
 			}
 		}

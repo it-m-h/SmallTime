@@ -17,7 +17,10 @@
                 ?>
                 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_template->get_templatepfad() ?>css/smalltime.css">
         </head>
-        <?php if($_modal == false) { ?>
+	<?php //if($_modal == false)
+	if($_modal == false)
+	{
+		?>
         <body>
                 <!--Anfang DIV für die InfoBox -->
 			<div id="InfoBox" style="z-index: 1; visibility: hidden; left: 0px; top: 0px;">
@@ -90,7 +93,11 @@
                      </div>
                 </div>
         </body>
-        <?php } elseif($_modal == true) { ?>
+		<?php
+	}
+	elseif($_modal == true)
+	{
+		?>
                 <body>
                         <div id='div_user04'>
                                 <?php include($_template->get_user04()); ?>

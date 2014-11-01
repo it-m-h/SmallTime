@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -28,14 +28,14 @@ echo "</td><td valign='middle'>";
 echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=$_timestamp&print=0'><img src='images/icons/printer.png' border=0></a> ";
 echo "</td><td valign='middle'>";
 echo " | ";
-//Version 0.6 Desing w�hlen - wird in Cookie gespeichert
+//Version 0.6 Desing wählen - wird in Cookie gespeichert
 echo "</td><td valign='middle'>";
 echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";
 echo "</td><td valign='middle'>";
-//TODO : in Entwicklung Mehrfacheintr�ge f�r Abwesenheiten
+//TODO : in Entwicklung Mehrfacheinträge für Abwesenheiten
 //echo " | ";
 //echo "</td><td valign='middle'>";
-//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheintr�ge f�r Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
+//echo "        <a href='?action=add_absenz_serie&timestamp=$_timestamp' title='Mehrfacheinträge für Abwesenheiten'><img src='images/icons/arrow_refresh.png' border='0'></a>";
 //echo "</td><td width=100 valign='middle'>";
 echo "&nbsp;";
 echo "</td>";

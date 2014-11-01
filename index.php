@@ -35,7 +35,7 @@ date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
-// Microtime f�r die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
+// Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
 $_start_time = explode(" ",microtime());
 $_start_time = $_start_time[1] + $_start_time[0];
 // ----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ require_once ('./include/class_table.php');
 include ("./include/time_funktionen.php");
 //$controller = new time_controller();
 // ----------------------------------------------------------------------------
-// Im Admin - Bereich bis zum gew�hlten Monat berechnen (f�r Druck und Anzeige)
+// Im Admin - Bereich bis zum gewählten Monat berechnen (für Druck und Anzeige)
 // ----------------------------------------------------------------------------
 if($_GET['calc']){
 	$_SESSION['calc'] = $_GET['calc'];
@@ -101,7 +101,7 @@ $_template	= new time_template("index.php");
 $_template->set_portal(1);
 $_favicon = "./images/favicon.ico";
 // ----------------------------------------------------------------------------
-// Controller f�r Login
+// Controller für Login
 // ----------------------------------------------------------------------------
 $_logcheck = new time_login();
 // falls eine Session exisitert und kein Action
@@ -112,11 +112,11 @@ if($_SESSION['admin'] and !$_GET['action']){
 if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	$_Userpfad = $_SESSION['admin']."/";
 }
-// Login �ber Cookie mit Daten�berpr�fung - bei Mehrbenutzerbetrieb sollte nicht �ber sookie eingeloggt werden
+// Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	$_logcheck->login($_POST, $_users->_array);
 }
-// Loginformular - Daten�berpr�fung
+// Loginformular - Datenüberprüfung
 if($_POST['login']){
 	$_logcheck->login($_POST, $_users->_array);
 }
@@ -128,7 +128,7 @@ if($_GET['action']=="logout"){
 
 //if(in_array(2,$show)) showClassVar($_logcheck);
 // ----------------------------------------------------------------------------
-// Controller f�r Action
+// Controller für Action
 // ----------------------------------------------------------------------------
 $_grpwahl = $_GET['group']-1;
 // Session  vorhanden - Daten anzeigen
@@ -335,7 +335,7 @@ switch($_action){
 		break;
 	case "insert_time":
 		if($_POST['absenden'] == "OK" and $_write){			
-			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit �ber Mitternacht geht
+			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
 			if($_POST['oldtime']==1){
 				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
 				$_time->set_timestamp($tmp2);

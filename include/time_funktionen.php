@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.896
+* Version 0.9
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -44,7 +44,7 @@ function getinfotext($str,$css){
 	return $_infotext;
 }
 // ----------------------------------------------------------------------------
-// Berechtigung, f�r Userzugriff auf PDF
+// Berechtigung, für Userzugriff auf PDF
 // ----------------------------------------------------------------------------
 function check_htaccess_pdf($datenpfad){
 	$_file = "./Data/".$datenpfad."/Dokumente/.htaccess";
@@ -102,7 +102,7 @@ function dec2time($number, $format = "%h:%i"){
 	return $format;
 }
 // ----------------------------------------------------------------------------
-// Funktionen f�r Debug
+// Funktionen für Debug
 // ----------------------------------------------------------------------------
 function txt($txt){
 	echo "<p style='color:red'>$txt</p>";

@@ -11,7 +11,7 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.897
+	* Version 0.9
 	* Author:  IT-Master GmbH
 	* www.it-master.ch / info@it-master.ch
 	* Copyright (c), IT-Master GmbH, All rights reserved
@@ -26,17 +26,17 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	//                mit einem "secret" und dem SHA-1 des Benutzer-Passworts 
 	// 
 	// ACHTUNG: Es wird kein Benutzername oder Passwort abgefragt!
-	//          ID-Verfahren weist Sicherheitsm�ngel auf: Jeder, dem das "secret"
+	//          ID-Verfahren weist Sicherheitsmängel auf: Jeder, dem das "secret"
 	//          sowie der Passwort-SHA-1 bekannt ist, kann die ID nachbilden!
-	//          Wenn das "secret" hier ge�ndert wird, muss es auch in
+	//          Wenn das "secret" hier geändert wird, muss es auch in
 	//          ./include/idtime-generate.php angepasst werden!
 	//
-	$idtime_secret = 'CHANGEME'; // [./0-9A-Za-z] Mehr als 21 Zeichen f�hren dazu, dass das Benutzer-Passwort nicht mehr in die ID-Generierung einflie�t.	
+	$idtime_secret = 'CHANGEME'; // [./0-9A-Za-z] Mehr als 21 Zeichen führen dazu, dass das Benutzer-Passwort nicht mehr in die ID-Generierung einfliesst.	
 	// -----------------------------------------------------------------------------
 	// Benutzerdaten in Array ( ID => Pfad ) lesen:
 	$_stempelid = array();
 	$fp = @fopen('./Data/users.txt', 'r');
-	@fgets($fp); // erste Zeile �berspringen
+	@fgets($fp); // erste Zeile überspringen
 	while (($logindata = fgetcsv($fp, 0, ';')) != false) {
 		if(isset($_GET['rfid'])) {
 			$tempid=trim(@$logindata[3]);
@@ -53,7 +53,7 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	}
 	fclose($fp);
 	// -----------------------------------------------------------------------------
-	// �bergebene ID Benutzer zuordnen und Stempelzeit eintragen:
+	// übergebene ID Benutzer zuordnen und Stempelzeit eintragen:
 	if (isset($_GET['id'])) {
 		$ID = substr($_GET['id'], 0, 16);
 		echo $_stempelid[$ID];
@@ -65,10 +65,10 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht &ouml;ffnen!");
 			fputs($fp, time().$_zeilenvorschub);
 			fclose($fp);
-			txt("OK � Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
+			txt("OK und Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
 			//$_SESSION['time'] = true; // ?
 		}
-		else txt("Fehler � unbekannte ID!", false);
+		else txt("Fehler, unbekannte ID!", false);
 	}elseif(isset($_GET['rfid'])){
 		if(isset($user)){
 			$_timestamp = time();
@@ -77,11 +77,11 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 			$fp = fopen($_file, 'a+b') or die("FEHLER - Konnte Stempeldatei nicht &ouml;ffnen!");
 			fputs($fp, time().$_zeilenvorschub);
 			fclose($fp);
-			txt("OK � Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
+			txt("OK und Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
 			//$_SESSION['time'] = true; // ?			
-		}else txt("Fehler � unbekannte ID!", false);
+		}else txt("Fehler, unbekannte ID!", false);
 	}else{ 
-		txt("Fehler � keine ID &uuml;bermittelt!", false);	
+		txt("Fehler, keine ID &uuml;bermittelt!", false);	
 	}
 	function txt($txt, $ok) {
 		echo '<p style="color:'.($ok?'green':'red').'">' . $txt . '</p>';

@@ -277,7 +277,7 @@ function erstelle_neu($_drucktime)
 
 
 	// -------------------------------------------------------------------------
-	// Absenzen anzeigen wenn Eintr�ge vorhanden sind
+	// Absenzen anzeigen wenn Einträge vorhanden sind
 	// -------------------------------------------------------------------------
 	if($_absenzenvorhanden){
 		$pdf->SetFillColor(240, 240, 240);

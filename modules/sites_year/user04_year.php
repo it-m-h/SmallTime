@@ -234,13 +234,14 @@ for($year = $_now; $year >= $_to; $year--)
 		<td class=td_background_tag align=right>".$anzeige[$year]['Summ']['feriengutschrift']." Tage</td>
 		<td class=td_background_tag align=right></td>
 		</tr>";
-		if(strstr(trim($_user->_modell), '0') )
+		// beides nötig wegen verschiedener Server-BS
+		if(strstr(trim($_user->_modell), '0')  OR trim($_user->_modell)=='0')
 		{
 			$v = $anzeige[$year - 1]['Summ']['Saldo'];
 		}
 		else
 		{
-			// Vorjahr bei Jährlich = 0
+			// Vorjahr beim jährlich Berechnugnsmodell = 0
 			$v = '';
 		}
 		$s = $anzeige[$year]['Saldo'][12] - $anzeige[$year]['Summ']['vorholzeit'] - $anzeige[$year]['Summ']['Auszahlung'];
