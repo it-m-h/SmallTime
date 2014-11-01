@@ -166,7 +166,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                                 $("#modalBody").load(this.href + '');
                                 $("#mainModal").modal('show');
                         });
-                $('a[title="Absenz l&ouml;schen"]').unbind();
-                $('a[title="Absenz löschen"]').unbind();
+                $('a[title="delete Absenz"]').unbind();
         </script>
 <?php } ?>

@@ -149,7 +149,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
         </tr>
 </table>
 <?php
-//TODO : Template ohne Bootstrap -> löschen
+//TODO : Template ohne Bootstrap -> lÃ¶schen
 if(strstr($_template->_modal,'true')){ ?>
         <script type="text/javascript">
                 $('#div_user04 a').click(function(e){
@@ -161,7 +161,6 @@ if(strstr($_template->_modal,'true')){ ?>
                                 console.log(this.href);
                                 e.preventDefault();
                         });
-                $('a[title="Absenz louml;schen"]').unbind();
-                $('a[title="Absenz löschen"]').unbind();
+                $('a[title="delete Absenz"]').unbind();
         </script>
 <?php } ?>
