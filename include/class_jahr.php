@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.001
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -206,10 +206,11 @@ class time_jahr{
 					$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
 				}						 
 				$z++;
+				$temp = $this->_summe_t  ;
 			}
 			// Jährliche Vorholzeit - Summe
 			$_monate=0;
-			if($this->_startjahr == $i){
+			if($this->_startjahr==$i){
 				if($_year_wahl==$i){
 					$_monate = $_month_wahl- $this->_startmonat+1;
 				}else{
@@ -217,12 +218,14 @@ class time_jahr{
 				}
 				$tmp = round($this->_Vorholzeit_pro_Jahr/12*$_monate,2);
 				$this->_summe_vorholzeit += $tmp;
-				
-			}else{
+			}elseif($_year_wahl==$i){
 				$_monate = $_month_wahl;
 				$tmp = round($this->_Vorholzeit_pro_Jahr/12*$_monate,2);
 				$this->_summe_vorholzeit += $tmp;
+			}else{
+				$this->_summe_vorholzeit += $this->_Vorholzeit_pro_Jahr;
 			}
+			
 		}
 		$this->_saldo_t 	= 	0;
 		$this->_saldo_t 	= 	$this->_saldo_t + $this->_summe_t ;
