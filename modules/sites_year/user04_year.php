@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.002
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -68,10 +68,8 @@ $_now   = date("Y", time());
 $_to    = $_jahr->_startjahr;
 //----------------------------------------------------------------------------------------------
 $anzeige= array();
-for($year = $_now; $year >= $_to; $year--)
-{
-	for($month = 0; $month < 12;$month++)
-	{
+for($year = $_now; $year >= $_to; $year--){
+	for($month = 0; $month < 12;$month++){
 		//Zeiten eintragen
 		$anzeige[$year]['Saldo'][$month] = $_jahr->_data[$year][$month][0];	// Saldo im Monat
 		$anzeige[$year]['Ferien'][$month] = $_jahr->_data[$year][$month][1];	// Ferien im Monat
@@ -101,8 +99,7 @@ for($year = $_now; $year >= $_to; $year--)
 }
 //----------------------------------------------------------------------------------------------
 // Auszahlungen eintragen
-for($u = 0; $u < count($auszahlung->_arr_ausz);$u++)
-{
+for($u = 0; $u < count($auszahlung->_arr_ausz);$u++){
 	$_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]);
 	$_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]);
 	$_tmp_ausz_m --;
@@ -114,10 +111,8 @@ for($u = 0; $u < count($auszahlung->_arr_ausz);$u++)
 }
 //----------------------------------------------------------------------------------------------
 //Summen berechnen
-for($year = $_to; $year <= $_now; $year++)
-{
-	for($month = 0; $month < 12;$month++)
-	{
+for($year = $_to; $year <= $_now; $year++){
+	for($month = 0; $month < 12;$month++){
 		//Summen
 		$anzeige[$year]['Summ']['Saldo'] += $anzeige[$year]['Saldo'][$month] ;
 		$anzeige[$year]['Summ']['Ferien'] += $anzeige[$year]['Ferien'][$month] ;
@@ -127,11 +122,13 @@ for($year = $_to; $year <= $_now; $year++)
 		$anzeige[$year]['Summ']['Auszahlung'] += $anzeige[$year]['Auszahlung'][$month];
 	}
 	//Saldo
-	
-	if($year == $_jahr->_startjahr){
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo']+$_user->_Stunden_uebertrag;
+	$startjahr = intval($_jahr->_startjahr);
+	if($year == $_jahr->_startjahr)
+	{
+		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] + $_user->_Stunden_uebertrag;
 	}
-	if($year == $_jahr->_startjahr OR !strstr($_user->_modell, '0')){
+	if($year == $startjahr OR intval($_user->_modell) != 0)
+	{
 		// Saldo bei Startjahr Vorholzeit Prozentual
 		$_vorholzeit = round($_jahr->_Vorholzeit_pro_Jahr / 12 * (13 - $_jahr->_startmonat),2);
 		$anzeige[$year]['Summ']['vorholzeit_start'] = $_vorholzeit;
@@ -149,7 +146,8 @@ for($year = $_to; $year <= $_now; $year++)
 		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $anzeige[$year]['Summ']['Auszahlung'];
 	}
 	//Ferien
-	if($year == $_jahr->_startjahr){
+	if($year == $_jahr->_startjahr)
+	{
 		// Ferien bei Startjahr prozentual
 		$_ferien = round($_jahr->_Ferien_pro_Jahr / 12 * (13 - $_jahr->_startmonat),2);
 		$anzeige[$year]['Summ']['ferien_start'] = $_ferien;
@@ -169,8 +167,7 @@ for($year = $_to; $year <= $_now; $year++)
 }
 //----------------------------------------------------------------------------------------------
 echo "<div id='show_year'>";
-for($year = $_now; $year >= $_to; $year--)
-{
+for($year = $_now; $year >= $_to; $year--){
 	echo "<div id='year'>";
 	echo "
 	<table width=375 border=0 cellpadding=3 cellspacing=1>
@@ -180,11 +177,9 @@ for($year = $_now; $year >= $_to; $year--)
 	<td class=td_background_top align=center>Ferien</td>
 	<td class=td_background_top align=center>Ausz.</td>
 	</tr>";
-	for($month = 0; $month < 12;$month++)
-	{
+	for($month = 0; $month < 12;$month++){
 		if($anzeige[$year]['Ferien'][$month] <> 0) $anzeige[$year]['Ferien'][$month] = $anzeige[$year]['Ferien'][$month]." Tg.";
-		if($anzeige[$year]['Auszahlung'][$month] <> 0)
-		{
+		if($anzeige[$year]['Auszahlung'][$month] <> 0){
 			$anzeige[$year]['Auszahlung'][$month] = $anzeige[$year]['Auszahlung'][$month]. " h";
 		}
 		else
@@ -211,8 +206,7 @@ for($year = $_now; $year >= $_to; $year--)
 	<td class=td_background_wochenende align=right>".$a."</td>
 	</tr>";
 	//Auszahlung
-	if($a)
-	{
+	if($a){
 		$a = '- '. $a;
 	}
 	echo "
@@ -224,9 +218,9 @@ for($year = $_now; $year >= $_to; $year--)
 	</tr>";
 	// Vorholzeiten
 	if($anzeige[$year]['Summ']['vorholzeit']) $v = '- '. $anzeige[$year]['Summ']['vorholzeit'];
+	// nicht das Startjahr?
 
-	if($year != $_jahr->_startjahr )
-	{
+	if($year != $_jahr->_startjahr ){
 		echo "
 		<tr>
 		<td class=td_background_tag align = left>Vorholzeit / Ferien</td>
@@ -234,9 +228,8 @@ for($year = $_now; $year >= $_to; $year--)
 		<td class=td_background_tag align=right>".$anzeige[$year]['Summ']['feriengutschrift']." Tage</td>
 		<td class=td_background_tag align=right></td>
 		</tr>";
-		// beides nötig wegen verschiedener Server-BS
-		if(strstr(trim($_user->_modell), '0')  OR trim($_user->_modell)=='0')
-		{
+		// beides nötig wegen verschiedener Server - BS
+		if(strstr(trim($_user->_modell), '0')  OR trim($_user->_modell) == '0'){
 			$v = $anzeige[$year - 1]['Summ']['Saldo'];
 		}
 		else
@@ -263,6 +256,7 @@ for($year = $_now; $year >= $_to; $year--)
 		<td class=td_background_tag align=right></td>
 		</tr>";
 	}
+	// beim Startjahr
 	else
 	{
 		$s = $anzeige[$year]['Saldo'][12] - $anzeige[$year]['Summ']['vorholzeit'] - $anzeige[$year]['Summ']['Auszahlung'];
@@ -290,6 +284,7 @@ for($year = $_now; $year >= $_to; $year--)
 		</tr>";
 	}
 	// Total - Summen
+	//$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] + $v;
 	echo "
 	<tr>
 	<td class=td_background_top align = left>Saldo ende Jahr:</td>
@@ -305,8 +300,7 @@ echo "</div>";
 
 function format($wert)
 {
-	if($wert < 0)
-	{
+	if($wert < 0){
 		return "<font class=minus>" . round($wert,2). "</font>";
 	}
 	return $wert;
