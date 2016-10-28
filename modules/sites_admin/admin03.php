@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.898
+* Version 0.9.001
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -126,12 +126,21 @@ if(!$show_user){
 		echo "' align=left>".$str."</td>";
 		echo "<td class=td_background_tag align=left>$_jahr->_saldo_t Std.</td>";
 		echo "</tr>";
+		
+		
 		echo "<tr>";
 		echo "<td class='alert";
 		echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
 		echo "' align=left>Feriensaldo</td>";
 		echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 		echo "</tr>";
+		// Falls Settings - ferien nur bis heute Berechnet werden zukünftige anzeigen lassen
+		if($_settings->_array[27][1]){
+			echo "<tr>";
+			echo "<td class='td_background_tag' align=left>geplante Ferien</td>";
+			echo "<td class=td_background_tag align=left>$_jahr->_summe_Fz Tage</td>";
+			echo "</tr>";
+		}
 		echo "<tr>";
 		echo "<td class='td_background_top' align=left colspan=2>Monats - Summen</td>";
 		echo "</tr>";

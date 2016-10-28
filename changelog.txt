@@ -1,0 +1,5 @@
+/********************************************************************************
+* Small Time - Changelog
+/********************************************************************************
+V 0.9.001 28.10.2016 -> Ferien nur bis heute in den Settings eingestellt, BUG in der Anzeige
+V 0.9.002 28.10.2016 -> user04_year.php -> Yahr - Anzeige kann bei alten gewählten Monaten falsch dargestellt werden

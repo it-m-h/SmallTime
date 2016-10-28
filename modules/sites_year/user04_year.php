@@ -28,7 +28,8 @@ echo "<tr>";
 echo "<td class='alert";
 echo $_jahr->_saldo_F >= 0 ? " alert-success" : " alert-error";
 echo "' width=100 align=left>Feriensaldo</td>";
-echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
+echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage
+<span style='color: #a1a1a1;font-size: 11px;'> / Achtung: in der unteren Tabelle werden nur die effektiv bezogenen Ferien angezeigt und berechnet.</style></td>";
 echo "</tr>";
 echo "</table>";
 echo "<br>";
@@ -71,15 +72,15 @@ $anzeige= array();
 for($year = $_now; $year >= $_to; $year--){
 	for($month = 0; $month < 12;$month++){
 		//Zeiten eintragen
-		$anzeige[$year]['Saldo'][$month] = $_jahr->_data[$year][$month][0];	// Saldo im Monat
-		$anzeige[$year]['Ferien'][$month] = $_jahr->_data[$year][$month][1];	// Ferien im Monat
-		$anzeige[$year]['Work'][$month] = $_jahr->_data[$year][$month][2];	// Gearbeitet
-		$anzeige[$year]['Soll'][$month] = $_jahr->_data[$year][$month][3];	// Sollstunden
+		$anzeige[$year]['Saldo'][$month] 	= $_jahr->_data[$year][$month][0];	// Saldo im Monat
+		$anzeige[$year]['Ferien'][$month] 	= $_jahr->_data[$year][$month][1];	// Ferien im Monat
+		$anzeige[$year]['Work'][$month] 	= $_jahr->_data[$year][$month][2];	// Gearbeitet
+		$anzeige[$year]['Soll'][$month] 		= $_jahr->_data[$year][$month][3];	// Sollstunden
 		//Summen eintragen
-		$anzeige[$year]['Saldo'][12] += $_jahr->_data[$year][$month][0];
-		$anzeige[$year]['Ferien'][12] += $_jahr->_data[$year][$month][1];
-		$anzeige[$year]['Work'][12] += $_jahr->_data[$year][$month][2];
-		$anzeige[$year]['Soll'][12] += $_jahr->_data[$year][$month][3];
+		$anzeige[$year]['Saldo'][12] 		+= $_jahr->_data[$year][$month][0];
+		$anzeige[$year]['Ferien'][12] 		+= $_jahr->_data[$year][$month][1];
+		$anzeige[$year]['Work'][12] 		+= $_jahr->_data[$year][$month][2];
+		$anzeige[$year]['Soll'][12] 		+= $_jahr->_data[$year][$month][3];
 		//Monatsname und Link
 		$_tempstamp = mktime(0, 0, 0, $month + 1, 1, $year);
 		$monatslink = "

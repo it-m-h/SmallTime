@@ -17,6 +17,8 @@ class time_jahr{
 	public $_CalcToTimestamp	=TRUE;	
 	public $_saldo_t		= NULL;		// Zeitsaldo
 	public $_saldo_F		= NULL;		// Feriensaldo
+	public $_saldo_Fv		= NULL;		// Vergangene Ferien
+	public $_saldo_Fz		= NULL;		// Eingetragene Ferien in der Zukunft
 	public $_arr_ausz		= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
 	public $_tot_ausz		= NULL;		// Auszahlungen summe
 	public $_ordnerpfad		= NULL;		// Pfad zu den Daten
@@ -86,13 +88,13 @@ class time_jahr{
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 				if($this->_CalcToTimestamp && date("n", $this->_timestamp)>=$this->_arr_ausz[$i][0] && date("Y", $this->_timestamp)>=$this->_arr_ausz[$i][1]){
-					if ($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
+					if($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
 					}elseif(!$this->_modell ==1){
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
 					}
 				}elseif(!$this->_CalcToTimestamp){
-					if ($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
+					if($this->_modell ==1 &&  date("Y", $this->_CalcToTimestamp)==$this->_arr_ausz[$i][1]){
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
 					}elseif(!$this->_modell ==1){
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
@@ -114,9 +116,9 @@ class time_jahr{
 				$_aj 		= date("Y", $this->_timestamp);
 				$_am 	= date("m", $this->_timestamp);
 				// wenn Auszahlungsjahr kleiner, alle Einträge
-				if ($this->_arr_ausz[$i][1]<$_aj){
+				if($this->_arr_ausz[$i][1]<$_aj){
 					$this->_tot_ausz += $this->_arr_ausz[$i][2];
-				//wenn Auszahlungsjahr gleich, dann nur bis zum Monat	
+					//wenn Auszahlungsjahr gleich, dann nur bis zum Monat	
 				}elseif($this->_arr_ausz[$i][1]==$_aj){
 					if($this->_arr_ausz[$i][0]<=$_am){
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
@@ -240,6 +242,51 @@ class time_jahr{
 		$_year_heute = $this->_jahr;
 		$_year_wahl = date('Y',$this->_timestamp);
 		$_month_wahl = date('m',$this->_timestamp);
+		$_now_month= date('m',time());
+		// wurde ein Monat in der vergangenheit gewählt nur bis dahin berechnen
+		// falls es der aktuelle Monat ist bis zum heutigen Datum
+		if ($_year_heute==$_year_wahl AND $_now_month==$_month_wahl){
+			$timestampvergleich = time();
+		}else{
+			// letzter Tag im Monat, darum 1. vom kommenden Monat berechnen minus einer sekunde...
+			$_jahr = $_year_wahl;
+			$_monat = $_month_wahl+1;
+			$_tag = 1;
+			$_stunde=0;
+			$_minute = 0;
+			$_sekunde=0;
+			$_timestamp = mktime($_stunde, $_minute, $_sekunde, $_monat, $_tag, $_jahr);
+			$timestampvergleich = $_timestamp-1;
+		}	
+		// Ferienberechnung Ferien vorher und zukunft
+		$this->_summe_Fv = 0; // zukünftige Ferien
+		$this->_summe_Fz = 0; // vergangene Ferien
+		for($i=$this->_startjahr; $i<=$_year_wahl; $i++){
+			$tmp_absenzen[$i] = new time_absenz($this->_ordnerpfad, $i);
+			// Falls keine Einträge in den Ferien oder kein File vorhanden
+			if(is_array($tmp_absenzen[$i]->_array[0])){
+				foreach($tmp_absenzen[$i]->_array as $eintrag){
+					if($eintrag[1]=='F'){
+						$zahl = $eintrag[2];
+						if($timestampvergleich <= $eintrag[0]){
+							$this->_summe_Fz = $this->_summe_Fz + $eintrag[2];
+						}else{
+							$this->_summe_Fv = $this->_summe_Fv + $eintrag[2];
+						}
+					}
+				}	
+			}
+			// Settings überprüfen, ob alle oder nur vergangene Ferien berechnet werden sollen
+			$this->_saldo_F += $this->calc_Ferien($i);
+		}
+		$tmpsettings = new time_settings();
+			if($tmpsettings->_array[27][1]==0){
+				$this->_summe_F = $this->_summe_Fv  + $this->_summe_Fz;
+			}else{
+				$this->_summe_F =  $this->_summe_Fv;
+			}
+		/*
+		// alte Variante bis 1.9.2016
 		for($i=$this->_startjahr; $i<=$_year_wahl; $i++){
 			$this->set_ueberschriften($i);
 			$file = "./Data/".$this->_ordnerpfad ."/Timetable/" . $i;
@@ -269,9 +316,11 @@ class time_jahr{
 
 				$z++;
 			}
+			
 			// Jährliches Ferienguthaben hinzufügen oder bei Startjahr prozentual hinzufügen
 			$this->_saldo_F += $this->calc_Ferien($i);		
 		}
+		*/
 		// Saldo der Ferien inkl. Übertrag berechnen
 		$this->_saldo_F = $this->_saldo_F - $this->_summe_F + $this->_Ferienguthaben_uebertrag;
 		//runden auf 2 Stellen 
