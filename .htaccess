@@ -1,5 +1,8 @@
 <Files ~ "^\.(htaccess|htpasswd)$">
-deny from all
+	deny from all
 </Files>
+<Files "*\.txt">
+  	deny from all
+ </Files>
 Options -Indexes
 order deny,allow
