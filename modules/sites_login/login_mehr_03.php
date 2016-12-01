@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.006
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -36,6 +36,12 @@ if(strstr($_template->_bootstrap,'true'))
 
 	</form>
 	<?php
+	if($_infotext04){
+		echo '<div id="mehrlogininfo">';
+		echo $_infotext04; 
+		echo '</div>';
+	}
+	
 	if($_POST['login'])
 	{
 		$_SESSION['admin'] = array();

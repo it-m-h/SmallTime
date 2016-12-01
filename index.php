@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.001
+* Version 0.9.006
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -213,19 +213,21 @@ switch($_action){
 				}else{
 				}
 				$_logcheck->logout();
-				header("Location: index.php?tmp=1");
+				header("Location: index.php?action=login_mehr&tmp=1");
 			}else{
-				header("Location: index.php?tmp=2");
+				header("Location: index.php?action=login_mehr&tmp=2");
 			}
 			exit();
 		}
 		$_infotext02 = getinfotext( "Stempel - Pannel","td_background_top");
 		if($_GET['tmp']=="1"){
-			$_infotext04 = getinfotext( "Stempelzeit erfasst!","td_background_heute");
+			$_infotext04 = getinfotext( "Stempelzeit erfasst!","alert alert-success");
+			//$_infotext04 = "";
 		}elseif($_GET['tmp']=="2"){
-			$_infotext04 = getinfotext( "Falscher Benutzername oder Passwort!","td_background_top");
+			$_infotext04 = getinfotext( "Falscher Login!","alert alert-danger");
 		}else{
-			$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!","td_background_top");
+			//$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!","td_background_top");
+			$_infotext04 = "";
 		}		
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_mehr_02.php";
