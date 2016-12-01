@@ -20,6 +20,7 @@ if (strstr($_template->_bootstrap,'true')){
                 <li<?php echo $_action=="import" ?  ' class="active"':''; ?>><a id="Import" title="Import von csv" href="?action=import">CSV Import</a></li>
                 <li<?php echo $_action=="debug_info" ?  ' class="active"':''; ?>><a id="Status" title="Status / Meldungen" href="?action=debug_info">Status</a></li>
                 <li<?php echo $_action=="idtime-generate" ?  ' class="active"':''; ?>><a id="Codes" title="QR-Codes" href="?action=idtime-generate">QR-Codes</a></li>
+                <li<?php echo $_action=="pdfgenerate" ?  ' class="active"':''; ?>><a id="pdfgenerate" title="pdfgenerate" href="?action=pdfgenerate">PDF</a></li>
                 <li<?php echo $_action=="logout" ?  ' class="active"':''; ?>><a id="Logout" title="Logout" href="?action=logout">Logout</a></li>
         </ul>
 <?php 

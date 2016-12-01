@@ -3,6 +3,7 @@
 
 #Codelobster - IDE
 *.clpprj
+*.csprj
 
 # Can also ignore all directories and files in a directory.
 Data/*

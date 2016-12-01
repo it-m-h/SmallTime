@@ -18,14 +18,15 @@ class time_template{
 	public  $_user02        	= "sites_user/user02.php";
 	public  $_user03        	= "sites_user/user03.php";
 	public  $_user04        	= "sites_user/user04.php";
-	public  $_plugin        	= "modules/sites_plugin/plugin_null.php";
-	public  $_mobile       	= "sites_mobile/mobile.php";
+	public  $_plugin        		= "modules/sites_plugin/plugin_null.php";
+	public  $_mobile       		= "sites_mobile/mobile.php";
 	public  $_modulpfad     	= "modules/";
 	public  $_modal		= false;
 	public  $_jquery		= false;
-	public  $_bootstrap	= false;
+	public  $_bootstrap		= false;
 	public  $_portal_admin	= false;
 	public  $_portal_user	= false;
+	public  $_ajaxhtml      	= "";
 
 	function __construct($_start){
 		if($_COOKIE["designname"]){

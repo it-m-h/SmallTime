@@ -73,7 +73,9 @@ var $PDFVersion;         // PDF version number
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
-function FPDF($orientation='P', $unit='mm', $size='A4')
+ /* Methods with the same name as their class will not be constructors in a future version of PHP
+/*  function FPDF($orientation='P', $unit='mm', $size='A4')*/
+function __construct($orientation='P', $unit='mm', $size='A4')
 {
 	// Some checks
 	$this->_dochecks();

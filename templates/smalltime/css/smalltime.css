@@ -317,6 +317,11 @@ a:hover {
         background-repeat: no-repeat;
         background-position: 29px 2px;
 }
+#pdfgenerate{
+        background-image: url(./../../../images/icons/page_white_acrobat.png);
+        background-repeat: no-repeat;
+        background-position: 17px 2px;
+}
 
 #logout_button{
         width: 268px;

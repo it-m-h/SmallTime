@@ -19,6 +19,7 @@
                 <script type="text/javascript" src="js/smalltime.js"></script>
                 <script type="text/javascript" src="js/bootstrap.js"></script>
                 <script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+                <script type="text/javascript" src="js/jput.js"></script>
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">

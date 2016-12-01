@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.001
+* Version 0.9.004
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -84,7 +84,8 @@ include_once ('./include/class_filehandle.php');
 include_once ('./include/class_rapport.php');
 include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
-require_once	('./include/class_table.php');
+include_once ('./include/class_pdfgenerate.php');
+require_once('./include/class_table.php');
 include ("./include/time_funktionen.php");
 // ----------------------------------------------------------------------------
 // Im Admin - Bereich bis zum gewählten Monat berechnen
@@ -171,6 +172,24 @@ if($_SESSION['admin']){
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
 switch($_action){
+	case "pdfgenerate":
+		if(isset($_POST['jahr']) && isset($_POST['monat'])){
+			$_pdfgenerate= new pdfgenerate($_POST['monat'],$_POST['jahr'], $_users);	
+		}else{
+			$_jahr = date("Y", time());
+			$_monat = date("m", time());
+			$_pdfgenerate= new pdfgenerate($_monat, $_jahr,$_users);
+		}
+		if(isset($_GET['function'])){
+			$_template->_ajaxhtml = $_pdfgenerate->output();
+		}else{
+			$_infotext = getinfotext("PDF für alle Mitarbeiter anzeigen und erstellen","td_background_top");
+			$_template->_user01 = "sites_admin/admin01.php";
+			$_template->_user02 = "sites_admin/admin02.php";
+			$_template->_user04 = "sites_admin/admin04_pdfgenerate.php";
+			$_template->_user03 = "sites_admin/admin03.php";	
+		}
+		break;
 	case "edit_ausz":
 		$auszahlung = new auszahlung($_GET['monat'],$_GET['jahr']);
 		$_template->_user04 = "sites_admin/admin04_auszahlung.php";
@@ -658,6 +677,8 @@ if(isset($_GET['modal'])){
 	header("Content-type: application/vnd-ms-excel");
 	header("Content-Disposition: attachment; filename=". $_datei);
 	include($_template->get_user04());
+}elseif(isset($_GET['function'])){
+	echo $_template->_ajaxhtml;
 }else{
 	include ($_template->get_template());
 }
