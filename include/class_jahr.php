@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9.001
+* Version 0.9.005
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -245,7 +245,7 @@ class time_jahr{
 		$_now_month= date('m',time());
 		// wurde ein Monat in der vergangenheit gewählt nur bis dahin berechnen
 		// falls es der aktuelle Monat ist bis zum heutigen Datum
-		if ($_year_heute==$_year_wahl AND $_now_month==$_month_wahl){
+		if($_year_heute==$_year_wahl AND $_now_month==$_month_wahl){
 			$timestampvergleich = time();
 		}else{
 			// letzter Tag im Monat, darum 1. vom kommenden Monat berechnen minus einer sekunde...
@@ -276,55 +276,27 @@ class time_jahr{
 					}
 				}	
 			}
-			// Settings überprüfen, ob alle oder nur vergangene Ferien berechnet werden sollen
+			// bei Startjahr Ferienanspruch berechnen
 			$this->_saldo_F += $this->calc_Ferien($i);
 		}
+		// Settings überprüfen, ob alle oder nur vergangene Ferien berechnet werden sollen
 		$tmpsettings = new time_settings();
-			if($tmpsettings->_array[27][1]==0){
-				$this->_summe_F = $this->_summe_Fv  + $this->_summe_Fz;
-			}else{
-				$this->_summe_F =  $this->_summe_Fv;
-			}
-		/*
-		// alte Variante bis 1.9.2016
-		for($i=$this->_startjahr; $i<=$_year_wahl; $i++){
-			$this->set_ueberschriften($i);
-			$file = "./Data/".$this->_ordnerpfad ."/Timetable/" . $i;
-			// Falls die Datei nicht existiert eine leere Datei erstellen
-			if(!file_exists($file)){
-				$fp = fopen($file, "w");
-				fclose($fp); 
-			}
-			$this->_data[$i] = file($file);
-			$z=0;
-			// Schleife - Monats Daten in der Jahres Datei 
-			foreach($this->_data[$i] as $zeile){
-				$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
-				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
-				if($this->_CalcToTimestamp){
-					// Jahr ist gleich, dann nur bis zum aktuellen Monat
-					if(date("Y", $this->_timestamp) == $i){
-						if(date("n", $this->_timestamp)>$z){
-							$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
-						}
-					}else{
-						$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
-					}
-				}else{
-					$this->_summe_F = $this->_summe_F + $this->_data[$i][$z][1];	
-				}
-
-				$z++;
-			}
-			
-			// Jährliches Ferienguthaben hinzufügen oder bei Startjahr prozentual hinzufügen
-			$this->_saldo_F += $this->calc_Ferien($i);		
+		if($tmpsettings->_array[27][1]==0){
+			$this->_summe_F = $this->_summe_Fv  + $this->_summe_Fz;
+		}else{
+			$this->_summe_F =  $this->_summe_Fv;
 		}
-		*/
-		// Saldo der Ferien inkl. Übertrag berechnen
-		$this->_saldo_F = $this->_saldo_F - $this->_summe_F + $this->_Ferienguthaben_uebertrag;
+
+		//falls in der Ansicht ein alter Monat gewählt wurde und für PDF -> Ferien in der Zukunft noch nicht berechnen
+		if(isset($_GET['timestamp'])){
+			// Saldo der Ferien inkl. Übertrag berechnen
+			$this->_saldo_F = $this->_saldo_F - $this->_summe_Fv + $this->_Ferienguthaben_uebertrag;
+		}else{
+			// Saldo der Ferien inkl. Übertrag berechnen
+			$this->_saldo_F = $this->_saldo_F - $this->_summe_F + $this->_Ferienguthaben_uebertrag;
+		}
 		//runden auf 2 Stellen 
-		$this->_saldo_F = round($this->_saldo_F,2);		
+			$this->_saldo_F = round($this->_saldo_F,2);	
 	}		
 	function __destruct(){
 	}
