@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.007
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -82,14 +82,15 @@ class time_filehandle{
 		for($x=0; $x< count($tmp); $x++){ 
 			$tmp = str_replace($_zeilenvorschub, "", $tmp); 
 		}
-		$tmp[] = $text;
-		rsort($tmp);
-		for($x=0; $x< count($tmp); $x++){ 
-			if($x > $_max){
-				unset($tmp[$x]);
-			}
+		$newarr = array();
+		$newarr[] = $text;
+		if(count($tmp)<$_max){
+			$_max = count($tmp);
 		}
-		$neu =implode($_zeilenvorschub,$tmp);	
+		for($x=0; $x<= $_max; $x++){ 			
+			$newarr[] = $tmp[$x];
+		}
+		$neu =implode($_zeilenvorschub,$newarr);
 		$open = fopen($_file,"w+");
 		fwrite ($open, $neu);
 		fclose($open);		
