@@ -2,7 +2,7 @@
 * SmallTime - Changelog
 /********************************************************************************
 V 0.9.001 28.10.2016 -> Ferien nur bis heute in den Settings eingestellt, BUG in der Anzeige
-V 0.9.002 28.10.2016 -> user04_year.php -> Yahr - Anzeige kann bei alten gewäten Monaten falsch dargestellt werden
+V 0.9.002 28.10.2016 -> user04_year.php -> Yahr - Anzeige kann bei alten gewählten Monaten falsch dargestellt werden
 V 0.9.004 01.12.2016 -> Neues Admin Menue:  PDF (anzeigen und erstellen von PDF)
 V 0.9.005 01.12.2016 -> Ferienberechnung bei PDF Erstellung und Anzeige von alten Monaten korrgiert
 V 0.9.006 01.12.2016 -> Mehrbenutzerlogin bei falschen sowie korrekten Eingaben, erscheint nun eine Meldung
