@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -31,6 +31,13 @@ if(isset($_GET['menue']))
 		$s03 = $active;
 		$s031= $fade;
 	}
+	elseif($_GET['menue'] == "pausen")
+	{
+		$s01 = '';
+		$s011= '';;
+		$s04 = $active;
+		$s041= $fade;
+	}
 }
 ?>
 <div id="kn">
@@ -38,6 +45,11 @@ if(isset($_GET['menue']))
 		<li<?php echo $s01; ?>>
 			<a data-toggle="tab" href="#s1">
 				<img src="./images/icons/cog_go.png" alt="" /> Settings
+			</a>
+		</li>
+		<li<?php echo $s04; ?>>
+			<a data-toggle="tab" href="#s4">
+				<img src="./images/icons/cog_go.png" alt="" /> Pausen
 			</a>
 		</li>
 		<li<?php echo $s02; ?>>
@@ -50,6 +62,7 @@ if(isset($_GET['menue']))
 				<img src="./images/icons/cog_go.png" alt="" /> Logo
 			</a>
 		</li>
+
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div id="s1" class="tab-pane fade<?php echo $s011; ?>">
@@ -70,6 +83,13 @@ if(isset($_GET['menue']))
 			<p id="content">
 				<?php
 				include('./modules/sites_admin/settings/003.php');
+				?>
+			</p>
+		</div>
+		<div id="s4" class="tab-pane fade<?php echo $s041; ?>">
+			<p id="content">
+				<?php
+				include('./modules/sites_admin/settings/pausen.php');
 				?>
 			</p>
 		</div>

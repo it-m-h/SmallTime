@@ -7,3 +7,4 @@ V 0.9.004 01.12.2016 -> Neues Admin Menue:  PDF (anzeigen und erstellen von PDF)
 V 0.9.005 01.12.2016 -> Ferienberechnung bei PDF Erstellung und Anzeige von alten Monaten korrgiert
 V 0.9.006 01.12.2016 -> Mehrbenutzerlogin bei falschen sowie korrekten Eingaben, erscheint nun eine Meldung
 V 0.9.007 01.12.2016 -> Log - Üersicht bei Status von User und Admin BUG - FIX
+V 0.9.008 06.12.2016 -> Automatische Pausen - mehrere Pausenregelungen sind nun einstellbar

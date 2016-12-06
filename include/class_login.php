@@ -2,18 +2,18 @@
 /*******************************************************************************
 * Login - Klasse
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_login{
-	public $_id			= "";
+	public $_id		= "";
 	public $_datenpfad	= "";
 	public $_username 	= "";
-	public $_passwort		= "";
+	public $_passwort	= "";
 	public $_login 		= false;
-	public $_admins		= false; 	//nur Admins einloggen, dann true setzten nach erstellen einer Instanz
+	public $_admins	= false; 	//nur Admins einloggen, dann true setzten nach erstellen einer Instanz
 	
 	function __construct(){	
 	}

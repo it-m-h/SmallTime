@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.004
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -78,6 +78,7 @@ include_once ('./include/class_template.php');
 include_once ('./include/class_time.php');
 include_once ('./include/class_month.php');
 include_once ('./include/class_personalblatt.php');
+include_once ('./include/class_pausen.php');
 include_once ('./include/class_jahr.php');
 include_once ('./include/class_feiertage.php');
 include_once ('./include/class_filehandle.php');

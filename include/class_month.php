@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.008
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 class time_month{
 	private $_file					= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
-	private $_pfad 				= NULL;	// Ordnerpfad
+	private $_pfad 					= NULL;	// Ordnerpfad
 	private $_wochentage			= NULL;	// Bezeichnung der Wochentage
 	private $_arbeitstage			= NULL;	// User - Arbeitstage - Einstellungen	
 	private $_u_feiertage			= NULL;	// User - Feiertage Einstellungen
@@ -17,14 +17,14 @@ class time_month{
 	private $_absenz				= NULL;	// Absenzen
 	private $_timeTable				= NULL;	// Zeiteinträge in einem Array
 	private $_startzeit				= NULL;	// Beginn der Zeitrechnung
-	private $_arbeitszeit			= NULL;
-	private $_autopause			= NULL;
+	private $_arbeitszeit				= NULL;
+	private $_autopause				= NULL;
 	private $_setautopause			= "";
 	private $_zeitzuschlag			= NULL;
 	private $_absenzberechnung 		= NULL;	
 	public $_SollProTag 			= NULL;	// Soll Arbeitszeit pro Tag
 	public $_letzterTag				= NULL;	// Anzahl der Tage im gewählen Monat	
-	public $_SummeSollProMonat 	= NULL;	// Summe der Soll - Stunden im Monat
+	public $_SummeSollProMonat 		= NULL;	// Summe der Soll - Stunden im Monat
 	public $_SummeWorkProMonat 	= NULL;	// Summe der gearbeiteten Stunden im Monat
 	public $_SummeAbsenzProMonat 	= NULL;
 	public $_SummeSaldoProMonat 	= NULL;	// Saldo in dem aktuellen Monat
@@ -104,11 +104,11 @@ class time_month{
 		$_stunden = trim($_stunden);
 		$_stunden = explode(";", $_stunden);
 		if(
-		($_stunden[0]!=trim($this->_SummeSaldoProMonat))
-		or
-		($_stunden[2]!=trim($this->_SummeSollProMonat))
-		or
-		($_stunden[3]!=trim($this->_SummeWorkProMonat))
+			($_stunden[0]!=trim($this->_SummeSaldoProMonat))
+			or
+			($_stunden[2]!=trim($this->_SummeSollProMonat))
+			or
+			($_stunden[3]!=trim($this->_SummeWorkProMonat))
 		){
 			$_year_data[$monat-1] = $this->_SummeSaldoProMonat.";".$this->_SummeFerien.$_zeilenvorschub;
 			$_str = $this->_SummeSaldoProMonat.";";
@@ -185,7 +185,7 @@ class time_month{
 			// Absenzstd	(18) in Stunden
 			// Arbeitstag 	(4) 	in Anzahl
 			// Wenn Absenz und keine Arbeitszeiten dann ist Absenz = Absenz (Anzahl) * Arbeitstag (Gewichtung)
-			if ($this->_MonatsArray[$i][15] and $this->_MonatsArray[$i][13] == 0){
+			if($this->_MonatsArray[$i][15] and $this->_MonatsArray[$i][13] == 0){
 				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
 			}
 			// saldo pro Tag = arbeitszeit(13) plus absenzzeit(18) minus soll(8)
@@ -296,8 +296,8 @@ class time_month{
 			//-------------------------------------------------------------------------
 			// Array mit Daten - Summen in der Spalte 3 
 			$a=0;
-			foreach ($this->_absenz->_calc as $zeile){
-				if($this->_MonatsArray[$i][14]==$zeile[1]) {
+			foreach($this->_absenz->_calc as $zeile){
+				if($this->_MonatsArray[$i][14]==$zeile[1]){
 					$this->_absenz->_calc[$a][3] = $this->_absenz->_calc[$a][3] + $this->_MonatsArray[$i][15];
 				}	
 				$a++;
@@ -485,7 +485,7 @@ class time_month{
 					echo "<hr color=red> ";
 				}
 				//------------------------------------------------------------------------------------
-				// Autopause berechnen
+				// Autopause berechnen bis V 0.9.007
 				//------------------------------------------------------------------------------------
 				if($this->_arbeitszeit > 0 && $_zeit >= $this->_arbeitszeit){
 					$_zeit = ($_zeit - $this->_autopause);	
@@ -495,6 +495,31 @@ class time_month{
 						$this->_setautopause = $this->_setautopause . $_anz;	
 					}
 					$_anz++;	
+				}
+				$time = $this->_arbeitszeit ;
+				//echo $time;
+				//------------------------------------------------------------------------------------
+				// Autopause berechnen ab V 0.9.007 : alte Version wird automatisch inaktiv
+				//------------------------------------------------------------------------------------
+				if($_zeit > 0){
+					$vergleichszeit= number_format($_zeit);
+					$time = pausen::check($vergleichszeit);
+					if($time[0]>0){
+						if($this->_autopause==""){
+							$this->_autopause = $time[0];
+						}else{
+							$this->_autopause = $this->_autopause + $time[0];
+						}
+						$this->_autopause .= ' Stunden';
+						$_zeit = ($_zeit - $time[0]);
+						if($this->_setautopause){
+							$this->_setautopause = $this->_setautopause. " & Zeit ". $_anz;
+						}else{
+							$this->_setautopause = $this->_setautopause . " Zeit " . $_anz;	
+						}
+						$this->_setautopause = $this->_setautopause . " Abzug nach id : " . $time[1];
+						$_anz++;
+					}
 				}
 				//------------------------------------------------------------------------------------
 				// Zeitzuschlag berechnen

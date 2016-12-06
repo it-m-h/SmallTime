@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Einstellugnen von Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -32,6 +32,15 @@ class time_settings{
 			$_newarray[$x] = implode("#", $_newarray[$x]);
 			fputs($fp, $_newarray[$x]);
 			if($x<$anzahl) fputs($fp, $_zeilenvorschub);
+		}
+		fclose($fp);
+	}
+	function save_array($arr){
+		$_zeilenvorschub = "\r\n";
+		//$anzahl = $_POST['anzahl'];
+		$fp = fopen($this->_filename,"w+");
+		foreach($arr as $eintrag){
+			fputs($fp, $eintrag . $_zeilenvorschub);
 		}
 		fclose($fp);
 	}

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9.007
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -46,8 +46,22 @@ class time_filehandle{
 			fclose($open);
 		}
 	}
+	function clear_file(){
+		$file = $this->_filepfad.$this->_filename;
+		$fp = fopen($file,"w+");
+		fputs($fp, '');
+		fclose($fp);	
+	}
 	function get_array(){
 		return $this->_array;	
+	}
+	function delete_line($id){
+		$_temp = file($this->_filepfad.$this->_filename);
+		unset($_temp[$id]);
+		$neu = implode( "", $_temp);
+		$open= fopen($this->_filepfad.$this->_filename,"w+");
+		fwrite ($open, $neu);
+		fclose($open);
 	}
 	
 	function user_exist($name){

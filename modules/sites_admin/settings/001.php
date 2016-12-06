@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.008
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -124,9 +124,11 @@ $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[20][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="20" value="'.$_settings->_array[20][1].'" size="2"> (Bis zum XX. des folgenden Monats aktiv, sichtbar)</td>';
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[20][2]."' src='images/icons/information.png' border=0></td></tr>";
+
 //------------------------------------------------------------------------------------
-//Automatische Pausen - Zeile 21 und 22
+//Automatische Pausen - Zeile 21 und 22 - ab Version 0.9.007 separate Einstellmöglichkeit
 //------------------------------------------------------------------------------------
+/*
 $_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Einstellungen f&uuml;r automatische Pausen ab einer Stempelzeit von X Stunden.</td></tr>";
 $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[21][0] . "</td>";
@@ -136,6 +138,7 @@ $_anzeige = $_anzeige . "<tr width=50%>";
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[22][0] . "</td>";
 $_anzeige = $_anzeige . '<td class=td_background_tag align=left><input type="text" name="22" value="'.$_settings->_array[22][1].'" size="2"> (Dezimalangabe z.B. 0.75)</td>';
 $_anzeige = $_anzeige . "<td class=td_background_tag align=left><img title='".$_settings->_array[22][2]."' src='images/icons/information.png' border=0></td></tr>";
+*/
 //------------------------------------------------------------------------------------
 // Absenzen - Berechnung (alle oder nur bis zum aktuellen Datum) (Zeile 28)
 //------------------------------------------------------------------------------------
