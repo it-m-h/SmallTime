@@ -284,7 +284,7 @@ class time_jahr{
 		if($tmpsettings->_array[27][1]==0){
 			$this->_summe_F = $this->_summe_Fv  + $this->_summe_Fz;
 		}else{
-			$this->_summe_F =  $this->_summe_Fv;
+			$this->_summe_F = $this->_summe_Fv;
 		}
 
 		//falls in der Ansicht ein alter Monat gewählt wurde und für PDF -> Ferien in der Zukunft noch nicht berechnen

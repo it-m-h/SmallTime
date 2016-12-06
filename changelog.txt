@@ -9,3 +9,4 @@ V 0.9.006 01.12.2016 -> Mehrbenutzerlogin bei falschen sowie korrekten Eingaben,
 V 0.9.007 01.12.2016 -> Log - Üersicht bei Status von User und Admin BUG - FIX
 V 0.9.008 06.12.2016 -> Automatische Pausen - mehrere Pausenregelungen sind nun einstellbar
 V 0.9.009 06.12.2016 -> Berechtigungen auf ZIP und PDF überarbeitet -> nur noch über download.php abrufbar
+V 0.9.010 06.12.2016 -> diverse Sicherheits - Bugfix sowie .htaccess - Dateierstellungen

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.010
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -157,8 +157,16 @@ if($_SESSION['admin']){
 	include ('./include/time_variablen_laden.php');
 }
 // ----------------------------------------------------------------------------
+// Sicherheit, darf der Mitarbeiter editieren -> alte timestamp
+// ----------------------------------------------------------------------------
+// $_settings->_array[23][1] = wie viel Tage zurück
+// TODO : falls in den Settings eingestellt wurde wie lange zurück Änderungen vorgenommen werden können, timestamp vergleichen
+$edit  = true;
+
+// ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
+
 switch($_action){
 	case "password":
 		$_infotext = "";	
@@ -252,84 +260,108 @@ switch($_action){
 		setLoginForm();
 		break;
 	case "add_rapport":
-		$_rapport = new time_rapport();
+		// Sicherheitscheck : Settings- 18 : Darf der User einen Rapport eintragen
+		if($_settings->_array[18][1] && $edit){
+			$_rapport = new time_rapport();
+		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_time/rapport_add_04.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "insert_rapport":
-		$_rapport = new time_rapport();
-		if($_POST['absenden'] == "UPDATE" and $_write){
-			$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
-		}elseif($_POST['absenden'] == "DELETE" and $_write){
-			$_rapport->delete_rapport($_user->_ordnerpfad, $_time->_timestamp);
+		// Sicherheitscheck : Settings- 18 : Darf der User einen Rapport eintragen
+		if($_settings->_array[18][1] && $edit){
+			$_rapport = new time_rapport();
+			if($_POST['absenden'] == "UPDATE" and $_write){
+				$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
+			}elseif($_POST['absenden'] == "DELETE" and $_write){
+				$_rapport->delete_rapport($_user->_ordnerpfad, $_time->_timestamp);
+			}
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "add_absenz":
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_time/absenz_add_04.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
+		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
+		if($_settings->_array[17][1] && $edit){
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_time/absenz_add_04.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
+		}
 		break;
 	case "insert_absenz":
-		if($_POST['absenden'] == "OK" and $_write){
-			$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
+		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
+		if($_settings->_array[17][1] && $edit){
+			if($_POST['absenden'] == "OK" and $_write){
+				$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
+			}
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_user/user04_timetable.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
 		}
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_user/user04_timetable.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "delete_absenz":
-		$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_user/user04_timetable.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
+		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
+		if($_settings->_array[17][1] && $edit){			
+			$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_user/user04_timetable.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
+		}
 		break;
 	case "edit_time":
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_time/time_edit_04.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
+		// Sicherheitscheck : Settings- 14 : darf der Mitarbeiter alte Stempelzeiten editieren
+		if($_settings->_array[14][1] && $edit){	
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_time/time_edit_04.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
+		}
 		break;
 	case "update_time":
-		$_oldtime = $_GET['timestamp'];
-		$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-		if($_POST['absenden'] == "UPDATE" and $_write){
-			// update oldtime, newtime, Ordner
-			$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
-		}elseif($_POST['absenden'] == "DELETE" and $_write){
-			// delete //oldtime, Ordner
-			$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
+		// Sicherheitscheck : Settings- 14 : darf der Mitarbeiter alte Stempelzeiten editieren
+		if($_settings->_array[14][1] && $edit){	
+			$_oldtime = $_GET['timestamp'];
+			$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+			if($_POST['absenden'] == "UPDATE" and $_write){
+				// update oldtime, newtime, Ordner
+				$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
+			}elseif($_POST['absenden'] == "DELETE" and $_write){
+				// delete //oldtime, Ordner
+				$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
+			}
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "insert_time_list":
-		if($_POST['absenden'] == "OK" and $_write){
-			$_timestamp		= $_GET['timestamp'];
-			$_w_tag			= $_POST['_w_tag'];
-			$_w_monat 		= $_POST['_w_monat'];
-			$_w_jahr		= $_POST['_w_jahr'];
-			$_zeitliste		= $_POST['_zeitliste'];
-			if($_zeitliste<>""){
-				$_w_sekunde     = 0;
-				$_zeitliste = trim($_zeitliste);
-				$_zeitliste = str_replace(" ", "", $_zeitliste);
-				$_zeitliste = str_replace(" ", "", $_zeitliste);
-				$_zeitliste = str_replace(" ", "", $_zeitliste);
-				$_zeitliste = str_replace(":", ".", $_zeitliste);
-				$_zeitliste = str_replace(",", ".", $_zeitliste);
-				$_zeitliste = explode("-",$_zeitliste);
-				$_temptext = "";
-				foreach($_zeitliste as $_zeiten){
-					$_tmp = explode(".",$_zeiten);
-					$_w_stunde = $_tmp[0];
-					$_w_minute = $_tmp[1];
-					if($_w_minute=="")$_w_minute=0;
-					$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
-					$_time->save_time($tmp, $_user->_ordnerpfad);
+		// Sicherheitscheck : Settings- 16 : Falls der User mehrere Zeiten eintragen darf
+		if($_settings->_array[16][1] && $edit){	
+			if($_POST['absenden'] == "OK" and $_write){
+				$_timestamp		= $_GET['timestamp'];
+				$_w_tag			= $_POST['_w_tag'];
+				$_w_monat 		= $_POST['_w_monat'];
+				$_w_jahr		= $_POST['_w_jahr'];
+				$_zeitliste		= $_POST['_zeitliste'];
+				if($_zeitliste<>""){
+					$_w_sekunde     = 0;
+					$_zeitliste = trim($_zeitliste);
+					$_zeitliste = str_replace(" ", "", $_zeitliste);
+					$_zeitliste = str_replace(" ", "", $_zeitliste);
+					$_zeitliste = str_replace(" ", "", $_zeitliste);
+					$_zeitliste = str_replace(":", ".", $_zeitliste);
+					$_zeitliste = str_replace(",", ".", $_zeitliste);
+					$_zeitliste = explode("-",$_zeitliste);
+					$_temptext = "";
+					foreach($_zeitliste as $_zeiten){
+						$_tmp = explode(".",$_zeiten);
+						$_w_stunde = $_tmp[0];
+						$_w_minute = $_tmp[1];
+						if($_w_minute=="")$_w_minute=0;
+						$tmp = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
+						$_time->save_time($tmp, $_user->_ordnerpfad);
+					}
 				}
 			}
 		}
@@ -338,24 +370,27 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "insert_time":
-		if($_POST['absenden'] == "OK" and $_write){			
-			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
-			if($_POST['oldtime']==1){
-				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
-				$_time->set_timestamp($tmp2);
-				$_time->save_time($tmp2, $_user->_ordnerpfad);
-			} elseif($_POST['oldtime']==2){
-				$tmp3 = $_time->mktime(23,59,59,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
-				$_time->set_timestamp($tmp3);
-				$_time->save_time($tmp3, $_user->_ordnerpfad);
-				
-				$tmp2 = $_time->mktime(0,0,0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-				$_time->set_timestamp($tmp2);
-				$_time->save_time($tmp2, $_user->_ordnerpfad);		
-			}		
-			$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
-			$_time->set_timestamp($tmp);
-			$_time->save_time($tmp, $_user->_ordnerpfad);
+		// Sicherheitscheck : Settings- 15 : Falls der User eine Zeit eintragen darf
+		if($_settings->_array[15][1] && $edit){
+			if($_POST['absenden'] == "OK" and $_write){			
+				//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
+				if($_POST['oldtime']==1){
+					$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+					$_time->set_timestamp($tmp2);
+					$_time->save_time($tmp2, $_user->_ordnerpfad);
+				} elseif($_POST['oldtime']==2){
+					$tmp3 = $_time->mktime(23,59,59,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
+					$_time->set_timestamp($tmp3);
+					$_time->save_time($tmp3, $_user->_ordnerpfad);
+					
+					$tmp2 = $_time->mktime(0,0,0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+					$_time->set_timestamp($tmp2);
+					$_time->save_time($tmp2, $_user->_ordnerpfad);		
+				}		
+				$tmp = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
+				$_time->set_timestamp($tmp);
+				$_time->save_time($tmp, $_user->_ordnerpfad);
+			}
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -370,14 +405,20 @@ switch($_action){
 		header("Location: index.php");
 		break;
 	case "add_time":
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_time/time_add_04.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
+		// Sicherheitscheck : Settings- 15 : Falls der User eine Zeit eintragen darf
+		if($_settings->_array[15][1] && $edit){
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_time/time_add_04.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
+		}
 		break;
 	case "add_time_list":
-		$_template->_user02 = "sites_user/user02_cal.php";
-		$_template->_user04 = "sites_time/time_addlist_04.php";
-		$_template->_user03 = "sites_user/user03_stat.php";
+		// Sicherheitscheck : Settings- 16 : Falls der User mehrere Zeiten eintragen darf
+		if($_settings->_array[16][1] && $edit){	
+			$_template->_user02 = "sites_user/user02_cal.php";
+			$_template->_user04 = "sites_time/time_addlist_04.php";
+			$_template->_user03 = "sites_user/user03_stat.php";
+		}
 		break;
 	case "show_time":
 		$_template->_user02 = "sites_user/user02_cal.php";

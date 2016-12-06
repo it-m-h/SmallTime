@@ -12,11 +12,11 @@ class time_user{
 	public $_password 			= NULL;
 	public $_ordnerpfad 			= NULL;	
 	public $_name				= NULL;	
-	public $_SollZeitProWoche		= NULL;
+	public $_SollZeitProWoche	= NULL;
 	public $_SollZeitProzent		= NULL;
 	public $_WochenArbeiztsZeit	= NULL;
 	//So = 0, Sa = 7
-	public $_arbeitstage 			= array(0,0,0,0,0,0,0);
+	public $_arbeitstage 		= array(0,0,0,0,0,0,0);
 	public $_SummeArbeitstage 	= NULL;
 	public $_SollZeitProTag		= NULL;
 	public $_BeginnDerZeitrechnung	= NULL;	
@@ -24,10 +24,10 @@ class time_user{
 	public $_Ferien_pro_Jahr		= NULL;		
 	public $_Stunden_uebertrag 	= NULL;
 	public $_Ferienguthaben_uebertrag 	= NULL;
-	public $_feiertage 				= array(0,0,0,0,0,0,0,0,0,0,0);
-	public $_absenzen				= array();
-	public $_zuschlag				= array();
-	public $_modell				= NULL;
+	public $_feiertage 			= array(0,0,0,0,0,0,0,0,0,0,0);
+	public $_absenzen			= array();
+	public $_zuschlag			= array();
+	public $_modell			= NULL;
 	
 	function __construct(){
 		$this->check_htaccess();

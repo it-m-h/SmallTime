@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.010
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -227,7 +227,7 @@ class time_month{
 			if(date("Y.m.d", $this->_MonatsArray[$i][0]) == date("Y.m.d", time())) $this->_MonatsArray[$i][30] = "class=td_background_heute";	
 			// Links
 			if($this->_MonatsArray[$i][14]<>""){
-				$this->_MonatsArray[$i][31] = "<a title='delete Absenz' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
+				$this->_MonatsArray[$i][31] = "<a class='deleteabsenz' title='delete Absenz' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
 				// Info bezüglich Absenz
 				$this->_MonatsArray[$i][32] = "<img border='0' src='images/icons/information.png' title='".trim($this->_MonatsArray[$i][15])." Tag ".trim($this->_MonatsArray[$i][16])." / Bezahlt : ".trim($this->_MonatsArray[$i][17])."%'>";
 				$this->_MonatsArray[$i][32] = trim($this->_MonatsArray[$i][15])." Tag ".trim($this->_MonatsArray[$i][16])." / Bezahlt : ".trim($this->_MonatsArray[$i][17])."%";	

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9010
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
@@ -110,7 +110,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 		}
 		echo "</td>\n";
 		//-------------------------------------------------------------------------
-		// Absenzen enzeigen
+		// Absenzen anzeigen
 		//-------------------------------------------------------------------------
 		if($_settings->_array[17][1] && $edit){
 			echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";	
@@ -175,6 +175,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 				$("#modalBody").load(this.href + '');
 				$("#mainModal").modal('show');
 			});
-		$('a[title="Absenz l&ouml;schen"]').unbind();
+		/*$('a[title="Absenz l&ouml;schen"]').unbind();*/
+		$('.deleteabsenz').unbind();
 	</script>
 <?php } ?>

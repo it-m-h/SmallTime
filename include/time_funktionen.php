@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.9
+* Version 0.9010
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -49,22 +49,45 @@ function getinfotext($str,$css){
 function check_htaccess_pdf($datenpfad){
 	$_file = "./Data/".$datenpfad."/Dokumente/.htaccess";
 	if(!file_exists($_file)){
-		$_zeilenvorschub = "\r\n";
-		$fp = fopen($_file,"a+");
-		fputs($fp, "Order deny,allow");
-		fputs($fp, $_zeilenvorschub);
-		fputs($fp, "Allow from all");
-		fputs($fp, $_zeilenvorschub);
-		fputs($fp, "Allow from <127.0.0.1>");
-		fputs($fp, $_zeilenvorschub);
-		fclose($fp);
-		$_datum = date("d.m.Y",time());
-		$_uhrzeit = date("H:i",time());
-		$_datetime =  $_datum." - ".$_uhrzeit;
-		$_debug 	= new time_filehandle("./debug/","time.txt",";");
-		$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" .$datenpfad.";htaccess nicht vorhanden, wurde erstellt.");
+		write_htaccess($_file);
+	}
+	$_file = "./Data/".$datenpfad."/img/.htaccess";
+	if(!file_exists($_file)){
+		write_htaccess($_file);
+	}
+	$_file = "./Data/".$datenpfad."/Rapport/.htaccess";
+	if(!file_exists($_file)){
+		write_htaccess($_file);
+	}
+	$_file = "./Data/".$datenpfad."/Timetable/.htaccess";
+	if(!file_exists($_file)){
+		write_htaccess($_file);
 	}
 }
+function write_htaccess($_file){
+	$_zeilenvorschub = "\r\n";
+	$fp = fopen($_file,"a+");
+	fputs($fp, "Order deny,allow");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "Allow from all");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, '<Files "*">');
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "	deny from all");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "</Files>");
+	fputs($fp, $_zeilenvorschub);
+		
+	//fputs($fp, "Allow from <127.0.0.1>");
+	//fputs($fp, $_zeilenvorschub);
+	fclose($fp);
+	$_datum = date("d.m.Y",time());
+	$_uhrzeit = date("H:i",time());
+	$_datetime =  $_datum." - ".$_uhrzeit;
+	$_debug 	= new time_filehandle("./debug/","time.txt",";");
+	$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" .$datenpfad.";htaccess nicht vorhanden, wurde erstellt.");
+}
+
 // ----------------------------------------------------------------------------
 // Meldungen in die Datei schreiben
 // ----------------------------------------------------------------------------
@@ -77,8 +100,12 @@ function check_htaccess($_file,$_rwo,$_text){
 			fputs($fp, $_zeilenvorschub);
 			fputs($fp, "Allow from all");
 			fputs($fp, $_zeilenvorschub);
-			fputs($fp, "Allow from <127.0.0.1>");
-			fputs($fp, $_zeilenvorschub);		
+			fputs($fp, '<Files "*">');
+			fputs($fp, $_zeilenvorschub);
+			fputs($fp, "	deny from all");
+			fputs($fp, $_zeilenvorschub);
+			fputs($fp, "</Files>");
+			fputs($fp, $_zeilenvorschub);	
 		}else{
 			fputs($fp, "Deny from all");	
 		}

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.010
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -172,8 +172,12 @@ class time_filehandle{
 		fputs($fp, $text.$_zeilenvorschub);
 		$text = 'Allow from all' ;
 		fputs($fp, $text.$_zeilenvorschub);
-		$text = 'Allow from <127.0.0.1>';
-		fputs($fp, $text.$_zeilenvorschub);
+		fputs($fp, '<Files "*">');
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "	deny from all");
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "</Files>");
+		fputs($fp, $_zeilenvorschub);
 		fclose($fp);
 	}
 	function absenz_txt($_file){
