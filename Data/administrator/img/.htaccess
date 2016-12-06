@@ -1,3 +1,5 @@
 Order deny,allow
 Allow from all
-Allow from <127.0.0.1>
+ <Files "*">
+  	deny from all
+ </Files>

@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.009
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -39,7 +39,11 @@ for($i = 0;$i < $anz;$i++)
 			$aktuell = $jahr;
 			echo "</div><div id='divpdf'>";
 		}
-		echo "<div id='pdf'><a id='pdfhref' href='./Data/".$_user->_ordnerpfad."/Dokumente/$afile[$i]' target='_new'><img src='images/ico/pdf.png' border=0 width=80><br>$afile[$i]</a>";
+		//echo "<div id='pdf'><a id='pdfhref' href='./Data/".$_user->_ordnerpfad."/Dokumente/$afile[$i]' target='_new'><img src='images/ico/pdf.png' border=0 width=80><br>$afile[$i]</a>";
+		// neuer Download nur über Sicherheit
+		echo "<div id='pdf'><a href='download.php?datei=".$afile[$i]."&typ=pdf' target='_new'><img id='zip' src='images/ico/zip.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
+		
+		
 		echo "</div>";
 	}
 }
