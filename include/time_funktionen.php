@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.9010
+* Version 0.9011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -64,6 +64,23 @@ function check_htaccess_pdf($datenpfad){
 		write_htaccess($_file);
 	}
 }
+function create_htaccess($datenpfad){
+	$_files[] = "./Data/".$datenpfad."/Dokumente/.htaccess";
+	$_files[] = "./Data/".$datenpfad."/img/.htaccess";
+	$_files[] = "./Data/".$datenpfad."/Rapport/.htaccess";
+	$_files[] = "./Data/".$datenpfad."/Timetable/.htaccess";
+	foreach($_files as $_file){
+		if(file_exists($_file)){
+			$inhalt = file($_file);
+			if(strpos($inhalt[2],"127.0.0.1")){
+				unlink($_file);
+			}	
+		}else{
+			write_htaccess($_file);
+		}
+	}
+}
+
 function write_htaccess($_file){
 	$_zeilenvorschub = "\r\n";
 	$fp = fopen($_file,"a+");

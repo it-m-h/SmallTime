@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.010
+* Version 0.9.011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -102,6 +102,17 @@ $_settings	= new time_settings();
 $_template	= new time_template("index.php");
 $_template->set_portal(1);
 $_favicon = "./images/favicon.ico";
+// ----------------------------------------------------------------------------
+// .htaccess - Dateien überprüfen und setzten
+// bei der Übernahme von alten Daten notwendig
+// ----------------------------------------------------------------------------
+$id = 0;
+foreach ($_users->_array as $tmpuser) {
+	if($tmpuser[0]<>"Pfad"){
+		create_htaccess($tmpuser[0]);
+	}
+}
+
 // ----------------------------------------------------------------------------
 // Controller für Login
 // ----------------------------------------------------------------------------

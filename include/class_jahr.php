@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9.005
+* Version 0.9.011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -274,6 +274,7 @@ class time_jahr{
 							$this->_summe_Fv = $this->_summe_Fv + $eintrag[2];
 						}
 					}
+					
 				}	
 			}
 			// bei Startjahr Ferienanspruch berechnen
@@ -286,17 +287,21 @@ class time_jahr{
 		}else{
 			$this->_summe_F = $this->_summe_Fv;
 		}
-
 		//falls in der Ansicht ein alter Monat gewählt wurde und für PDF -> Ferien in der Zukunft noch nicht berechnen
 		if(isset($_GET['timestamp'])){
 			// Saldo der Ferien inkl. Übertrag berechnen
-			$this->_saldo_F = $this->_saldo_F - $this->_summe_Fv + $this->_Ferienguthaben_uebertrag;
+			// Falls der Timestamp der aktuelle Monat ist, und in den Settings kommende Ferien berechnet werden sollen
+			if($tmpsettings->_array[27][1]==0 && $_year_heute==$_year_wahl && $_month_wahl == $_now_month){
+				$this->_saldo_F = $this->_saldo_F - $this->_summe_F + $this->_Ferienguthaben_uebertrag;
+			}else{
+				$this->_saldo_F = $this->_saldo_F - $this->_summe_Fv + $this->_Ferienguthaben_uebertrag;
+			}
 		}else{
 			// Saldo der Ferien inkl. Übertrag berechnen
 			$this->_saldo_F = $this->_saldo_F - $this->_summe_F + $this->_Ferienguthaben_uebertrag;
 		}
 		//runden auf 2 Stellen 
-			$this->_saldo_F = round($this->_saldo_F,2);	
+		$this->_saldo_F = round($this->_saldo_F,2);	
 	}		
 	function __destruct(){
 	}
