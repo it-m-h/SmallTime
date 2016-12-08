@@ -2,7 +2,7 @@
 /*******************************************************************************
 *PDF für alle Mitarbeiter generieren und anzeigen
 /*******************************************************************************
-* Version 0.9.004
+* Version 0.9.011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -56,6 +56,7 @@ class pdfgenerate{
 			$arr[$i]['userstartmonat'] 	= date("m", $userdata[1]);
 			$arr[$i]['userstartjahr'] 	= date("Y",$userdata[1]);
 			$arr[$i]['pdflink'] = './Data/' . $user['0'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf';
+			$arr[$i]['pdfdatei'] =  $this->_jahr . '.' . $this->_monat . '.pdf';
 			$arr[$i]['pdflinkcreate'] =' ';
 			$arr[$i]['pdfexist'] = '0'; 
 			// check ob file existiert
@@ -63,7 +64,7 @@ class pdfgenerate{
 				$arr[$i]['pdfexist'] = '1'; 
 				// Link zum PDF
 				$arr[$i]['pdflink'] ='
-				<a id="pdfhref" href="' . $arr[$i]['pdflink'] . '" target="_new">
+				<a id="pdfhref" href="download.php?datei=' .$arr[$i]['pdfdatei'] . '&typ=pdf" target="_new">
 				<img src="images/icons/page_white_acrobat.png" border="0" > - 
 				./Data/' . $user['0'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf
 				</a>';
