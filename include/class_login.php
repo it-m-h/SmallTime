@@ -117,8 +117,8 @@ class time_login{
 		$_SESSION['id'] 			= $u;
 		$_SESSION['datenpfad'] 	= $this->_datenpfad;
 		$_SESSION['username'] 	= $this->_username;
-		$_SESSION['passwort'] 	= $this->_passwort;
-		$_SESSION['login'] 		= $this->_login;
+		$_SESSION['passwort'] 		= $this->_passwort;
+		$_SESSION['login'] 			= $this->_login;
 	}
 	private function setcookie(){
 		setcookie("lname",$this->_username,time()+2952000);

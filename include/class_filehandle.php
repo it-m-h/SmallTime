@@ -10,7 +10,7 @@
 class time_filehandle{
 	public $_filename 	= ""; 
 	public $_filepfad 	= "";
-	public $_array	= NULL;
+	public $_array		= NULL;
 	
 	function __construct($_filepfad, $_filename, $_trennzeichen){
 		$this->_filename = $_filename;

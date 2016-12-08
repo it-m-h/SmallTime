@@ -64,7 +64,7 @@ class pdfgenerate{
 				$arr[$i]['pdfexist'] = '1'; 
 				// Link zum PDF
 				$arr[$i]['pdflink'] ='
-				<a id="pdfhref" href="download.php?datei=' .$arr[$i]['pdfdatei'] . '&typ=pdf" target="_new">
+				<a id="pdfhref" href="download.php?datei=' .$arr[$i]['pdfdatei'] . '&typ=pdf&pfad='.$user['0'].'" target="_new">
 				<img src="images/icons/page_white_acrobat.png" border="0" > - 
 				./Data/' . $user['0'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf
 				</a>';
