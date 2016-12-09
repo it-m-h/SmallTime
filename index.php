@@ -173,7 +173,6 @@ if($_SESSION['admin']){
 // $_settings->_array[23][1] = wie viel Tage zurück
 // TODO : falls in den Settings eingestellt wurde wie lange zurück Änderungen vorgenommen werden können, timestamp vergleichen
 $edit  = true;
-
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------

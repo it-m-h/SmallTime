@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -168,7 +168,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	include ('./include/time_variablen_laden.php');
 	$_template->_plugin	= "modules/sites_plugin/plugin.php";
-}
+}	
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------

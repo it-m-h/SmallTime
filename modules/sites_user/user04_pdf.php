@@ -41,7 +41,7 @@ for($i = 0;$i < $anz;$i++)
 		}
 		//echo "<div id='pdf'><a id='pdfhref' href='./Data/".$_user->_ordnerpfad."/Dokumente/$afile[$i]' target='_new'><img src='images/ico/pdf.png' border=0 width=80><br>$afile[$i]</a>";
 		// neuer Download nur über Sicherheit
-		echo "<div id='pdf'><a href='download.php?datei=".$afile[$i]."&typ=pdf' target='_new'><img id='zip' src='images/ico/pdf.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
+		echo "<div id='pdf'><a href='download.php?datei=".$afile[$i]."&typ=pdf&pfad=".$_user->_ordnerpfad."' target='_new'><img id='zip' src='images/ico/pdf.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
 		
 		
 		echo "</div>";

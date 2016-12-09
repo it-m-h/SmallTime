@@ -10,4 +10,5 @@ V 0.9.007 01.12.2016 -> Log - Üersicht bei Status von User und Admin BUG - FIX
 V 0.9.008 06.12.2016 -> Automatische Pausen - mehrere Pausenregelungen sind nun einstellbar
 V 0.9.009 06.12.2016 -> Berechtigungen auf ZIP und PDF überarbeitet -> nur noch über download.php abrufbar
 V 0.9.010 06.12.2016 -> diverse Sicherheits - Bugfix sowie .htaccess - Dateierstellungen
-V 0.9.011 07.12.2016 -> kleine Bug - korrekturen
+V 0.9.011 07.12.2016 -> kleine Bug - Korrekturen
+V 0.9.011 09.12.2016 -> kleine Bug - Korrekturen -> admins dürfen alle PDF und ZIP downloaden / ZIP - Download ging nicht

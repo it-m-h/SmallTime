@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Login - Klasse
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.011
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -90,6 +90,7 @@ class time_login{
 					$this->_login		= true;
 					$this->setSession(trim($u));
 					$this->setcookie();	
+					$_SESSION['showpdf'] = 1;
 				}
 			}
 		}else{	
@@ -113,12 +114,13 @@ class time_login{
 		}
 	}
 	private function setSession($u){
-		$_SESSION['admin'] 		= $this->_datenpfad;
-		$_SESSION['id'] 			= $u;
+		$_SESSION['admin'] 	= $this->_datenpfad;
+		$_SESSION['id'] 		= $u;
 		$_SESSION['datenpfad'] 	= $this->_datenpfad;
 		$_SESSION['username'] 	= $this->_username;
-		$_SESSION['passwort'] 		= $this->_passwort;
-		$_SESSION['login'] 			= $this->_login;
+		$_SESSION['passwort'] 	= $this->_passwort;
+		$_SESSION['login'] 		= $this->_login;
+		$_SESSION['showpdf'] 	= 0;
 	}
 	private function setcookie(){
 		setcookie("lname",$this->_username,time()+2952000);
