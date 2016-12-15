@@ -13,3 +13,4 @@ V 0.9.010 06.12.2016 -> diverse Sicherheits - Bugfix sowie .htaccess - Dateierst
 V 0.9.011 07.12.2016 -> kleine Bug - Korrekturen
 V 0.9.011 09.12.2016 -> kleine Bug - Korrekturen -> admins dürfen alle PDF und ZIP downloaden / ZIP - Download ging nicht
 V 0.9.012 15.12.2016 -> Bug - Ferienberechnung (Zukunft oder nur bis Heute) wenn Ferien berechnete Werte im Monat sind
+V 0.9.012 15.12.2016 -> Bug - download als Admin mit Fehlermeldung bei unzureichender Berechtigung

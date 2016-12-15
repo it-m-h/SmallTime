@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time - Datei - download
 /*******************************************************************************
-* Version 0.9.011
+* Version 0.9.012
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -39,10 +39,12 @@ if(@$_SESSION['admin']==NULL OR @$_SESSION['admin']==""){
 		// $_SESSION['showpdf']  ist 1 wenn ein Administrator eingeloggt ist
 		if($_SESSION['showpdf']==1 && isset($_GET['pfad'])){
 			$pfad = './Data/'.$_GET['pfad'].'/Dokumente/';
+			$datei = $datei;
+			$type = 'application/pdf';
+			getfile($pfad, $datei, $type);
+		}else{
+			echo "Keine Administratoren - Berechtigung.";
 		}
-		$datei = $datei;
-		$type = 'application/pdf';
-		getfile($pfad, $datei, $type);
 	}else{
 		echo "File - Typ wird nicht unterstützt.";
 	}
