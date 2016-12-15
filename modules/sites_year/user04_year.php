@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.002
+* Version 0.9.012
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -290,7 +290,7 @@ for($year = $_now; $year >= $_to; $year--){
 	<tr>
 	<td class=td_background_top align = left>Saldo ende Jahr:</td>
 	<td class=td_background_top align=right>" . format($anzeige[$year]['Summ']['Saldo']) . "</td>
-	<td class=td_background_top align=right>" . format($anzeige[$year]['Summ']['Ferien']) . " Tage</td>
+	<td class=td_background_top align=right>" . format(round($anzeige[$year]['Summ']['Ferien'],2)) . " Tage</td>
 	<td class=td_background_top align=right></td>
 	</tr>";
 
