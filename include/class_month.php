@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.9.012
+* Version 0.9.013
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -267,7 +267,7 @@ class time_month{
 			}
 			$this->_MonatsArray[$i][35] = "";
 			if($this->_setautopause){
-				$_temptext = "Die automatische Pause von " . $this->_autopause . " wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;
+				$_temptext = "Die automatische Pause von " . $this->_MonatsArray[$i][38] . "h wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;				
 				$this->_MonatsArray[$i][35] = "<img title='$_temptext' src='images/icons/clock_pause.png' border=0>";
 				$this->_setautopause ="";
 			}
@@ -375,6 +375,10 @@ class time_month{
 		// -------------------------------------------------------------------------
 		$_count = count($_stempelzeit);
 		for($h=0; $h<$_count; $h=$h+2){
+			if($_debug_berechnung){
+					echo "<br>--------------------------------------------------------------------------------";
+					echo "<br>Tag:  " . $i;
+				}
 			$_anzeige[$h]	= date("H:i",$_stempelzeit[$h]);
 			//Anzeige bei 59 Min und 59 Sek runden
 			if(date("i",$_stempelzeit[$h])=='59' and date("s",$_stempelzeit[$h])=='59'){
@@ -397,93 +401,36 @@ class time_month{
 				// Stunden die gearbeitet wurden (mal 100 für die Dezimalumrechnung)
 				$_start = date("H",$_stempelzeit[$h]);
 				$_ende = date("H",$_stempelzeit[$h+1]);
-				$_saldo = $_ende-$_start;
-				$_dezimal = $_saldo*100;
-				$_h = $_dezimal;
-				// $_h = (date("H",$_stempelzeit[$h+1] - $_stempelzeit[$h])-1)*100;
-				// Minuten die gearbeitet wurden und nun in Dezimal
-				/* ---------------------------------------------------------------------------------
-				// Test nur mit Minuten rechnen, ist ungenauer bei alten Stempelzeiten
-				$_timestampdiff = $_stempelzeit[$h+1] - $_stempelzeit[$h];
-				$_minuten = date("i",$_stempelzeit[$h+1]) - date("i",$_stempelzeit[$h]);
-				if ($_minuten < 0) $_minuten =$_minuten+60;
-				$_dezimal = round($_minuten*100/60,2);
-				//$_min = $_dezimal;
-				-----------------------------------------------------------------------------------*/
-				$_min = round(((date("i",($_stempelzeit[$h+1] - $_stempelzeit[$h])))*100/60),2);
+				//------------------------------------------------------------------------------------------
+				// Korrektur 28.12.2016 - Zeitberechnung - kleine Fehlerkorrektur im hunderstel - Bereich
+				//------------------------------------------------------------------------------------------
+				$work_h = date("H",$_stempelzeit[$h+1]) - date("H",$_stempelzeit[$h]);
+				// Resultat könnte kleiner als 0 sein, wird weiter unten korrigiert
+				$work_m = date("i",$_stempelzeit[$h+1]) - date("i",$_stempelzeit[$h]);
+				// Resultat könnte kleiner als 0 sein, wird weiter unten korrigiert
+				$work_s = date("s",$_stempelzeit[$h+1]) - date("s",$_stempelzeit[$h]);
+				// falls Berechung im Minus ist, eine Minute abziehen und 60 Sekunden hinzu zählen
+				if($work_s<0){
+					$work_m = $work_m-1;
+					$work_s = $work_s + 60;
+				}
+				// falls Berechung im Minus ist, eine Stunde abziehen und 60 Minuten hinzu zählen
+				if($work_m<0){
+					$work_h = $work_h-1;
+					$work_m = $work_m +60;
+				}
 				if($_debug_berechnung ){
-					echo "<br>---------------- Minuten";
-					$_minuten1 = 0;
-					$_minuten2 = 0;
-					$_minuten1 = date("i",$_stempelzeit[$h]);
-					$_minuten2 = date("i",$_stempelzeit[$h+1]);	
-					echo "<br>rechnen : ". (date("i",$_stempelzeit[$h+1] - $_stempelzeit[$h]));
-					echo "<br>rechnen unterschied : ". $_stempelzeit[$h+1];
-					echo "<br>rechnen unterschied : ". $_stempelzeit[$h];
-					echo "<br>rechnen unterschied : ". ($_stempelzeit[$h+1] - $_stempelzeit[$h])/60/60;
-					$min = date("i",$_stempelzeit[$h]+1) - date("i",$_stempelzeit[$h]);
-					echo "<br>rechnen unterschied min : ". $min ;
-					echo "<br>rechnen unterschied min : ". round($min *100/60,2);
-					echo "<br>rechnen unterschied min...... : ". $_minuten;
-					echo "<br>rechnen unterschied min...... : ". $_dezimal;
-					echo "<br><br> minute 2: ". $_minuten1. " - " . $_minuten2 ;
-					echo "<hr color = gray>";	
+					echo "<br>Arbeitszeit in Stunden, Minuten, Sekunden: " . $work_h . ":" . $work_m . ":" . $work_s ; 
 				}
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				// Falls Sekunden = 59 und Minuten 59, dann Dezimalkorrektur anwenden auf 60 Sekunden
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				if(date("s",$_stempelzeit[$h+1])=='59' and date("i",$_stempelzeit[$h+1])=='59'){
-					$_min = $_min+1.5;
-					if($_debug_berechnung) echo ".....Dezimal korrektur 23:59:59<br>";
+				// Zeiten nun in Dezimal umrechnen
+				$work_s = $work_s/60;
+				$work_m = $work_m/60*100;
+				$work_m = ($work_m + $work_s) / 100;
+				$work_h = $work_h + $work_m;
+				if($_debug_berechnung ){
+					echo "<br>Arbeitszeit in Dezimal grundet: " . round($work_h,2) ; 
 				}
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				// Falls Sekunden gehen < als Sekunden kommen und Minuten gehen == Minuten kommen, dann Stunde -1 rechnen
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				elseif(date("s",$_stempelzeit[$h+1])<date("s",$_stempelzeit[$h]) and date("i",$_stempelzeit[$h+1])==date("i",$_stempelzeit[$h])){
-					$_min = $_min+1.5;
-					$_h = $_h-100;
-					if($_debug_berechnung) echo ".....Stunde abz&auml;hlen<br>";
-				}
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				// Falls Minuten gehen < Minuten kommen, dann Stunden -1 rechnen
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				elseif(date("i",$_stempelzeit[$h+1])<date("i",$_stempelzeit[$h])){
-					$_h = $_h-100;
-					if($_debug_berechnung) echo ".....Stunde abz&auml;hlen 2<br>";
-				}
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				// Falls Sekunden gehen < als Sekunden kommen und Minuten gehen <> Minuten kommen, dann nur Dezimalkorrektur
-				//--------------------------------------------------------------------------------------------------------------------------------------------
-				elseif(date("s",$_stempelzeit[$h+1])<date("s",$_stempelzeit[$h]) and date("i",$_stempelzeit[$h+1])<>date("i",$_stempelzeit[$h])){
-					$_min = $_min+1.5;
-					if($_debug_berechnung) echo ".....Dezimalkorrektur 2<br>";
-				}
-				$_zeit = round(($_h+$_min)/100,2);
-				// Arbeitszeit por Tag
-				// Debug bei Berechnungen-----------------------------------------
-				if($_debug){	
-					echo "<br> Zeit start : " . $_start ;
-					echo "<br> Zeit ende : " . $_ende ;
-					echo "<br> Zeit saldo : " . $_saldo ;
-					echo "<br> Zeit dezimal : " . $_dezimal;
-					echo "<br> ------------------------";
-					echo "<br> Stunden : " . $_h ;
-					echo "<br> Minuten : " . $_min ;
-					echo "<br> Sekunden : " . $_sek ;
-					echo "<br> Zeit : " . $_zeit ;
-				}
-				//Debug bei Berechnungen-----------------------------------------
-				if($_debug_berechnung){
-					echo "Zeiten:" . $_stempelzeit[$h] . " - " . $_stempelzeit[$h+1];
-					echo "<br>Stunden:" . date("H",$_stempelzeit[$h]) . " - " . date("H",$_stempelzeit[$h+1]);
-					echo "<br>Minuten:" . date("i",$_stempelzeit[$h]) . " - " . date("i",$_stempelzeit[$h+1]);
-					echo "<br>Sekunden:" . date("s",$_stempelzeit[$h]) . " - " . date("s",$_stempelzeit[$h+1]);
-					echo "<br> ------------------------";
-					echo "<br> Stunden : " . $_h ;
-					echo "<br> Minuten : " . $_min ;
-					echo "<br> Sekunden : " . $_sek ;
-					echo "<hr color=red> ";
-				}
+				$_zeit  = round($work_h,2) ;
 				//------------------------------------------------------------------------------------
 				// Autopause berechnen bis V 0.9.007
 				//------------------------------------------------------------------------------------
@@ -497,14 +444,16 @@ class time_month{
 					$_anz++;	
 				}
 				$time = $this->_arbeitszeit ;
-				//echo $time;
 				//------------------------------------------------------------------------------------
 				// Autopause berechnen ab V 0.9.007 : alte Version wird automatisch inaktiv
 				//------------------------------------------------------------------------------------
 				if($_zeit > 0){
 					$vergleichszeit= number_format($_zeit);
+					$vergleichszeit = $_zeit;
 					$time = pausen::check($vergleichszeit);
 					if($time[0]>0){
+						// für die Darstellung im Monatsarray Spalte 38, wie viel Zeit abgezogen wurde
+						$this->_MonatsArray[$i][38] = $this->_MonatsArray[$i][38] + $time[0];
 						if($this->_autopause==""){
 							$this->_autopause = $time[0];
 						}else{
@@ -513,9 +462,9 @@ class time_month{
 						$this->_autopause .= ' Stunden';
 						$_zeit = ($_zeit - $time[0]);
 						if($this->_setautopause){
-							$this->_setautopause = $this->_setautopause. " & Zeit ". $_anz;
+							$this->_setautopause = $this->_setautopause. " & Zeitenpaar ". $_anz;
 						}else{
-							$this->_setautopause = $this->_setautopause . " Zeit " . $_anz;	
+							$this->_setautopause = $this->_setautopause . " Zeitenpaar " . $_anz;	
 						}
 						$this->_setautopause = $this->_setautopause . " Abzug nach id : " . $time[1];
 						$_anz++;

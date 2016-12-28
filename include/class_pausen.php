@@ -3,7 +3,7 @@
 * Automatische Pausenregelung für Mitarbeiter 
 * werden von den Arbeitszeiten abgezogen
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.013
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
