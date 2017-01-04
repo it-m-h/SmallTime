@@ -1,5 +1,6 @@
 Order deny,allow
 Allow from all
- <Files "*">
+<Files "*">
   	deny from all
  </Files>
+Options -Indexes
