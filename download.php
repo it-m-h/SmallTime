@@ -28,9 +28,8 @@ if(@$_SESSION['admin']==NULL OR @$_SESSION['admin']==""){
 		// $_SESSION['showpdf']  ist 1 wenn ein Administrator eingeloggt ist
 		if($_SESSION['showpdf']==1 && isset($_GET['pfad'])){
 			$pfad = './Data/_zip/'.$_GET['pfad'].'/';
-			echo "ZIP mit Pfad gesetzt.";
+			//echo "ZIP mit Pfad gesetzt.";
 		}
-		$datei = $datei;
 		$type = 'application/zip';
 		getfile($pfad, $datei, $type);
 	}elseif($typ =="pdf"){
@@ -39,12 +38,10 @@ if(@$_SESSION['admin']==NULL OR @$_SESSION['admin']==""){
 		// $_SESSION['showpdf']  ist 1 wenn ein Administrator eingeloggt ist
 		if($_SESSION['showpdf']==1 && isset($_GET['pfad'])){
 			$pfad = './Data/'.$_GET['pfad'].'/Dokumente/';
-			$datei = $datei;
-			$type = 'application/pdf';
-			getfile($pfad, $datei, $type);
-		}else{
-			echo "Keine Administratoren - Berechtigung.";
+			//echo "PDF mit Pfad gesetzt.";
 		}
+		$type = 'application/pdf';
+		getfile($pfad, $datei, $type);
 	}else{
 		echo "File - Typ wird nicht unterstützt.";
 	}
