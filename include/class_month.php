@@ -22,6 +22,7 @@ class time_month{
 	private $_setautopause			= "";
 	private $_zeitzuschlag			= NULL;
 	private $_absenzberechnung 		= NULL;	
+	private $_absenzberechnungArbeitszeit = NULL;
 	public $_SollProTag 			= NULL;	// Soll Arbeitszeit pro Tag
 	public $_letzterTag				= NULL;	// Anzahl der Tage im gewählen Monat	
 	public $_SummeSollProMonat 	= NULL;	// Summe der Soll - Stunden im Monat
@@ -40,7 +41,7 @@ class time_month{
 	public $_modal				= NULL;
 	public $_modal_str				= NULL;
 	
-	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause, $absenzberechnung){	
+	function __construct($SettingCountry, $lastday, $ordnerpfad, $jahr, $monat, $arbeitstage, $ufeiertag, $_SollProTag, $_startzeit, $arbeitszeit, $autopause, $absenzberechnung, $absenzberechnungArbeitszeit){
 		$this->_file = "./Data/".$ordnerpfad."/Rapport/";
 		$this->_pfad = "./Data/".$ordnerpfad."/";
 		$this->_arbeitstage	= $arbeitstage;
@@ -57,6 +58,7 @@ class time_month{
 		$this->_arbeitszeit = $arbeitszeit;	
 		$this->_autopause	= $autopause;
 		$this->_absenzberechnung = $absenzberechnung;
+		$this->_absenzberechnungArbeitszeit = $absenzberechnungArbeitszeit;
 		//Absenzenberechnung nur bis Heute in den Settings?
 		if($absenzberechnung){ $this->absenzsetting(); }
 		//Monatsdaten berechnen und im Array speichern
@@ -205,11 +207,13 @@ class time_month{
 				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13];
 			}
 			// wenn eine Absenz vorhanden ist und das saldo >0 sowie tmp=0(nicht in der Zukunft)
-			if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
-				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
-				$this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
-				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
-				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
+            if($this->_absenzberechnungArbeitszeit == 1){
+			    if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
+                $this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
+                $this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
+                $this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
+                $saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
+                }
 			}
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
