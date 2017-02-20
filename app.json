@@ -1,7 +1,7 @@
 {
   "name": "SmallTime",
   "website": "http://www.small.li/",
-  "description": "Kleine Zeiterfassung für Privatpersonen und kleine Firmen\n\nBenutzername: admin / Passwort: 1234 (Login nach Installation ändern!)",
+  "description": "Kleine Zeiterfassung für Privatpersonen und kleine Firmen",
   "repository": "https://github.com/itmastergmbh/SmallTime",
   "logo": "https://github.com/jekuno/SmallTime/blob/master/images/logo.png",
   "keywords": ["smalltime", "zeiterfassung", "time tracker", "php", "holiday tracker", "tracking", "webapp"]
