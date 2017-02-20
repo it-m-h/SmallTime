@@ -157,6 +157,27 @@ if($_settings->_array[27][1]==0){ $check2=" checked ";}else{$check2="";}
 			</tr></table>
 		</td>';
 $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[27][2]."' src='images/icons/information.png' border=0></td></tr>";
+
+//------------------------------------------------------------------------------------
+// Absenzen - Arbeitszeit wird von der Absenz abgezogen (Zeile 29)
+//------------------------------------------------------------------------------------
+$_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Absenzen - Arbeitszeit wird von der Absenz abgezogen</td></tr>";
+$_anzeige = $_anzeige . "<tr width=50%>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[28][0] . "</td>";
+if($_settings->_array[28][1]==1){ $check1=" checked ";}else{$check1="";}
+if($_settings->_array[28][1]==0){ $check2=" checked ";}else{$check2="";}
+$_anzeige = $_anzeige . '
+		<td class=td_background_tag align=left>
+			<table border="0" cellspacing="0" cellpadding="0" ><tr>
+				<td><input type="radio" value="1" name="28" '. $check1 .'></td>
+				<td>ja (Standard)</td>
+				<td><input type="radio" value="0" name="28" '. $check2 .'></td>
+				<td>nein</td>
+			</tr></table>
+		</td>';
+$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[28][2]."' src='images/icons/information.png' border=0></td></tr>";
+
+
 $y--;
 $_anzeige = $_anzeige . "	
 	<tr><td class=td_background_heute colspan='3' align=center >
