@@ -30,7 +30,6 @@ include_once ('./include/class_rapport.php');
 include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
 include ("./include/time_funktionen.php");
-
 $_grpwahl = $_grpwahl-1;
 $_group = new time_group($_grpwahl);
 if(isset($id)) $_grpwahl = $_group->get_usergroup($id);
@@ -38,14 +37,11 @@ $anzMA = count($_group->_array[1][$_grpwahl]);
 
 foreach($_group->_array[0] as $gruppen){
 	//echo $gruppen[0];
-}			
-						
+}									
 if(isset($_GET['json'])){
-
 	//-------------------------------------------------------------------------------------------------------------
 	// Anwesenheitsliste in ein JSON laden
 	//-------------------------------------------------------------------------------------------------------------
-	
 	$tmparr = array();
 	for($x=0; $x<$anzMA ;$x++){	
 		$tmparr[$x]['gruppe'] = trim($_group->_array[0][$_grpwahl][$x]);		
@@ -60,8 +56,7 @@ if(isset($_GET['json'])){
 			$tmparr[$x]['status'] = 'Anwesend';
 		}else{
 			$tmparr[$x]['status'] = 'Abwesend';
-		}
-						
+		}				
 		// Mitarbeiter - Bild anzeigen
 		if(file_exists("./Data/".$_group->_array[2][$_grpwahl][$x]."/img/bild.jpg")){		
 			$tmparr[$x]['bild'] = "./Data/".$_group->_array[2][$_grpwahl][$x]."/img/bild.jpg";	
@@ -149,7 +144,6 @@ if(isset($_GET['json'])){
 					-webkit-order: 2;
 					order: 2;
 				}
-
 				.row{
 				}
 				nav ul li.active {
@@ -164,21 +158,17 @@ if(isset($_GET['json'])){
 						width: 80%;
 						max-width: 1600px;
 					}
-
 				}
 				@media only screen and (min-width: 993px){
 					.container{
 						width: 95%;
 					}	
-
 				}
 				@media only screen and (min-width: 601px){
 					.container{
 						width: 95%;
 					}	
-		
 				}
-
 			</style>
 			<script>
 				(function($)
@@ -257,7 +247,6 @@ if(isset($_GET['json'])){
 					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 					<ul class="right hide-on-med-and-down">
 						<?php 
-						
 						$i=2;
 						foreach($_group->_array[0] as $gruppen){
 							echo '<li ';
@@ -277,25 +266,15 @@ if(isset($_GET['json'])){
 						}
 						echo '<li ><a href="index.php" target="_new"><i class="fa fa-home fa-2"></i> Index.php</a></li>';
 						echo '<li ><a href="admin.php" target="_new"><i class="fa fa-lock fa-2"></i> Admin.php</a></li>';
-						
-						
 						?>
-					
-						<!--<li <?php if($_grpwahl=='2') echo 'class="active" '; ?>id="menue1"><a href="?gruppe=2" id="seite1"><i class="fa fa-firefox mr5"></i> Seite 1</a></li>
-						<li <?php if($_grpwahl=='3') echo 'class="active" '; ?>id="menue2"><a href="?gruppe=3" id="seite2"><i class="fa fa-firefox mr5"></i> Seite 2</a></li>
-						</ul>
-						<ul class="side-nav" id="mobile-demo">
-						<li <?php if($_grpwahl=='2') echo 'class="active" '; ?>id="mobmenue1"><a href="?gruppe=2" id="mobseite1"><i class="fa fa-firefox mr5"></i> Seite 1</a></li>
-						<li <?php if($_grpwahl=='3') echo 'class="active" '; ?>id="mobmenue2"><a href="?gruppe=3" id="mobseite2"><i class="fa fa-firefox mr5"></i> Seite 2</a></li>-->
 					</ul>
 				</div>
 			</nav>
-			<!--  CONTENT  --------------------------------------------------------------------------------------------------------------------------------->
+			<!--  CONTENT  !-->
 			<div class="container" id="ContentHTML">
 				<div class="container">
 					<div id="maanzeige" class="row"></div>
 					<div id="matemplate"  style="visibility: hidden">
-						
 						<div class="col s12 m6 l4">
 							<div class=" mitarbeiter " onclick="mastempeln('{{idtime}}')" >
 								<div class="bild" id="img"><img src="{{bild}}" alt="{{username}}"  /></div>
