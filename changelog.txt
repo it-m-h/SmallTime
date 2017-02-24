@@ -16,3 +16,4 @@ V 0.9.012 15.12.2016 -> Bug - Ferienberechnung (Zukunft oder nur bis Heute) wenn
 V 0.9.012 15.12.2016 -> Bug - download als Admin mit Fehlermeldung bei unzureichender Berechtigung
 V 0.9.013 28.12.2016 -> Zeitenumrechnung von Minuten und Sekunden in Dezimal, korrigiert (kleine Fehler - Korrektur im Hundertstel)
 V 0.9.014 25.01.2017 -> Bug: Mitarbeiter konnten keine PDF ansehen
+V 0.9.015 24.02.2017 -> Beispiel für ein Touchscreen - Stempel - Terminal

@@ -38,6 +38,8 @@ class time_group
 					$u = 0;
 					// Anzahl Stempelzeiten
 					$this->_array[6][$x][$y] = count($this->_array[5][$x][$y]);
+					// Passwort
+					$this->_array[7][$x][$y] = $_users->_array[$ma][2];
 					$y++;
 				}
 			}
