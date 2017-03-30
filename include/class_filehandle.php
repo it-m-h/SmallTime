@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9.010
+* Version 0.9.016
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -141,7 +141,7 @@ class time_filehandle{
 			$file = "./Data/". $_a. "/Timetable/total.txt";
 			$this->timetable_txt($file, 0, '0');
 			mkdir ("./Data/". $_a. "/img");
-			$this->htaccess_txt($file);
+			$this->htaccess_img($file);
 			$file = "./Data/". $_a. "/absenz.txt";
 			$this->absenz_txt($file);
 			$file = "./Data/". $_a. "/userdaten.txt";
@@ -164,6 +164,25 @@ class time_filehandle{
 		$fp = fopen($file,"w+");
 		fputs($fp, $text);
 		fclose($fp);	
+	}
+	function htaccess_img($_file){
+		$_zeilenvorschub = "\r\n";
+		$fp = fopen($_file,"w+");
+		$text = 'Order deny,allow';
+		fputs($fp, $text.$_zeilenvorschub);
+		$text = 'Allow from all' ;
+		fputs($fp, $text.$_zeilenvorschub);
+		fputs($fp, '<Files ~ "\.(jpg)$">');
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "	order deny,allow");
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "	allow from all");
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "</Files>");
+		fputs($fp, $_zeilenvorschub);
+		fputs($fp, "Options -Indexes");
+		fputs($fp, $_zeilenvorschub);
+		fclose($fp);
 	}
 	function htaccess_txt($_file){
 		$_zeilenvorschub = "\r\n";

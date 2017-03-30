@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.899
+* Version 0.9.016
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -23,7 +23,7 @@ for($i = 0; $i < 12;$i++)
 	// ----------------------------------------------------------------------------
 	$_temp_time = new time();
 	$_temp_time->set_timestamp(mktime(0,0,0,$i + 1,1,$_time->_jahr));
-	$time_month = new time_month( $_settings->_array[12][1], $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1]);
+	$time_month = new time_month( $_settings->_array[12][1], $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
 	
 	$_temp_time = NULL;
 	

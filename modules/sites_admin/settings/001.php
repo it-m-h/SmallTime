@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.008
+* Version 0.9.016
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -172,7 +172,7 @@ $_anzeige = $_anzeige . '
 				<td><input type="radio" value="1" name="28" '. $check1 .'></td>
 				<td>ja (Standard)</td>
 				<td><input type="radio" value="0" name="28" '. $check2 .'></td>
-				<td>nein</td>
+				<td>nein,  ACHTUNG: <img title="Mit dieser Einstellung könnten Ferien in Überzeit umgewandelt werden. Bitte beachten Sie die gesetzlichen Richtlinien!" src="images/icons/information.png" border="0"></td>
 			</tr></table>
 		</td>';
 $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[28][2]."' src='images/icons/information.png' border=0></td></tr>";
