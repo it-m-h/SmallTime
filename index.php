@@ -29,9 +29,18 @@ function my_session_start()
       }
       return session_start();
 }
-error_reporting(E_ALL ^ E_NOTICE);
-//error_reporting(E_ALL);
-ini_set("display_errors", 1); 
+define('DEBUG', false); 
+if(DEBUG == true)
+{
+    error_reporting(E_ALL);
+    //error_reporting(E_ALL ^ E_NOTICE);
+    ini_set("display_errors", 1); 
+}
+else
+{
+    error_reporting(0);
+    ini_set("display_errors", 0); 
+}
 // Zeitzone setzten, damit die Stunden richtig ausgerechnet werden
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
