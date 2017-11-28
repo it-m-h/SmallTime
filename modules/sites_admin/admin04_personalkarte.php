@@ -2,13 +2,13 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.897
+* Version 0.9.017
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 //--------------------------------------------------------------
-//zip - Pfad überprüfen und erstellen falls nicht vorhanden
+//img- Pfad überprüfen und erstellen falls nicht vorhanden
 //--------------------------------------------------------------
 $_tmppfad = "./Data/".$_user->_ordnerpfad."/img/";
 if(!file_exists($_tmppfad))

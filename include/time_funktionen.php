@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.9011
+* Version 0.9.017
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -53,7 +53,8 @@ function check_htaccess_pdf($datenpfad){
 	}
 	$_file = "./Data/".$datenpfad."/img/.htaccess";
 	if(!file_exists($_file)){
-		write_htaccess($_file);
+		//write_htaccess($_file);
+		write_htaccess_img($_file);
 	}
 	$_file = "./Data/".$datenpfad."/Rapport/.htaccess";
 	if(!file_exists($_file)){
@@ -76,10 +77,43 @@ function create_htaccess($datenpfad){
 				unlink($_file);
 			}	
 		}else{
-			write_htaccess($_file);
+			$temp = stripos($_file, 'img');
+			if($temp){
+				write_htaccess_img($_file);
+			}else{
+				write_htaccess($_file);
+			}
 		}
 	}
 }
+
+function write_htaccess_img($_file){
+	$_zeilenvorschub = "\r\n";
+	$fp = fopen($_file,"a+");
+	fputs($fp, "Order deny,allow");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "Allow from all");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, '<Files ~ "\.(jpg)$">');
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "	order deny,allow");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "	allow from all");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "</Files>");
+	fputs($fp, $_zeilenvorschub);
+	fputs($fp, "Options -Indexes");
+	fputs($fp, $_zeilenvorschub);	
+	//fputs($fp, "Allow from <127.0.0.1>");
+	//fputs($fp, $_zeilenvorschub);
+	fclose($fp);
+	$_datum = date("d.m.Y",time());
+	$_uhrzeit = date("H:i",time());
+	$_datetime =  $_datum." - ".$_uhrzeit;
+	$_debug 	= new time_filehandle("./debug/","time.txt",";");
+	$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" .$datenpfad.";htaccess nicht vorhanden, wurde erstellt.");
+}
+
 
 function write_htaccess($_file){
 	$_zeilenvorschub = "\r\n";
@@ -110,7 +144,15 @@ function write_htaccess($_file){
 // ----------------------------------------------------------------------------
 function check_htaccess($_file,$_rwo,$_text){
 	if(!file_exists($_file)){
-		$_zeilenvorschub = "\r\n";
+		
+		$temp = stripos($_file, 'img');
+		if($temp){
+			write_htaccess_img($_file);
+		}else{
+			write_htaccess($_file);
+		}
+			
+		/*$_zeilenvorschub = "\r\n";
 		$fp = fopen($_file,"a+");
 		if($_rwo){
 			fputs($fp, "Order deny,allow");
@@ -126,7 +168,7 @@ function check_htaccess($_file,$_rwo,$_text){
 		}else{
 			fputs($fp, "Deny from all");	
 		}
-		fclose($fp);
+		fclose($fp);*/
 		$_datum = date("d.m.Y",time());
 		$_uhrzeit = date("H:i",time());
 		$_datetime =  $_datum." - ".$_uhrzeit;
