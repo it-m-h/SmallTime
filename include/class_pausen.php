@@ -3,7 +3,7 @@
 * Automatische Pausenregelung für Mitarbeiter 
 * werden von den Arbeitszeiten abgezogen
 /*******************************************************************************
-* Version 0.9.013
+* Version 0.9.018
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -131,8 +131,8 @@ class pausen{
 		$p=0;					
 		foreach($pausen->_array as $pause){
 			$tmp_pausen = explode(';',$pause);
-			$minpause = number_format(floatval($tmp_pausen[0]));
-			$maxpause = number_format(floatval($tmp_pausen[1]));	
+			$minpause = floatval($tmp_pausen[0]);
+			$maxpause = floatval($tmp_pausen[1]);
 			if(is_array($tmp_pausen)){
 				if($minpause<= $vergleichszeit AND $maxpause > $vergleichszeit){
 					$return[0] = round( $tmp_pausen[2]/60,2);
