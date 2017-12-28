@@ -18,3 +18,6 @@ V 0.9.013 28.12.2016 -> Zeitenumrechnung von Minuten und Sekunden in Dezimal, ko
 V 0.9.014 25.01.2017 -> Bug: Mitarbeiter konnten keine PDF ansehen
 V 0.9.015 24.02.2017 -> Beispiel für ein Touchscreen - Stempel - Terminal
 V 0.9.016 30.03.2017 -> Fehler bei der Jahresansicht / Fehler bei der Bildanzeige mit htaccess / Settings - Einstellungen - Abwesenheitsberechnungen
+V 0.9.017 30.11.2017 -> Fehler bei User - Bildern in der .htaccess Datei
+V 0.9.018 14.12.2017 -> Fehler in der Berechnung der Pausenregelung bei Eingaben z.B. 9.25
+V 0.9.019 28.12.2017 -> Fehler in der Auszahlungs - Berechnung - Jahresübersicht

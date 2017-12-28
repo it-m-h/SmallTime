@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9.012
+* Version 0.9.019
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -30,20 +30,20 @@ class time_jahr{
 	public $_Stunden_uebertrag	= NULL; 		
 	public $_Ferienguthaben_uebertrag	= NULL;
 	//public $Ferien_pro_Jahr; 		
-	public $_Vorholzeit_pro_Jahr	= NULL; 	
+	public $_Vorholzeit_pro_Jahr		= NULL; 	
 	
 	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp){	
-		$this->_ordnerpfad 			= $ordnerpfad;
+		$this->_ordnerpfad 				= $ordnerpfad;
 		$this->_timestamp 				= $_timestamp;
 		// Jahr auf aktuell setzten falls kein Endjahr angegeben ist
 		if($jahr==0) $this->_jahr 		= date("Y", time());
 		$this->_startjahr 				= date("Y",$startjahr);
 		$this->_startmonat 				= date("n",$startjahr);
 		$this->_Stunden_uebertrag 		= $Stunden_uebertrag;
-		$this->_Ferienguthaben_uebertrag = $Ferienguthaben_uebertrag;
+		$this->_Ferienguthaben_uebertrag= $Ferienguthaben_uebertrag;
 		$this->_Ferien_pro_Jahr 		= $Ferien_pro_Jahr;
-		$this->_Vorholzeit_pro_Jahr 		= $Vorholzeit_pro_Jahr;	
-		$this->_modell 				= $modell;	
+		$this->_Vorholzeit_pro_Jahr 	= $Vorholzeit_pro_Jahr;	
+		$this->_modell 					= $modell;	
 		$this->_CalcToTimestamp 		= $_SESSION['calc'] ;
 		$this->calc_feriensumme();
 		// ---------------------------------------------------------------------------------------
@@ -69,11 +69,11 @@ class time_jahr{
 		$anz = 0;
 		for($i=0; $i< count($this->_arr_ausz);$i++){
 			if($this->_CalcToTimestamp && date("Y", $this->_timestamp)>trim($monat)){
-				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
+				if(trim($this->_arr_ausz[$i][0])==trim($monat) && trim($this->_arr_ausz[$i][1])==trim($jahr)){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
 			}elseif(!$this->_CalcToTimestamp){
-				if(strstr(trim($this->_arr_ausz[$i][0]),trim($monat)) && strstr(trim($this->_arr_ausz[$i][1]),trim($jahr))){
+				if(trim($this->_arr_ausz[$i][0])==trim($monat) && trim($this->_arr_ausz[$i][1])==trim($jahr)){
 					$anz =  $this->_arr_ausz[$i][2];
 				}
 			}	
