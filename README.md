@@ -16,7 +16,7 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 * <b>idtime.php</b> (wird benötigt um mit RFID oder Qrcode zu stempeln -> <b>kann gelöscht werden</b>)
 * <b>stempelterminal.php</b> (ist ein Beispiel, wie ein Terminal aufgebaut werden könnte -> <b>sollte gelöscht werden</b>, wenn diese nicht verwendet werden soll, weil dort keine Passwort abfragen vorhanden sind)
 
-## Berechtigungen setzten zum Schrieben bei LINUX: (inkl. Unterverzeichnisse)
+## Verzeichnis - Berechtigungen setzten zum Schrieben bei LINUX: (inkl. Unterverzeichnisse)
 * ./Data
 * ./import
 * ./debug
