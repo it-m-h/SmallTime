@@ -15,7 +15,6 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 * <b>android.php</b> (wird benötigt, wenn die APP verwendet wird - wird nicht weiter gepflegt und <b>kann gelöscht werden</b>)
 * <b>idtime.php</b> (wird benötigt um mit RFID oder Qrcode zu stempeln -> <b>kann gelöscht werden</b>)
 * <b>stempelterminal.php</b> (ist ein Beispiel, wie ein Terminal aufgebaut werden könnte -> <b>sollte gelöscht werden</b>, wenn diese nicht verwendet werden soll, weil dort keine Passwort abfragen vorhanden sind)
-* <b>terminal.php</b> (Beispiel für die Anzeige bei einem NFC - Reader - Raspberry und Bildschirm <b>kann gelöscht werden</b>)
 
 ## Verzeichnis - Berechtigungen setzen zum Schreiben bei LINUX: 
 (inkl. Unterverzeichnisse)
