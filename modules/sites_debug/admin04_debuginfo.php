@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_POST['delete'])
+if(@$_POST['delete'])
 {
 	echo "Alle Meldungen wurden gel&ouml;scht!";
 	$fp = fopen("./debug/time.txt", "w");

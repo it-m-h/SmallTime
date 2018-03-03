@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.011
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -61,9 +61,14 @@ if (version_compare(phpversion(), '5.3', '<')) {
 // F5 verhindern dass daten zwei mal gespeichert werden kann
 // ----------------------------------------------------------------------------
 //$_write = true;         // Daten werden dann  gespeichert
-$_now = $_GET['token'];
+if(isset($_GET['token'])){
+	$_now = $_GET['token'];
+}else{
+	$_now = NULL;
+}
+
 $token = md5(uniqid('SmallTime'));
-if(trim($_SESSION['last'])== trim($_now ) and isset($_SESSION['last'])){
+if(trim(@$_SESSION['last'])== trim($_now ) and isset($_SESSION['last'])){
 	$_write = true;
 }else{
 	$_write = false;
@@ -102,7 +107,7 @@ include ("./include/time_funktionen.php");
 // ----------------------------------------------------------------------------
 // Im Admin - Bereich bis zum gewählten Monat berechnen
 // ----------------------------------------------------------------------------
-if($_GET['calc']){
+if(isset($_GET['calc']) and $_GET['calc']){
 	$_SESSION['calc'] = $_GET['calc'];
 }else{
 	$_SESSION['calc'] = true;
@@ -132,22 +137,22 @@ $_logcheck->_admins = true; //Nur Admins dürfen sich einloggen (ID = 0 oder Pos
 $_logcheck->checkadmin( $_users->_array);
 // ----------------------------------------------------------------------------
 // falls eine Session exisitert und kein Action
-if($_SESSION['admin'] and !$_GET['action']){
-	$_logcheck->rapport($_SESSION['admin'],"korrekt", "Session");
+if(@$_SESSION['admin'] and !@$_GET['action']){
+	$_logcheck->rapport(@$_SESSION['admin'],"korrekt", "Session");
 }	
 // keine Session vorhanden
-if($_SESSION['admin']==NULL OR $_SESSION['admin']==""){
-	$_Userpfad = $_SESSION['admin']."/";
+if(@$_SESSION['admin']==NULL OR @$_SESSION['admin']==""){
+	$_Userpfad = @$_SESSION['admin']."/";
 }
 // Login über Cookie mit Datenüberprüfung
-if($_COOKIE["lname"] and $_COOKIE["lpass"] and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
+if(@$_COOKIE["lname"] and @$_COOKIE["lpass"] and (@$_SESSION['admin']==NULL OR @$_SESSION['admin']=="")){
 	$_logcheck->login($_POST, $_users->_array);
 }
 // Loginformular - Datenüberprüfung
-if($_POST['login']){
+if(isset($_POST['login'])){
 	$_logcheck->login($_POST, $_users->_array);;
 }
-if($_GET['action']=="logout"){
+if(@$_GET['action']=="logout"){
 	$_logcheck->logout();
 	header("Location: admin.php");
 	exit();
@@ -156,15 +161,16 @@ if($_GET['action']=="logout"){
 // Controller für Action
 // ----------------------------------------------------------------------------
 // Session  vorhanden - Daten anzeigen
-if($_SESSION['admin'] and !$_GET['action']){
+if(@$_SESSION['admin'] and !@$_GET['action']){
 	$_action = "show_admin";
-}elseif($_GET['action'] && $_SESSION['admin']){
-	$_action = $_GET['action'];
-	$_grpwahl = $_GET['group']-1;
-}elseif($_GET['group']){
+}elseif(@$_GET['action'] && @$_SESSION['admin']){
+	$_action = @$_GET['action'];
+	$_grpwahl = @$_GET['group']-1;
+	//$_grpwahl = $_GET['group']-1;
+}elseif(@$_GET['group']){
 	$_grpwahl = $_GET['group']-1;
 	$_action = "login_mehr";
-	if($_GET['group']=="-1"){
+	if(@$_GET['group']=="-1"){
 		$_action = "login_einzel";
 	}
 }elseif($_settings->_array[19][1]=="1"){
@@ -173,7 +179,7 @@ if($_SESSION['admin'] and !$_GET['action']){
 // ----------------------------------------------------------------------------
 // Modler Userdaten laden
 // ----------------------------------------------------------------------------
-if($_SESSION['admin']){
+if(@$_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// DEKLARATION DER VARIABLEN
 	// ----------------------------------------------------------------------------
@@ -183,7 +189,7 @@ if($_SESSION['admin']){
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
-switch($_action){
+switch(@$_action){
 	case "pdfgenerate":
 		if(isset($_POST['jahr']) && isset($_POST['monat'])){
 			$_pdfgenerate= new pdfgenerate($_POST['monat'],$_POST['jahr'], $_users);	
@@ -214,7 +220,7 @@ switch($_action){
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
 	case "plugins":
-		if($_POST['plugin']){
+		if(@$_POST['plugin']){
 			$_SESSION['plugin'] = $_POST['plugin'];
 		}
 		if($_POST['plugin']=="zeiterfassung") header("Location: admin.php");
@@ -260,7 +266,7 @@ switch($_action){
 		$_template->_user04 = "sites_year/user04_year.php";
 		break;
 	case "delete_user":
-		if($_POST['absenden'] == "OK"){
+		if(@$_POST['absenden'] == "OK"){
 			$id = $_GET['delete_user_id'];
 			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
 			header("Location: admin.php?action=delete_user&show=delete");		
@@ -290,10 +296,10 @@ switch($_action){
 	case "anwesend":
 		if($_grpwahl==0) $_grpwahl = 1;
 		$_group = new time_group($_grpwahl);
-		if($id) $_grpwahl = $_group->get_usergroup($id);
+		if(@$id) $_grpwahl = $_group->get_usergroup($id);
 		break;
 	case "login_mehr":
-		if($_POST['login'] == "Stempelzeit eintragen" and $_write){
+		if(@$_POST['login'] == "Stempelzeit eintragen" and $_write){
 			$_logcheck->login($_POST, $_users->_array);
 			if($_SESSION['admin']){
 				$id = $_logcheck->_id;
@@ -347,7 +353,7 @@ switch($_action){
 		$_template->_user04 = "sites_time/absenz_add_04.php";
 		break;
 	case "insert_absenz":
-		if($_POST['absenden'] == "OK" and $_write){
+		if(@$_POST['absenden'] == "OK" and $_write){
 			$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
 		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
@@ -376,7 +382,7 @@ switch($_action){
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "insert_time_list":
-		if($_POST['absenden'] == "OK" and $_write){
+		if(@$_POST['absenden'] == "OK" and $_write){
 			$_timestamp		= $_GET['timestamp'];
 			$_w_tag			= $_POST['_w_tag'];
 			$_w_monat		= $_POST['_w_monat'];
@@ -406,7 +412,7 @@ switch($_action){
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "insert_time":
-		if($_POST['absenden'] == "OK" and $_write){
+		if(@$_POST['absenden'] == "OK" and $_write){
 			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
 			if($_POST['oldtime']==1){
 				$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
@@ -513,7 +519,7 @@ switch($_action){
 		$_template->_user04 = "sites_admin/admin04_user_edit.php";
 		break;
 	case "user_update":
-		if($_POST['absenden'] == "OK"){
+		if(@$_POST['absenden'] == "OK"){
 			$_user->set_user_details();
 		}
 		$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Userdaten wurden aktualisiert</td></tr></table>","td_background_heute");
@@ -550,14 +556,14 @@ switch($_action){
 		//-----------------------------------------------
 		//löschen einer Gruppe
 		//-----------------------------------------------
-		if($_GET['del']<>""){
+		if(@$_GET['del']<>""){
 			$_infotext = getinfotext(  "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>","td_background_heute");
 			$_group->del_group($_GET['del']);	
 		}
 		//-----------------------------------------------
 		//aktualisieren oder Gruppen hinzufügen
 		//-----------------------------------------------	
-		if($_POST['senden']){
+		if(@$_POST['senden']){
 			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppen gespeichert</td></tr></table>","td_background_heute");
 			$_group->save_group();
 		}
@@ -567,7 +573,7 @@ switch($_action){
 	case "settings";
 		$_infotext = "Settings editieren";
 		$_infotext = getinfotext( $_infotext,"td_background_top");	
-		if($_POST['senden']){
+		if(@$_POST['senden']){
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>","td_background_heute");
 			$_settings->save_settings();
 		}
@@ -577,10 +583,10 @@ switch($_action){
 	case "feiertage";
 		$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum","td_background_top");
 		$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
-		if($_POST['senden']){
+		if(@$_POST['senden']){
 			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>","td_background_heute");
 			$_feiertage->save_feiertage();
-		}elseif($_GET['del']<>""){
+		}elseif(@$_GET['del']<>""){
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>","td_background_heute");
 			$_feiertage->delete_feiertag($_GET['del']);
 		}
@@ -588,7 +594,7 @@ switch($_action){
 		$_template->_user04 = "sites_admin/admin04_feiertage_edit.php";
 		break;
 	case "user_add":
-		if($_POST['absenden'] == "OK"){
+		if(@$_POST['absenden'] == "OK"){
 			$_a    = $_POST['_a'];
 			$_b    = $_POST['_b'];
 			$_c    = sha1($_POST['_c']);
@@ -631,7 +637,7 @@ function setLoginForm(){
 	$_template->_user03 = "sites_login/admin_login_einzel_03.php";
 	$_template->_user04 = "sites_login/admin_login_einzel_04.php";
 }
-if($_SESSION['admin']){
+if(@$_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------

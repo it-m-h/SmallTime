@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -10,7 +10,7 @@
 // ----------------------------------------------------------------------------
 // Jahresanzeige und Wahl (Beginn bis Heute)
 // ---------------------------------------------------------------------------- 
-$_startjahr	= date("Y",$_user->_BeginnDerZeitrechnung);
+$_startjahr	= @date("Y",$_user->_BeginnDerZeitrechnung);
 $_aktuell		= date("Y",time());
 $_w_jahr        = $_time->_jahr;
 echo '<div class="btn-group">';

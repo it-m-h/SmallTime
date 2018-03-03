@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.012
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -77,10 +77,10 @@ for($year = $_now; $year >= $_to; $year--){
 		$anzeige[$year]['Work'][$month] 	= $_jahr->_data[$year][$month][2];	// Gearbeitet
 		$anzeige[$year]['Soll'][$month] 		= $_jahr->_data[$year][$month][3];	// Sollstunden
 		//Summen eintragen
-		$anzeige[$year]['Saldo'][12] 		+= $_jahr->_data[$year][$month][0];
-		$anzeige[$year]['Ferien'][12] 		+= $_jahr->_data[$year][$month][1];
-		$anzeige[$year]['Work'][12] 		+= $_jahr->_data[$year][$month][2];
-		$anzeige[$year]['Soll'][12] 		+= $_jahr->_data[$year][$month][3];
+		@$anzeige[$year]['Saldo'][12] 		+= $_jahr->_data[$year][$month][0];
+		@$anzeige[$year]['Ferien'][12] 		+= $_jahr->_data[$year][$month][1];
+		@$anzeige[$year]['Work'][12] 		+= $_jahr->_data[$year][$month][2];
+		@$anzeige[$year]['Soll'][12] 		+= $_jahr->_data[$year][$month][3];
 		//Monatsname und Link
 		$_tempstamp = mktime(0, 0, 0, $month + 1, 1, $year);
 		$monatslink = "
@@ -115,12 +115,12 @@ for($u = 0; $u < count($auszahlung->_arr_ausz);$u++){
 for($year = $_to; $year <= $_now; $year++){
 	for($month = 0; $month < 12;$month++){
 		//Summen
-		$anzeige[$year]['Summ']['Saldo'] += $anzeige[$year]['Saldo'][$month] ;
-		$anzeige[$year]['Summ']['Ferien'] += $anzeige[$year]['Ferien'][$month] ;
-		$anzeige[$year]['Summ']['Work'] += $anzeige[$year]['Work'][$month] ;
-		$anzeige[$year]['Summ']['Soll'] += $anzeige[$year]['Soll'][$month] ;
+		@$anzeige[$year]['Summ']['Saldo'] += $anzeige[$year]['Saldo'][$month] ;
+		@$anzeige[$year]['Summ']['Ferien'] += $anzeige[$year]['Ferien'][$month] ;
+		@$anzeige[$year]['Summ']['Work'] += $anzeige[$year]['Work'][$month] ;
+		@$anzeige[$year]['Summ']['Soll'] += $anzeige[$year]['Soll'][$month] ;
 		//Auszahlung
-		$anzeige[$year]['Summ']['Auszahlung'] += $anzeige[$year]['Auszahlung'][$month];
+		@$anzeige[$year]['Summ']['Auszahlung'] += $anzeige[$year]['Auszahlung'][$month];
 	}
 	//Saldo
 	$startjahr = intval($_jahr->_startjahr);
@@ -225,7 +225,7 @@ for($year = $_now; $year >= $_to; $year--){
 		echo "
 		<tr>
 		<td class=td_background_tag align = left>Vorholzeit / Ferien</td>
-		<td class=td_background_tag align=right>".$v."</td>
+		<td class=td_background_tag align=right>".@$v."</td>
 		<td class=td_background_tag align=right>".$anzeige[$year]['Summ']['feriengutschrift']." Tage</td>
 		<td class=td_background_tag align=right></td>
 		</tr>";

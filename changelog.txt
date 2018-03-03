@@ -21,3 +21,4 @@ V 0.9.016 30.03.2017 -> Fehler bei der Jahresansicht / Fehler bei der Bildanzeig
 V 0.9.017 30.11.2017 -> Fehler bei User - Bildern in der .htaccess Datei
 V 0.9.018 14.12.2017 -> Fehler in der Berechnung der Pausenregelung bei Eingaben z.B. 9.25
 V 0.9.019 28.12.2017 -> Fehler in der Auszahlungs - Berechnung - Jahresübersicht
+V 0.9.020 03.03.2017 -> Fehler beim terminal.php - diverse Fehler abgefangen

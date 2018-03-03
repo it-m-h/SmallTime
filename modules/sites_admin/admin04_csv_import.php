@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -43,8 +43,8 @@ echo "<hr color=red>";
 //-------------------------------------------------------------------------------------------
 //File importieren und speichern unter ./import / import.csv falls ein neues ausgewählt wurde
 //-------------------------------------------------------------------------------------------
-$_file   = $_FILES['uploadedfile']['tmp_name'];
-$_submit = $_POST['submit'];
+$_file   = @$_FILES['uploadedfile']['tmp_name'];
+$_submit = @$_POST['submit'];
 if($_file && $_submit)
 {
 	move_uploaded_file($_FILES['uploadedfile']['tmp_name'], "import/import.csv");
@@ -191,7 +191,7 @@ function convertint($_string)
 <?php
 echo "<hr color=red>";
 //wenn User gewählt, importieren
-if($_POST['importieren'])
+if(@$_POST['importieren'])
 {
 	echo "Mitarbeiter ausgew&auml;hlt, ich importiere....... <hr>";
 	echo "Mitarbeiter : ".$_POST['name']. "<br>";

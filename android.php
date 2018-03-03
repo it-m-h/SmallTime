@@ -3,11 +3,11 @@ session_start();
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');
 header("Content-Type: text/html; charset=utf-8");
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -56,6 +56,7 @@ if($login){
         include_once ('./include/class_template.php');
         include_once ('./include/class_time.php');
         include_once ('./include/class_month.php');
+        include_once ('./include/class_pausen.php');
         include_once ('./include/class_jahr.php');
         include_once ('./include/class_feiertage.php');
         include_once ('./include/class_filehandle.php');
@@ -63,14 +64,14 @@ if($login){
         include_once ('./include/class_show.php');
         include_once ('./include/class_settings.php');
         include ("./include/time_funktionen.php");
-        $_users                = new time_filehandle("./Data/","users.txt",";");
+        $_users         = new time_filehandle("./Data/","users.txt",";");
         $_groups        = new time_filehandle("./Data/","group.txt",";");
-        $_settings        = new time_settings();
-        $_time = new time();
+        $_settings      = new time_settings();
+        $_time 			= new time();
         $_time->set_monatsname($_settings->_array[11][1]);
-        $_user = new time_user();
+        $_user 			= new time_user();
         $_user->load_data_session();
-        $_absenz = new time_absenz($_user->_ordnerpfad, $_time->_jahr);
+        $_absenz 		= new time_absenz($_user->_ordnerpfad, $_time->_jahr);
         $_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
         $_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
         // ----------------------------------------------------------------------------------------------
@@ -133,7 +134,7 @@ function get_var(){
                                 echo $temp;
                         }
                 }else{
-                        $referenz =&  ${$_GET['class']}->$_GET['var'];
+                        $referenz =&  ${$_GET['class']}->{$_GET['var']};
                         echo $referenz;
                 }
         }

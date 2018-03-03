@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.9.013
+* Version 0.9.020
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -73,7 +73,7 @@ class time_month{
 	}  
 	private function absenzsetting(){
 		for($i=0; $i<= count($this->_absenz->_array);$i++){
-			if($this->_absenz->_array[$i][0] >= time()){
+			if(@$this->_absenz->_array[$i][0] >= time()){
 				$this->_absenz->_array[$i][2]="";
 			}	
 		}
@@ -139,7 +139,11 @@ class time_month{
 			$tmp = $this->_MonatsArray[$i][5];
 			$wahl = $this->_MonatsArray[$i][5];
 			$tmparr = array_keys($this->_feiertage);
-			$this->_MonatsArray[$i][6] = $tmparr[$wahl];
+			if($wahl>=0){
+				$this->_MonatsArray[$i][6] = $tmparr[$wahl];
+			}else{
+				$this->_MonatsArray[$i][6] = '';
+			}
 			$this->_MonatsArray[$i][7] = ($this->_MonatsArray[$i][4]>'0' && $this->_MonatsArray[$i][5] == -1)? "1":"0";
 			// Falls das Datum in der Zukunft liegt, noch kein Arbeitstag und keine Zeitrechnung
 			if($_Day > time()) $this->_MonatsArray[$i][7]=0;	
@@ -162,10 +166,18 @@ class time_month{
 			}else{
 				$tmp = array();
 			}
-			$this->_MonatsArray[$i][14] = $tmp[1];
-			$this->_MonatsArray[$i][15] = $tmp[2];	// Anzahl der Absenz
-			$this->_MonatsArray[$i][16] = $tmp[3];
-			$this->_MonatsArray[$i][17] = $tmp[4]; 
+			$this->_MonatsArray[$i][14] = 0;
+			$this->_MonatsArray[$i][15] = 0;
+			$this->_MonatsArray[$i][16] = 0;
+			$this->_MonatsArray[$i][17] = 0;
+			if(isset($tmp[1])) $this->_MonatsArray[$i][14] = $tmp[1];
+			if(isset($tmp[2])) $this->_MonatsArray[$i][15] = $tmp[2];
+			if(isset($tmp[3])) $this->_MonatsArray[$i][16] = $tmp[3];
+			if(isset($tmp[4])) $this->_MonatsArray[$i][17] = $tmp[4];	
+			//$this->_MonatsArray[$i][14] = $tmp[1];
+			//$this->_MonatsArray[$i][15] = $tmp[2];	// Anzahl der Absenz
+			//$this->_MonatsArray[$i][16] = $tmp[3];
+			//$this->_MonatsArray[$i][17] = $tmp[4]; 
 			$tmp1=0;
 			// Liegen die Absenzen oder die Zeiten in der Zukunft, dann nicht berechnen
 			if($this->_MonatsArray[$i][15]<>0 && ($this->_MonatsArray[$i][4]==0 || $this->_MonatsArray[$i][5]<> -1) && $_Day<time()){
@@ -392,7 +404,7 @@ class time_month{
 				if($_debug_berechnung) echo ".....Zahl runden<br>";
 			}
 			// falls eine Zeit fehlt ist die nächste zeit 0 und kann nicht berechnet werden
-			if($_stempelzeit[$h+1]<>0){
+			if(isset($_stempelzeit[$h+1]) and $_stempelzeit[$h+1]<>0){
 				if($_debug) echo "<hr>";
 				$_anzeige[$h+1]	= date("H:i",$_stempelzeit[$h+1]);
 				//Anzeige bei 59 Min und 59 Sek runden
@@ -454,25 +466,27 @@ class time_month{
 				if($_zeit > 0){
 					$vergleichszeit= number_format($_zeit);
 					$vergleichszeit = $_zeit;
-					$time = pausen::check($vergleichszeit);
-					if($time[0]>0){
-						// für die Darstellung im Monatsarray Spalte 38, wie viel Zeit abgezogen wurde
-						$this->_MonatsArray[$i][38] = $this->_MonatsArray[$i][38] + $time[0];
-						if($this->_autopause==""){
-							$this->_autopause = $time[0];
-						}else{
-							$this->_autopause = $this->_autopause + $time[0];
+					if(class_exists('pausen')){
+						$time = pausen::check($vergleichszeit);
+						if($time[0]>0){
+							// für die Darstellung im Monatsarray Spalte 38, wie viel Zeit abgezogen wurde
+							$this->_MonatsArray[$i][38] = $this->_MonatsArray[$i][38] + $time[0];
+							if($this->_autopause==""){
+								$this->_autopause = $time[0];
+							}else{
+								$this->_autopause = $this->_autopause + $time[0];
+							}
+							$this->_autopause .= ' Stunden';
+							$_zeit = ($_zeit - $time[0]);
+							if($this->_setautopause){
+								$this->_setautopause = $this->_setautopause. " & Zeitenpaar ". $_anz;
+							}else{
+								$this->_setautopause = $this->_setautopause . " Zeitenpaar " . $_anz;	
+							}
+							$this->_setautopause = $this->_setautopause . " Abzug nach id : " . $time[1];
+							$_anz++;
 						}
-						$this->_autopause .= ' Stunden';
-						$_zeit = ($_zeit - $time[0]);
-						if($this->_setautopause){
-							$this->_setautopause = $this->_setautopause. " & Zeitenpaar ". $_anz;
-						}else{
-							$this->_setautopause = $this->_setautopause . " Zeitenpaar " . $_anz;	
-						}
-						$this->_setautopause = $this->_setautopause . " Abzug nach id : " . $time[1];
-						$_anz++;
-					}
+					} 
 				}
 				//------------------------------------------------------------------------------------
 				// Zeitzuschlag berechnen

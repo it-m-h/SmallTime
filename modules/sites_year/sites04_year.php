@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.016
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -27,11 +27,11 @@ for($i = 0; $i < 12;$i++)
 	
 	$_temp_time = NULL;
 	
-	$_data[0][1] += $time_month->_SummeSollProMonat;
-	$_data[1][1] += $time_month->_SummeWorkProMonat;
-	$_data[2][1] += $time_month->_SummeAbsenzProMonat;
-	$_data[3][1] += $time_month->_SummeSaldoProMonat;
-	$_data[4][1] += $_jahr->get_auszahlung(($i + 1), $_time->_jahr);
+	@$_data[0][1] += $time_month->_SummeSollProMonat;
+	@$_data[1][1] += $time_month->_SummeWorkProMonat;
+	@$_data[2][1] += $time_month->_SummeAbsenzProMonat;
+	@$_data[3][1] += $time_month->_SummeSaldoProMonat;
+	@$_data[4][1] += $_jahr->get_auszahlung(($i + 1), $_time->_jahr);
 
 	//-------------------------------------------------------------------------
 	// Summen der Absenzen berechnen (ab 0.87 erweiterbar pro Mitarbeiter)
@@ -52,19 +52,19 @@ for($i = 0; $i < 12;$i++)
 	$_jahres_berechnung[$i] = $time_month;
 }
 for($i = 0; $i < 12;$i++){
-	$_SummeSollProMonat += $_jahres_berechnung[$i]->_SummeSollProMonat;
-	$_SummeWorkProMonat += $_jahres_berechnung[$i]->_SummeWorkProMonat;
-	$_SummeAbsenzProMonat += $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
-	$_SummeSaldoProMonat += $_jahres_berechnung[$i]->_SummeSaldoProMonat;
-	$_SummeStempelzeiten += $_jahres_berechnung[$i]->_SummeStempelzeiten;
+	@$_SummeSollProMonat += $_jahres_berechnung[$i]->_SummeSollProMonat;
+	@$_SummeWorkProMonat += $_jahres_berechnung[$i]->_SummeWorkProMonat;
+	@$_SummeAbsenzProMonat += $_jahres_berechnung[$i]->_SummeAbsenzProMonat;
+	@$_SummeSaldoProMonat += $_jahres_berechnung[$i]->_SummeSaldoProMonat;
+	@$_SummeStempelzeiten += $_jahres_berechnung[$i]->_SummeStempelzeiten;
 	//-----------------------------------------------------------------------alt
-	$_SummeFerien += $_jahres_berechnung[$i]->_SummeFerien;
-	$_SummeKrankheit += $_jahres_berechnung[$i]->_SummeKrankheit;
-	$_SummeUnfall += $_jahres_berechnung[$i]->_SummeUnfall;
-	$_SummeMilitaer += $_jahres_berechnung[$i]->_SummeMilitaer;
-	$_SummeIntern += $_jahres_berechnung[$i]->_SummeIntern;
-	$_SummeWeiterbildung += $_jahres_berechnung[$i]->_SummeWeiterbildung;
-	$_SummeExtern += $_jahres_berechnung[$i]->_SummeExtern;
+	@$_SummeFerien += $_jahres_berechnung[$i]->_SummeFerien;
+	@$_SummeKrankheit += $_jahres_berechnung[$i]->_SummeKrankheit;
+	@$_SummeUnfall += $_jahres_berechnung[$i]->_SummeUnfall;
+	@$_SummeMilitaer += $_jahres_berechnung[$i]->_SummeMilitaer;
+	@$_SummeIntern += $_jahres_berechnung[$i]->_SummeIntern;
+	@$_SummeWeiterbildung += $_jahres_berechnung[$i]->_SummeWeiterbildung;
+	@$_SummeExtern += $_jahres_berechnung[$i]->_SummeExtern;
 	//--------------------------------------------------------------------alt
 }
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1 >";

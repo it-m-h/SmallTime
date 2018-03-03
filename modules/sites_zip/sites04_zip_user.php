@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.009
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -25,7 +25,7 @@ if(!file_exists ($_pfad) || !is_dir($_pfad))
 {
         mkdir ($_pfad);
 }
-if($_POST['make'])
+if(@$_POST['make'])
 {
         $_jahr   = date("Y", time());
         $_monat  = date("n", time());

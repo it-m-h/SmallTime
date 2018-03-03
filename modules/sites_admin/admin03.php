@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.001
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -83,7 +83,7 @@ foreach($_benutzer as $string){
 }
 echo "</table>";
 
-if(!$show_user){
+if(!@$show_user){
 
 	echo "<hr>";
 	//-----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ if(!$show_user){
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Start - Datum</td>";
-	echo "<td class=td_background_tag align=left>".date("d.m.Y",$_user->_BeginnDerZeitrechnung)."</td>";
+	echo "<td class=td_background_tag align=left>".@date("d.m.Y",$_user->_BeginnDerZeitrechnung)."</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td class=td_background_tag align=left>Anstellung</td>";
@@ -109,7 +109,7 @@ if(!$show_user){
 	echo "<td class=td_background_tag align=left>Sollstd. / Wo</td>";
 	echo "<td class=td_background_tag align=left>$_user->_SollZeitProWoche h</td>";
 	echo "</tr>";
-	if(!$show_user_only){
+	if(!@$show_user_only){
 		echo "<tr>";
 		echo "<td class='td_background_top' align=left colspan=2>Total - Saldi ende Monat</td>";
 		echo "</tr>";

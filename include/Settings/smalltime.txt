@@ -1,2 +1,2 @@
-0.9.017
-http://www.small.li/update
+0.9.020
+http://www.small.li

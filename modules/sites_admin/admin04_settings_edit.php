@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.016
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -47,17 +47,17 @@ if(isset($_GET['menue']))
 				<img src="./images/icons/cog_go.png" alt="" /> Settings
 			</a>
 		</li>
-		<li<?php echo $s04; ?>>
+		<li<?php echo @$s04; ?>>
 			<a data-toggle="tab" href="#s4">
 				<img src="./images/icons/cog_go.png" alt="" /> Pausen
 			</a>
 		</li>
-		<li<?php echo $s02; ?>>
+		<li<?php echo @$s02; ?>>
 			<a data-toggle="tab" href="#s2">
 				<img src="./images/icons/cog_go.png" alt="" /> Multilogin
 			</a>
 		</li>
-		<li<?php echo $s03; ?>>
+		<li<?php echo @$s03; ?>>
 			<a data-toggle="tab" href="#s3">
 				<img src="./images/icons/cog_go.png" alt="" /> Logo
 			</a>

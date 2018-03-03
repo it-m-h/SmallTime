@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9.019
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -37,6 +37,7 @@ class time_jahr{
 		$this->_timestamp 				= $_timestamp;
 		// Jahr auf aktuell setzten falls kein Endjahr angegeben ist
 		if($jahr==0) $this->_jahr 		= date("Y", time());
+		$startjahr = trim($startjahr);
 		$this->_startjahr 				= date("Y",$startjahr);
 		$this->_startmonat 				= date("n",$startjahr);
 		$this->_Stunden_uebertrag 		= $Stunden_uebertrag;

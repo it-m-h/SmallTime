@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Template - Klasse 
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -18,7 +18,7 @@ class time_template{
 	public  $_user02        	= "sites_user/user02.php";
 	public  $_user03        	= "sites_user/user03.php";
 	public  $_user04        	= "sites_user/user04.php";
-	public  $_plugin        		= "modules/sites_plugin/plugin_null.php";
+	public  $_plugin        	= "modules/sites_plugin/plugin_null.php";
 	public  $_mobile       		= "sites_mobile/mobile.php";
 	public  $_modulpfad     	= "modules/";
 	public  $_modal		= false;
@@ -29,7 +29,7 @@ class time_template{
 	public  $_ajaxhtml      	= "";
 
 	function __construct($_start){
-		if($_COOKIE["designname"]){
+		if(isset($_COOKIE["designname"])){
 			//ausgewähltes Design vom Cookie laden
 			$this->_templatepfad = "./templates/".$_COOKIE["designname"]."/";
 		}else{

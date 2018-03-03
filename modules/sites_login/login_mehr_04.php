@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -139,7 +139,7 @@ if($_settings->_array[13][1] OR $_SESSION['admin']){
 		if(!$_grpwahl) $_grpwahl = 1;
 		if($_grpwahl == -1)$_grpwahl = 1;
 		$_group = new time_group($_grpwahl);
-		if($id) $_grpwahl = $_group->get_usergroup($id);
+		if(@$id) $_grpwahl = $_group->get_usergroup($id);
 		$anzMA = count($_group->_array[1][$_grpwahl]);
 		echo '<table border="0" cellspacing="1" cellpadding="3" width=100%>';
 		for($x=0; $x<$anzMA ;$x++){

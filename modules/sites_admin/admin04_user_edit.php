@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -20,7 +20,7 @@ echo "<td align=left class=td_background_tag width=16><img title='Name des Mitar
 echo "</tr>";
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Start - Datum</td>";
-echo "<td align=left class=td_background_tag ><input type='text' name='_b' value='".date("d.m.Y",$_user->_BeginnDerZeitrechnung)."' size='10'> (Beginn der Zeitrechnung)</td>";
+echo "<td align=left class=td_background_tag ><input type='text' name='_b' value='".@date("d.m.Y",$_user->_BeginnDerZeitrechnung)."' size='10'> (Beginn der Zeitrechnung)</td>";
 echo "<td align=left class=td_background_tag width=16><img title='Einstellungsdatum, es wird nur jeder 1. des Monats unterst&uuml;tzt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 //------------------------------------------------------------------------------------

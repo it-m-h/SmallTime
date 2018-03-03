@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time - Template
 /*******************************************************************************
-* Version 0.872
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -55,6 +55,7 @@
                                         <div id='div_user03'>
                                                 <?php  //echo "<pre>".$_template->get_user03()."</pre>"; ?>
                                                 <?php include($_template->get_user03()); ?>
+                                                <?php echo $_copyright; ?>
                                         </div>
                                 </div>
                                 <div class="span9">
@@ -69,11 +70,6 @@
                                                 <?php //echo "<pre>".$_template->get_user04()."</pre>"; ?>
                                                 <?php include($_template->get_user04()); ?>
                                         </div>
-                                </div>
-                        </div>
-                        <div class="row footer">
-                                <div class="span12">
-                                        <?php echo $_copyright; ?>
                                 </div>
                         </div>
                 </div>

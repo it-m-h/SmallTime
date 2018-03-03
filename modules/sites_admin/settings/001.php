@@ -45,13 +45,13 @@ foreach($_settings->_array as $_zeile){
 		if($_settings->_array[$y][1]==3) $check3=" checked ";
 		if($_settings->_array[$y][1]==4) $check4=" checked ";
 		$_anzeige = $_anzeige . '<td><table border="0" cellspacing="0" cellpadding="0" ><tr>
-		<td><input type="radio" value="1" name="'.$y.'" title="Switzerland"'. $check1 .'></td>
+		<td><input type="radio" value="1" name="'.$y.'" title="Switzerland"'. @$check1 .'></td>
 		<td><img src="images/country/24/Switzerland.png"></td>
-		<td><input type="radio" value="2" name="'.$y.'" title="Germany"'. $check2 .'></td>
+		<td><input type="radio" value="2" name="'.$y.'" title="Germany"'. @$check2 .'></td>
 		<td><img src="images/country/24/Germany.png"></td>
-		<td><input type="radio" value="3" name="'.$y.'" title="Austria"'. $check3 .'></td>
+		<td><input type="radio" value="3" name="'.$y.'" title="Austria"'. @$check3 .'></td>
 		<td><img src="images/country/24/Austria.png"></td>
-		<td><input type="radio" value="4" name="'.$y.'" title="Liechtenstein"'. $check4 .'></td>
+		<td><input type="radio" value="4" name="'.$y.'" title="Liechtenstein"'. @$check4 .'></td>
 		<td><img src="images/country/24/Liechtenstein.png"></td>
 		</tr></table></td>';
 		$_anzeige = $_anzeige .  "<td><img title='".$_settings->_array[$y][2]."' src='images/icons/information.png' border=0></td></tr>";

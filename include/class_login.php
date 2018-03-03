@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Login - Klasse
 /*******************************************************************************
-* Version 0.9.011
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -138,7 +138,7 @@ class time_login{
 			foreach($_berechtigt as $u){
 				$_name 		= trim($userlist[trim($u)][0]);
 				$_passwort 	= trim($userlist[trim($u)][2]);
-				if($_name == $_SESSION['admin']){
+				if($_name == @$_SESSION['admin']){
 					$_secure = true;
 				}
 			}

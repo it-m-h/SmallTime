@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Feiertage für das gewählte Jahr
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -34,7 +34,12 @@ class time_feiertage
 		$z = 0;
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
-			if(trim($this->_feiertageUSER[$z - 1]) == "1"){
+			
+			
+			
+			if(trim(@$this->_feiertageUSER[$z - 1]) == "1"){
+				//echo 'feiertag';
+				//echo $_bez .' : ' .$this->_feiertageUSER[$z-1].'<br>'; 
 				$holidays[$_bez] = $_tag;
 			}elseif($z == 0){
 				$holidays[$_bez] = $_tag;
@@ -97,7 +102,7 @@ class time_feiertage
 		$holidays = array();
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
-			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> $this->_feiertageUSER[$z - 1], '_id' => $z);
+			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> @$this->_feiertageUSER[$z - 1], '_id' => $z);
 			$z++;
 		}
 		unset($holidays[0]);

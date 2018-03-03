@@ -2,12 +2,12 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.020
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_GET["designname"] == "mobile")
+if(@$_GET["designname"] == "mobile")
 {
 ?>
 	<script type="text/javascript">
@@ -30,7 +30,7 @@ while($file = readdir ($handle))
 {
 	if($file != "." && $file != "..")
 	{
-		if($_COOKIE["designname"] == "mobile")
+		if(@$_COOKIE["designname"] == "mobile")
 		{
 			echo '<a title="'.$file.'" href="?action=setdesign&designname='.$file.'">';
 		}
