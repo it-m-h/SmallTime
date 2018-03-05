@@ -135,13 +135,7 @@ function get_var(){
 				echo $temp;
 			}
 		}else{
-			$referenz =&  $
-			{
-				$_GET['class']
-			}->
-			{
-				$_GET['var']
-			};
+			$referenz =& ${$_GET['class']}->{$_GET['var']};
 			echo $referenz;
 		}
 	}
