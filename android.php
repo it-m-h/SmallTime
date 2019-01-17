@@ -3,6 +3,7 @@ session_start();
 date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');
 header("Content-Type: text/html; charset=utf-8");
+header('Access-Control-Allow-Origin: *');
 //error_reporting(E_ALL ^ E_NOTICE);
 /********************************************************************************
 * Small Time
