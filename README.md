@@ -22,3 +22,10 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 * ./import
 * ./debug
 * ./include/Settings
+
+## Update einer alten Version
+* Ordner der alten Version umbenennen (z.B. /time -> /time_old)
+* neue Version installieren (Ordner wie früher benennen /time)
+* Schreibrechte auf Ordner setzen in der neuen Version
+* ./include/Settings -> Dateien der alten Version in die neue kopieren
+* ./Data -> alle Ordner und Dateien der alten Version in die neue kopieren
