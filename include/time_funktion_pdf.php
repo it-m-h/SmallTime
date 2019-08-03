@@ -244,26 +244,25 @@ function erstelle_neu($_drucktime)
 				$tmp = $tmp . $trenn;
 				$tmp = $tmp . $zeile[12][$x];
 			}
-			$pdf->Cell(72,5,$tmp,1,'','L','1'); 	// Stempelzeiten in einer Schleife....
-			if($zeile[13] == 0)$zeile[13] = "";
-			/* Korrektur: $zeile[13] ist hier nicht mehr 0, sondern bereits "" */
-			if ($zeile[20] == 0 && $zeile[13] == "") $zeile[20] = "";
+			// Stempelzeiten
+			$pdf->Cell(72,5,$tmp,1,'','L','1'); 	
+			// Summe
+			if($zeile[13] == 0) $zeile[13] = "";
+			$pdf->Cell(13,5,$zeile[13],1,'','C','1');	
+			// Saldo
+			if($zeile[20] == 0 && $zeile[13] == 0)$zeile[20] = "";	
 			$pdf->Cell(13,5,$zeile[20],1,'','C','1');
-			/* Anpassung: Wenn keine Abwesenheit, dann gar nichts anzeigen */
+			// Abw.
 			if ($zeile[14] == "0") $zeile[14] = "";
-			$pdf->Cell(14,5,$zeile[14],1,'','C','1');
+			$pdf->Cell(14,5,$zeile[14],1,'','L','1');
 			$_txt = iconv("UTF-8", "ISO-8859-1", $zeile[34]);
-			/* Korrektur: Bei vorhandener Bemerkung keine 0 davor anzeigen
-			 * Anpassung: Wenn keine Bemerkung, dann gar nichts anzeigen */
+			// Bemerkung
 			$zeile[6] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[6]));
 			$zeile[16] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[16]));
-			/* Korrektur: Wenn Abwesenheit und Bemerkung, diese nicht ohne Trennzeichen konkatenieren
-			 * Anpassung: Semikolon und Zeilenumbruch als Trennzeichen */
 			if (($zeile[16] != "") && (strlen($zeile[34]) > 1))
 				$pdf->MultiCell(48,5,$zeile[6].$zeile[16].";\r\n".$_txt,1,'','L','1');
 			else
 				$pdf->MultiCell(48,5,$zeile[6].$zeile[16].$_txt,1,'','L','1');
-			//$pdf->MultiCell(48,5,'',1,'','L','1');
 		}
 		$i++;
 	}
