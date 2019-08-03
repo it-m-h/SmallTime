@@ -51,6 +51,7 @@ function erstelle_neu($_drucktime)
 	// -------------------------------------------------------------------------
 	$pdf->Cell(11,6,'',0,'','L');
 	$pdf->Cell(30,6,'Name : ',0,0,'L', '1');
+	$_user->_name         = iconv("UTF-8","ISO-8859-1",$_user->_name);
 	$pdf->Cell(59,6,$_user->_name,0,0,'L', '1');
 	$pdf->Cell(30,6,'Monat : ',0,0,'L', '1');
 	$_monatname         = iconv("UTF-8","ISO-8859-1",$_time->_monatname);
