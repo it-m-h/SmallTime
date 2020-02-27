@@ -139,7 +139,8 @@ class time_user{
 		$_tag[]			= $_POST['wotag6'];
 		$_anzahlFT		= $_POST['anzahlFT'];		
 		$_FT 			= array();
-		for ($u=1; $u<=$_anzahlFT; $u++){
+		for ($u=0; $u<$_anzahlFT; $u++){
+		//for ($u=1; $u<=$_anzahlFT; $u++){
 			$_FT[]	= $_POST['feiertag'.$u];
 		}
 		$x=0;

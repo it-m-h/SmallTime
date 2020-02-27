@@ -102,10 +102,10 @@ class time_feiertage
 		$holidays = array();
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
-			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> @$this->_feiertageUSER[$z - 1], '_id' => $z);
+			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> @$this->_feiertageUSER[$z], '_id' => $z);
 			$z++;
 		}
-		unset($holidays[0]);
+		//unset($holidays[0]);
 		$holidays = $this->array_orderby($holidays, '_tag', SORT_ASC);
 		return $holidays;
 	}
@@ -139,6 +139,7 @@ class time_feiertage
 	function get_firmenfeiertage()
 	{
 		$_tmparr = file($this->_file);
+
 		$x       = 0;
 		foreach($_tmparr as $_zeile){
 			$_tmparr[$x] = explode(";", $_tmparr[$x]);
