@@ -176,6 +176,7 @@ class time_feiertage
 			//Landesfeiertag - aus den Settings------------------------------------------------------
 			if($_country == 1) $holidays['Bundesfeier'] = mktime(0,0,0,8,1,$year);
 			if($_country == 2) $holidays['Tag der deutschen Einheit'] = mktime(0,0,0,10,3,$year);
+			if($_country == 2) $holidays['Reformationstag'] = mktime(0,0,0,10,31,$year);
 			if($_country == 3) $holidays['&ouml;sterreichische Nationalfeiertag'] = mktime(0,0,0,10,26,$year);
 			if($_country == 4) $holidays['Staatsfeiertag in Liechtenstein'] = mktime(0,0,0,8,15,$year);
 			//Landesfeiertag - aus den Settings------------------------------------------------------
