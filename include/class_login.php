@@ -95,7 +95,7 @@ class time_login{
 			}
 		}else{	
 			foreach($userlist as $zeile){	
-				if (strtolower($this->_username) == strtolower(trim($zeile[1])) AND strtolower($this->_passwort) == strtolower(trim($zeile[2])) ){
+				if ($this->_username == trim($zeile[1]) AND $this->_passwort == trim($zeile[2])){
 					$this->_id 		= $u;
 					$this->_datenpfad 	= $zeile[0];
 					$this->_username 	= $zeile[1];
