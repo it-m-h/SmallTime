@@ -1,5 +1,5 @@
 Title der Webseite#SMALL - Time, Zeiterfassung / Digitale Stempeluhr#Title der Webseite
-meta:Author#IT-Master GmbH#Author der Webseite
+meta:Author#IT-Master#Author der Webseite
 meta:Editor#editor#Editor
 meta:Content-language#DE#Content
 meta:Content-Type#text/html; charset=utf-8#Zeichensatz

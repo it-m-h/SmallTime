@@ -2,12 +2,11 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9010
+* Version 0.9.022
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c) , IT-Master GmbH, All rights reserved
 *******************************************************************************/
-
 // ----------------------------------------------------------------------------
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
@@ -175,7 +174,6 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
 				$("#modalBody").load(this.href + '');
 				$("#mainModal").modal('show');
 			});
-		/*$('a[title="Absenz l&ouml;schen"]').unbind();*/
 		$('.deleteabsenz').unbind();
 	</script>
 <?php } ?>

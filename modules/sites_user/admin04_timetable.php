@@ -2,13 +2,13 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.022
 * Author: IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
-// Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
+// Spaltenreite vergrÃ¶ssern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
 $t = 1;
 if($_settings->_array[15][1]||$_settings->_array[26][1]) $t++;
@@ -161,6 +161,6 @@ if(strstr($_template->_modal,'true')){ ?>
                                 console.log(this.href);
                                 e.preventDefault();
                         });
-                $('a[title="delete Absenz"]').unbind();
+                $('.deleteabsenz').unbind();
         </script>
 <?php } ?>
