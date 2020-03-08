@@ -24,3 +24,4 @@ V 0.9.019 28.12.2017 -> Fehler in der Auszahlungs - Berechnung - Jahresübersich
 V 0.9.020 03.03.2017 -> Fehler beim terminal.php - diverse Fehler abgefangen
 V 0.9.021 08.03.2017 -> Fehler im Template
 V 0.9.022 08.03.2020 -> kleine Korrekturen, betrifft keine Funktionen
+V 0.9.023 08.03.2020 -> Mitarbeiter z.B. test123 und test1234 gefixt

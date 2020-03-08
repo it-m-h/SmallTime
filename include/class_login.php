@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Login - Klasse
 /*******************************************************************************
-* Version 0.9.020
+* Version 0.9.023
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -95,7 +95,7 @@ class time_login{
 			}
 		}else{	
 			foreach($userlist as $zeile){	
-				if(strstr($this->_username,trim($zeile[1])) and strstr($this->_passwort,trim($zeile[2]))){
+				if (strtolower($this->_username) == strtolower(trim($zeile[1])) AND strtolower($this->_passwort) == strtolower(trim($zeile[2])) ){
 					$this->_id 		= $u;
 					$this->_datenpfad 	= $zeile[0];
 					$this->_username 	= $zeile[1];

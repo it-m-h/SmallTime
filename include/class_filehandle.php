@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9.020
+* Version 0.9.023
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
@@ -69,7 +69,7 @@ class time_filehandle{
 		$i=0;
 		foreach($inhalt as $temp){
 			$temp = explode(";",$temp);
-			if (strstr($temp[1], $name)) return true;
+			if (strtolower($temp[1]) == strtolower($name)) return true;
 			$i++;		
 		}
 		return false;
