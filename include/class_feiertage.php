@@ -102,7 +102,7 @@ class time_feiertage
 		$holidays = array();
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
-			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> @$this->_feiertageUSER[$z], '_id' => $z);
+			$holidays[$z] = array('_bez' => $_bez,'_tag' => $_tag,'_wahl'=> @$this->_feiertageUSER[$z-1], '_id' => $z);
 			$z++;
 		}
 		//unset($holidays[0]);
