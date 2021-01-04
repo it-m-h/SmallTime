@@ -8,10 +8,6 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
-// Zeitzone setzten, damit die Stunden richtig ausgerechnet werden
-date_default_timezone_set("Europe/Paris");
-@setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');
-
 $_grpwahl = '2';
 $gruppe = 2;
 if(isset($_GET['gruppe'])){
