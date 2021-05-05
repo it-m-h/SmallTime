@@ -682,8 +682,6 @@ foreach($_arr as $_zeile){
 	$_copyright .= $_tmp;
 }
 $_copyright .= "</div>";
-
-
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
@@ -700,4 +698,3 @@ if(isset($_GET['modal'])){
 }else{
 	include ($_template->get_template());
 }
-
