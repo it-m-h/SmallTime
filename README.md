@@ -3,6 +3,9 @@ Die kleine Zeiterfassung für Privatpersonen und kleine Firmen.
 Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+## PHP
+Achtung: PHP 8 wird zur Zeit nicht unterstützt!
+
 ## Administrator-Zugang
 * Benutzername: <b>admin</b>
 * Passwort: <b>1234</b> (Nach Deployment unmittelbar ändern!)
