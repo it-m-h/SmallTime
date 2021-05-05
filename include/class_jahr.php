@@ -279,19 +279,19 @@ class time_jahr{
 						if($_year_wahl==$j){
 							//  Ferien in der Vergangenheit von gewählten Monat
 							if($_month_wahl <= $i){
-								$this->_summe_Fz += $_arr[$i][1];	
+								$this->_summe_Fz += floatval($_arr[$i][1]);	
 							}else{
-								$this->_summe_Fv += $_arr[$i][1];
+								$this->_summe_Fv += floatval($_arr[$i][1]);
 							}
 						}else{
-							$this->_summe_Fv += $_arr[$i][1];
+							$this->_summe_Fv += floatval($_arr[$i][1]);
 						}
 						
 					}else{
-						$this->_summe_Fv += $_arr[$i][1];
+						$this->_summe_Fv += floatval($_arr[$i][1]);
 					}
 					//Summe alle Eingtetragenen und Berechneten Ferien
-					$this->_summe_Ft += $_arr[$i][1];
+					$this->_summe_Ft += floatval ($_arr[$i][1]);
 				}
 			}			
 		}
@@ -306,7 +306,7 @@ class time_jahr{
 						$zahl = $eintrag[2];
 						if(time() < $eintrag[0]){
 							//wenn der eintrag in der Zukunft liegt und noch nicht in den Summen enthalten ist
-							$this->_summe_Fgeplant += $eintrag[2];
+							$this->_summe_Fgeplant += floatval($eintrag[2]);
 						}
 					}
 					

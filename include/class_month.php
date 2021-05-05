@@ -72,10 +72,12 @@ class time_month{
 		return $this->_absenz->_calc;
 	}  
 	private function absenzsetting(){
-		for($i=0; $i<= count($this->_absenz->_array);$i++){
-			if(@$this->_absenz->_array[$i][0] >= time()){
-				$this->_absenz->_array[$i][2]="";
-			}	
+		if(is_array($this->_absenz->_array)){
+			for($i=0; $i <= count($this->_absenz->_array);$i++){
+				if(@$this->_absenz->_array[$i][0] >= time()){
+					$this->_absenz->_array[$i][2]="";
+				}	
+			}
 		}
 	}
 	public function save_data($monat,$jahr){
@@ -230,7 +232,7 @@ class time_month{
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
 			if($i>0){
-				$this->_MonatsArray[$i][21] = round($this->_MonatsArray[$i-1][21] + $this->_MonatsArray[$i][20],2);
+				$this->_MonatsArray[$i][21] = round(floatval($this->_MonatsArray[$i-1][21]) + floatval($this->_MonatsArray[$i][20]),2);
 			}else{
 				$this->_MonatsArray[$i][21] = $this->_MonatsArray[$i][20];
 			}
@@ -544,21 +546,23 @@ class time_month{
 	private function get_timestamps($_Day){
 		$_stempelzeit = array();
 		$_saldo = array();
-		for($g=0; $g<count($this->_timeTable); $g++){
-			//Datenüberprüfung und Bereinigung bei Leerzeilen
-			$this->_timeTable[$g] = trim($this->_timeTable[$g]);
-			$this->_timeTable[$g] = str_replace("\r", "", $this->_timeTable[$g]);
-			$this->_timeTable[$g] = str_replace("\n", "", $this->_timeTable[$g]);
-			if($this->_timeTable[$g]){
-				if(date("d.m.Y",$this->_timeTable[$g])== date("d.m.Y",$_Day)){
-					$_stempelzeit[] = $this->_timeTable[$g];
-				}	
-			}else{
-				$_datum = date("d.m.Y",time());
-				$_uhrzeit = date("H:i",time());
-				$_datetime = $_datum." - ".$_uhrzeit;
-				$_debug = new time_filehandle("./debug/","time.txt",";");
-				$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_month;304;" .$this->_file.";Leerzeile entdeckt");
+		if(is_array($this->_timeTable)){
+			for($g=0; $g<count($this->_timeTable); $g++){
+				//Datenüberprüfung und Bereinigung bei Leerzeilen
+				$this->_timeTable[$g] = trim($this->_timeTable[$g]);
+				$this->_timeTable[$g] = str_replace("\r", "", $this->_timeTable[$g]);
+				$this->_timeTable[$g] = str_replace("\n", "", $this->_timeTable[$g]);
+				if($this->_timeTable[$g]){
+					if(date("d.m.Y",$this->_timeTable[$g])== date("d.m.Y",$_Day)){
+						$_stempelzeit[] = $this->_timeTable[$g];
+					}	
+				}else{
+					$_datum = date("d.m.Y",time());
+					$_uhrzeit = date("H:i",time());
+					$_datetime = $_datum." - ".$_uhrzeit;
+					$_debug = new time_filehandle("./debug/","time.txt",";");
+					$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_month;304;" .$this->_file.";Leerzeile entdeckt");
+				}
 			}
 		}	
 		return $_stempelzeit;
