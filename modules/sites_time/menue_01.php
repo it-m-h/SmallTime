@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.9
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 echo "<table width='100%' hight='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
 if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";

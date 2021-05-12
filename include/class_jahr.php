@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Jahresberechnung
 /*******************************************************************************
-* Version 0.9.020
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_jahr{		
 	public $_jahr 				= NULL;		// Startjahr des Users
@@ -44,8 +44,8 @@ class time_jahr{
 		$this->_Ferienguthaben_uebertrag= $Ferienguthaben_uebertrag;
 		$this->_Ferien_pro_Jahr 		= $Ferien_pro_Jahr;
 		$this->_Vorholzeit_pro_Jahr 	= $Vorholzeit_pro_Jahr;	
-		$this->_modell 					= $modell;	
-		$this->_CalcToTimestamp 		= $_SESSION['calc'] ;
+		$this->_modell 					= $modell;
+		if(isset($_SESSION['calc'])) $this->_CalcToTimestamp = $_SESSION['calc'] ;
 		$this->calc_feriensumme();
 		// ---------------------------------------------------------------------------------------
 		// Falls jeden Monat die Überzeit auf 0 gestellt wird:
@@ -279,19 +279,19 @@ class time_jahr{
 						if($_year_wahl==$j){
 							//  Ferien in der Vergangenheit von gewählten Monat
 							if($_month_wahl <= $i){
-								$this->_summe_Fz += $_arr[$i][1];	
+								$this->_summe_Fz += floatval($_arr[$i][1]);	
 							}else{
-								$this->_summe_Fv += $_arr[$i][1];
+								$this->_summe_Fv += floatval($_arr[$i][1]);
 							}
 						}else{
-							$this->_summe_Fv += $_arr[$i][1];
+							$this->_summe_Fv += floatval($_arr[$i][1]);
 						}
 						
 					}else{
-						$this->_summe_Fv += $_arr[$i][1];
+						$this->_summe_Fv += floatval($_arr[$i][1]);
 					}
 					//Summe alle Eingtetragenen und Berechneten Ferien
-					$this->_summe_Ft += $_arr[$i][1];
+					$this->_summe_Ft += floatval($_arr[$i][1]);
 				}
 			}			
 		}
@@ -299,18 +299,21 @@ class time_jahr{
 		// eingetragene Ferien noch nicht berechnet in den Monatssummen:
 		for($i=$_year_start; $i<=$_year_wahl; $i++){
 			$tmp_absenzen[$i] = new time_absenz($this->_ordnerpfad, $i);
+			
 			// Falls keine Einträge in den Ferien oder kein File vorhanden
-			if(is_array($tmp_absenzen[$i]->_array[0])){
-				foreach($tmp_absenzen[$i]->_array as $eintrag){
-					if($eintrag[1]=='F'){
-						$zahl = $eintrag[2];
-						if(time() < $eintrag[0]){
-							//wenn der eintrag in der Zukunft liegt und noch nicht in den Summen enthalten ist
-							$this->_summe_Fgeplant += $eintrag[2];
+			if(is_array($tmp_absenzen[$i]->_array) && count($tmp_absenzen[$i]->_array)){
+				if(is_array($tmp_absenzen[$i]->_array[0])){
+					foreach($tmp_absenzen[$i]->_array as $eintrag){
+						if($eintrag[1]=='F'){
+							$zahl = $eintrag[2];
+							if(time() < $eintrag[0]){
+								//wenn der eintrag in der Zukunft liegt und noch nicht in den Summen enthalten ist
+								$this->_summe_Fgeplant += floatval($eintrag[2]);
+							}
 						}
-					}
-					
-				}	
+						
+					}	
+				}
 			}
 			// bei Startjahr Ferienanspruch berechnen
 			$this->_saldo_F += $this->calc_Ferien($i);

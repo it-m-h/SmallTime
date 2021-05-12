@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.896
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_pluginpfad = "./plugins/";
 $_folderlist = opendir($_pluginpfad);
@@ -24,12 +24,12 @@ $anz=count($pfile);
 		<tr>
 			<td width="100%" align="left">
 				<select class="pluginselect" name="plugin" onchange="document.plugin.submit()">
-				<option value="zeiterfassung" <?php if($_SESSION['plugin'] == "zeiterfassung" ) echo " selected "?>>Zeiterfassung</option>
+				<option value="zeiterfassung" <?php if(@$_SESSION['plugin'] == "zeiterfassung" ) echo " selected "?>>Zeiterfassung</option>
 					<?php
 					for($i=0;$i<$anz;$i++){
 						if($pfile[$i] != "." && $pfile[$i] != ".." && $pfile[$i] != ".htaccess"){
 							echo '<option value="'.$pfile[$i].'"';
-							if($_SESSION['plugin'] == $pfile[$i]) echo " selected ";
+							if(@$_SESSION['plugin'] == $pfile[$i]) echo " selected ";
 							echo '>'.$pfile[$i].'</option>';
 						}
 					} 

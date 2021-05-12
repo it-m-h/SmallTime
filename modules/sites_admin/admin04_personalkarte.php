@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.017
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 //--------------------------------------------------------------
 //img- Pfad überprüfen und erstellen falls nicht vorhanden
@@ -22,7 +22,7 @@ check_htaccess($_tmppfad.".htaccess", true, ".htaccess im Personalbildpfad geset
 //--------------------------------------------------------------
 //Bild upload Überprüfung
 //--------------------------------------------------------------
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
 	$dateityp = GetImageSize($_FILES['datei']['tmp_name']);
 	if($dateityp[2] == 2)
@@ -38,10 +38,10 @@ if($_POST['submit'])
 }
 
 $_count = count($_personaldaten->_personaldaten) + 1;
-if($_POST['update'])
+if(isset($_POST['update']))
 {
 	for($i = 0; $i < $_count ;$i++)
-	$array[] = $_POST["feld_$i"];
+	$array[] = @$_POST["feld_$i"];
 	$_personaldaten->save_data($array);
 	$_personaldaten->load_data();
 }
@@ -81,8 +81,12 @@ if(!file_exists($_bild))
 		{
 			echo "
 			<tr>
-			<td class=td_background_tag width=120 align=left>$_zeilen[0]</td>
-			<td class=td_background_tag align=left><input type='text' name='feld_$x' value='$_zeilen[1]' size='40'></td>
+			<td class=td_background_tag width=120 align=left>";
+			if(isset($_zeilen[0])) echo $_zeilen[0];
+			echo "</td>
+			<td class=td_background_tag align=left><input type='text' name='feld_$x' value='";
+			if(isset($_zeilen[1])) echo $_zeilen[1];
+			echo "' size='40'></td>
 			</tr>";
 			$x++;
 		}

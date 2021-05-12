@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.9.020
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 //$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr);
 //-----------------------------------------------------------------------------
@@ -72,15 +72,15 @@ $anzeige= array();
 for($year = $_now; $year >= $_to; $year--){
 	for($month = 0; $month < 12;$month++){
 		//Zeiten eintragen
-		$anzeige[$year]['Saldo'][$month] 	= $_jahr->_data[$year][$month][0];	// Saldo im Monat
-		$anzeige[$year]['Ferien'][$month] 	= $_jahr->_data[$year][$month][1];	// Ferien im Monat
-		$anzeige[$year]['Work'][$month] 	= $_jahr->_data[$year][$month][2];	// Gearbeitet
-		$anzeige[$year]['Soll'][$month] 		= $_jahr->_data[$year][$month][3];	// Sollstunden
+		$anzeige[$year]['Saldo'][$month] 	= floatval($_jahr->_data[$year][$month][0]);	// Saldo im Monat
+		$anzeige[$year]['Ferien'][$month] 	= floatval($_jahr->_data[$year][$month][1]);	// Ferien im Monat
+		$anzeige[$year]['Work'][$month] 	= floatval($_jahr->_data[$year][$month][2]);	// Gearbeitet
+		$anzeige[$year]['Soll'][$month] 		= floatval($_jahr->_data[$year][$month][3]);	// Sollstunden
 		//Summen eintragen
-		@$anzeige[$year]['Saldo'][12] 		+= $_jahr->_data[$year][$month][0];
-		@$anzeige[$year]['Ferien'][12] 		+= $_jahr->_data[$year][$month][1];
-		@$anzeige[$year]['Work'][12] 		+= $_jahr->_data[$year][$month][2];
-		@$anzeige[$year]['Soll'][12] 		+= $_jahr->_data[$year][$month][3];
+		@$anzeige[$year]['Saldo'][12] 		+= floatval($_jahr->_data[$year][$month][0]);
+		@$anzeige[$year]['Ferien'][12] 		+= floatval($_jahr->_data[$year][$month][1]);
+		@$anzeige[$year]['Work'][12] 		+= floatval($_jahr->_data[$year][$month][2]);
+		@$anzeige[$year]['Soll'][12] 		+= floatval($_jahr->_data[$year][$month][3]);
 		//Monatsname und Link
 		$_tempstamp = mktime(0, 0, 0, $month + 1, 1, $year);
 		$monatslink = "
@@ -302,7 +302,7 @@ echo "</div>";
 function format($wert)
 {
 	if($wert < 0){
-		return "<font class=minus>" . round($wert,2). "</font>";
+		return "<font class=minus>" . round(floatval($wert),2). "</font>";
 	}
 	return $wert;
 }

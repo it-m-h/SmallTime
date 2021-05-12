@@ -3,9 +3,9 @@
 * Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
 /*******************************************************************************
 * Version 0.899
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_benutzer = file("./Data/users.txt");
 unset($_benutzer[0]);

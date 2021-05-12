@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.896
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 // Falls Template jquery benutzt (im XML - File), dann kann datetimepicker verwendet werden
 if (strstr($_template->_jquery,'true')){ ?>

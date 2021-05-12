@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Small Time Formulargenerator
 /*******************************************************************************
-* Version 0.9
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class Formular{
 	// Die einzelnen Felder werden in der Variable $inputs gespeichert

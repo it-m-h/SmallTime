@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.9.016
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_info[0]="Title der Webseite";
 $_info[1]="meta:Author";

@@ -3,9 +3,9 @@
 * Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
 /*******************************************************************************
 * Version 0.899
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 echo '<table cellpadding="2" cellspacing="1" border="0"><tr>';
 for($i=1; $i<count($_monat->_MonatsArray); $i++){

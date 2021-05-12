@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time - Datei - download
 /*******************************************************************************
-* Version 0.9.012
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 //Session starten
 //download.php?datei=2016&type=zip

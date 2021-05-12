@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // PDF erstellen mit mehreren Stempelzeiten und Kommentaren auf gleicher Seite
@@ -330,10 +330,8 @@ function erstelle_neu($_drucktime)
 	$pdf->Cell(178,5,$datum,0,'','L');
 	$pdf->Ln();
 	//$pdf->_checkoutput();
-	$pdf->Output("./Data/".$_user->_ordnerpfad."/Dokumente/".date("Y.m", $_time->_timestamp).".pdf");
+	$pdf->Output("F", "./Data/".$_user->_ordnerpfad."/Dokumente/".date("Y.m", $_time->_timestamp).".pdf");
 }
-
-
 
 class PDF extends FPDF
 {
@@ -364,7 +362,7 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',6);
 		//Seitenzahl
 		//$this->Cell(0,10,'Seite '.$this->PageNo().' / {nb}',0,0,'C');
-		$this->Cell(0,10,'SMALL - TIME - Zeiterfassung, IT-Master GmbH / www.small.li',0,0,'C');
+		$this->Cell(0,10,'SMALL - TIME - Zeiterfassung, IT-Master / www.small.li',0,0,'C');
 	}
 	//Simple table
 	function BasicTable($header,$data)

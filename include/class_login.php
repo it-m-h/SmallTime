@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Login - Klasse
 /*******************************************************************************
-* Version 0.9.023
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_login{
 	public $_id		= "";
@@ -19,13 +19,21 @@ class time_login{
 	}
 	function login($POST,$userlist){
 		if($this->_admins){
-			$this->_username 	= trim($_POST['_n']);
-			$this->_passwort 	= sha1(trim($_POST['_p']));	
+			if(isset($_POST['_n'])){
+				$this->_username 	= trim($_POST['_n']);
+			}
+			if(isset($_POST['_p'])){
+				$this->_passwort 	= sha1(trim($_POST['_p']));	
+			}	
 		}else{
 			if($_POST['_n'] and $_POST['_p']){
 				//  Anmeldung über Loginformular
+			if(isset($_POST['_n'])){
 				$this->_username 	= trim($_POST['_n']);
-				$this->_passwort 	= sha1(trim($_POST['_p']));		
+			}
+			if(isset($_POST['_p'])){
+				$this->_passwort 	= sha1(trim($_POST['_p']));	
+			}	
 			}else{
 				// automatische Anmeldung über Cookies
 				$this->_username 	= $_COOKIE["lname"];
@@ -110,7 +118,11 @@ class time_login{
 		if($this->_login){
 			$this->rapport($this->_username, "korrekt", "Login-Form");
 		}else{
-			$this->rapport($this->_username, $_POST['_p'], "Fehler");
+			if(isset($_POST['_p'])){
+				$this->rapport($this->_username, $_POST['_p'], "Fehler");
+			}else{
+				$this->rapport($this->_username, 'Passwort fehler', "Fehler");
+			}
 		}
 	}
 	private function setSession($u){

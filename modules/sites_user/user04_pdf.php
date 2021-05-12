@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.9.011
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_pfad = "./Data/".$_user->_ordnerpfad."/Dokumente/";
 check_htaccess_pdf($_user->_ordnerpfad);

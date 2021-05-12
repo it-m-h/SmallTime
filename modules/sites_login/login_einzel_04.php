@@ -3,9 +3,9 @@
 * Login - Formular
 /*******************************************************************************
 * Version 0.896
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_color['td_background_top']	= "#f9fd9f"; 	//Überschriften
 $_color['td_background_tag']	= "#e3f3dd"; 	//Normal,Arbeitstag

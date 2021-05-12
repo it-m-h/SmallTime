@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Small Time allgemeine Funktionen
 /*******************************************************************************
-* Version 0.9.017
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // Multi - Settings - Anzeige XML erstellen
@@ -111,6 +111,9 @@ function write_htaccess_img($_file){
 	$_uhrzeit = date("H:i",time());
 	$_datetime =  $_datum." - ".$_uhrzeit;
 	$_debug 	= new time_filehandle("./debug/","time.txt",";");
+	if(!isset($datenpfad) || $datenpfad<>""){
+		$datenpfad = "xxxxxx bug001";
+	}
 	$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" .$datenpfad.";htaccess nicht vorhanden, wurde erstellt.");
 }
 
@@ -277,4 +280,10 @@ function monatskalender($tmp){
 	$_ausgabe = $_ausgabe. '</tr>';
 	$_ausgabe = $_ausgabe. '</table>';
 	return $_ausgabe;
+}
+
+function showarr($array){
+	echo "<pre>";
+	print_r($array);
+	echo "</pre>";
 }

@@ -2,10 +2,10 @@
 /*******************************************************************************
 *PDF für alle Mitarbeiter generieren und anzeigen
 /*******************************************************************************
-* Version 0.9.011
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class pdfgenerate{
 	public $_monat= NULL;

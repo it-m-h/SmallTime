@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Feiertage für das gewählte Jahr
 /*******************************************************************************
-* Version 0.9.020
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_feiertage
 {
@@ -28,7 +28,7 @@ class time_feiertage
 	function __destruct()
 	{
 	}
-	function getFeiertage($year = NULL, $_country)
+	function getFeiertage($year = NULL, $_country=NULL)
 	{
 		//Feiertage All werden mit den Einstellungen beim User verglichen, ob true oder false
 		$z = 0;
@@ -92,7 +92,7 @@ class time_feiertage
 		$delta = $D + $e + 1;
 		return strtotime("+$delta days", mktime(0,0,0,3,21,$year));
 	}
-	function getFeiertageALL($year = NULL, $_country)
+	function getFeiertageALL($year = NULL, $_country=NULL)
 	{
 		return $this->_defineFT;
 	}
@@ -166,7 +166,7 @@ class time_feiertage
 		call_user_func_array('array_multisort', $args);
 		return array_pop($args);
 	}
-	function defineFeiertag($year = NULL, $_country)
+	function defineFeiertag($year = NULL, $_country=NULL)
 	{
 		// Feiertage kännen ergänzt werden (je nach Land oder Kanton usw.)
 		// Formular beim User wird automatisch erweitert (sortiert nach Datum)

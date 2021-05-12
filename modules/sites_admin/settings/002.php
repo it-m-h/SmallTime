@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.893
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 if(@$_POST['01'] ){
 	$dom = new DOMDocument('1.0', 'utf-8');
@@ -197,15 +197,15 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</tr>
 		<tr>
 			<td class="td_background_tag">Letzte Stempelzeit von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="03" value="1"<?php echo $_S3 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="03" value="1"<?php echo @$_S3 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Alle Stempelzeiten von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="04" value="1"<?php echo $_S4 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="04" value="1"<?php echo @$_S4 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Bid des Users anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="05" value="1"<?php echo $_S5 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="05" value="1"<?php echo @$_S5 ;?>></td>
 		</tr>
 	</table>	
 	<table width="100%" border="0">
@@ -227,7 +227,7 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</tr>
 		<tr>
 			<td class="td_background_tag">Alle Stempelzeiten von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="14" value="1"<?php echo $_S14 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="14" value="1"<?php echo @$_S14 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Bid des Users anzeigen</td>

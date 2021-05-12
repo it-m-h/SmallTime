@@ -11,10 +11,10 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	/********************************************************************************
 	* Small Time
 	/*******************************************************************************
-	* Version 0.9.003
-	* Author:  IT-Master GmbH
+	* Version 0.9.1
+	* Author:  IT-Master
 	* www.it-master.ch / info@it-master.ch
-	* Copyright (c), IT-Master GmbH, All rights reserved
+	* Copyright (c), IT-Master, All rights reserved
 	********************************************************************************/
 	// -----------------------------------------------------------------------------
 	// idtime - Stempelzeit via Direkt-URL eintragen, z.B. ID oder

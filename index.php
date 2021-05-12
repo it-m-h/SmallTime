@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.020
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 //Session starten
 if( !my_session_start() ){
@@ -51,11 +51,15 @@ $_start_time = $_start_time[1] + $_start_time[0];
 // F5 verhindern dass daten zwei mal gespeichert werden kann
 // ----------------------------------------------------------------------------
 //$_write = true;         // Daten werden dann  gespeichert
-$_now        = $_GET['token'];
-$token       = md5(uniqid('SmallTime'));
+if(isset($_GET['token'])){
+	$_now = $_GET['token'];
+}else{
+	$_now = NULL;
+}
+$token = md5(uniqid('SmallTime'));
 //echo  $_SESSION['last'] . " - " . $_now ;
 //echo " < br > ";
-if(trim($_SESSION['last']) == trim($_now ) and isset($_SESSION['last'])){
+if(isset($_SESSION['last']) && trim($_SESSION['last']) == trim($_now )){
 	//echo "Speichern erlaubt";
 	$_write = true;
 }else{
@@ -97,10 +101,10 @@ include ("./include/time_funktionen.php");
 // ----------------------------------------------------------------------------
 // Im Admin - Bereich bis zum gewählten Monat berechnen (für Druck und Anzeige)
 // ----------------------------------------------------------------------------
-if($_GET['calc']){
+if(isset($_GET['calc'])){
 	$_SESSION['calc'] = $_GET['calc'];
 }else{
-	$_SESSION['calc'] = false;
+	$_SESSION['calc'] = NULL;
 }
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
@@ -127,22 +131,26 @@ foreach($_users->_array as $tmpuser){
 // ----------------------------------------------------------------------------
 $_logcheck = new time_login();
 // falls eine Session exisitert und kein Action
-if($_SESSION['admin'] and !$_GET['action']){
+if(isset($_SESSION['admin']) and !isset($_GET['action'])){
 	$_logcheck->rapport($_SESSION['admin'],"korrekt", "Session");
 }
 // keine Session vorhanden
-if(!$_POST AND ($_SESSION['admin'] == NULL OR $_SESSION['admin'] == "")){
-	$_Userpfad = $_SESSION['admin']."/";
+if(!$_POST){
+	if(!isset($_SESSION['admin'])){
+		$_Userpfad = "administrator/";
+	}else{
+		$_Userpfad = $_SESSION['admin']."/";
+	}
 }
 // Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
 if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1] == "0" and ($_SESSION['admin'] == NULL OR $_SESSION['admin'] == "")){
 	$_logcheck->login($_POST, $_users->_array);
 }
 // Loginformular - Datenüberprüfung
-if($_POST['login']){
+if(isset($_POST['login'])){
 	$_logcheck->login($_POST, $_users->_array);
 }
-if($_GET['action'] == "logout"){
+if(isset($_GET['action']) && $_GET['action'] == "logout"){
 	$_logcheck->logout();
 	header("Location: index.php");
 	exit();
@@ -152,13 +160,17 @@ if($_GET['action'] == "logout"){
 // ----------------------------------------------------------------------------
 // Controller für Action
 // ----------------------------------------------------------------------------
-$_grpwahl = $_GET['group'] - 1;
+if(isset($_GET['group'])) {
+	$_grpwahl = $_GET['group'] - 1;
+}else{
+	$_grpwahl = 0;
+}
 // Session  vorhanden - Daten anzeigen
-if($_SESSION['admin'] and !$_GET['action']){
+if(isset($_SESSION['admin']) and !isset($_GET['action'])){
 	$_action = "show_time";
-}elseif($_GET['action'] && $_SESSION['admin']){
+}elseif(isset($_GET['action']) && isset($_SESSION['admin'])){
 	$_action = $_GET['action'];
-}elseif($_GET['group']){
+}elseif(isset($_GET['group'])){
 	$_action = "login_mehr";
 	if($_GET['group'] == "-1"){
 		$_action = "login_einzel";
@@ -170,7 +182,7 @@ if($_SESSION['admin'] and !$_GET['action']){
 // ----------------------------------------------------------------------------
 // Modler Userdaten laden
 // ----------------------------------------------------------------------------
-if($_SESSION['admin']){
+if(isset($_SESSION['admin'])){
 	// ----------------------------------------------------------------------------
 	// DEKLARATION DER VARIABLEN
 	// ----------------------------------------------------------------------------
@@ -189,7 +201,7 @@ $edit = true;
 switch($_action){
 	case "password":
 	$_infotext = "";
-	if($_POST['senden']){
+	if(isset($_POST['senden'])){
 		if($_POST['new1'] <> $_POST['new2']  OR $_POST['new1'] == "" OR $_POST['new2'] == ""){
 			$_infotext = getinfotext('Neue Passw&ouml;rter nicht identisch','alert-error');
 		}elseif(sha1($_POST['old']) <> $_SESSION['passwort'] and $_POST['old'] <> ""){
@@ -231,7 +243,7 @@ switch($_action){
 	break;
 	case "login_mehr":
 	if(isset($_SESSION['save'])) $_SESSION['save'] = 8;
-	if($_POST['login'] == "Stempelzeit eintragen" and $_write){
+	if(isset($_POST['login']) && $_POST['login'] == "Stempelzeit eintragen" && $_write){
 		$_logcheck->login($_POST, $_users->_array);
 		if($_SESSION['admin']){
 			$id = $_logcheck->_id;
@@ -249,10 +261,10 @@ switch($_action){
 		exit();
 	}
 	$_infotext02 = getinfotext( "Stempel - Pannel","td_background_top");
-	if($_GET['tmp'] == "1"){
+	if(isset($_GET['tmp'] ) && $_GET['tmp'] == "1"){
 		$_infotext04 = getinfotext( "Stempelzeit erfasst!","alert alert-success");
 		//$_infotext04 = "";
-	}elseif($_GET['tmp'] == "2"){
+	}elseif(isset($_GET['tmp']) && $_GET['tmp'] == "2"){
 		$_infotext04 = getinfotext( "Falscher Login!","alert alert-danger");
 	}else{
 		//$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!","td_background_top");
@@ -516,7 +528,7 @@ function setLoginForm(){
 }
 
 
-if($_SESSION['admin']){
+if(isset($_SESSION['admin'])){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------

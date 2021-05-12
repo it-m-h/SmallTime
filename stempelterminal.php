@@ -3,10 +3,10 @@
 * Small Time - Beispiel für ein einfaches Touch - Screen - Stempelterminal
 * bei nichtgebrauch Datei löschen
 /*******************************************************************************
-* Version 0.9.015
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $_grpwahl = '2';
 $gruppe = 2;

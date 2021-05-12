@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.022
-* Author: IT-Master GmbH
+* Version 0.9.1
+* Author: IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
@@ -99,14 +99,14 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 //-------------------------------------------------------------------------
                 // Absenzen enzeigen
                 //-------------------------------------------------------------------------
-                if($_settings->_array[17][1]||$_settings->_array[26][1]){
+                if($_settings->_array[17][1] || $_settings->_array[26][1]){
                         echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";
                 }
                 echo " <td ". $_monat->_MonatsArray[$z][30]." width=62 align=center>";
                 //-------------------------------------------------------------------------
                 // Falls eine Absenz vorhanden ist, Infos anzeigen
                 //-------------------------------------------------------------------------
-                if($_monat->_MonatsArray[$z][14]<>""){
+                if($_monat->_MonatsArray[$z][14] > 0){
                         echo "\n        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                         <tr>
                         <td>".trim($_monat->_MonatsArray[$z][14]).":".trim($_monat->_MonatsArray[$z][15])."</td>

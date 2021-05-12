@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.020
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 * letzte Änderung: 24.8.2016
 *******************************************************************************/
 //Session starten
@@ -398,8 +398,10 @@ switch(@$_action){
 			$_temptext  = "";
 			foreach($_zeitliste as $_zeiten){
 				$_tmp      = explode(".",$_zeiten);
-				$_w_stunde = $_tmp[0];
-				$_w_minute = $_tmp[1];
+				if(is_array($_tmp )){
+					$_w_stunde = $_tmp[0];
+					$_w_minute = $_tmp[1];
+				}
 				if($_w_minute == "")$_w_minute = 0;
 				$tmp       = $_time->mktime($_w_stunde,$_w_minute,0,$_w_monat, $_w_tag,$_w_jahr);
 				$_time->save_time($tmp, $_user->_ordnerpfad);
@@ -412,11 +414,11 @@ switch(@$_action){
 	case "insert_time":
 	if(@$_POST['absenden'] == "OK" and $_write){
 		//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
-		if($_POST['oldtime'] == 1){
+		if(isset($_POST['oldtime']) == 1){
 			$tmp2 = $_time->mktime($_POST['_w2_stunde'],$_POST['_w2_minute'],0,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
 			$_time->set_timestamp($tmp2);
 			$_time->save_time($tmp2, $_user->_ordnerpfad);
-		} elseif($_POST['oldtime'] == 2){
+		} elseif(isset($_POST['oldtime']) == 2){
 			$tmp3 = $_time->mktime(23,59,59,$_POST['_w2_monat'], $_POST['_w2_tag'],$_POST['_w2_jahr']);
 			$_time->set_timestamp($tmp3);
 			$_time->save_time($tmp3, $_user->_ordnerpfad);
@@ -539,7 +541,7 @@ switch(@$_action){
 	$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 	break;
 	case "user_personalkarte":
-	if($_POST['update']){
+	if(isset($_POST['update'])){
 		$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ". $_user->_name ." wurde aktualisiert","td_background_heute");
 	}else{
 		$_infotext = getinfotext("Personalkarte von ". $_user->_name,"td_background_top");
@@ -682,6 +684,8 @@ foreach($_arr as $_zeile){
 	$_copyright .= $_tmp;
 }
 $_copyright .= "</div>";
+
+
 // ----------------------------------------------------------------------------
 // Viewer - Anzeige der Seite
 // ----------------------------------------------------------------------------
@@ -698,3 +702,4 @@ if(isset($_GET['modal'])){
 }else{
 	include ($_template->get_template());
 }
+

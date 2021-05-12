@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.896
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 if($_settings->_array[13][1]){
 	get_gruppen();

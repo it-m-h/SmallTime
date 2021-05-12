@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Auszahlung von Stunden
 /*******************************************************************************
-* Version 0.9.019
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class auszahlung{
 	public $_ausz_jahr	= NULL;		// Auszahlungen summe

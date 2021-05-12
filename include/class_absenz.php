@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Absenzen - Klasse
 /*******************************************************************************
-* Version 0.9
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_absenz{
 	public $_array 		= NULL;
@@ -73,6 +73,7 @@ class time_absenz{
         $_file 		= "./Data/".$ordnerpfad."/Timetable/A" . $_w_jahr;
         $_absenzliste = file($_file);
         $i=0;
+		$neu = "";
         foreach($_absenzliste as $string){
                 $string = explode(";", $string);
                 if ($string[0] == $_timestamp) {
@@ -80,7 +81,9 @@ class time_absenz{
                 }
                 $i++;
         }
-        $neu = implode( "", $_absenzliste);
+		if(is_array($_absenzliste)){
+			$neu = implode( "", $_absenzliste);
+		}
         $open = fopen($_file,"w+");
         fwrite ($open, $neu);
         fclose($open);

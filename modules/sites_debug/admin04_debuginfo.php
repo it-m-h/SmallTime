@@ -2,10 +2,10 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.020
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 if(@$_POST['delete'])
 {
@@ -113,20 +113,19 @@ function show($array)
 					}else{
 						$_zeile = explode(";", $_zeile);
 						echo "<td align=left>";
-						echo $_zeile[5]. " in : ";
-						echo $_zeile[4]. " ";
-						if(strstr($_zeile[5],"Leerzeile entdeckt"))
-						{
-							echo "</td>";
-							echo "<form name='login' action='?action=debug_info' method='post' target='_self'>";
-							echo "<td>";
-							echo "<input type='hidden' name='datei' value='".$_zeile[4]."' >";
-							echo "</td>";
-							echo "</form>";
-						}
-						else
-						{
-							echo "</td>";
+						if(isset($_zeile[5])){
+							echo $_zeile[5]. " in : ";
+							echo $_zeile[4]. " ";
+							if(strstr($_zeile[5],"Leerzeile entdeckt")){
+								echo "</td>";
+								echo "<form name='login' action='?action=debug_info' method='post' target='_self'>";
+								echo "<td>";
+								echo "<input type='hidden' name='datei' value='".$_zeile[4]."' >";
+								echo "</td>";
+								echo "</form>";
+							}else{
+								echo "</td>";
+							}
 						}
 					}
 					echo "</tr>";

@@ -2,10 +2,10 @@
 /*******************************************************************************
 * User - Daten
 /*******************************************************************************
-* Version 0.899
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_user{
 	public $_loginname 			= NULL;
@@ -65,7 +65,7 @@ class time_user{
 		if ($this->_modell==NULL) $this->_modell = 0;
 	}
 	function load_data_session(){
-		if($_SESSION['datenpfad']){
+		if(isset($_SESSION['datenpfad'])){
 			$_userdaten = file("./Data/".$_SESSION['datenpfad']."/userdaten.txt");
 			$this->_loginname 	= $_SESSION['username'];
 			$this->_password 	= $_SESSION['passwort'];
@@ -143,7 +143,9 @@ class time_user{
 		
 		//for ($u=0; $u<$_anzahlFT; $u++){
 		for ($u=1; $u<=$_anzahlFT; $u++){
-			$_FT[]	= $_POST['feiertag'.$u];
+			if(isset($_POST['feiertag'.$u])){
+				$_FT[]	= $_POST['feiertag'.$u];
+			}
 		}
 		$x=0;
 		foreach($_FT as $_wert){

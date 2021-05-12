@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Gruppen - Klasse
 /*******************************************************************************
-* Version 0.896
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_group
 {
@@ -170,9 +170,9 @@ class time_group
 		$fp              = fopen($this->_filename,"w+");
 		for($x = 0; $x <= $_anzahl; $x++)
 		{
-			$_temp_e = $_POST['e'.$x];
-			$_temp_v = $_POST['v'.$x];
-			$_temp_u = $_POST['u'.$x];
+			$_temp_e = @$_POST['e'.$x];
+			$_temp_v = @$_POST['v'.$x];
+			$_temp_u = @$_POST['u'.$x];
 			if($_temp_v <> "" && $_temp_e <> "")
 			{
 				fputs($fp, $_temp_e.";".$_temp_v.";".$_temp_u.$_zeilenvorschub);

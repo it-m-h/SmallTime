@@ -2,10 +2,10 @@
 /*******************************************************************************
 * Monatsberechnungen
 /*******************************************************************************
-* Version 0.9.022
-* Author: IT-Master GmbH
+* Version 0.9.1
+* Author: IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_month{
 	private $_file					= NULL;	// Datei - Pfad inkl. Name mit Stempelzeiten
@@ -19,6 +19,7 @@ class time_month{
 	private $_startzeit				= NULL;	// Beginn der Zeitrechnung
 	private $_arbeitszeit			= NULL;
 	private $_autopause			= NULL;
+	private $_autopausewert			= 0;
 	private $_setautopause			= "";
 	private $_zeitzuschlag			= NULL;
 	private $_absenzberechnung 		= NULL;	
@@ -72,10 +73,12 @@ class time_month{
 		return $this->_absenz->_calc;
 	}  
 	private function absenzsetting(){
-		for($i=0; $i<= count($this->_absenz->_array);$i++){
-			if(@$this->_absenz->_array[$i][0] >= time()){
-				$this->_absenz->_array[$i][2]="";
-			}	
+		if(is_array($this->_absenz->_array)){
+			for($i=0; $i <= count($this->_absenz->_array);$i++){
+				if(@$this->_absenz->_array[$i][0] >= time()){
+					$this->_absenz->_array[$i][2]="";
+				}	
+			}
 		}
 	}
 	public function save_data($monat,$jahr){
@@ -185,7 +188,7 @@ class time_month{
 			}else{
 				$tmp=$this->_MonatsArray[$i][8];$tmp1=0;
 			}
-			$tmp = round($tmp*$this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][17]/100, 2);
+			$tmp = round($tmp * floatval( $this->_MonatsArray[$i][15]) * floatval($this->_MonatsArray[$i][17]) / 100, 2);
 			$this->_MonatsArray[$i][18] = $tmp;
 			$this->_MonatsArray[$i][19] = "";
 
@@ -200,39 +203,39 @@ class time_month{
 			// Arbeitstag 	(4) 	in Anzahl
 			// Wenn Absenz und keine Arbeitszeiten dann ist Absenz = Absenz (Anzahl) * Arbeitstag (Gewichtung)
 			if($this->_MonatsArray[$i][15] and $this->_MonatsArray[$i][13] == 0){
-				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
+				$this->_MonatsArray[$i][15] = round(floatval($this->_MonatsArray[$i][15])*floatval($this->_MonatsArray[$i][4]),2);
 			}
 			// saldo pro Tag = arbeitszeit(13) plus absenzzeit(18) minus soll(8)
 			$saldo = 0;
-			$saldo = $this->_MonatsArray[$i][13] + $this->_MonatsArray[$i][18] - $this->_MonatsArray[$i][8];
+			$saldo = floatval($this->_MonatsArray[$i][13]) + floatval($this->_MonatsArray[$i][18]) - floatval($this->_MonatsArray[$i][8]);
 			// wenn gearbeitet grösser als soll, dann Absenzen ignorieren
 			if($this->_MonatsArray[$i][13] > $this->_MonatsArray[$i][8] and $this->_MonatsArray[$i][15] == 1){
 				$this->_MonatsArray[$i][15] = 0;
 				$this->_MonatsArray[$i][18] = 0;
-				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
+				$saldo = floatval($this->_MonatsArray[$i][18]) + floatval($this->_MonatsArray[$i][13]) - floatval($this->_MonatsArray[$i][8]);
 			}
 			//wenn absenz(15) == 1 Prozentual ausrechnen sowie tmp=0(nicht in der Zukunft)
 			if($this->_MonatsArray[$i][15] == 1 and $tmp1==1){
-				$this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
-				$this->_MonatsArray[$i][15] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8],2);
-				$this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
-				$saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13];
+				$this->_MonatsArray[$i][18] = round((floatval($this->_MonatsArray[$i][8]) - floatval($this->_MonatsArray[$i][13]))*floatval($this->_MonatsArray[$i][17])/100, 2);
+				$this->_MonatsArray[$i][15] = round((floatval($this->_MonatsArray[$i][8]) - floatval($this->_MonatsArray[$i][13]))/floatval($this->_MonatsArray[$i][8]),2);
+				$this->_MonatsArray[$i][15] = round(floatval($this->_MonatsArray[$i][15])*floatval($this->_MonatsArray[$i][4]),2);
+				$saldo = floatval($this->_MonatsArray[$i][18]) + floatval($this->_MonatsArray[$i][13]);
 			}
 			// wenn eine Absenz vorhanden ist und das saldo >0 sowie tmp=0(nicht in der Zukunft)
             if($this->_absenzberechnungArbeitszeit == 1){
 			    if($this->_MonatsArray[$i][15] == 1 and $saldo > 0 and $tmp1==0){
-                $this->_MonatsArray[$i][18] = round(($this->_MonatsArray[$i][8] - $this->_MonatsArray[$i][13])*$this->_MonatsArray[$i][17]/100, 2);
-                $this->_MonatsArray[$i][15] = round((($this->_MonatsArray[$i][8]-$this->_MonatsArray[$i][13])/$this->_MonatsArray[$i][8]),2);
-                $this->_MonatsArray[$i][15] = round($this->_MonatsArray[$i][15]*$this->_MonatsArray[$i][4],2);
-                $saldo = $this->_MonatsArray[$i][18] + $this->_MonatsArray[$i][13] - $this->_MonatsArray[$i][8];
+                $this->_MonatsArray[$i][18] = round((floatval($this->_MonatsArray[$i][8]) - floatval($this->_MonatsArray[$i][13]))*floatval($this->_MonatsArray[$i][17])/100, 2);
+                $this->_MonatsArray[$i][15] = round(((floatval($this->_MonatsArray[$i][8])-floatval($this->_MonatsArray[$i][13]))/floatval($this->_MonatsArray[$i][8])),2);
+                $this->_MonatsArray[$i][15] = round(floatval($this->_MonatsArray[$i][15])*floatval($this->_MonatsArray[$i][4]),2);
+                $saldo = floatval($this->_MonatsArray[$i][18]) + floatval($this->_MonatsArray[$i][13]) - floatval($this->_MonatsArray[$i][8]);
                 }
 			}
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
 			if($i>0){
-				$this->_MonatsArray[$i][21] = round($this->_MonatsArray[$i-1][21] + $this->_MonatsArray[$i][20],2);
+				$this->_MonatsArray[$i][21] = round(floatval($this->_MonatsArray[$i-1][21]) + floatval($this->_MonatsArray[$i][20]),2);
 			}else{
-				$this->_MonatsArray[$i][21] = $this->_MonatsArray[$i][20];
+				$this->_MonatsArray[$i][21] = floatval($this->_MonatsArray[$i][20]);
 			}
 			//-------------------------------------------------------------------------
 			// für die Darstellung
@@ -242,7 +245,7 @@ class time_month{
 			if($this->_MonatsArray[$i][6]<>"") $this->_MonatsArray[$i][30] = "class=td_background_feiertag";
 			if(date("Y.m.d", $this->_MonatsArray[$i][0]) == date("Y.m.d", time())) $this->_MonatsArray[$i][30] = "class=td_background_heute";	
 			// Links
-			if($this->_MonatsArray[$i][14]<>""){
+			if($this->_MonatsArray[$i][14]<>0){
 				$this->_MonatsArray[$i][31] = "<a class='deleteabsenz' title='Absenz l&ouml;schen' href='?action=delete_absenz&timestamp=".$this->_MonatsArray[$i][0]."'><img src='images/icons/date_delete.png' border=0></a>";
 				// Info bezüglich Absenz
 				$this->_MonatsArray[$i][32] = "<img border='0' src='images/icons/information.png' title='".trim($this->_MonatsArray[$i][15])." Tag ".trim($this->_MonatsArray[$i][16])." / Bezahlt : ".trim($this->_MonatsArray[$i][17])."%'>";
@@ -283,7 +286,7 @@ class time_month{
 			}
 			$this->_MonatsArray[$i][35] = "";
 			if($this->_setautopause){
-				$_temptext = "Die automatische Pause von " . $this->_MonatsArray[$i][38] . "h wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;				
+				$_temptext = "Die automatische Pause von " . floatval($this->_MonatsArray[$i][38]) . "h wurde abgerechnet in den Stempelzeiten : ". $this->_setautopause;				
 				$this->_MonatsArray[$i][35] = "<img title='$_temptext' src='images/icons/clock_pause.png' border=0>";
 				$this->_setautopause ="";
 			}
@@ -296,11 +299,11 @@ class time_month{
 			//-------------------------------------------------------------------------
 			// Summen berechnen
 			//-------------------------------------------------------------------------
-			$this->_SummeSollProMonat 		= $this->_SummeSollProMonat	+ $this->_MonatsArray[$i][8];
-			$this->_SummeWorkProMonat 	= $this->_SummeWorkProMonat	+ $this->_MonatsArray[$i][13];
-			$this->_SummeAbsenzProMonat 	= $this->_SummeAbsenzProMonat	+ $this->_MonatsArray[$i][18];
-			$this->_SummeSaldoProMonat 	= $this->_SummeSaldoProMonat + $this->_MonatsArray[$i][20];
-			$this->_SummeStempelzeiten 		= $this->_SummeStempelzeiten + $this->_MonatsArray[$i][11];
+			$this->_SummeSollProMonat 		= $this->_SummeSollProMonat	+ floatval($this->_MonatsArray[$i][8]);
+			$this->_SummeWorkProMonat 	= $this->_SummeWorkProMonat	+ floatval($this->_MonatsArray[$i][13]);
+			$this->_SummeAbsenzProMonat 	= $this->_SummeAbsenzProMonat	+ floatval($this->_MonatsArray[$i][18]);
+			$this->_SummeSaldoProMonat 	= $this->_SummeSaldoProMonat + floatval($this->_MonatsArray[$i][20]);
+			$this->_SummeStempelzeiten 		= $this->_SummeStempelzeiten + floatval($this->_MonatsArray[$i][11]);
 						
 			$this->_SummeWorkProMonat 	= round($this->_SummeWorkProMonat,2);
 			$this->_SummeAbsenzProMonat 	= round($this->_SummeAbsenzProMonat,2);
@@ -314,19 +317,25 @@ class time_month{
 			$a=0;
 			foreach($this->_absenz->_calc as $zeile){
 				if($this->_MonatsArray[$i][14]==$zeile[1]){
-					$this->_absenz->_calc[$a][3] = $this->_absenz->_calc[$a][3] + $this->_MonatsArray[$i][15];
+					$this->_absenz->_calc[$a][3] = floatval($this->_absenz->_calc[$a][3]) + floatval($this->_MonatsArray[$i][15]);
 				}	
 				$a++;
 			}
 			//-------------------------------------------------------------alte Abwesenheitsberechnungen
-			if($this->_MonatsArray[$i][14]=="F") $this->_SummeFerien = $this->_SummeFerien + $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="K") $this->_SummeKrankheit = $this->_SummeKrankheit+ $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="U") $this->_SummeUnfall = $this->_SummeUnfall+ $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="M") $this->_SummeMilitaer = $this->_SummeMilitaer+ $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="I") $this->_SummeIntern = $this->_SummeIntern+ $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="W") $this->_SummeWeiterbildung = $this->_SummeWeiterbildung+ $this->_MonatsArray[$i][15];
-			if($this->_MonatsArray[$i][14]=="E") $this->_SummeExtern = $this->_SummeExtern+ $this->_MonatsArray[$i][15];
+			if($this->_MonatsArray[$i][14]=="F") $this->_SummeFerien = $this->_SummeFerien + floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="K") $this->_SummeKrankheit = $this->_SummeKrankheit+ floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="U") $this->_SummeUnfall = $this->_SummeUnfall+ floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="M") $this->_SummeMilitaer = $this->_SummeMilitaer+ floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="I") $this->_SummeIntern = $this->_SummeIntern+ floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="W") $this->_SummeWeiterbildung = $this->_SummeWeiterbildung+ floatval($this->_MonatsArray[$i][15]);
+			if($this->_MonatsArray[$i][14]=="E") $this->_SummeExtern = $this->_SummeExtern+ floatval($this->_MonatsArray[$i][15]);
 			//------------------------------------------------------------------alte Abwesenheitsberechnungen	
+			/* if($this->_MonatsArray[$i][14]<>0){
+				echo "---------";
+			}else{
+				echo "xxx";
+			}
+			echo $this->_MonatsArray[$i][14]; */
 		}	
 	}
 	private function get_absenz($_Day){
@@ -470,20 +479,23 @@ class time_month{
 						$time = pausen::check($vergleichszeit);
 						if($time[0]>0){
 							// für die Darstellung im Monatsarray Spalte 38, wie viel Zeit abgezogen wurde
-							$this->_MonatsArray[$i][38] = $this->_MonatsArray[$i][38] + $time[0];
-							if($this->_autopause==""){
-								$this->_autopause = $time[0];
+							$this->_MonatsArray[$i][38] = 0;
+							if(floatval($time[0]) <> 0){
+								$this->_MonatsArray[$i][38] = $this->_MonatsArray[$i][38] + floatval($time[0]);
+							}
+							if($this->_autopause=="" OR $this->_autopause==0){
+								$this->_autopause = floatval($time[0]);
 							}else{
-								$this->_autopause = $this->_autopause + $time[0];
+								$this->_autopause = floatval($this->_autopause) + floatval($time[0]);
 							}
 							$this->_autopause .= ' Stunden';
-							$_zeit = ($_zeit - $time[0]);
+							$_zeit = ($_zeit - floatval($time[0]));
 							if($this->_setautopause){
 								$this->_setautopause = $this->_setautopause. " & Zeitenpaar ". $_anz;
 							}else{
 								$this->_setautopause = $this->_setautopause . " Zeitenpaar " . $_anz;	
 							}
-							$this->_setautopause = $this->_setautopause . " Abzug nach id : " . $time[1];
+							$this->_setautopause = $this->_setautopause . " Abzug nach id : " . floatval($time[1]);
 							$_anz++;
 						}
 					} 
@@ -544,21 +556,23 @@ class time_month{
 	private function get_timestamps($_Day){
 		$_stempelzeit = array();
 		$_saldo = array();
-		for($g=0; $g<count($this->_timeTable); $g++){
-			//Datenüberprüfung und Bereinigung bei Leerzeilen
-			$this->_timeTable[$g] = trim($this->_timeTable[$g]);
-			$this->_timeTable[$g] = str_replace("\r", "", $this->_timeTable[$g]);
-			$this->_timeTable[$g] = str_replace("\n", "", $this->_timeTable[$g]);
-			if($this->_timeTable[$g]){
-				if(date("d.m.Y",$this->_timeTable[$g])== date("d.m.Y",$_Day)){
-					$_stempelzeit[] = $this->_timeTable[$g];
-				}	
-			}else{
-				$_datum = date("d.m.Y",time());
-				$_uhrzeit = date("H:i",time());
-				$_datetime = $_datum." - ".$_uhrzeit;
-				$_debug = new time_filehandle("./debug/","time.txt",";");
-				$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_month;304;" .$this->_file.";Leerzeile entdeckt");
+		if(is_array($this->_timeTable)){
+			for($g=0; $g<count($this->_timeTable); $g++){
+				//Datenüberprüfung und Bereinigung bei Leerzeilen
+				$this->_timeTable[$g] = trim($this->_timeTable[$g]);
+				$this->_timeTable[$g] = str_replace("\r", "", $this->_timeTable[$g]);
+				$this->_timeTable[$g] = str_replace("\n", "", $this->_timeTable[$g]);
+				if($this->_timeTable[$g]){
+					if(date("d.m.Y",$this->_timeTable[$g])== date("d.m.Y",$_Day)){
+						$_stempelzeit[] = $this->_timeTable[$g];
+					}	
+				}else{
+					$_datum = date("d.m.Y",time());
+					$_uhrzeit = date("H:i",time());
+					$_datetime = $_datum." - ".$_uhrzeit;
+					$_debug = new time_filehandle("./debug/","time.txt",";");
+					$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_month;304;" .$this->_file.";Leerzeile entdeckt");
+				}
 			}
 		}	
 		return $_stempelzeit;

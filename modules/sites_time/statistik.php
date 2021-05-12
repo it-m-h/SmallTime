@@ -3,9 +3,9 @@
 * Small Time
 /*******************************************************************************
 * Version 0.898
-* Author:  IT-Master GmbH
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 echo "<table width=100% border=0 cellpadding=3 cellspacing=1>";
 echo "	<tr>";

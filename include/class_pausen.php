@@ -3,10 +3,10 @@
 * Automatische Pausenregelung für Mitarbeiter 
 * werden von den Arbeitszeiten abgezogen
 /*******************************************************************************
-* Version 0.9.018
-* Author:  IT-Master GmbH
+* Version 0.9.1
+* Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
-* Copyright (c), IT-Master GmbH, All rights reserved
+* Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 abstract
 class pausen{
@@ -40,7 +40,7 @@ class pausen{
 				$_settings->save_array($savearr);			
 			}
 		}else{
-			$text = 'anzahl Datensätze: ' . count($file->_array[0]);
+			$text = 'anzahl Datensätze: ' . count($file->_array);
 			$anzahl = count($file->_array);
 		}
 		if($file->_array[0] == 'keine Daten vorhanden!'){
@@ -102,9 +102,13 @@ class pausen{
 				if($checkdata[$x][0] == $checkdata[$x][1]){
 					$meldung .= 'Pos: ' . $x . ': Werte überprüfen, von bis Stunden identisch : ' . $checkdata[$x][0] .' == '. $checkdata[$x][1] . '<br>';
 				}
-				if($checkdata[$x][1] > $checkdata[$x+1][0] && $checkdata[$x+1][0]<>''){
-					$meldung .= 'Pos: ' . ($x+1) . ' und ' . ($x+2) . ' : Werte überprüfen, überschneidungen : ' . $checkdata[$x][1] .' > '. $checkdata[$x+1][0] . '<br>';
+				
+				if(isset($checkdata[$x+1][0])){
+					if($checkdata[$x][1] > $checkdata[$x+1][0]){
+						$meldung .= 'Pos: ' . ($x+1) . ' und ' . ($x+2) . ' : Werte überprüfen, überschneidungen : ' . $checkdata[$x][1] .' > '. $checkdata[$x+1][0] . '<br>';
+					}
 				}
+				
 			}
 			// ----------------------------------------------------------------------------
 			// daten speichern
@@ -128,20 +132,22 @@ class pausen{
 		$return[0] = 0;
 		$return[1] = 0;
 		$pausen = new time_filehandle('./include/Settings/', 'pausen.txt', '\r\n');
-		$p=0;					
+		$p=0;
 		foreach($pausen->_array as $pause){
 			$tmp_pausen = explode(';',$pause);
-			$minpause = floatval($tmp_pausen[0]);
-			$maxpause = floatval($tmp_pausen[1]);
-			if(is_array($tmp_pausen)){
-				if($minpause<= $vergleichszeit AND $maxpause > $vergleichszeit){
-					$return[0] = round( $tmp_pausen[2]/60,2);
-					$return[1] = $p+1;
-					return $return;
-				}
-			}	
-			$p++;
-		}	
+			if(count($tmp_pausen)>1){
+				$minpause = floatval($tmp_pausen[0]);
+				$maxpause = floatval($tmp_pausen[1]);
+				if(is_array($tmp_pausen)){
+					if($minpause<= $vergleichszeit AND $maxpause > $vergleichszeit){
+						$return[0] = round( $tmp_pausen[2]/60,2);
+						$return[1] = $p+1;
+						return $return;
+					}
+				}	
+				$p++;
+			}
+		}
 		return $return;
 	}
 }
