@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9
+* Version 0.9.11
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -35,7 +35,7 @@ if (strstr($_template->_bootstrap,'true')){
 		echo "
 		<table height='35'  border='0' cellpadding='0' cellspacing='0'>
 		<tr>";
-		$_startjahr = date("Y",$_user->_BeginnDerZeitrechnung);	// User - Einstellungen
+		$_startjahr = date("Y", intval($_user->_BeginnDerZeitrechnung));	// User - Einstellungen
 		$_w_jahr	= $_time->_jahr;							// gewähltes Jahr
 		$_nextjahr	= date("Y",time());						// nächstes Jahr
 		if ($_startjahr<$_w_jahr) {

@@ -26,3 +26,4 @@ V 0.9.021 08.03.2017 -> Fehler im Template
 V 0.9.022 08.03.2020 -> kleine Korrekturen, betrifft keine Funktionen
 V 0.9.023 08.03.2020 -> Mitarbeiter z.B. test123 und test1234 gefixt
 V 0.9.100 06.05.2021 -> PHP 8.0 unterstützung
+V 0.9.110 17.06.2021 -> diverse kleinere Bugs gefixt
