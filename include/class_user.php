@@ -3,7 +3,7 @@
 /*******************************************************************************
  * User - Daten
 /*******************************************************************************
- * Version 0.9.11
+ * Version 0.9.12
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -147,22 +147,15 @@ class time_user
 		$_anzahlFT		= $_POST['anzahlFT'];
 		$_FT 			= array();
 
-
-		//for ($u=0; $u<$_anzahlFT; $u++){
-		for ($u = 1; $u <= $_anzahlFT; $u++) {
-			if (isset($_POST['feiertag' . $u])) {
-				$_FT[]	= $_POST['feiertag' . $u];
+		// Feiertage speichern
+		for ($u = 0; $u <= $_anzahlFT; $u++) {
+			if($_POST['feiertag' . $u]=="on"){
+				$_FT[] = 1;
+			}else{
+				$_FT[] = 0;
 			}
 		}
-		$x = 0;
-		foreach ($_FT as $_wert) {
-			if ($_wert) {
-				$_FT[$x] = 1;
-			} else {
-				$_FT[$x] = 0;
-			}
-			$x++;
-		}
+		
 		$_ZT[]	= $_POST['zutagvon0'] . ";" . $_POST['zutagbis0'] . ";" . $_POST['zutagporzent0'];
 		$_ZT[]	= $_POST['zutagvon1'] . ";" . $_POST['zutagbis1'] . ";" . $_POST['zutagporzent1'];
 		$_ZT[]	= $_POST['zutagvon2'] . ";" . $_POST['zutagbis2'] . ";" . $_POST['zutagporzent2'];
