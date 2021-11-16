@@ -3,7 +3,7 @@
 /*******************************************************************************
  * User - Daten
 /*******************************************************************************
- * Version 0.9.12
+ * Version 0.9.122
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -149,13 +149,13 @@ class time_user
 
 		// Feiertage speichern
 		for ($u = 0; $u <= $_anzahlFT; $u++) {
-			if($_POST['feiertag' . $u]=="on"){
+			if (isset($_POST['feiertag' . $u])) {
 				$_FT[] = 1;
-			}else{
+			} else {
 				$_FT[] = 0;
 			}
 		}
-		
+
 		$_ZT[]	= $_POST['zutagvon0'] . ";" . $_POST['zutagbis0'] . ";" . $_POST['zutagporzent0'];
 		$_ZT[]	= $_POST['zutagvon1'] . ";" . $_POST['zutagbis1'] . ";" . $_POST['zutagporzent1'];
 		$_ZT[]	= $_POST['zutagvon2'] . ";" . $_POST['zutagbis2'] . ";" . $_POST['zutagporzent2'];
