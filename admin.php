@@ -32,7 +32,7 @@ function my_session_start()
 	}
 	return session_start();
 }
-define('DEBUG', TRUE);
+define('DEBUG', false);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);
@@ -401,7 +401,11 @@ switch (@$_action) {
 					$_tmp      = explode(".", $_zeiten);
 					if (is_array($_tmp)) {
 						$_w_stunde = $_tmp[0];
-						$_w_minute = $_tmp[1];
+						if(isset($_tmp[1])) {
+							$_w_minute = $_tmp[1];
+						}else{
+							$_w_minute = 0;
+						}
 					}
 					if ($_w_minute == "") $_w_minute = 0;
 					$tmp       = $_time->mktime($_w_stunde, $_w_minute, 0, $_w_monat, $_w_tag, $_w_jahr);

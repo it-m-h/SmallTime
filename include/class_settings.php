@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Einstellugnen von Small Time
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.123
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -25,8 +25,8 @@ class time_settings{
 		$fp = fopen($this->_filename,"w+");
 		for($x=0; $x<=$anzahl; $x++ ){
 			$_newarray[$x][0] = $this->_array[$x][0];
-			$_newarray[$x][1] = $_POST[$x];
-			$this->_array[$x][1] = $_POST[$x];
+			$_newarray[$x][1] = @$_POST[$x];
+			$this->_array[$x][1] = @$_POST[$x];
 			$_newarray[$x][2] = str_replace("\r", "", $this->_array[$x][2]);
 			$_newarray[$x][2] = str_replace("\n", "", $_newarray[$x][2]);
 			$_newarray[$x] = implode("#", $_newarray[$x]);

@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Gruppen - Klasse
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.123
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -87,7 +87,7 @@ class time_group
 		// Anzeige der heutigen Stempelzeiten (nur heute $temptime)
 		$_temptime = array();
 		$_str = "";
-		if(count($_timeTable))
+		if(is_array($_timeTable) && count($_timeTable))
 		{
 			foreach($_timeTable as $_time)
 			{

@@ -29,4 +29,4 @@ V 0.9.100 06.05.2021 -> PHP 8.0 unterstützung
 V 0.9.110 17.06.2021 -> diverse kleinere Bugs gefixt
 V 0.9.120 19.07.2021 -> Feiertage für MA gefixt
 V 0.9.121 17.06.2021 -> Jahresanzeige - fix - Monate wurden nicht angezeigt
-V 0.9.122 16.11.2021 -> Feiertage - in der Klasse war noch ein Fehler
+V 0.9.123 29.11.2021 -> kleinere Buggs
