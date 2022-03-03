@@ -1,6 +1,12 @@
 <Files ~ "^\.(htaccess|htpasswd)$">
 	deny from all
 </Files>
+<Files ~ "^(README.md|changelog.txt)$">
+	deny from all
+</Files>
+<Files ~ "^.git">
+	deny from all
+</Files>
 <Files "*.txt">
   	deny from all
  </Files>
