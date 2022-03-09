@@ -30,3 +30,4 @@ V 0.9.110 17.06.2021 -> diverse kleinere Bugs gefixt
 V 0.9.120 19.07.2021 -> Feiertage für MA gefixt
 V 0.9.121 17.06.2021 -> Jahresanzeige - fix - Monate wurden nicht angezeigt
 V 0.9.123 29.11.2021 -> kleinere Buggs
+V 0.9.124 08.03.2022 -> FPDF - update
