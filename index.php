@@ -54,7 +54,7 @@ $_start_time = $_start_time[1] + $_start_time[0];
 if(isset($_GET['token'])){
 	$_now = $_GET['token'];
 }else{
-	$_now = NULL;
+	$_now = '';
 }
 $token = md5(uniqid('SmallTime'));
 //echo  $_SESSION['last'] . " - " . $_now ;
@@ -143,7 +143,7 @@ if(!$_POST){
 	}
 }
 // Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
-if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1] == "0" and ($_SESSION['admin'] == NULL OR $_SESSION['admin'] == "")){
+if(isset($_COOKIE["lname"]) && isset($_COOKIE["lpass"]) && $_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1] == "0" and ($_SESSION['admin'] == NULL OR $_SESSION['admin'] == "")){
 	$_logcheck->login($_POST, $_users->_array);
 }
 // Loginformular - Datenüberprüfung

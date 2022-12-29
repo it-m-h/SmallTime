@@ -113,8 +113,8 @@ class time_month
 		}
 		// Saldo; Ferien; Sollstunden; Work
 		// (Sollstunden und Work mit Jahresanzeige berechnen und eintragen lassen)
-		$_stunden = str_ireplace('\n', '', $_year_data[$monat - 1]);
-		$_stunden = str_ireplace('\r', '', $_stunden);
+		$_stunden = @str_ireplace('\n', '', $_year_data[$monat - 1]);
+		$_stunden = @str_ireplace('\r', '', $_stunden);
 		$_stunden = trim($_stunden);
 		$_stunden = explode(";", $_stunden);
 		if (

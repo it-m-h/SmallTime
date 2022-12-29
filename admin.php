@@ -63,7 +63,7 @@ if (version_compare(phpversion(), '5.3', '<')) {
 if (isset($_GET['token'])) {
 	$_now = $_GET['token'];
 } else {
-	$_now = NULL;
+	$_now = '';
 }
 
 $token = md5(uniqid('SmallTime'));
@@ -401,9 +401,9 @@ switch (@$_action) {
 					$_tmp      = explode(".", $_zeiten);
 					if (is_array($_tmp)) {
 						$_w_stunde = $_tmp[0];
-						if(isset($_tmp[1])) {
+						if (isset($_tmp[1])) {
 							$_w_minute = $_tmp[1];
-						}else{
+						} else {
 							$_w_minute = 0;
 						}
 					}

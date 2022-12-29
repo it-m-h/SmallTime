@@ -62,7 +62,7 @@ class time_feiertage
 		}
 		if ($year > 2038 || $year < 1901) return false;  // limitations of date() / mktime(), if OS == Win change 1901 to 1970!
 		$d     = (((255 - 11 * ($year % 19)) - 21) % 30) + 21;
-		$delta = $d + ($d > 48) + 6 - (($year + $year / 4 + $d + ($d > 48) + 1) % 7);
+		$delta = $d + ($d > 48) + 6 - (intval($year + $year / 4 + $d + ($d > 48) + 1) % 7);
 		$easter = strtotime("+$delta days", mktime(0, 0, 0, 3, 1, $year));
 		return $easter;
 	}
@@ -79,8 +79,8 @@ class time_feiertage
 		$c = $year % 7;
 		$m = ((8 * ($year / 100) + 13) / 25) - 2;
 		$s = ($year / 100) - ($year / 400) - 2;
-		$M = (15 + $s - $m) % 30;
-		$N = (6 + $s) % 7;
+		$M = (intval(15 + $s - $m) % 30);
+		$N = (intval(6 + $s) % 7);
 		$d = ($M + 19 * $a) % 30;
 		if ($d == 29) $D = 28;
 		elseif ($d == 28 && $a >= 11) $D = 27;
