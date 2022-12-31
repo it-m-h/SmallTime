@@ -33,6 +33,9 @@ class time_jahr
 	public $_Ferienguthaben_uebertrag	= NULL;
 	//public $Ferien_pro_Jahr; 		
 	public $_Vorholzeit_pro_Jahr		= NULL;
+	function __get($a){ return $a; }
+	function __set($a,$b){}
+	function __isset($a){}
 
 	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp)
 	{
