@@ -102,10 +102,10 @@ for ($year = $_now; $year >= $_to; $year--) {
 //----------------------------------------------------------------------------------------------
 // Auszahlungen eintragen
 for ($u = 0; $u < count($auszahlung->_arr_ausz); $u++) {
-	$_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]);
-	$_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]);
+	(isset($auszahlung->_arr_ausz[$u][1]))? $_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]) : $_tmp_ausz_y=0;
+	(isset($auszahlung->_arr_ausz[$u][0]))? $_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]) : $_tmp_ausz_m=0;
 	$_tmp_ausz_m--;
-	$_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]);
+	(isset($auszahlung->_arr_ausz[$u][2]))? $_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]): $_tmp_ausz_a=0;
 	$_tmp_ausz_a = str_ireplace('\r', '', $_tmp_ausz_a);
 	$_tmp_ausz_a = str_ireplace('\n', '', $_tmp_ausz_a);
 

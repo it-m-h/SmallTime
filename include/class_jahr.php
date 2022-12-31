@@ -119,17 +119,19 @@ class time_jahr
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
-				$tmpaustime = mktime(1, 1, 1, $this->_arr_ausz[$i][0], 1, $this->_arr_ausz[$i][1]);
-				$now = (int)$this->_timestamp;
-				$_aj 		= date("Y", $this->_timestamp);
-				$_am 	= date("m", $this->_timestamp);
-				// wenn Auszahlungsjahr kleiner, alle Einträge
-				if ($this->_arr_ausz[$i][1] < $_aj) {
-					$this->_tot_ausz += $this->_arr_ausz[$i][2];
-					//wenn Auszahlungsjahr gleich, dann nur bis zum Monat	
-				} elseif ($this->_arr_ausz[$i][1] == $_aj) {
-					if ($this->_arr_ausz[$i][0] <= $_am) {
+				if (isset($this->_arr_ausz[$i][0]) && isset($this->_arr_ausz[$i][1])) {
+					$tmpaustime = mktime(1, 1, 1, $this->_arr_ausz[$i][0], 1, $this->_arr_ausz[$i][1]);
+					$now = (int)$this->_timestamp;
+					$_aj 		= date("Y", $this->_timestamp);
+					$_am 	= date("m", $this->_timestamp);
+					// wenn Auszahlungsjahr kleiner, alle Einträge
+					if ($this->_arr_ausz[$i][1] < $_aj) {
 						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						//wenn Auszahlungsjahr gleich, dann nur bis zum Monat	
+					} elseif ($this->_arr_ausz[$i][1] == $_aj) {
+						if ($this->_arr_ausz[$i][0] <= $_am) {
+							$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						}
 					}
 				}
 			}

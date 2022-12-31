@@ -80,7 +80,9 @@ class auszahlung{
 			$this->_arr_ausz = file($file);
 			for($i=0; $i< count($this->_arr_ausz);$i++){
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
-				$this->_tot_ausz += $this->_arr_ausz[$i][2];
+				if(isset($this->_arr_ausz[$i][2])){
+					$this->_tot_ausz += $this->_arr_ausz[$i][2];
+				}
 			}
 		}else{
 			$fp = fopen($file, "w");

@@ -67,7 +67,7 @@ if (isset($_GET['token'])) {
 }
 
 $token = md5(uniqid('SmallTime'));
-if (trim(@$_SESSION['last']) == trim($_now) and isset($_SESSION['last'])) {
+if (isset($_SESSION['last']) && trim(@$_SESSION['last']) == trim($_now)) {
 	$_write = true;
 } else {
 	$_write = false;
