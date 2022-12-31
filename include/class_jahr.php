@@ -33,7 +33,7 @@ class time_jahr
 	public $_Ferienguthaben_uebertrag	= NULL;
 	//public $Ferien_pro_Jahr; 		
 	public $_Vorholzeit_pro_Jahr		= NULL;
-	function __get($a){ return $a; }
+	function __get($a){ return NULL; }
 	function __set($a,$b){}
 	function __isset($a){}
 
@@ -330,14 +330,14 @@ class time_jahr
 			// bei Startjahr Ferienanspruch berechnen
 			$this->_saldo_F += floatval($this->calc_Ferien($i));
 		}
-		$this->_summe_Fz = $this->_summe_Fz  + $this->_summe_Fgeplant;
+		$this->_summe_Fz = floatval($this->_summe_Fz)  + floatval($this->_summe_Fgeplant);
 		// Summe von Ferienanspruch und Übertragenen Ferien 
 		$this->_saldo_F = $this->_saldo_F + floatval($this->_Ferienguthaben_uebertrag);
 		// settings == 1 wenn kommende Ferien nicht mitberechnet werden sollen
 		if ($tmpsettings->_array[27][1] == 1) {
-			$this->_saldo_F = $this->_saldo_F - $this->_summe_Fv;
+			$this->_saldo_F = floatval($this->_saldo_F) - floatval($this->_summe_Fv);
 		} else {
-			$this->_saldo_F = $this->_saldo_F - $this->_summe_Fv - $this->_summe_Fz;
+			$this->_saldo_F = floatval($this->_saldo_F) - floatval($this->_summe_Fv) - floatval($this->_summe_Fz);
 		}
 		//runden auf 2 Stellen 
 		$this->_saldo_F = round($this->_saldo_F, 2);
