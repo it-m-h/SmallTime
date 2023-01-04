@@ -159,6 +159,7 @@ if (@$_GET['action'] == "logout") {
 // ----------------------------------------------------------------------------
 // Controller für Action
 // ----------------------------------------------------------------------------
+$_action = "";
 // Session  vorhanden - Daten anzeigen
 if (@$_SESSION['admin'] and !@$_GET['action']) {
 	$_action = "show_admin";
