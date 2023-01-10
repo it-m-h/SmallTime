@@ -102,10 +102,10 @@ for ($year = $_now; $year >= $_to; $year--) {
 //----------------------------------------------------------------------------------------------
 // Auszahlungen eintragen
 for ($u = 0; $u < count($auszahlung->_arr_ausz); $u++) {
-	(isset($auszahlung->_arr_ausz[$u][1]))? $_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]) : $_tmp_ausz_y=0;
-	(isset($auszahlung->_arr_ausz[$u][0]))? $_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]) : $_tmp_ausz_m=0;
+	(isset($auszahlung->_arr_ausz[$u][1])) ? $_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]) : $_tmp_ausz_y = 0;
+	(isset($auszahlung->_arr_ausz[$u][0])) ? $_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]) : $_tmp_ausz_m = 0;
 	$_tmp_ausz_m--;
-	(isset($auszahlung->_arr_ausz[$u][2]))? $_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]): $_tmp_ausz_a=0;
+	(isset($auszahlung->_arr_ausz[$u][2])) ? $_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]) : $_tmp_ausz_a = 0;
 	$_tmp_ausz_a = str_ireplace('\r', '', $_tmp_ausz_a);
 	$_tmp_ausz_a = str_ireplace('\n', '', $_tmp_ausz_a);
 
@@ -130,7 +130,7 @@ for ($year = $_to; $year <= $_now; $year++) {
 	}
 	if ($year == $startjahr or intval($_user->_modell) != 0) {
 		// Saldo bei Startjahr Vorholzeit Prozentual
-		$_vorholzeit = round($_jahr->_Vorholzeit_pro_Jahr / 12 * (13 - $_jahr->_startmonat), 2);
+		$_vorholzeit = round(floatval($_jahr->_Vorholzeit_pro_Jahr) / 12 * (13 - floatval($_jahr->_startmonat)), 2);
 		$anzeige[$year]['Summ']['vorholzeit_start'] = $_vorholzeit;
 		$anzeige[$year]['Summ']['vorholzeit'] = $_vorholzeit;
 		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $_vorholzeit;
@@ -146,10 +146,10 @@ for ($year = $_to; $year <= $_now; $year++) {
 	//Ferien
 	if ($year == $_jahr->_startjahr) {
 		// Ferien bei Startjahr prozentual
-		$_ferien = round($_jahr->_Ferien_pro_Jahr / 12 * (13 - $_jahr->_startmonat), 2);
+		$_ferien = round(floatval($_jahr->_Ferien_pro_Jahr) / 12 * (13 - floatval($_jahr->_startmonat)), 2);
 		$anzeige[$year]['Summ']['ferien_start'] = $_ferien;
 		$anzeige[$year]['Summ']['ferien_uebertrag'] = $_ferien;
-		$_ferien = $_ferien + $_user->_Ferienguthaben_uebertrag;
+		$_ferien = $_ferien + floatval($_user->_Ferienguthaben_uebertrag);
 		$anzeige[$year]['Summ']['feriengutschrift'] = $_ferien;
 		$anzeige[$year]['Summ']['Ferien'] = $_ferien - $anzeige[$year]['Summ']['Ferien'];
 	} else {

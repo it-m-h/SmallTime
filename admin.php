@@ -9,6 +9,7 @@
  * Copyright (c), IT-Master, All rights reserved
  * letzte Änderung: 24.8.2016
  *******************************************************************************/
+declare(strict_types=1);
 //Session starten
 if (!my_session_start()) {
 	session_id(uniqid());
@@ -32,7 +33,7 @@ function my_session_start()
 	}
 	return session_start();
 }
-define('DEBUG', false);
+define('DEBUG', true);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);
@@ -669,7 +670,7 @@ $_time_end    = $_time_end[1] + $_time_end[0];
 // ^^ Jetzt wird wieder die Aktuelle Zeit gemessen
 $_zeitmessung = $_time_end - $_start_time;
 // ^^ Endzeit minus Startzeit = die Differenz der beiden Zeiten
-$_zeitmessung = substr($_zeitmessung, 0, 4);
+$_zeitmessung = substr(strval($_zeitmessung), 0, 4);
 // ^^ Die Zeit wird auf X Kommastellen gekürzt
 $_copyright .= '<hr color="#DFDFDF" size="1">Ladezeit der Seite: ' . $_zeitmessung . ' Sekunden.<br>';
 // ----------------------------------------------------------------------------
@@ -687,7 +688,7 @@ if ($_mem_usage > 19.9) {
 foreach ($_arr as $_zeile) {
 	$_tmp = str_replace("##ver##", $_ver[0], $_zeile);
 	$_tmp = str_replace("##phpver##", phpversion(), $_tmp);
-	$_tmp = str_replace("##memory##", $_mem_usage, $_tmp);
+	$_tmp = str_replace("##memory##", strval($_mem_usage), $_tmp);
 	$_copyright .= $_tmp;
 }
 $_copyright .= "</div>";
