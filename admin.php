@@ -9,6 +9,7 @@
  * Copyright (c), IT-Master, All rights reserved
  * letzte Änderung: 24.8.2016
  *******************************************************************************/
+
 declare(strict_types=1);
 //Session starten
 if (!my_session_start()) {
@@ -33,7 +34,7 @@ function my_session_start()
 	}
 	return session_start();
 }
-define('DEBUG', true);
+define('DEBUG', false);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);

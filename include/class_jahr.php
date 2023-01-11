@@ -8,6 +8,7 @@
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
  *******************************************************************************/
+#[AllowDynamicProperties]
 class time_jahr
 {
 	public $_jahr 				= NULL;		// Startjahr des Users
@@ -23,7 +24,7 @@ class time_jahr
 	public $_saldo_Fz			= NULL;		// Eingetragene Ferien in der Zukunft
 	public $_arr_ausz			= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
 	public $_tot_ausz			= NULL;		// Auszahlungen summe
-	public $_ordnerpfad		= NULL;		// Pfad zu den Daten
+	public $_ordnerpfad			= NULL;		// Pfad zu den Daten
 	public $_startjahr 			= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_startmonat			= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_array				= NULL;		// Array des Jahres
@@ -33,9 +34,6 @@ class time_jahr
 	public $_Ferienguthaben_uebertrag	= NULL;
 	//public $Ferien_pro_Jahr; 		
 	public $_Vorholzeit_pro_Jahr		= NULL;
-	function __get($a){ return NULL; }
-	function __set($a,$b){}
-	function __isset($a){}
 
 	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp)
 	{
@@ -293,7 +291,7 @@ class time_jahr
 						if ($_year_wahl == $j) {
 							//  Ferien in der Vergangenheit von gewählten Monat
 							if ($_month_wahl <= $i) {
-								$this->_summe_Fz = floatval($this->_summe_Fz) +floatval($_arr[$i][1]);
+								$this->_summe_Fz = floatval($this->_summe_Fz) + floatval($_arr[$i][1]);
 							} else {
 								$this->_summe_Fv = floatval($this->_summe_Fv) + floatval($_arr[$i][1]);
 							}
