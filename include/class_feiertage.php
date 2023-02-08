@@ -1,22 +1,22 @@
 <?php
 
 /*******************************************************************************
- * Feiertage für das gewählte Jahr
+* Feiertage für das gewählte Jahr
 /*******************************************************************************
- * Version 0.9.122
- * Author:  IT-Master
- * www.it-master.ch / info@it-master.ch
- * Copyright (c), IT-Master, All rights reserved
- *******************************************************************************/
+* Version 0.9.125
+* Author:  IT-Master
+* www.it-master.ch / info@it-master.ch
+* Copyright (c), IT-Master, All rights reserved
+*******************************************************************************/
 class time_feiertage
 {
-	public	$_w_jahr 	= NULL;
-	public	$_country 	= NULL;
-	public	$_easter 	= NULL;
-	public	$_feiertageUSER = NULL;
-	public  $_feiertage = array();			// Feiertage die gültig sind
-	private $_defineFT 	= array();			// definition der Feiertage
-	private $_file 		= "./include/Settings/feiertage.txt";
+	public $_w_jahr = NULL;
+	public $_country = NULL;
+	public $_easter = NULL;
+	public $_feiertageUSER = NULL;
+	public $_feiertage = array(); // Feiertage die gültig sind
+	private $_defineFT = array(); // definition der Feiertage
+	private $_file = "./include/Settings/feiertage.txt";
 	function __construct($_w_jahr, $_country, $_feiertageUSER)
 	{
 		$this->_w_jahr = $_w_jahr;
@@ -47,9 +47,9 @@ class time_feiertage
 		$_userfeiertage = file($this->_file);
 		foreach ($_userfeiertage as $_eintrag) {
 			$_eintrag = explode(";", $_eintrag);
-			$_datum   = date('d.n', $_eintrag[1]);
-			$_datum   = explode(".", $_datum);
-			$_datum   = mktime(0, 0, 0, $_datum[1], $_datum[0], $year);
+			$_datum = date('d.n', $_eintrag[1]);
+			$_datum = explode(".", $_datum);
+			$_datum = mktime(0, 0, 0, $_datum[1], $_datum[0], $year);
 			$holidays[$_eintrag[0]] = $_datum;
 		}
 		return $holidays;
@@ -57,11 +57,14 @@ class time_feiertage
 	function easter($year = null)
 	{
 		if (strlen(strval($year)) == 2) {
-			if ($year < 70) $year += 2000;
-			else $year += 1900;
+			if ($year < 70)
+				$year += 2000;
+			else
+				$year += 1900;
 		}
-		if ($year > 2038 || $year < 1901) return false;  // limitations of date() / mktime(), if OS == Win change 1901 to 1970!
-		$d     = (((255 - 11 * ($year % 19)) - 21) % 30) + 21;
+		if ($year > 2038 || $year < 1901)
+			return false; // limitations of date() / mktime(), if OS == Win change 1901 to 1970!
+		$d = (((255 - 11 * ($year % 19)) - 21) % 30) + 21;
 		$delta = $d + ($d > 48) + 6 - (intval($year + $year / 4 + $d + ($d > 48) + 1) % 7);
 		$easter = strtotime("+$delta days", mktime(0, 0, 0, 3, 1, $year));
 		return $easter;
@@ -69,10 +72,13 @@ class time_feiertage
 	function easter2($year)
 	{
 		if (strlen(strval($year)) == 2) {
-			if ($year < 70) $year += 2000;
-			else $year += 1900;
+			if ($year < 70)
+				$year += 2000;
+			else
+				$year += 1900;
 		}
-		if ($year > 2038 || $year < 1901) return false;
+		if ($year > 2038 || $year < 1901)
+			return false;
 		//limitations of date() / mktime(), if OS == Win change 1901 to 1970!
 		$a = $year % 19;
 		$b = $year % 4;
@@ -82,10 +88,13 @@ class time_feiertage
 		$M = (intval(15 + $s - $m) % 30);
 		$N = (intval(6 + $s) % 7);
 		$d = ($M + 19 * $a) % 30;
-		if ($d == 29) $D = 28;
-		elseif ($d == 28 && $a >= 11) $D = 27;
-		else $D     = $d;
-		$e     = (2 * $b + 4 * $c + 6 * $D + $N) % 7;
+		if ($d == 29)
+			$D = 28;
+		elseif ($d == 28 && $a >= 11)
+			$D = 27;
+		else
+			$D = $d;
+		$e = (2 * $b + 4 * $c + 6 * $D + $N) % 7;
 		$delta = $D + $e + 1;
 		return strtotime("+$delta days", mktime(0, 0, 0, 3, 21, $year));
 	}
@@ -136,7 +145,7 @@ class time_feiertage
 	{
 		$_tmparr = file($this->_file);
 
-		$x       = 0;
+		$x = 0;
 		foreach ($_tmparr as $_zeile) {
 			$_tmparr[$x] = explode(";", $_tmparr[$x]);
 			$_tmparr[$x][1] = date('d.n', $_tmparr[$x][1]);
@@ -156,7 +165,7 @@ class time_feiertage
 				$args[$n] = $tmp;
 			}
 		}
-		$args[] = &$data;
+		$args[] = & $data;
 		call_user_func_array('array_multisort', $args);
 		return array_pop($args);
 	}
@@ -167,11 +176,16 @@ class time_feiertage
 		// Speichern erfolgt ebenfalls automatisch
 		if ($easter = $this->easter($year)) {
 			//Landesfeiertag - aus den Settings------------------------------------------------------
-			if ($_country == 1) $holidays['Bundesfeier'] = mktime(0, 0, 0, 8, 1, $year);
-			if ($_country == 2) $holidays['Tag der deutschen Einheit'] = mktime(0, 0, 0, 10, 3, $year);
-			if ($_country == 2) $holidays['Reformationstag'] = mktime(0, 0, 0, 10, 31, $year);
-			if ($_country == 3) $holidays['&ouml;sterreichische Nationalfeiertag'] = mktime(0, 0, 0, 10, 26, $year);
-			if ($_country == 4) $holidays['Staatsfeiertag in Liechtenstein'] = mktime(0, 0, 0, 8, 15, $year);
+			if ($_country == 1)
+				$holidays['Bundesfeier'] = mktime(0, 0, 0, 8, 1, $year);
+			if ($_country == 2)
+				$holidays['Tag der deutschen Einheit'] = mktime(0, 0, 0, 10, 3, $year);
+			if ($_country == 2)
+				$holidays['Reformationstag'] = mktime(0, 0, 0, 10, 31, $year);
+			if ($_country == 3)
+				$holidays['&ouml;sterreichische Nationalfeiertag'] = mktime(0, 0, 0, 10, 26, $year);
+			if ($_country == 4)
+				$holidays['Staatsfeiertag in Liechtenstein'] = mktime(0, 0, 0, 8, 15, $year);
 			//Landesfeiertag - aus den Settings------------------------------------------------------
 			$holidays['Neujahr'] = mktime(0, 0, 0, 1, 1, $year);
 			$holidays['Rosenmontag'] = strtotime("-48 days", $easter);
@@ -186,11 +200,11 @@ class time_feiertage
 			$holidays['Pfingstmontag'] = strtotime("+50 days", $easter);
 			$holidays['Fronleichnam'] = strtotime("+60 days", $easter);
 			$holidays['Allerheiligen'] = mktime(0, 0, 0, 11, 1, $year);
-			$holidays['Bussbettag'] = strtotime("-11 days", strtotime("1 sunday", mktime(0, 0, 0, 11, 26, $year)));
-			$holidays['Advent1'] = strtotime("1 sunday", mktime(0, 0, 0, 11, 26, $year));
-			$holidays['Advent2'] = strtotime("2 sunday", mktime(0, 0, 0, 11, 26, $year));
-			$holidays['Advent3'] = strtotime("3 sunday", mktime(0, 0, 0, 11, 26, $year));
-			$holidays['Advent4'] = strtotime("4 sunday", mktime(0, 0, 0, 11, 26, $year));
+			$holidays['Bussbettag'] = $this->getFirstAdventSunday($year) - 11 * 24 * 60 * 60;
+			$holidays['Advent1'] = $this->getFirstAdventSunday($year);
+			$holidays['Advent2'] = $holidays['Advent1'] + 7 * 24 * 60 * 60;
+			$holidays['Advent3'] = $holidays['Advent2'] + 7 * 24 * 60 * 60;
+			$holidays['Advent4'] = $holidays['Advent3'] + 7 * 24 * 60 * 60;
 			$holidays['Heiligabend'] = mktime(0, 0, 0, 12, 24, $year);
 			$holidays['Weihnachten'] = mktime(0, 0, 0, 12, 25, $year);
 			$holidays['Stephanstag'] = mktime(0, 0, 0, 12, 26, $year);
@@ -200,5 +214,14 @@ class time_feiertage
 			//$holidays['St. Leodegar'] = mktime(0,0,0,10,2,$year);
 			return $holidays;
 		}
+	}
+	public function getFirstAdventSunday($year)
+	{
+		$firstAdvent = new DateTime();
+		$firstAdvent->setISODate($year, 26, 7);
+		$firstAdvent->modify('first Sunday of December');
+		//return $firstAdvent->format('d.m.Y');
+		//return $firstAdvent;
+		return $firstAdvent->getTimestamp();
 	}
 }
