@@ -1,13 +1,13 @@
 <?php
 
 /********************************************************************************
- * Small Time
+* Small Time
 /*******************************************************************************
- * Version 0.9.1
- * Author:  IT-Master
- * www.it-master.ch / info@it-master.ch
- * Copyright (c), IT-Master, All rights reserved
- *******************************************************************************/
+* Version 0.9.1
+* Author:  IT-Master
+* www.it-master.ch / info@it-master.ch
+* Copyright (c), IT-Master, All rights reserved
+*******************************************************************************/
 declare(strict_types=1);
 //Session starten
 if (!my_session_start()) {
@@ -21,11 +21,11 @@ function my_session_start()
 	if (isset($_COOKIE[$sn])) {
 		$sessid = $_COOKIE[$sn];
 	} else
-	if (isset($_GET[$sn])) {
-		$sessid = $_GET[$sn];
-	} else {
-		return session_start();
-	}
+		if (isset($_GET[$sn])) {
+			$sessid = $_GET[$sn];
+		} else {
+			return session_start();
+		}
 
 	if (!preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid)) {
 		return false;
@@ -78,7 +78,8 @@ $_modal = (isset($_GET['modal']) == true ? true : false);
 // Modler laden
 // ----------------------------------------------------------------------------
 define('FPDF_INSTALLDIR', './fpdf');
-if (!defined('FPDF_FONTPATH')) define('FPDF_FONTPATH', FPDF_INSTALLDIR . '/font/');
+if (!defined('FPDF_FONTPATH'))
+	define('FPDF_FONTPATH', FPDF_INSTALLDIR . '/font/');
 include_once(FPDF_INSTALLDIR . '/fpdf.php');
 //include_once ('./include / class_controller.php');
 include_once('./include/class_absenz.php');
@@ -111,17 +112,17 @@ if (isset($_GET['calc'])) {
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
-$_users    = new time_filehandle("./Data/", "users.txt", ";");
-$_groups   = new time_filehandle("./Data/", "group.txt", ";");
+$_users = new time_filehandle("./Data/", "users.txt", ";");
+$_groups = new time_filehandle("./Data/", "group.txt", ";");
 $_settings = new time_settings();
 $_template = new time_template("index.php");
 $_template->set_portal(1);
-$_favicon  = "./images/favicon.ico";
+$_favicon = "./images/favicon.ico";
 // ----------------------------------------------------------------------------
 // .htaccess - Dateien überprüfen und setzten
 // bei der Übernahme von alten Daten notwendig
 // ----------------------------------------------------------------------------
-$id        = 0;
+$id = 0;
 foreach ($_users->_array as $tmpuser) {
 	if ($tmpuser[0] <> "Pfad") {
 		create_htaccess($tmpuser[0]);
@@ -205,17 +206,19 @@ switch ($_action) {
 	case "password":
 		$_infotext = "";
 		if (isset($_POST['senden'])) {
-			if ($_POST['new1'] <> $_POST['new2']  or $_POST['new1'] == "" or $_POST['new2'] == "") {
+			if ($_POST['new1'] <> $_POST['new2'] or $_POST['new1'] == "" or $_POST['new2'] == "") {
 				$_infotext = getinfotext('Neue Passw&ouml;rter nicht identisch', 'alert-error');
 			} elseif (sha1($_POST['old']) <> $_SESSION['passwort'] and $_POST['old'] <> "") {
 				$_infotext = getinfotext('Altes Passwort nicht korrekt', 'alert-error');
 			} else {
 				$_infotext = getinfotext('Neues Passwort wurde gespeichert', 'alert-error');
-				$tmpusers  = file("./Data/users.txt");
+				$tmpusers = file("./Data/users.txt");
 				for ($u = 0; $u <= count($tmpusers); $u++) {
-					$zeilen = explode(";", $tmpusers[$u]);
-					if ($zeilen[1] == $_user->_loginname) {
-						$tmpusers[$u] = str_replace(sha1($_POST['old']), sha1($_POST['new1']), $tmpusers[$u]);
+					if (isset($tmpusers[$u]) && stripos($tmpusers[$u], ";")) {
+						$zeilen = explode(";", $tmpusers[$u]);
+						if ($zeilen[1] == $_user->_loginname) {
+							$tmpusers[$u] = str_replace(sha1($_POST['old']), sha1($_POST['new1']), $tmpusers[$u]);
+						}
 					}
 				}
 				$neu = implode("", $tmpusers);
@@ -237,15 +240,18 @@ switch ($_action) {
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "anwesend":
-		if ($_grpwahl == 0) $_grpwahl = 1;
-		$_group   = new time_group($_grpwahl);
-		if ($id) $_grpwahl = $_group->get_usergroup($id);
+		if ($_grpwahl == 0)
+			$_grpwahl = 1;
+		$_group = new time_group($_grpwahl);
+		if ($id)
+			$_grpwahl = $_group->get_usergroup($id);
 		$_template->_user02 = "sites_login/login_mehr_02.php";
 		$_template->_user04 = "sites_login/login_mehr_04.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "login_mehr":
-		if (isset($_SESSION['save'])) $_SESSION['save'] = 8;
+		if (isset($_SESSION['save']))
+			$_SESSION['save'] = 8;
 		if (isset($_POST['login']) && $_POST['login'] == "Stempelzeit eintragen" && $_write) {
 			$_logcheck->login($_POST, $_users->_array);
 			if ($_SESSION['admin']) {
@@ -281,7 +287,8 @@ switch ($_action) {
 	case "login_einzel":
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_einzel_02.php";
-		if ($_GET['group'] == "-1") $_template->_user03 = "sites_login/login_einzel_03.php";
+		if ($_GET['group'] == "-1")
+			$_template->_user03 = "sites_login/login_einzel_03.php";
 		$_template->_user04 = "sites_login/login_einzel_04.php";
 		break;
 	case "login":
@@ -290,7 +297,7 @@ switch ($_action) {
 	case "logout":
 		$_logcheck->logout();
 		$_grpwahl = 1;
-		$_group   = new time_group($_grpwahl);
+		$_group = new time_group($_grpwahl);
 		setLoginForm();
 		break;
 	case "add_rapport":
@@ -374,9 +381,9 @@ switch ($_action) {
 		if ($_settings->_array[16][1] && $edit) {
 			if ($_POST['absenden'] == "OK" and $_write) {
 				$_timestamp = $_GET['timestamp'];
-				$_w_tag     = $_POST['_w_tag'];
-				$_w_monat   = $_POST['_w_monat'];
-				$_w_jahr    = $_POST['_w_jahr'];
+				$_w_tag = $_POST['_w_tag'];
+				$_w_monat = $_POST['_w_monat'];
+				$_w_jahr = $_POST['_w_jahr'];
 				$_zeitliste = $_POST['_zeitliste'];
 				if ($_zeitliste <> "") {
 					$_w_sekunde = 0;
@@ -387,13 +394,14 @@ switch ($_action) {
 					$_zeitliste = str_replace(":", ".", $_zeitliste);
 					$_zeitliste = str_replace(",", ".", $_zeitliste);
 					$_zeitliste = explode("-", $_zeitliste);
-					$_temptext  = "";
+					$_temptext = "";
 					foreach ($_zeitliste as $_zeiten) {
-						$_tmp      = explode(".", $_zeiten);
+						$_tmp = explode(".", $_zeiten);
 						$_w_stunde = $_tmp[0];
 						$_w_minute = $_tmp[1];
-						if ($_w_minute == "") $_w_minute = 0;
-						$tmp       = $_time->mktime($_w_stunde, $_w_minute, 0, $_w_monat, $_w_tag, $_w_jahr);
+						if ($_w_minute == "")
+							$_w_minute = 0;
+						$tmp = $_time->mktime($_w_stunde, $_w_minute, 0, $_w_monat, $_w_tag, $_w_jahr);
 						$_time->save_time($tmp, $_user->_ordnerpfad);
 					}
 				}
@@ -469,9 +477,9 @@ switch ($_action) {
 		check_htaccess_pdf($_user->_ordnerpfad);
 		$_print = $_GET['print'];
 		$_druck = $_print;
-		$_jahr  = date("Y", time());
+		$_jahr = date("Y", time());
 		$_monat = date("n", time()) - 1;
-		$_tag   = date("j", time());
+		$_tag = date("j", time());
 		if ($_druck) {
 			//erstelle_pdf_more($_MonatsArray); // TODO: undefined function
 		} else {
@@ -498,7 +506,7 @@ switch ($_action) {
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "setdesign":
-		$_design   = $_GET['designname'];
+		$_design = $_GET['designname'];
 		setcookie("designname", $_design, time() + 2592000);
 		$_template = NULL;
 		unset($_template);
@@ -545,12 +553,12 @@ if (isset($_SESSION['admin'])) {
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 }
 
-$_copyright   = "<div class=copyright>";
+$_copyright = "<div class=copyright>";
 //-----------------------------------------------------------------------------
 //Seitenladezeit
 //-----------------------------------------------------------------------------
-$_time_end    = explode(" ", microtime());
-$_time_end    = $_time_end[1] + $_time_end[0];
+$_time_end = explode(" ", microtime());
+$_time_end = $_time_end[1] + $_time_end[0];
 // ^^ Jetzt wird wieder die Aktuelle Zeit gemessen
 $_zeitmessung = $_time_end - $_start_time;
 // ^^ Endzeit minus Startzeit = die Differenz der beiden Zeiten
