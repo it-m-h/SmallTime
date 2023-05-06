@@ -33,3 +33,4 @@ V 0.9.123 29.11.2021 -> kleinere Buggs
 V 0.9.124 08.03.2022 -> FPDF - update
 V 0.9.125 08.02.2023 -> Feiertage Korrektur von BussundBettag, Advent
 V 0.9.126 12.02.2023 -> Fix, User can new Passwort set
+V 0.9.127 06.05.2023 -> Bug im Zeitberechnungsmodell monatlich

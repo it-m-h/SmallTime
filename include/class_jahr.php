@@ -73,16 +73,22 @@ class time_jahr
 	function get_auszahlung($monat, $jahr)
 	{
 		$anz = 0;
-		for ($i = 0; $i < count($this->_arr_ausz); $i++) {
-			if ($this->_CalcToTimestamp && date("Y", $this->_timestamp) > trim($monat)) {
-				if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
-					$anz =  $this->_arr_ausz[$i][2];
-				}
-			} elseif (!$this->_CalcToTimestamp) {
-				if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
-					$anz =  $this->_arr_ausz[$i][2];
+		if(is_array($this->_arr_ausz)){
+			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
+				if ($this->_CalcToTimestamp && date("Y", $this->_timestamp) > trim($monat)) {
+					if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
+						$anz =  $this->_arr_ausz[$i][2];
+					}
+				} elseif (!$this->_CalcToTimestamp) {
+					if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
+						$anz =  $this->_arr_ausz[$i][2];
+					}
 				}
 			}
+		}elseif(isset($this->_arr_ausz)){
+			$anz =  $this->_arr_ausz;
+		}else{
+			$anz =  0;
 		}
 		return $anz;
 	}
@@ -150,10 +156,29 @@ class time_jahr
 		$this->_data[$i] = file($file);
 		$z = 0;
 		foreach ($this->_data[$i] as $zeile) {
-			$this->_data[$i][$z] = explode(";", $zeile);
+			if (strpos($zeile, ";") !== false) {
+				$this->_data[$i][$z] = explode(";", $zeile);
+			} else {
+				//$this->_data[$i][$z] = $this->_data[$i][$z];
+				$this->_data[$i][$z][0] = $zeile;
+			}
 			$z++;
 		}
-		$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
+		// wenn ; ist in $this->_data[$i][$z]
+		if (isset($this->_data[$i][$z]) && strpos($this->_data[$i][$z], ";") !== false){
+			$this->_data[$i][$z] = explode(";", $this->_data[$i][$z]);
+		}else{ 
+			if(isset($this->_data[$i][$z])){
+				$this->_data[$i][$z][0] = $this->_data[$i][$z];
+			}else{
+				$this->_data[$i][$z][0] = 0;
+			}
+			//$this->_data[$i][$z] = $this->_data[$i][$z];
+			
+		}
+		//$this->_data[$i][$z][0] = 0;
+
+		
 		$this->_saldo_t = $this->_data[$i][$z][0];
 	}
 	function calc_year()
