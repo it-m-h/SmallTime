@@ -549,7 +549,12 @@ class time_month
 				$tmp = explode(";", $_userdaten[$_tmptag]);
 				$Start = $tmp[0];
 				$Ende = $tmp[1];
-				$zuschlag = ($tmp[2] - 100) / 100;
+				// falls $tmp[2] eine Zahl isz, dann ist es ein Zuschlag
+				if (is_numeric($tmp[2])){
+					$zuschlag = ($tmp[2] - 100) / 100;
+				}else{
+					$zuschlag = 0;
+				}
 				$Stempel1 = (date("H", $_stempelzeit[$h]) * 100 + date("i", $_stempelzeit[$h]) * 100 / 60) / 100;
 				$Stempel2 = (date("H", $_stempelzeit[$h + 1]) * 100 + date("i", $_stempelzeit[$h + 1]) * 100 / 60) / 100;
 				if ($_debug)

@@ -1,22 +1,21 @@
 <?php
-
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.128
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
+* letzte Änderung: 10.5.2023
 *******************************************************************************/
-declare(strict_types=1);
+//declare(strict_types=1);
 //Session starten
 if (!my_session_start()) {
 	session_id(uniqid());
 	session_start();
 	session_regenerate_id();
 }
-function my_session_start()
-{
+function my_session_start() {
 	$sn = session_name();
 	if (isset($_COOKIE[$sn])) {
 		$sessid = $_COOKIE[$sn];
@@ -32,7 +31,7 @@ function my_session_start()
 	}
 	return session_start();
 }
-define('DEBUG', false);
+define('DEBUG', true);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);
@@ -79,8 +78,8 @@ $_modal = (isset($_GET['modal']) == true ? true : false);
 // ----------------------------------------------------------------------------
 define('FPDF_INSTALLDIR', './fpdf');
 if (!defined('FPDF_FONTPATH'))
-	define('FPDF_FONTPATH', FPDF_INSTALLDIR . '/font/');
-include_once(FPDF_INSTALLDIR . '/fpdf.php');
+	define('FPDF_FONTPATH', FPDF_INSTALLDIR.'/font/');
+include_once(FPDF_INSTALLDIR.'/fpdf.php');
 //include_once ('./include / class_controller.php');
 include_once('./include/class_absenz.php');
 include_once('./include/class_auszahlung.php');
@@ -142,7 +141,7 @@ if (!$_POST) {
 	if (!isset($_SESSION['admin'])) {
 		$_Userpfad = "administrator/";
 	} else {
-		$_Userpfad = $_SESSION['admin'] . "/";
+		$_Userpfad = $_SESSION['admin']."/";
 	}
 }
 // Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
@@ -439,7 +438,7 @@ switch ($_action) {
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int) $_settings->_array[25][1]);
+		$_time->set_runden((int)$_settings->_array[25][1]);
 		$_time->save_quicktime($_user->_ordnerpfad);
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -523,8 +522,7 @@ switch ($_action) {
 // ----------------------------------------------------------------------------
 // Logion - Formular darstellen
 // ----------------------------------------------------------------------------
-function setLoginForm()
-{
+function setLoginForm() {
 	global $_template, $_settings;
 	if ($_settings->_array[19][1] == 0) {
 		$_template->_user01 = "sites_time/null.php";
@@ -575,7 +573,7 @@ $_mem_usage = round((memory_get_peak_usage(true) / 1048576), 3);
 if ($_mem_usage > 19.9) {
 	$_debug = new time_filehandle("./debug/", "time.txt", ";");
 	$_seite = explode('?', $_SERVER['HTTP_REFERER']);
-	$_debug->insert_line("Memory Fehler ;" . date('d.m.Y', time()) . "; File:  admin.php?" . $_seite[1] . "; RAM:" . $_mem_usage);
+	$_debug->insert_line("Memory Fehler ;".date('d.m.Y', time())."; File:  admin.php?".$_seite[1]."; RAM:".$_mem_usage);
 }
 foreach ($_arr as $_zeile) {
 	$_tmp = str_replace("##ver##", $_ver[0], $_zeile);
@@ -592,11 +590,11 @@ if (isset($_GET['modal'])) {
 	include($_template->get_user04());
 } elseif (isset($_GET['excel'])) {
 	$_datei = str_ireplace(" ", "-", trim($_user->_name));
-	$_datei = $_datei . "-" . $_time->_jahr;
-	$_datei = $_datei . "-" . $_time->_monat;
-	$_datei = $_datei . ".xls";
+	$_datei = $_datei."-".$_time->_jahr;
+	$_datei = $_datei."-".$_time->_monat;
+	$_datei = $_datei.".xls";
 	header("Content-type: application/vnd-ms-excel");
-	header("Content-Disposition: attachment; filename=" . $_datei);
+	header("Content-Disposition: attachment; filename=".$_datei);
 	$_template->_user04 = "sites_user/user04_xls_monat.php";
 	include($_template->get_user04());
 } else {

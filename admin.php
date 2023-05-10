@@ -1,40 +1,37 @@
 <?php
-
 /********************************************************************************
- * Small Time
+* Small Time
 /*******************************************************************************
- * Version 0.9.1
- * Author:  IT-Master
- * www.it-master.ch / info@it-master.ch
- * Copyright (c), IT-Master, All rights reserved
- * letzte Änderung: 24.8.2016
- *******************************************************************************/
-
-declare(strict_types=1);
+* Version 0.9.128
+* Author:  IT-Master
+* www.it-master.ch / info@it-master.ch
+* Copyright (c), IT-Master, All rights reserved
+* letzte Änderung: 10.5.2023
+*******************************************************************************/
+//declare(strict_types=1);
 //Session starten
 if (!my_session_start()) {
 	session_id(uniqid());
 	session_start();
 	session_regenerate_id();
 }
-function my_session_start()
-{
+function my_session_start() {
 	$sn = session_name();
 	if (isset($_COOKIE[$sn])) {
 		$sessid = $_COOKIE[$sn];
 	} else
-	if (isset($_GET[$sn])) {
-		$sessid = $_GET[$sn];
-	} else {
-		return session_start();
-	}
+		if (isset($_GET[$sn])) {
+			$sessid = $_GET[$sn];
+		} else {
+			return session_start();
+		}
 
 	if (!preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid)) {
 		return false;
 	}
 	return session_start();
 }
-define('DEBUG', false);
+define('DEBUG', true);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);
@@ -56,7 +53,7 @@ $_start_time = $_start_time[1] + $_start_time[0];
 // PHP - Version Check - Meldung, falls PHP - version kleiner als 5.3:
 // ----------------------------------------------------------------------------
 if (version_compare(phpversion(), '5.3', '<')) {
-	echo " PHP Version : " . phpversion() . " wird nicht unterst&uuml;tzt. (Version 5.4 oder h&ouml;her wird ben&ouml;tigt)";
+	echo " PHP Version : ".phpversion()." wird nicht unterst&uuml;tzt. (Version 5.4 oder h&ouml;her wird ben&ouml;tigt)";
 }
 // ----------------------------------------------------------------------------
 // F5 verhindern dass daten zwei mal gespeichert werden kann
@@ -84,8 +81,9 @@ $_modal = (isset($_GET['modal']) == true ? true : false);
 // Modler laden
 // ----------------------------------------------------------------------------
 define('FPDF_INSTALLDIR', './fpdf');
-if (!defined('FPDF_FONTPATH')) define('FPDF_FONTPATH', FPDF_INSTALLDIR . '/font/');
-include_once(FPDF_INSTALLDIR . '/fpdf.php');
+if (!defined('FPDF_FONTPATH'))
+	define('FPDF_FONTPATH', FPDF_INSTALLDIR.'/font/');
+include_once(FPDF_INSTALLDIR.'/fpdf.php');
 include_once('./include/class_absenz.php');
 include_once('./include/class_auszahlung.php');
 include_once('./include/class_user.php');
@@ -116,8 +114,8 @@ if (isset($_GET['calc']) and $_GET['calc']) {
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
-$_users    = new time_filehandle("./Data/", "users.txt", ";");
-$_groups   = new time_filehandle("./Data/", "group.txt", ";");
+$_users = new time_filehandle("./Data/", "users.txt", ";");
+$_groups = new time_filehandle("./Data/", "group.txt", ";");
 $_settings = new time_settings();
 $_template = new time_template("index.php");
 $_template->_user01 = "sites_admin/admin01.php";
@@ -143,7 +141,7 @@ if (@$_SESSION['admin'] and !@$_GET['action']) {
 }
 // keine Session vorhanden
 if (@$_SESSION['admin'] == NULL or @$_SESSION['admin'] == "") {
-	$_Userpfad = @$_SESSION['admin'] . "/";
+	$_Userpfad = @$_SESSION['admin']."/";
 }
 // Login über Cookie mit Datenüberprüfung
 if (@$_COOKIE["lname"] and @$_COOKIE["lpass"] and (@$_SESSION['admin'] == NULL or @$_SESSION['admin'] == "")) {
@@ -151,7 +149,8 @@ if (@$_COOKIE["lname"] and @$_COOKIE["lpass"] and (@$_SESSION['admin'] == NULL o
 }
 // Loginformular - Datenüberprüfung
 if (isset($_POST['login'])) {
-	$_logcheck->login($_POST, $_users->_array);;
+	$_logcheck->login($_POST, $_users->_array);
+	;
 }
 if (@$_GET['action'] == "logout") {
 	$_logcheck->logout();
@@ -171,7 +170,7 @@ if (@$_SESSION['admin'] and !@$_GET['action']) {
 	//$_grpwahl = $_GET['group'] - 1;
 } elseif (@$_GET['group']) {
 	$_grpwahl = $_GET['group'] - 1;
-	$_action  = "login_mehr";
+	$_action = "login_mehr";
 	if (@$_GET['group'] == "-1") {
 		$_action = "login_einzel";
 	}
@@ -196,8 +195,8 @@ switch (@$_action) {
 		if (isset($_POST['jahr']) && isset($_POST['monat'])) {
 			$_pdfgenerate = new pdfgenerate($_POST['monat'], $_POST['jahr'], $_users);
 		} else {
-			$_jahr        = date("Y", time());
-			$_monat       = date("m", time());
+			$_jahr = date("Y", time());
+			$_monat = date("m", time());
 			$_pdfgenerate = new pdfgenerate($_monat, $_jahr, $_users);
 		}
 		if (isset($_GET['function'])) {
@@ -217,7 +216,7 @@ switch (@$_action) {
 	case "update_ausz":
 		$auszahlung = new auszahlung($_GET['monat'], $_GET['jahr']);
 		$auszahlung->save_auszahlung($_POST['anzahl']);
-		$_infotext  = getinfotext("Jahres&uuml;bersicht", "td_background_top");
+		$_infotext = getinfotext("Jahres&uuml;bersicht", "td_background_top");
 		$_template->_user02 = "sites_year/sites02_year.php";
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
@@ -225,18 +224,19 @@ switch (@$_action) {
 		if (@$_POST['plugin']) {
 			$_SESSION['plugin'] = $_POST['plugin'];
 		}
-		if ($_POST['plugin'] == "zeiterfassung") header("Location: admin.php");
-		$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : " . $_SESSION['plugin'] . " wird geladen.", "td_background_top");
+		if ($_POST['plugin'] == "zeiterfassung")
+			header("Location: admin.php");
+		$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : ".$_SESSION['plugin']." wird geladen.", "td_background_top");
 		if (isset($_GET['excel'])) {
 			$_datei = $_GET['excel'];
-			$_datei = $_datei . "-" . $_time->_jahr;
-			$_datei = $_datei . "-" . $_time->_monat;
-			$_datei = $_datei . ".xls";
-			$_call  = $_GET['excel'];
-			$_template->_user04 = "sites_admin/export_xls_" . $_call . ".php";
+			$_datei = $_datei."-".$_time->_jahr;
+			$_datei = $_datei."-".$_time->_monat;
+			$_datei = $_datei.".xls";
+			$_call = $_GET['excel'];
+			$_template->_user04 = "sites_admin/export_xls_".$_call.".php";
 		} else {
 			$_template->_modulpfad = "plugins/";
-			include("plugins/" . $_SESSION['plugin'] . "/index.php");
+			include("plugins/".$_SESSION['plugin']."/index.php");
 		}
 		break;
 	case "idtime-generate":
@@ -263,13 +263,13 @@ switch (@$_action) {
 		break;
 	case "show_year":
 		$auszahlung = new auszahlung(1, 2000);
-		$_infotext  = getinfotext("Jahres&uuml;bersicht", "td_background_top");
+		$_infotext = getinfotext("Jahres&uuml;bersicht", "td_background_top");
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_year/user04_year.php";
 		break;
 	case "delete_user":
 		if (@$_POST['absenden'] == "OK") {
-			$id          = $_GET['delete_user_id'];
+			$id = $_GET['delete_user_id'];
 			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
 			header("Location: admin.php?action=delete_user&show=delete");
 		} elseif ($_POST['absenden'] == "CANCEL") {
@@ -277,9 +277,9 @@ switch (@$_action) {
 			$_template->_user02 = "sites_admin/admin02.php";
 			$_template->_user04 = "sites_admin/admin04.php";
 		} elseif (@$_GET['show'] == "delete") {
-			$_infotext   = getinfotext("User wurde gel&ouml;scht.", "td_background_heute");
+			$_infotext = getinfotext("User wurde gel&ouml;scht.", "td_background_heute");
 			$_infotext04 = "";
-			$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_" . date("Y.n.d") . "_XXXXXXX!";
+			$_infotext04 .= "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_XXXXXXX!";
 			$_infotext04 .= "<br> Sichen Sie bitte das Verzeichniss und l&ouml;schen Sie es.";
 			$_infotext04 .= "<br>Falls einmal ein gleicher Benutzer erstellt und dieser wieder gel&ouml;scht wird k&ouml;nnte es zu einer Fehlermeldung kommen.";
 			$_template->_user02 = "sites_admin/admin02.php";
@@ -296,9 +296,11 @@ switch (@$_action) {
 		$_template->_user04 = "sites_admin/admin04_csv_import.php";
 		break;
 	case "anwesend":
-		if ($_grpwahl == 0) $_grpwahl = 1;
-		$_group   = new time_group($_grpwahl);
-		if (@$id) $_grpwahl = $_group->get_usergroup($id);
+		if ($_grpwahl == 0)
+			$_grpwahl = 1;
+		$_group = new time_group($_grpwahl);
+		if (@$id)
+			$_grpwahl = $_group->get_usergroup($id);
 		break;
 	case "login_mehr":
 		if (@$_POST['login'] == "Stempelzeit eintragen" and $_write) {
@@ -321,7 +323,8 @@ switch (@$_action) {
 	case "login_einzel":
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_einzel_02.php";
-		if ($_GET['group'] == "-1") $_template->_user03 = "login_einzel_03.php";
+		if ($_GET['group'] == "-1")
+			$_template->_user03 = "login_einzel_03.php";
 		$_template->_user04 = "sites_login/login_einzel_04.php";
 		break;
 	case "login":
@@ -330,7 +333,7 @@ switch (@$_action) {
 	case "logout":
 		$_logcheck->logout();
 		$_grpwahl = 1;
-		$_group   = new time_group($_grpwahl);
+		$_group = new time_group($_grpwahl);
 		setLoginForm();
 		break;
 	case "anwesend":
@@ -386,9 +389,9 @@ switch (@$_action) {
 	case "insert_time_list":
 		if (@$_POST['absenden'] == "OK" and $_write) {
 			$_timestamp = $_GET['timestamp'];
-			$_w_tag     = $_POST['_w_tag'];
-			$_w_monat   = $_POST['_w_monat'];
-			$_w_jahr    = $_POST['_w_jahr'];
+			$_w_tag = $_POST['_w_tag'];
+			$_w_monat = $_POST['_w_monat'];
+			$_w_jahr = $_POST['_w_jahr'];
 			$_zeitliste = $_POST['_zeitliste'];
 			if ($_zeitliste <> "") {
 				$_w_sekunde = 0;
@@ -399,9 +402,9 @@ switch (@$_action) {
 				$_zeitliste = str_replace(":", ".", $_zeitliste);
 				$_zeitliste = str_replace(",", ".", $_zeitliste);
 				$_zeitliste = explode("-", $_zeitliste);
-				$_temptext  = "";
+				$_temptext = "";
 				foreach ($_zeitliste as $_zeiten) {
-					$_tmp      = explode(".", $_zeiten);
+					$_tmp = explode(".", $_zeiten);
 					if (is_array($_tmp)) {
 						$_w_stunde = $_tmp[0];
 						if (isset($_tmp[1])) {
@@ -410,8 +413,9 @@ switch (@$_action) {
 							$_w_minute = 0;
 						}
 					}
-					if ($_w_minute == "") $_w_minute = 0;
-					$tmp       = $_time->mktime($_w_stunde, $_w_minute, 0, $_w_monat, $_w_tag, $_w_jahr);
+					if ($_w_minute == "")
+						$_w_minute = 0;
+					$tmp = $_time->mktime($_w_stunde, $_w_minute, 0, $_w_monat, $_w_tag, $_w_jahr);
 					$_time->save_time($tmp, $_user->_ordnerpfad);
 				}
 			}
@@ -443,7 +447,7 @@ switch (@$_action) {
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int) $_settings->_array[25][1]);
+		$_time->set_runden((int)$_settings->_array[25][1]);
 		$_time->save_quicktime($_user->_ordnerpfad);
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
@@ -464,9 +468,9 @@ switch (@$_action) {
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		if (isset($_GET['excel'])) {
 			$_datei = str_ireplace(" ", "-", trim($_user->_name));
-			$_datei = $_datei . "-" . $_time->_jahr;
-			$_datei = $_datei . "-" . $_time->_monat;
-			$_datei = $_datei . ".xls";
+			$_datei = $_datei."-".$_time->_jahr;
+			$_datei = $_datei."-".$_time->_monat;
+			$_datei = $_datei.".xls";
 			$_template->_user04 = "sites_admin/export_xls_monat.php";
 		}
 		break;
@@ -480,7 +484,7 @@ switch (@$_action) {
 		check_htaccess_pdf($_user->_ordnerpfad);
 		$_jahr = date("Y", time());
 		$_monat = date("n", time());
-		$_tag  = date("j", time());
+		$_tag = date("j", time());
 		erstelle_neu(0);
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/user04_pdf_show.php";
@@ -550,9 +554,9 @@ switch (@$_action) {
 		break;
 	case "user_personalkarte":
 		if (isset($_POST['update'])) {
-			$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von " . $_user->_name . " wurde aktualisiert", "td_background_heute");
+			$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ".$_user->_name." wurde aktualisiert", "td_background_heute");
 		} else {
-			$_infotext = getinfotext("Personalkarte von " . $_user->_name, "td_background_top");
+			$_infotext = getinfotext("Personalkarte von ".$_user->_name, "td_background_top");
 		}
 		$_personaldaten = new time_personalblatt();
 		$_template->_user02 = "sites_admin/admin02.php";
@@ -560,7 +564,7 @@ switch (@$_action) {
 		break;
 	case "group";
 		$_infotext = getinfotext("Gruppen editieren", "td_background_top");
-		$_group    = new time_group(-1);
+		$_group = new time_group(-1);
 		//-----------------------------------------------
 		//löschen einer Gruppe
 		//-----------------------------------------------
@@ -609,13 +613,13 @@ switch (@$_action) {
 			$_d = $_POST['_d'];
 			if ($_a <> "" && $_b <> "" && $_POST['_c'] <> "") {
 				if ($_users->user_exist($_a)) {
-					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>" . $_a . "</b> existiert bereits!</font></td></tr></table>";
+					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>".$_a."</b> existiert bereits!</font></td></tr></table>";
 					$_infotext = getinfotext($_infotext, "td_background_heute");
 				} else {
-					$_users->insert_user($_a . ";" . $_b . ";" . $_c . ";" . $_d);
+					$_users->insert_user($_a.";".$_b.";".$_c.";".$_d);
 					$_users->add_user($_a);
-					header("Location: admin.php?action=user_edit&admin_id=" . $_users->get_anzahl());
-					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Mitarbeiter <b>" . $_a . "</b> wurde erfolgreich erstellt.</td></tr></table>";
+					header("Location: admin.php?action=user_edit&admin_id=".$_users->get_anzahl());
+					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Mitarbeiter <b>".$_a."</b> wurde erfolgreich erstellt.</td></tr></table>";
 					$_infotext = getinfotext($_infotext, "td_background_heute");
 					break;
 				}
@@ -638,8 +642,7 @@ switch (@$_action) {
 // ----------------------------------------------------------------------------
 // Logion - Formular darstellen
 // ----------------------------------------------------------------------------
-function setLoginForm()
-{
+function setLoginForm() {
 	global $_template;
 	$_template->_user01 = "sites_time/null.php";
 	$_template->_user02 = "sites_login/admin_login_einzel_02.php";
@@ -662,18 +665,18 @@ if (@$_SESSION['admin']) {
 	// Berechnung Endjahr = aktuelles Jahr, dann 0 sonst $_time->_jahr
 	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
 }
-$_copyright   = '<div class="copyright">';
+$_copyright = '<div class="copyright">';
 //-----------------------------------------------------------------------------
 //Seitenladezeit
 //-----------------------------------------------------------------------------
-$_time_end    = explode(" ", microtime());
-$_time_end    = $_time_end[1] + $_time_end[0];
+$_time_end = explode(" ", microtime());
+$_time_end = $_time_end[1] + $_time_end[0];
 // ^^ Jetzt wird wieder die Aktuelle Zeit gemessen
 $_zeitmessung = $_time_end - $_start_time;
 // ^^ Endzeit minus Startzeit = die Differenz der beiden Zeiten
 $_zeitmessung = substr(strval($_zeitmessung), 0, 4);
 // ^^ Die Zeit wird auf X Kommastellen gekürzt
-$_copyright .= '<hr color="#DFDFDF" size="1">Ladezeit der Seite: ' . $_zeitmessung . ' Sekunden.<br>';
+$_copyright .= '<hr color="#DFDFDF" size="1">Ladezeit der Seite: '.$_zeitmessung.' Sekunden.<br>';
 // ----------------------------------------------------------------------------
 // copyright Text
 // ----------------------------------------------------------------------------
@@ -684,7 +687,7 @@ $_mem_usage = round((memory_get_peak_usage(true) / 1048576), 3);
 if ($_mem_usage > 19.9) {
 	$_debug = new time_filehandle("./debug/", "time.txt", ";");
 	$_seite = explode('?', $_SERVER['HTTP_REFERER']);
-	$_debug->insert_line("Memory Fehler ;" . date('d.m.Y', time()) . "; File:  admin.php?" . $_seite[1] . "; RAM:" . $_mem_usage);
+	$_debug->insert_line("Memory Fehler ;".date('d.m.Y', time())."; File:  admin.php?".$_seite[1]."; RAM:".$_mem_usage);
 }
 foreach ($_arr as $_zeile) {
 	$_tmp = str_replace("##ver##", $_ver[0], $_zeile);
@@ -702,9 +705,10 @@ if (isset($_GET['modal'])) {
 	// bei Modal nur DIV04 anzeigen
 	include($_template->get_user04());
 } elseif (isset($_GET['excel'])) {
-	if (!$_datei)  $_datei = 'excel.xls';
+	if (!$_datei)
+		$_datei = 'excel.xls';
 	header("Content-type: application/vnd-ms-excel");
-	header("Content-Disposition: attachment; filename=" . $_datei);
+	header("Content-Disposition: attachment; filename=".$_datei);
 	include($_template->get_user04());
 } elseif (isset($_GET['function'])) {
 	echo $_template->_ajaxhtml;
