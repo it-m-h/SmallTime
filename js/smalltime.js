@@ -1,11 +1,3 @@
- $( document ).ready(function() {
-		console.log( "document loaded" );
-	});
-
-
-$( window ).load(function() {
-		console.log( "window loaded" );
-	});
         
 var offsetx=20
 var offsety=0
