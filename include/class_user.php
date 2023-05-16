@@ -3,7 +3,7 @@
 /*******************************************************************************
  * User - Daten
 /*******************************************************************************
- * Version 0.9.122
+ * Version 0.9.130
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -43,12 +43,12 @@ class time_user
 		$this->_ordnerpfad	= $_SESSION['datenpfad'];
 		$this->_name		= $_userdaten[0];
 		$this->_WochenArbeiztsZeit = $_userdaten[3];
-		$this->_SollZeitProWoche = ($_userdaten[3] / 100 * $_userdaten[2]);
-		$this->_SollZeitProzent = $_userdaten[2];
+		$this->_SollZeitProWoche = (floatval($_userdaten[3]) / 100 * floatval($_userdaten[2]));
+		$this->_SollZeitProzent = floatval($_userdaten[2]);
 		$this->_SummeArbeitstage = 0;
 		$this->_arbeitstage = explode(";", $_userdaten[7]);
 		foreach ($this->_arbeitstage as $_tmp) {
-			$this->_SummeArbeitstage = $this->_SummeArbeitstage + $_tmp;
+			$this->_SummeArbeitstage = $this->_SummeArbeitstage + floatval($_tmp);
 		}
 		$this->_SollZeitProTag = round($this->_SollZeitProWoche / $this->_SummeArbeitstage, 2);
 		$this->_BeginnDerZeitrechnung = $_userdaten[1];

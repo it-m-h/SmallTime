@@ -3,7 +3,7 @@
 /*******************************************************************************
  * Jahresberechnung
 /*******************************************************************************
- * Version 0.9.11
+ * Version 0.9.130
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -382,7 +382,7 @@ class time_jahr
 	{
 		// Falls der Startmonat nicht der Januar ist, restliches Guthaben der Ferien berechnen
 		if ($this->_startmonat > 1 && $this->_startjahr == $i) {
-			$Ferien = round(($this->_Ferien_pro_Jahr / 12 * (13 - $this->_startmonat)), 2);
+			$Ferien = round((floatval($this->_Ferien_pro_Jahr) / 12 * (13 - intval($this->_startmonat))), 2);
 		} else {
 			$Ferien = $this->_Ferien_pro_Jahr;
 		}
