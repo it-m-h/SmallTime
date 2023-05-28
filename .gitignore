@@ -1,3 +1,5 @@
+.gitignore/*
+
 #PHP - Storm
 .idea
 
@@ -6,9 +8,11 @@
 *.csprj
 
 # Can also ignore all directories and files in a directory.
-# Data/*
-# Data/administrator/*
+Data/*
+Data/Administrator/
 debug/*
+
+js/js_bak
 .vscode/*
 
 # Recycle Bin used on file shares
