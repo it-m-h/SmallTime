@@ -37,3 +37,4 @@ V 0.9.127 06.05.2023 -> Bug im Zeitberechnungsmodell monatlich
 V 0.9.128 10.05.2023 -> declare(strict_types=1); führt zu einer weissen Seite unter Raspberry Pi
 V 0.9.129 16.05.2023 -> jquery & jqueryui update - Sicherheitslücken eliminiert
 V 0.9.130 16.05.2023 -> unter Linux noch Fehler beim Konvertieren
+V 0.9.131 16.05.2023 -> UserDelete - crash fix, PDF mit vielen Zeiten , Darstellung optimiert, Filter bei vielen Usern im Adminbereich optimiert

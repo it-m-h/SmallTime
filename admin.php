@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.128
+* Version 0.9.131
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -271,7 +271,7 @@ switch (@$_action) {
 		if (@$_POST['absenden'] == "OK") {
 			$id = $_GET['delete_user_id'];
 			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
-			header("Location: admin.php?action=delete_user&show=delete");
+			header("Location: admin.php?action=delete_user&show=delete&admin_id=1");
 		} elseif ($_POST['absenden'] == "CANCEL") {
 			$_infotext = getinfotext("User wurde nicht gel&ouml;scht.", "td_background_heute");
 			$_template->_user02 = "sites_admin/admin02.php";
