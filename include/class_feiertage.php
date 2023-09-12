@@ -34,7 +34,7 @@ class time_feiertage
 		//Feiertage All werden mit den Einstellungen beim User verglichen, ob true oder false
 		$z = 0;
 		foreach ($this->_defineFT as $_bez => $_tag) {
-			if (trim(@$this->_feiertageUSER[$z]) == "1") {
+			if (isset($this->_feiertageUSER[$z]) && trim(@$this->_feiertageUSER[$z]) == "1") {
 				//echo 'feiertag';
 				//echo $_bez .' : ' .$this->_feiertageUSER[$z-1].'<br>'; 
 				$holidays[$_bez] = $_tag;
