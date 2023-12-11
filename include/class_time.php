@@ -226,7 +226,7 @@ class time{
 			$datum = $this->timecount($_timeTable);
 		}
 		// letzten Monat überprüfen falls in diesem keine Einträge drin sind
-		if(count($_timeTable)<1){
+		if(is_countable($_timeTable) && count($_timeTable)<1){
 			$monat = $monat-1;
 			$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;
 			if(file_exists($_file)){
