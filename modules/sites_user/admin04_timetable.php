@@ -40,7 +40,7 @@ if (strstr($_template->_modal, 'true'))
                 //-------------------------------------------------------------------------
                 //Feiertag - Textanzeige
                 //-------------------------------------------------------------------------
-                if ($_monat->_MonatsArray[$z][6] <> "") {
+                if ($_monat->_MonatsArray[$z][6] != '') {
                         $_txt0 = "<img title='".$_monat->_MonatsArray[$z][6]."' src='images/icons/bullet_star.png' border=0>";
                 } else {
                         $_txt0 = "";

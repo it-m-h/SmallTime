@@ -51,7 +51,7 @@ $pausen = pausen::get();
 	Berechnet wird ein Abzug von 15 Minuten von 2 Stunden bis 2 Stunden 59 Min und 59 Sekunden Arbeitszeit.
 </p><br>
 <?php
-if($meldung<>''){
+if($meldung!= ''){
 	
 	echo '
 	<table width="100%" border="0" cellpadding="5" cellspacing="1">

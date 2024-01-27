@@ -261,7 +261,7 @@ class time_month
 			$this->_MonatsArray[$i][30] = "class=td_background_tag";
 			if (!$this->_MonatsArray[$i][4] or $this->_MonatsArray[$i][4] == 0)
 				$this->_MonatsArray[$i][30] = "class=td_background_wochenende";
-			if ($this->_MonatsArray[$i][6] <> "")
+			if ($this->_MonatsArray[$i][6] != '')
 				$this->_MonatsArray[$i][30] = "class=td_background_feiertag";
 			if (date("Y.m.d", $this->_MonatsArray[$i][0]) == date("Y.m.d", time()))
 				$this->_MonatsArray[$i][30] = "class=td_background_heute";

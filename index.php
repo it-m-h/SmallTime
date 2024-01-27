@@ -207,7 +207,7 @@ switch ($_action) {
 		if (isset($_POST['senden'])) {
 			if ($_POST['new1'] <> $_POST['new2'] or $_POST['new1'] == "" or $_POST['new2'] == "") {
 				$_infotext = getinfotext('Neue Passw&ouml;rter nicht identisch', 'alert-error');
-			} elseif (sha1($_POST['old']) <> $_SESSION['passwort'] and $_POST['old'] <> "") {
+			} elseif (sha1($_POST['old']) <> $_SESSION['passwort'] and $_POST['old'] != '') {
 				$_infotext = getinfotext('Altes Passwort nicht korrekt', 'alert-error');
 			} else {
 				$_infotext = getinfotext('Neues Passwort wurde gespeichert', 'alert-error');
@@ -256,7 +256,7 @@ switch ($_action) {
 			if ($_SESSION['admin']) {
 				$id = $_logcheck->_id;
 				// Fehlerhandling bei F5 und dann sendenklick
-				if ($_POST['_n'] <> "" and $_POST['_p'] <> "") {
+				if ($_POST['_n'] != '' and $_POST['_p'] != '') {
 					$_time->set_timestamp(time());
 					$_time->save_time(time(), $_user->_ordnerpfad);
 				} else {
@@ -384,7 +384,7 @@ switch ($_action) {
 				$_w_monat = $_POST['_w_monat'];
 				$_w_jahr = $_POST['_w_jahr'];
 				$_zeitliste = $_POST['_zeitliste'];
-				if ($_zeitliste <> "") {
+				if ($_zeitliste != '') {
 					$_w_sekunde = 0;
 					$_zeitliste = trim($_zeitliste);
 					$_zeitliste = str_replace(" ", "", $_zeitliste);

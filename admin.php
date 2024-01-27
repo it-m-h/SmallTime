@@ -308,7 +308,7 @@ switch (@$_action) {
 			if ($_SESSION['admin']) {
 				$id = $_logcheck->_id;
 				// Fehlerhandling bei F5 und dann sendenklick
-				if ($_POST['_n'] <> "" and $_POST['_p'] <> "") {
+				if ($_POST['_n'] != '' and $_POST['_p'] != '') {
 					$_time->set_timestamp(time());
 					$_time->save_time(time(), $_user->_ordnerpfad);
 				}
@@ -393,7 +393,7 @@ switch (@$_action) {
 			$_w_monat = $_POST['_w_monat'];
 			$_w_jahr = $_POST['_w_jahr'];
 			$_zeitliste = $_POST['_zeitliste'];
-			if ($_zeitliste <> "") {
+			if ($_zeitliste != '') {
 				$_w_sekunde = 0;
 				$_zeitliste = trim($_zeitliste);
 				$_zeitliste = str_replace(" ", "", $_zeitliste);
@@ -568,7 +568,7 @@ switch (@$_action) {
 		//-----------------------------------------------
 		//löschen einer Gruppe
 		//-----------------------------------------------
-		if (@$_GET['del'] <> "") {
+		if (@$_GET['del'] != '') {
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Gruppe gel&ouml;scht</td></tr></table>", "td_background_heute");
 			$_group->del_group($_GET['del']);
 		}
@@ -598,7 +598,7 @@ switch (@$_action) {
 		if (@$_POST['senden']) {
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>", "td_background_heute");
 			$_feiertage->save_feiertage();
-		} elseif (@$_GET['del'] <> "") {
+		} elseif (@$_GET['del'] != '') {
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertag gel&ouml;scht</td></tr></table>", "td_background_heute");
 			$_feiertage->delete_feiertag($_GET['del']);
 		}
@@ -611,7 +611,7 @@ switch (@$_action) {
 			$_b = $_POST['_b'];
 			$_c = sha1($_POST['_c']);
 			$_d = $_POST['_d'];
-			if ($_a <> "" && $_b <> "" && $_POST['_c'] <> "") {
+			if ($_a != '' && $_b != '' && $_POST['_c'] != '') {
 				if ($_users->user_exist($_a)) {
 					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>".$_a."</b> existiert bereits!</font></td></tr></table>";
 					$_infotext = getinfotext($_infotext, "td_background_heute");

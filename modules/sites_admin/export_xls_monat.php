@@ -7,7 +7,13 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
-$stempelzeiten = 6;
+$stempelzeiten = 6; // minimale initialisation
+for($z=1; $z< count($_monat->_MonatsArray); $z++){
+	if (count($_monat->_MonatsArray[$z][12]) > $stempelzeiten) {
+		$stempelzeiten = count($_monat->_MonatsArray[$z][12]);
+	}
+}
+
 $xls ='';
 $xls .='
 <table>
@@ -56,10 +62,19 @@ $xls .='
 		//-------------------------------------------------------------------------
 		$xls .= "		<td bgcolor=".$farbe.">". $_monat->_MonatsArray[$z][3]."</td>\n";
 		//-------------------------------------------------------------------------
-		// Stempelzeiten anzeigen / max. 6 Stempelzeiten
+		// Stempelzeiten anzeigen / max. XX Stempelzeiten ($stempelzeiten)
 		//-------------------------------------------------------------------------
-		for ($x=0;$x<$stempelzeiten;$x++){
-			$xls .= "		<td bgcolor=".$farbe.">". $_monat->_MonatsArray[$z][12][$x] ."</td>\n";
+		try{
+			for ($x=0;$x<$stempelzeiten;$x++){
+				if(isset($_monat->_MonatsArray[$z][12][$x])){
+					$xls .= "		<td bgcolor=".$farbe.">". $_monat->_MonatsArray[$z][12][$x] ."</td>\n";
+				}else{
+					$xls .= "		<td bgcolor=".$farbe."></td>\n";
+				}
+				
+			}
+		}catch(Exception $e){
+			$xls .= "<td bgcolor=".$farbe."></td>\n";
 		}
 		//-------------------------------------------------------------------------
 		// gearbeitete Stunden  anzeigen

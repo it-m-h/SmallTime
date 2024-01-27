@@ -22,14 +22,14 @@ class time_login
 	function login($POST, $userlist)
 	{
 		if ($this->_admins) {
-			if (isset($_POST['_n']) && ($_POST['_n'] <> '')) {
+			if (isset($_POST['_n']) && ($_POST['_n'] != '')) {
 				$this->_username = trim($_POST['_n']);
 			}
-			if (isset($_POST['_p']) && ($_POST['_p'] <> '')) {
+			if (isset($_POST['_p']) && ($_POST['_p'] != '')) {
 				$this->_passwort = sha1(trim($_POST['_p']));
 			}
 		} else {
-			if ($_POST['_n'] && $_POST['_p'] && ($_POST['_n'] <> '' && $_POST['_p'] <> '')) {
+			if ($_POST['_n'] && $_POST['_p'] && ($_POST['_n'] != '' && $_POST['_p'] != '')) {
 				//  Anmeldung über Loginformular
 				if (isset($_POST['_n'])) {
 					$this->_username = trim($_POST['_n']);

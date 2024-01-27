@@ -121,7 +121,7 @@ class time_feiertage
 		for ($x = 0; $x <= $_anzahl; $x++) {
 			$_name = $_POST['e' . $x];
 			$_datum = $_POST['v' . $x];
-			if ($_name <> "" && $_datum <> "") {
+			if ($_name != '' && $_datum != '') {
 				$_datum = explode(".", $_datum);
 				$_datum2 = mktime(0, 0, 0, $_datum[1], $_datum[0], 0);
 				$_tmparr[$x] = $_name . ";" . $_datum2;

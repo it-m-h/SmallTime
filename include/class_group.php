@@ -173,7 +173,7 @@ class time_group
 			$_temp_e = @$_POST['e'.$x];
 			$_temp_v = @$_POST['v'.$x];
 			$_temp_u = @$_POST['u'.$x];
-			if($_temp_v <> "" && $_temp_e <> "")
+			if($_temp_v != '' && $_temp_e != '')
 			{
 				fputs($fp, $_temp_e.";".$_temp_v.";".$_temp_u.$_zeilenvorschub);
 			}

@@ -117,7 +117,7 @@ function write_htaccess_img($_file)
 	$_uhrzeit = date("H:i", time());
 	$_datetime =  $_datum . " - " . $_uhrzeit;
 	$_debug 	= new time_filehandle("./debug/", "time.txt", ";");
-	if (!isset($datenpfad) || $datenpfad <> "") {
+	if (!isset($datenpfad) || $datenpfad != '') {
 		$datenpfad = "xxxxxx bug001";
 	}
 	$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" . $datenpfad . ";htaccess nicht vorhanden, wurde erstellt.");
