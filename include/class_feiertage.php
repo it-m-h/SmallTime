@@ -191,7 +191,9 @@ class time_feiertage
 			$holidays['Rosenmontag'] = strtotime("-48 days", $easter);
 			$holidays['Aschermittwoch'] = strtotime("-46 days", $easter);
 			$holidays['TagDerArbeit'] = mktime(0, 0, 0, 5, 1, $year);
-			$holidays['Karfreitag'] = strtotime("-2 days", $easter);
+			if($year == 2025){
+				$holidays['JahrestagDerBefreiungVomNationalsozialismusUndDesEndesDesZweitenWeltkriegs'] = mktime(0, 0, 0, 5, 8, 2025); # https://www.berlin.de/aktuelles/9188766-958090-einmaliger-feiertag-am-8-mai-2025.html
+			}			$holidays['Karfreitag'] = strtotime("-2 days", $easter);
 			$holidays['Ostersonntag'] = $easter;
 			$holidays['Ostermontag'] = strtotime("+1 day", $easter);
 			$holidays['Himmelfahrt'] = strtotime("+39 days", $easter);
