@@ -31,6 +31,13 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 - ./debug
 - ./include/Settings
 
+## XAMMP / LAMP installieren
+
+- Windows : XAMPP von www.apachefriends.org
+- ZIP von GIT downloaden und ins c:/xampp/htdocs kopieren. (alles im htdocs wird nicht benötigt)
+- c:/xampp/xampp-control.exe ausführen und Webserver starten
+- Webseite aufrufen: http://127.0.0.1 (die IP vom Rechner geht auch, sowie auch localhost)
+
 ## Update einer alten Version
 
 - Ordner der alten Version umbenennen (z.B. /time -> /time_old)
@@ -48,6 +55,7 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 - [PHP 8.3 auf Ubuntu 22.04 installieren](https://www.erikdonner.dev/2023/12/29/php-8-3-auf-ubuntu-22-04-installieren/)
 - [Ubuntu PHP ZIP Extension](https://www.itsolutionstuff.com/post/ubuntu-php-zip-extension-install-commands-exampleexample.html?utm_content=cmp-true)
 - [PHP iconv wird benötigt](https://www.php.net/manual/en/function.iconv.php)
+- [php-xml wird benötigt](https://www.php.net/manual/de/install.unix.debian.php)
 
 ### Berechtigungen
 
@@ -69,7 +77,7 @@ mit dem Befehl `make down` wird das docker-compose wieder gestoppt.
 
 Wenn die App nicht startet könnte der Benutzer und die Gruppe von den beiden Volumes smalltime-data und smalltime-settings nicht auf www-data eingerichtet sein.
 
-## Error
+## DEBUG / Fehlermeldungen ein oder ausschalten:
 
 Alle Meldungen können angezeigt werden, wenn DEBUG auf **true** gestellt wird.
 
