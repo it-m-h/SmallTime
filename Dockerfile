@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y \
     && chmod -R 750 /var/www/html/import \
     && chmod -R 750 /var/www/html/debug \
     && chmod -R 750 /var/www/html/include/Settings \
-    && rm -f /var/www/html/android.php \
-       /var/www/html/idtime.php \
-       /var/www/html/stempelterminal.php \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
