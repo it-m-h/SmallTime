@@ -19,7 +19,7 @@ function create_mulitsettings()
 	$root->appendChild($guest = $dom->createElement("guest"));
 	$guest->appendChild($dom->createElement("ShowUsername", "true"));
 	$guest->appendChild($dom->createElement("ShowUserOnline", "true"));
-	$guest->appendChild($dom->createElement("ShowUserLastTime", "fasle"));
+	$guest->appendChild($dom->createElement("ShowUserLastTime", "false"));
 	$guest->appendChild($dom->createElement("ShowUserAllTime", "false"));
 	$guest->appendChild($dom->createElement("ShowUserPic", "false"));
 	$root->appendChild($firstNode = $dom->createElement("user"));

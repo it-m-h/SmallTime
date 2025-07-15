@@ -31,21 +31,21 @@ if(@$_POST['01'] ){
 		$guest->appendChild($dom->createElement("ShowUserLastTime", "true"));
 		$_S3 = " checked";
 	}else{
-		$guest->appendChild($dom->createElement("ShowUserLastTime", "fasle"));
+		$guest->appendChild($dom->createElement("ShowUserLastTime", "false"));
 		$_S3 = "";
 	}		
 	if(@$_POST['04']){
 		$guest->appendChild($dom->createElement("ShowUserAllTime", "true"));
 		$_S4 = " checked";
 	}else{
-		$guest->appendChild($dom->createElement("ShowUserAllTime", "fasle"));
+		$guest->appendChild($dom->createElement("ShowUserAllTime", "false"));
 		$_S4 = "";
 	}	
 	if(@$_POST['05']){
 		$guest->appendChild($dom->createElement("ShowUserPic", "true"));
 		$_S5 = " checked";
 	}else{
-		$guest->appendChild($dom->createElement("ShowUserPic", "fasle"));
+		$guest->appendChild($dom->createElement("ShowUserPic", "false"));
 		$_S5 = "";
 	}	
 	
@@ -68,21 +68,21 @@ if(@$_POST['01'] ){
 		$user->appendChild($dom->createElement("ShowUserLastTime", "true"));
 		$_S13 = " checked";
 	}else{
-		$user->appendChild($dom->createElement("ShowUserLastTime", "fasle"));
+		$user->appendChild($dom->createElement("ShowUserLastTime", "false"));
 		$_S13 = "";
 	}		
 	if(@$_POST['14']){
 		$user->appendChild($dom->createElement("ShowUserAllTime", "true"));
 		$_S14 = " checked";
 	}else{
-		$user->appendChild($dom->createElement("ShowUserAllTime", "fasle"));
+		$user->appendChild($dom->createElement("ShowUserAllTime", "false"));
 		$_S14 = "";
 	}	
 	if(@$_POST['15']){
 		$user->appendChild($dom->createElement("ShowUserPic", "true"));
 		$_S15 = " checked";
 	}else{
-		$user->appendChild($dom->createElement("ShowUserPic", "fasle"));
+		$user->appendChild($dom->createElement("ShowUserPic", "false"));
 		$_S15 = "";
 	}	
 	
@@ -105,21 +105,21 @@ if(@$_POST['01'] ){
 		$admin->appendChild($dom->createElement("ShowUserLastTime", "true"));
 		$_S23 = " checked";
 	}else{
-		$admin->appendChild($dom->createElement("ShowUserLastTime", "fasle"));
+		$admin->appendChild($dom->createElement("ShowUserLastTime", "false"));
 		$_S23 = "";
 	}		
 	if(@$_POST['24']){
 		$admin->appendChild($dom->createElement("ShowUserAllTime", "true"));
 		$_S24 = " checked";
 	}else{
-		$admin->appendChild($dom->createElement("ShowUserAllTime", "fasle"));
+		$admin->appendChild($dom->createElement("ShowUserAllTime", "false"));
 		$_S24 = "";
 	}	
 	if(@$_POST['25']){
 		$admin->appendChild($dom->createElement("ShowUserPic", "true"));
 		$_S25 = " checked";
 	}else{
-		$admin->appendChild($dom->createElement("ShowUserPic", "fasle"));
+		$admin->appendChild($dom->createElement("ShowUserPic", "false"));
 		$_S25 = "";
 	}	
 		
