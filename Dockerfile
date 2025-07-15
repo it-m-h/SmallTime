@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 750 /var/www/html/Data \
-    && chmod -R 750 /var/www/html/import \
-    && chmod -R 750 /var/www/html/debug \
-    && chmod -R 750 /var/www/html/include/Settings \
+       /var/www/html/import \
+       /var/www/html/debug \
+       /var/www/html/include/Settings \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
