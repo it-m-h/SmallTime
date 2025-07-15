@@ -1,0 +1,16 @@
+---
+services:
+  smalltime-app:
+    image: smalltime:latest
+    container_name: smalltime-app
+    ports:
+      - "8082:80"
+    volumes:
+      - smalltime-data:/var/www/html/Data
+      - smalltime-settings:/var/www/html/include/Settings
+    restart: unless-stopped
+    user: "33:33"
+
+volumes:
+  smalltime-data:
+  smalltime-settings:
