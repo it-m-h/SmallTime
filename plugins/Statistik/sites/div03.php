@@ -10,13 +10,16 @@
 $_benutzer = file("./Data/users.txt");
 unset($_benutzer[0]);
 $i=1;
-echo '<table cellpadding="2" cellspacing="1" border="0" width="100%">';
+echo '<table id="statSort" class="tablesorter tablesorter-blue" cellpadding="2" cellspacing="1" border="0" width="100%">';
 echo '
+<thead>
 	<tr>
-		<td width="20" height="20" class="td_background_top">ID</td>
-		<td valign="middle" align="left" class="td_background_top">Name</td>
-		<td valign="middle" align="left" class="td_background_top">Tot.</td>
-	</tr>';
+		<th width="20" height="20" class="td_background_top">ID</th>
+		<th valign="middle" align="left" class="td_background_top">Name</th>
+		<th valign="middle" align="left" class="td_background_top">Tot.</th>
+	</tr>
+</thead> 
+<tbody>';
 foreach($_benutzer as $string){	
 	$string = explode(";", $string);	
 	if(file_exists("./Data/".$string[0]."/Timetable/total.txt")){
@@ -37,4 +40,16 @@ foreach($_benutzer as $string){
 	</tr>'; 
 	$i++;
 }
-echo '</table>';
+echo '
+</tbody>
+</table>';
+
+echo '
+<script>
+	$("#statSort").tablesorter();
+
+	
+
+
+</script>
+';

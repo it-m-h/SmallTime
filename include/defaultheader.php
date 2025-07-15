@@ -24,3 +24,4 @@
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.ui.css">
                 <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">
+                <link rel="stylesheet" type="text/css" media="screen" href="css/tablesorter.blue.min.css">
