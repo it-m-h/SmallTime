@@ -7,7 +7,7 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
-if(@$_POST['01'] ){
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$dom = new DOMDocument('1.0', 'utf-8');
 	$root = $dom->createElement('multilogin');
 	$dom->appendChild($root);
@@ -122,7 +122,7 @@ if(@$_POST['01'] ){
 		$admin->appendChild($dom->createElement("ShowUserPic", "false"));
 		$_S25 = "";
 	}	
-		
+	$dom->formatOutput = true;	
 	$dom->save('./include/Settings/multilogin.xml');
 }
 if(file_exists ("./include/Settings/multilogin.xml")){
@@ -189,11 +189,11 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</thead>
 		<tr>
 			<td class="td_background_tag">Anzeige des Usernamens</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="01" value="1"<?php echo $_S1 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="01" value="1"<?php echo @$_S1 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Anzeige ob Anwesend oder Abwesend (gr&uuml;n oder rot)</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="02" value="1"<?php echo $_S2 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="02" value="1"<?php echo @$_S2 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Letzte Stempelzeit von Heute anzeigen</td>
@@ -215,15 +215,15 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</thead>
 		<tr>
 			<td class="td_background_tag">Anzeige des Usernamens</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="11" value="1"<?php echo $_S11 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="11" value="1"<?php echo @$_S11 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Anzeige ob Anwesend oder Abwesend (gr&uuml;n oder rot)</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="12" value="1"<?php echo $_S12 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="12" value="1"<?php echo @$_S12 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Letzte Stempelzeit von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="13" value="1"<?php echo $_S13 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="13" value="1"<?php echo @$_S13 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Alle Stempelzeiten von Heute anzeigen</td>
@@ -231,7 +231,7 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</tr>
 		<tr>
 			<td class="td_background_tag">Bid des Users anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="15" value="1"<?php echo $_S15 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="15" value="1"<?php echo @$_S15 ;?>></td>
 		</tr>
 	</table>	
 	<table width="100%" border="0">
@@ -241,23 +241,23 @@ if($multilogin->admin->ShowUserPic=="true"){
 		</thead>
 		<tr>
 			<td class="td_background_tag">Anzeige des Usernamens</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="21" value="1"<?php echo $_S21 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="21" value="1"<?php echo @$_S21 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Anzeige ob Anwesend oder Abwesend (gr&uuml;n oder rot)</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="22" value="1"<?php echo $_S22 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="22" value="1"<?php echo @$_S22 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Letzte Stempelzeit von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="23" value="1"<?php echo $_S23 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="23" value="1"<?php echo @$_S23 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Alle Stempelzeiten von Heute anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="24" value="1"<?php echo $_S24 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="24" value="1"<?php echo @$_S24 ;?>></td>
 		</tr>
 		<tr>
 			<td class="td_background_tag">Bid des Users anzeigen</td>
-			<td class="td_background_tag" align="center"><input type="checkbox" name="25" value="1"<?php echo $_S25 ;?>></td>
+			<td class="td_background_tag" align="center"><input type="checkbox" name="25" value="1"<?php echo @$_S25 ;?>></td>
 		</tr>
 	</table>	
 	<br />
