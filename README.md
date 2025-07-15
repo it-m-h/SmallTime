@@ -47,6 +47,7 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 - [Ubuntu - PHP Installation](https://wiki.ubuntuusers.de/PHP/)
 - [PHP 8.3 auf Ubuntu 22.04 installieren](https://www.erikdonner.dev/2023/12/29/php-8-3-auf-ubuntu-22-04-installieren/)
 - [Ubuntu PHP ZIP Extension](https://www.itsolutionstuff.com/post/ubuntu-php-zip-extension-install-commands-exampleexample.html?utm_content=cmp-true)
+- [PHP iconv wird benötigt](https://www.php.net/manual/en/function.iconv.php)
 
 ### Berechtigungen
 
