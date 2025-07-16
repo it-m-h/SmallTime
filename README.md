@@ -92,5 +92,5 @@ docker compose up
 
 Alle Meldungen können angezeigt werden, wenn DEBUG auf **true** gestellt wird.
 
-- in der `index.php` - Zeile:34 = `define('DEBUG', **false**);`
-- in der `admin.php` - Zeile:34 = `define('DEBUG', **false**);`
+- in der `index.php` - Zeile:34 = `define('DEBUG', false);`
+- in der `admin.php` - Zeile:34 = `define('DEBUG', false);`
