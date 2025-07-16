@@ -1,6 +1,7 @@
 ---
 services:
   smalltime-app:
+    build: .
     image: smalltime:latest
     container_name: smalltime-app
     ports:

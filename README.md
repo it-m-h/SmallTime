@@ -77,6 +77,12 @@ mit dem Befehl `make down` wird das docker-compose wieder gestoppt.
 
 Wenn die App nicht startet könnte der Benutzer und die Gruppe von den beiden Volumes smalltime-data und smalltime-settings nicht auf www-data eingerichtet sein.
 
+### Docker Container mit Windows ohne make 
+- Voraussetzung: Docker Desktop ist installiert und gestartet
+- in der Konsole (CMD) zum Verzeichnis wechseln in dem SmallTime liegt
+- Befehl: docker compose build
+- Befehl: docker compose up
+
 ## DEBUG / Fehlermeldungen ein oder ausschalten:
 
 Alle Meldungen können angezeigt werden, wenn DEBUG auf **true** gestellt wird.
