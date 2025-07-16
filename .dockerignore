@@ -1,0 +1,14 @@
+.dockerignore
+.git*
+changelog.txt
+docker-compose.yml
+node_modules
+tmp/
+Dockerfile
+Makefile
+README.md
+*.log
+# Ignore instead of removing after copying to the image
+android.php
+idtime.php
+stempelterminal.php
