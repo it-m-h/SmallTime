@@ -132,10 +132,15 @@ class time_user
 		$_m = $_POST['_m'];
 		$_c 				= $_POST['_c'];
 		$_d				= $_POST['_d'];
+		if (!isset($_d) || trim($_d) === '') $_d = 0;
 		$_e				= $_POST['_e'];
+		if (!isset($_e) || trim($_e) === '') $_e = 0;
 		$_f				= $_POST['_f'];
+		if (!isset($_f) || trim($_f) === '') $_f = 0;
 		$_g1			= $_POST['_g1'];
+		if (!isset($_g1) || trim($_g1) === '') $_g1 = 0;
 		$_g2			= $_POST['_g2'];
+		if (!isset($_g2) || trim($_g2) === '') $_g2 = 0;
 		$_tag 			= array();
 		$_tag[]			= $_POST['wotag0'];
 		$_tag[]			= $_POST['wotag1'];

@@ -68,7 +68,7 @@ falls am Montag nicht gearbeitet wird ergibt dann 4 Wochen Ferien. Oder wenn ein
 echo "</tr>";
 echo "<tr>";
 echo "<td align=left class=td_background_tag>Guthaben - &Uuml;bertrag<br>(Stunden / Ferien)</td>";
-echo "<td align=left class=td_background_tag><input type='text' name='_g1' value='".$_user->_Stunden_uebertrag."' size='10'> | <input type='text' name='_g2' value='".$_user->_Ferienguthaben_uebertrag."' size='10'></td>";
+echo "<td align=left class=td_background_tag><input type='text' name='_g1' value='".$_user->_Stunden_uebertrag."' size='10' required> | <input type='text' name='_g2' value='".$_user->_Ferienguthaben_uebertrag."' size='10' required></td>";
 echo "<td align=left class=td_background_tag width=16><img title='Falls &Uuml;berzeitguthaben oder Ferienguthaben bei Beginn existiert, bitte hier eintragen.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 echo "<tr>";

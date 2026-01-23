@@ -1,4 +1,11 @@
 .gitignore/*
+.ddev/*
+.dockerignore
+docker-compose.yml
+Dockerfile
+Dockerfile-*
+docker-compose-*.yml
+Makefile
 
 #PHP - Storm
 .idea
@@ -14,6 +21,7 @@ debug/*
 js/js_bak
 .vscode/*
 .ddev/*
+.tmp/*
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
