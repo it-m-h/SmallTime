@@ -1,11 +1,5 @@
 .gitignore/*
 .ddev/*
-.dockerignore
-docker-compose.yml
-Dockerfile
-Dockerfile-*
-docker-compose-*.yml
-Makefile
 
 #PHP - Storm
 .idea
