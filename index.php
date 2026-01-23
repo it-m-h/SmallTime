@@ -31,7 +31,7 @@ function my_session_start() {
 	}
 	return session_start();
 }
-define('DEBUG', false);
+define('DEBUG', true);
 if (DEBUG == true) {
 	error_reporting(E_ALL);
 	//error_reporting(E_ALL ^ E_NOTICE);
