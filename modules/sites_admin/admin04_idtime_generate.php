@@ -47,7 +47,7 @@
 
         $fp = @fopen('./Data/users.txt', 'r');
         @fgets($fp); // erste Zeile überspringen
-        while (($logindata = fgetcsv($fp, 0, ';')) != false) {
+        while (($logindata = fgetcsv($fp, 0, ';', '"', '\\')) != false) {
                 $hash = sha1($logindata[1].$logindata[2].crypt($logindata[1], '$2y$04$'.substr($idtime_secret.$logindata[2], 0, 22)));
                 $ID = substr($hash, 0, 16);
                 echo '<div class="idtime">';

@@ -7,7 +7,8 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
-$_infotext = "<b>Plugins werden geladen</b> : ".$_POST['plugin'] . " wird geladen.";
+$pluginName = (isset($_POST['plugin']) ? $_POST['plugin'] : (isset($_SESSION['plugin']) ? $_SESSION['plugin'] : "Statistik"));
+$_infotext = "<b>Plugins werden geladen</b> : ".$pluginName . " wird geladen.";
 $_template->_user01 = "Statistik/sites/div01.php";
 $_template->_user02 = "Statistik/sites/div02.php";
 $_template->_user03 = "Statistik/sites/div03.php";

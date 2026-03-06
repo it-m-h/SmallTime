@@ -166,9 +166,11 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 	$anz = count($_data[$uz][13]);
 	for($a = 1; $a <= 12; $a++)
 	{
-		for($b = 0; $b <= $anz; $b++)
+		for($b = 1; $b < $anz; $b++)
 		{
-			$_data[$uz][13][$b] += $_data[$uz][$a][$b];
+			$gesamt = (is_numeric($_data[$uz][13][$b]) ? (float)$_data[$uz][13][$b] : 0);
+			$monat = (is_numeric($_data[$uz][$a][$b]) ? (float)$_data[$uz][$a][$b] : 0);
+			$_data[$uz][13][$b] = $gesamt + $monat;
 		}
 	}
 	$uz++;

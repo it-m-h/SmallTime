@@ -221,10 +221,11 @@ switch (@$_action) {
 		$_template->_user04 = "sites_year/sites04_year.php";
 		break;
 	case "plugins":
-		if (@$_POST['plugin']) {
-			$_SESSION['plugin'] = $_POST['plugin'];
+		$selectedPlugin = (isset($_POST['plugin']) ? $_POST['plugin'] : (isset($_SESSION['plugin']) ? $_SESSION['plugin'] : ""));
+		if ($selectedPlugin !== "") {
+			$_SESSION['plugin'] = $selectedPlugin;
 		}
-		if ($_POST['plugin'] == "zeiterfassung")
+		if ($selectedPlugin == "zeiterfassung")
 			header("Location: admin.php");
 		$_infotext_org = getinfotext("<b>Plugins werden geladen</b> : ".$_SESSION['plugin']." wird geladen.", "td_background_top");
 		if (isset($_GET['excel'])) {
@@ -470,7 +471,11 @@ switch (@$_action) {
 			$_datei = str_ireplace(" ", "-", trim($_user->_name));
 			$_datei = $_datei."-".$_time->_jahr;
 			$_datei = $_datei."-".$_time->_monat;
-			$_datei = $_datei.".xls";
+			if (class_exists('ZipArchive')) {
+				$_datei = $_datei.".xlsx";
+			} else {
+				$_datei = $_datei.".xls";
+			}
 			$_template->_user04 = "sites_admin/export_xls_monat.php";
 		}
 		break;
@@ -706,8 +711,12 @@ if (isset($_GET['modal'])) {
 	include($_template->get_user04());
 } elseif (isset($_GET['excel'])) {
 	if (!$_datei)
-		$_datei = 'excel.xls';
-	header("Content-type: application/vnd-ms-excel");
+		$_datei = (class_exists('ZipArchive') ? 'excel.xlsx' : 'excel.xls');
+	if (strtolower(pathinfo($_datei, PATHINFO_EXTENSION)) == 'xlsx') {
+		header("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+	} else {
+		header("Content-type: application/vnd.ms-excel");
+	}
 	header("Content-Disposition: attachment; filename=".$_datei);
 	include($_template->get_user04());
 } elseif (isset($_GET['function'])) {

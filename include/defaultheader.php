@@ -11,7 +11,9 @@
                 <meta name="keywords" content="<?php echo $_settings->_array[9][1] ?>">
                 <meta name="copyright" content="<?php echo $_settings->_array[10][1] ?>">
                 <link rel="SHORTCUT ICON" href="<?php echo $_favicon ?>">
-                <meta name="robots" content="noindex">
+                <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+                <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+                <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
                 <script type="text/javascript" src="js/jquery.js"></script>
                 <script type="text/javascript" src="js/jquery-ui.js"></script>
                 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
