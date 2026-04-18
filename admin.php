@@ -686,7 +686,7 @@ $_copyright .= '<hr color="#DFDFDF" size="1">Ladezeit der Seite: '.$_zeitmessung
 // copyright Text
 // ----------------------------------------------------------------------------
 $_arr = file("./include/Settings/copyright.txt");
-$_ver = file("./include/Settings/smalltime.txt");
+$_ver = file("./smalltime.txt");
 $_copyright .= "";
 $_mem_usage = round((memory_get_peak_usage(true) / 1048576), 3);
 if ($_mem_usage > 19.9) {
