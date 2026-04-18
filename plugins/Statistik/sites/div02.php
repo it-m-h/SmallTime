@@ -143,9 +143,17 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 			$arrabs[$u][2] = $werte[2];
 			$monat = date("n", $werte[0]);
 			$arrabs[$u][3] = $monat;
+			//for($c = 0;$c < count($abstxt);$c++)
+			//{
+			//	if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 4)] += $werte[2];
+			//}
 			for($c = 0;$c < count($abstxt);$c++)
 			{
-				if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 4)] += $werte[2];
+			    if($werte[1] == $abstxt[$c]) {
+			        $current = (is_numeric($_data[$uz][$monat][($c + 4)]) ? (float)$_data[$uz][$monat][($c + 4)] : 0);
+			        $addValue = (is_numeric($werte[2]) ? (float)$werte[2] : 0);
+			        $_data[$uz][$monat][($c + 4)] = $current + $addValue;
+			    }
 			}
 			$u++;
 		}
@@ -168,6 +176,9 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 	{
 		for($b = 1; $b < $anz; $b++)
 		{
+			//$gesamt = (is_numeric($_data[$uz][13][$b]) ? (float)$_data[$uz][13][$b] : 0);
+			//$monat = (is_numeric($_data[$uz][$a][$b]) ? (float)$_data[$uz][$a][$b] : 0);
+			//$_data[$uz][13][$b] = $gesamt + $monat;
 			$gesamt = (is_numeric($_data[$uz][13][$b]) ? (float)$_data[$uz][13][$b] : 0);
 			$monat = (is_numeric($_data[$uz][$a][$b]) ? (float)$_data[$uz][$a][$b] : 0);
 			$_data[$uz][13][$b] = $gesamt + $monat;
@@ -234,86 +245,92 @@ echo $html;
 
 function view_jahr($a)
 {
-	global $_data;
-	global $wahljahr;
-	global $AnzahlAbsenzen;
-	$anz = count($_data[$a][13]);
-	$html= "";
-	$html .= "<table width=100% hight=100% border=0 cellpadding=3 cellspacing=1>";
-	$html .= "<tr>";
-	$html .= "<td class=td_background_info width=30px>";
-	$html .= $wahljahr;
-	$html .= "</td>";
-	//-------------------------------------------------------------------------------------------
-	// rote Spaltenüberschriften / Jahr / Soll / Work / Saldo / Absenzen
-	//-------------------------------------------------------------------------------------------
-	for($i = 1; $i < ($AnzahlAbsenzen + 4); $i++)
-	{
-		$html .= "<td width=40 align=middle class=td_background_info>";
-		$html .= "" .$_data[$a][0][$i] . "";
-		$html .= "</td>";
-	}
-	$html .= "</tr>";
-	for($m = 1; $m <= 12;$m++)
-	{
-
-		$html .= "<tr>";
-		$html .= "<td class=td_background_wochenende>";
-		$html .= "<table width=100% hight=100% border=0 cellpadding=2 cellspacing=0><tr><td width=18 valign=middle>";
-		$html .= "<img src=images/icons/calendar_view_month.png border=0>";
-		$html .= "</td><td align=left>";
-		$html .= $m;
-		$html .= "</td></tr></table>";
-		$html .= "</td>";
-		//-------------------------------------------------------------------------------------------
-		// Inhalte / der Tabelle
-		//-------------------------------------------------------------------------------------------
-		for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
-		{
-			$html .= "<td width=40 align=middle class=td_background_tag> ";
-			if($_data[$a][$m][$mi] <> NULL)
-			{
-				$wert = trim($_data[$a][$m][$mi]);
-				if($wert < 0)
-				{
-					$wert = "<font class=minus>".$wert."</font>";
-				}
-				$html .= $wert;
-			}
-			else
-			{
-				$html .= "";
-			}
-			$html .= "</td>";
-		}
-		$html .= "</tr>";
-	}
-	$html .= "<tr>";
-	//-------------------------------------------------------------------------------------------
-	// Summen in der Jahresansicht des MA unten
-	//-------------------------------------------------------------------------------------------
-	$html .= "<td class=td_background_info>Summe:</td>";
-	for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
-	{
-		$html .= "<td width=40 align=middle class=td_background_info> ";
-		if($_data[$a][13][$mi] <> 0)
-		{
-			$wert = trim($_data[$a][13][$mi]);
-			if($wert < 0)
-			{
-				$wert = "<font class=minus>".$wert."</font>";
-			}
-			$html .= $wert;
-		}
-		else
-		{
-			$html .= "";
-		}
-		$html .= "</td>";
-	}
-	$html .= "</tr>";
-	$html .= "</table>";
-	return $html;
+    global $_data;
+    global $wahljahr;
+    global $AnzahlAbsenzen;
+    
+    $anz = count($_data[$a][13]);
+    $html = "";
+    
+    $html .= "<table width=100% height=100% border=0 cellpadding=3 cellspacing=1>";
+    $html .= "<tr>";
+    $html .= "<td class=td_background_info width=30px>";
+    $html .= $wahljahr;
+    $html .= "</td>";
+    
+    // Spaltenüberschriften
+    for($i = 1; $i < ($AnzahlAbsenzen + 4); $i++)
+    {
+        $html .= "<td width=40 align=middle class=td_background_info>";
+        $html .= $_data[$a][0][$i];
+        $html .= "</td>";
+    }
+    $html .= "</tr>";
+    
+    // Monatsdaten
+    for($m = 1; $m <= 12; $m++)
+    {
+        $html .= "<tr>";
+        $html .= "<td class=td_background_wochenende>";
+        $html .= "<table width=100% height=100% border=0 cellpadding=2 cellspacing=0><tr><td width=18 valign=middle>";
+        $html .= "<img src=images/icons/calendar_view_month.png border=0>";
+        $html .= "</td><td align=left>";
+        $html .= $m;
+        $html .= "</td></tr></table>";
+        $html .= "</td>";
+        
+        // Werte für jeden Monat
+        for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
+        {
+            $html .= "<td width=40 align=middle class=td_background_tag> ";
+            
+            // KORREKTUR HIER: Sicherstellen, dass die Logik korrekt geklammert ist
+            if(isset($_data[$a][$m][$mi]) && $_data[$a][$m][$mi] !== NULL && $_data[$a][$m][$mi] !== "")
+            {
+                $wert = trim($_data[$a][$m][$mi]);
+                
+                // Typsicherheit für negative Zahlen
+                if(is_numeric($wert) && $wert < 0)
+                {
+                    $wert = "<font class=minus>" . $wert . "</font>";
+                }
+                $html .= $wert;
+            }
+            else
+            {
+                // Leer lassen oder Platzhalter
+                $html .= "";
+            }
+            $html .= "</td>";
+        }
+        $html .= "</tr>"; // Ende der Monatszeile
+    }
+    
+    // Summenzeile
+    $html .= "<tr>";
+    $html .= "<td class=td_background_info>Summe:</td>";
+    for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
+    {
+        $html .= "<td width=40 align=middle class=td_background_info> ";
+        if(isset($_data[$a][13][$mi]) && $_data[$a][13][$mi] != 0)
+        {
+            $wert = trim($_data[$a][13][$mi]);
+            if(is_numeric($wert) && $wert < 0)
+            {
+                $wert = "<font class=minus>" . $wert . "</font>";
+            }
+            $html .= $wert;
+        }
+        else
+        {
+            $html .= "";
+        }
+        $html .= "</td>";
+    }
+    $html .= "</tr>";
+    
+    $html .= "</table>";
+    return $html;
 }
 ?>
 
