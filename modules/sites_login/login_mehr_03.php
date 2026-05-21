@@ -32,7 +32,6 @@ if(strstr($_template->_bootstrap,'true'))
 		</i>
 
 		<input style="margin-top: 20px;" class="btn" type='submit' name='login' value='Stempelzeit eintragen' >
-		<input type='hidden' name='tmp_log' value='<?php echo $_SESSION['tmp_login']; ?>' >
 
 	</form>
 	<?php
@@ -92,7 +91,6 @@ else
 			<tr>
 				<td align=center COLSPAN=2 width=60>
 					<input type='submit' name='login' value='Stempelzeit eintragen' >
-					<input type='hidden' name='tmp_log' value='<?php echo $_SESSION['tmp_login']; ?>' >
 				</td>
 			</tr>
 		</table>

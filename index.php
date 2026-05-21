@@ -256,13 +256,15 @@ switch ($_action) {
 			$_SESSION['save'] = 8;
 		if (isset($_POST['login']) && $_POST['login'] == "Stempelzeit eintragen" && $_write) {
 			$_stempelGespeichert = false;
+			$_stempelpfad = "";
 			$_logcheck->login($_POST, $_users->_array);
 			if ($_SESSION['admin']) {
 				$id = $_logcheck->_id;
+				$_stempelpfad = isset($_SESSION['datenpfad']) ? $_SESSION['datenpfad'] : $_logcheck->_datenpfad;
 				// Fehlerhandling bei F5 und dann sendenklick
 				if ($_POST['_n'] != '' and $_POST['_p'] != '') {
 					$_time->set_timestamp(time());
-					$_stempelGespeichert = $_time->save_time(time(), $_user->_ordnerpfad);
+					$_stempelGespeichert = $_time->save_time(time(), $_stempelpfad);
 				} else {
 				}
 				$_logcheck->logout();

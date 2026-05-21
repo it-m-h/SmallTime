@@ -112,9 +112,13 @@ class time{
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
 		$fp = fopen($_file,"a+");
+		if(!$fp){
+			return false;
+		}
 		fputs($fp, $_timestamp);
 		fputs($fp, $_zeilenvorschub);
 		fclose($fp);	
+		return true;
 	}
 	
 	function set_runden($zahl){
