@@ -15,6 +15,8 @@ $s02    	= '';
 $s021   	= '';
 $s03    	= '';
 $s031   	= '';
+$s04    	= '';
+$s041   	= '';
 if(isset($_GET['menue']))
 {
 	if($_GET['menue'] == "multilogin")
