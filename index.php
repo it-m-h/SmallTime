@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.128
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -196,7 +196,7 @@ if (isset($_SESSION['admin'])) {
 // ----------------------------------------------------------------------------
 // $_settings->_array[23][1] = wie viel Tage zurück
 // TODO : falls in den Settings eingestellt wurde wie lange zurück Änderungen vorgenommen werden können, timestamp vergleichen
-$edit = true;
+$edit = !time_user::is_after_endtime($_time->_timestamp, $_user->_EndeDerZeitrechnung);
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
@@ -252,17 +252,22 @@ switch ($_action) {
 		if (isset($_SESSION['save']))
 			$_SESSION['save'] = 8;
 		if (isset($_POST['login']) && $_POST['login'] == "Stempelzeit eintragen" && $_write) {
+			$_stempelGespeichert = false;
 			$_logcheck->login($_POST, $_users->_array);
 			if ($_SESSION['admin']) {
 				$id = $_logcheck->_id;
 				// Fehlerhandling bei F5 und dann sendenklick
 				if ($_POST['_n'] != '' and $_POST['_p'] != '') {
 					$_time->set_timestamp(time());
-					$_time->save_time(time(), $_user->_ordnerpfad);
+					$_stempelGespeichert = $_time->save_time(time(), $_user->_ordnerpfad);
 				} else {
 				}
 				$_logcheck->logout();
-				header("Location: index.php?action=login_mehr&tmp=1");
+				if ($_stempelGespeichert) {
+					header("Location: index.php?action=login_mehr&tmp=1");
+				} else {
+					header("Location: index.php?action=login_mehr&tmp=3");
+				}
 			} else {
 				header("Location: index.php?action=login_mehr&tmp=2");
 			}
@@ -274,6 +279,8 @@ switch ($_action) {
 			//$_infotext04 = "";
 		} elseif (isset($_GET['tmp']) && $_GET['tmp'] == "2") {
 			$_infotext04 = getinfotext("Falscher Login!", "alert alert-danger");
+		} elseif (isset($_GET['tmp']) && $_GET['tmp'] == "3") {
+			$_infotext04 = getinfotext("Keine Erfassung mehr m&ouml;glich, End-Datum erreicht.", "alert alert-danger");
 		} else {
 			//$_infotext04 = getinfotext( "Bitte Username und Passwort eingeben!","td_background_top");
 			$_infotext04 = "";
@@ -291,7 +298,7 @@ switch ($_action) {
 		$_template->_user04 = "sites_login/login_einzel_04.php";
 		break;
 	case "login":
-		$_logcheck = new time_login($_POST, $_users->_array);
+		$_logcheck->login($_POST, $_users->_array);
 		break;
 	case "logout":
 		$_logcheck->logout();
@@ -438,8 +445,10 @@ switch ($_action) {
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int)$_settings->_array[25][1]);
-		$_time->save_quicktime($_user->_ordnerpfad);
+		if ($edit) {
+			$_time->set_runden((int)$_settings->_array[25][1]);
+			$_time->save_quicktime($_user->_ordnerpfad);
+		}
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
 		$_template->_user03 = "sites_user/user03_stat.php";
@@ -542,13 +551,13 @@ if (isset($_SESSION['admin'])) {
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
+	$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1], $_user->_EndeDerZeitrechnung);
 	$_monat->_modal = $_template->_modal;
 	// ----------------------------------------------------------------------------
 	// Jahresdaten berechnen
 	// ----------------------------------------------------------------------------
 	// berechnung Endjahr = aktuelles jahr, dann 0 sonst $_time->_jahr
-	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
+	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp, $_user->_EndeDerZeitrechnung);
 }
 
 $_copyright = "<div class=copyright>";

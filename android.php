@@ -8,7 +8,7 @@ header('Access-Control-Allow-Origin: *');
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -73,8 +73,8 @@ if($login){
 	$_user     = new time_user();
 	$_user->load_data_session();
 	$_absenz   = new time_absenz($_user->_ordnerpfad, $_time->_jahr);
-	$_monat    = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
-	$_jahr     = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
+	$_monat    = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1], $_user->_EndeDerZeitrechnung);
+	$_jahr     = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp, $_user->_EndeDerZeitrechnung);
 	// ----------------------------------------------------------------------------------------------
 	// Controller action - Handling
 	// ----------------------------------------------------------------------------------------------
@@ -90,7 +90,9 @@ if($login){
 		get_tag();
 		break;
 		case "quicktime":
-		$_time->save_quicktime($_user->_ordnerpfad);
+		if (!$_time->save_quicktime($_user->_ordnerpfad)) {
+			echo "Keine Erfassung mehr m&ouml;glich, End-Datum erreicht.";
+		}
 		break;
 		case "getmitarbeiter":
 		get_mitarbeiter();
@@ -143,6 +145,10 @@ function get_var(){
 }
 function get_xml(){
 	//Example object
+	$x = new stdClass();
+	$x->name = new stdClass();
+	$x->arr = array();
+	$y = new stdClass();
 	$x->name->first = "John";
 	$x->name->last = "Smith";
 	$x->arr['Fruit'] = 'Bannana';
@@ -241,10 +247,12 @@ function get_statistik(){
 }
 function get_mitarbeiter(){
 	//In Arbeit
-	if(!$_grpwahl) $_grpwahl = 1;
+	global $_grpwahl;
+	global $id;
+	if(!isset($_grpwahl) || !$_grpwahl) $_grpwahl = 1;
 	if($_grpwahl == - 1)$_grpwahl = 1;
 	$_group   = new time_group($_grpwahl);
-	if($id) $_grpwahl = $_group->get_usergroup($id);
+	if(isset($id) && $id) $_grpwahl = $_group->get_usergroup($id);
 	$anzMA    = count($_group->_array[1][$_grpwahl]);
 	for($x = 0; $x < $anzMA ;$x++){
 		$count_time = count($_group->_array[5][$_grpwahl][$x]);

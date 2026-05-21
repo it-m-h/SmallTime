@@ -9,7 +9,7 @@
 *******************************************************************************/
 class time_filehandle{
 	public $_filename 	= ""; 
-	public $_filepfad 	= "";
+* Version 0.9.205
 	public $_array		= NULL;
 	
 	function __construct($_filepfad, $_filename, $_trennzeichen){
@@ -216,6 +216,7 @@ class time_filehandle{
 		fputs($fp, $text.$_zeilenvorschub);
 		$text = 'Extern;E;50';
 		fputs($fp, $text.$_zeilenvorschub);
+		fputs($fp, $_zeilenvorschub);
 		fclose($fp);
 	}
 	function userdaten_txt($_file){

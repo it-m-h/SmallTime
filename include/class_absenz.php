@@ -9,10 +9,27 @@
 *******************************************************************************/
 class time_absenz
 {
-	public $_array = array();
+* Version 0.9.205
 	public $_filetext = array();
 	public $_calc = array();
 	private $ordnerpfad = NULL;
+	private function parse_absenz_line($line)
+	{
+		$line = rtrim((string)$line, "\r\n");
+		$parts = explode(";", $line);
+		$parts = array_pad($parts, 3, '');
+
+		return array($parts[0], $parts[1], $parts[2]);
+	}
+	private function is_empty_absenz_line($line)
+	{
+		return trim($line[0]) == '' && trim($line[1]) == '' && trim($line[2]) == '';
+	}
+	private function is_after_user_end($ordnerpfad, $_timestamp)
+	{
+		$_endtime = time_user::get_user_endtime_by_path($ordnerpfad);
+		return time_user::is_after_endtime($_timestamp, $_endtime);
+	}
 	function __construct($ordnerpfad, $jahr)
 	{
 		$this->ordnerpfad = $ordnerpfad;
@@ -25,13 +42,16 @@ class time_absenz
 			$this->_array = file($_file);
 			$i = 0;
 			foreach ($this->_array as $string) {
-				$string = explode(";", $string);
+				$string = $this->parse_absenz_line($string);
 
 				foreach ($this->_filetext as $_zeile) {
-					$_zeile = explode(";", $_zeile);
-					if (trim($string[1]) == trim($_zeile[1])) {
+					$_zeile = $this->parse_absenz_line($_zeile);
+					if ($this->is_empty_absenz_line($_zeile)) {
+						continue;
+					}
+					if (trim($string[1]) != '' && trim($string[1]) == trim($_zeile[1])) {
 						$string[3] = trim($_zeile[0]);
-						if (!trim($string[2]) <> 0)
+						if (trim($string[2]) == '' || floatval($string[2]) == 0)
 							$string[2] = 1;
 						$string[4] = trim($_zeile[2]);
 					}
@@ -41,7 +61,6 @@ class time_absenz
 			}
 		}
 		$this->calc();
-		return $this->_array;
 	}
 	function calc()
 	{
@@ -51,7 +70,10 @@ class time_absenz
 				$_zeile = str_replace("ä", "ae", $_zeile);
 				$_zeile = str_replace("ö", "oe", $_zeile);
 				$_zeile = str_replace("ü", "ue", $_zeile);
-				$_zeile = explode(";", $_zeile);
+				$_zeile = $this->parse_absenz_line($_zeile);
+				if ($this->is_empty_absenz_line($_zeile)) {
+					continue;
+				}
 				$this->_calc[$o] = array($_zeile[0], $_zeile[1], $_zeile[2], 0);
 				$o++;
 			}
@@ -71,6 +93,9 @@ class time_absenz
 			$_abwesenheit = file($_file);
 		}
 		$_timestamp = $_GET['timestamp'];
+		if ($this->is_after_user_end($ordnerpfad, $_timestamp)) {
+			return false;
+		}
 		$_grund = $_POST['_grund'];
 		$_anzahl = $_POST['_anzahl'];
 		$fp = fopen($_file, "a+");
@@ -80,6 +105,9 @@ class time_absenz
 	function delete_absenz($ordnerpfad, $_w_jahr)
 	{
 		$_timestamp = $_GET['timestamp'];
+		if ($this->is_after_user_end($ordnerpfad, $_timestamp)) {
+			return false;
+		}
 		$_file = "./Data/" . $ordnerpfad . "/Timetable/A" . $_w_jahr;
 		$_absenzliste = file($_file);
 		$i = 0;

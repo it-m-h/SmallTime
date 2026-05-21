@@ -9,7 +9,7 @@
 *******************************************************************************/
 ?>
 <!--Anfang DIV für die InfoBoxMonat -->
-<div id="InfoBoxMonat" style="z-index: 1; visibility: hidden; left: 0px; top: 0px;">
+* Version 0.9.205
 	<div id="BoxInnenMonat">
 		<span id="BoxInhalteMonat">
 		</span>
@@ -92,7 +92,15 @@
 	}
 </script>
 <?php
+function statistik_parse_line($line, $length = 3)
+{
+	$parts = explode(";", rtrim((string)$line, "\r\n"));
+
+	return array_pad($parts, $length, '');
+}
+
 $uz = 0;
+$summaryColumnCount = 3;
 for($z = 1; $z < count($_users->_array ) ; $z++)
 {
 	$_file        		= "./Data/" .$_users->_array[$z][0] . "/Timetable/" .$wahljahr;
@@ -100,19 +108,24 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 	$_file_absenz 	= "./Data/".$_users->_array[$z][0]."/Timetable/A" . $wahljahr;
 	$_file_abstxt 		= "./Data/".$_users->_array[$z][0]."/absenz.txt";
 	$abstxt       		= array();
+	$tmparr = array();
 	if(file_exists($_file_abstxt))
 	{
 		$tmparr = file($_file_abstxt);
 		foreach($tmparr as $zeile)
 		{
-			$spalte = explode(";", $zeile);
+			$spalte = statistik_parse_line($zeile);
+			if(trim($spalte[1]) == '') {
+				continue;
+			}
 			$abstxt[] = $spalte[1];
 		}
 	}
 	//-------------------------------------------------------------------------------------------
 	// Anzahl der Absenzen für die Anzahl der Spaltenberechnung
 	//-------------------------------------------------------------------------------------------
-	$AnzahlAbsenzen = count($tmparr);
+	$AnzahlAbsenzen = count($abstxt);
+	$summaryColumnCount = max($summaryColumnCount, $AnzahlAbsenzen + 3);
 	$_data[$uz][0][0] = $wahljahr;
 	$_data[$uz][0][1] = "Soll";
 	$_data[$uz][0][2] = "Work";
@@ -137,7 +150,10 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 		
 		foreach($tmparr as $zeile)
 		{
-			$werte = explode(";", $zeile);
+			$werte = statistik_parse_line($zeile);
+			if(trim($werte[0]) == '' || trim($werte[1]) == '') {
+				continue;
+			}
 			$arrabs[$u][0] = $werte[0];
 			$arrabs[$u][1] = $werte[1];
 			$arrabs[$u][2] = $werte[2];
@@ -164,7 +180,7 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 		$tmparr = file($_file);
 		for($i = 1; $i <= 12; $i++)
 		{
-			$werte = explode(";", $tmparr[($i - 1)]);
+			$werte = statistik_parse_line($tmparr[($i - 1)] ?? '', 4);
 			$_data[$uz][$i][1] = $werte[2];	// Soll
 			$_data[$uz][$i][2] = $werte[3];	// Work
 			$_data[$uz][$i][3] = $werte[0];	// Saldo
@@ -199,7 +215,7 @@ $html .= "</td>";
 for($i = 1; $i < ($AnzahlAbsenzen + 4); $i++)
 {
 	$html .= "<td width=40 align=middle class=td_background_info>";
-	$html .= "" .$_data[0][0][$i] . "";
+	$html .= isset($_data[0][0][$i]) ? $_data[0][0][$i] : "";
 	$html .= "</td>";
 }
 $html .= "</tr>";
@@ -218,10 +234,10 @@ for($a = 0; $a < count($_data); $a++)
 	// Inhalte / der Tabelle
 	//-------------------------------------------------------------------------------------------
 
-	for($i = 1; $i <= ($AnzahlAbsenzen + 3); $i++)
+	for($i = 1; $i <= $summaryColumnCount; $i++)
 	{
 		$html .= "<td width=40 align=middle class=td_background_tag>";
-		if($_data[$a][13][$i] <> 0)
+		if(isset($_data[$a][13][$i]) && $_data[$a][13][$i] <> 0)
 		{
 			$wert = trim($_data[$a][13][$i]);		
 			if($wert < 0){
@@ -247,7 +263,7 @@ function view_jahr($a)
 {
     global $_data;
     global $wahljahr;
-    global $AnzahlAbsenzen;
+	$detailColumnCount = isset($_data[$a][0]) ? (count($_data[$a][0]) - 1) : 0;
     
     $anz = count($_data[$a][13]);
     $html = "";
@@ -259,10 +275,10 @@ function view_jahr($a)
     $html .= "</td>";
     
     // Spaltenüberschriften
-    for($i = 1; $i < ($AnzahlAbsenzen + 4); $i++)
+	for($i = 1; $i <= $detailColumnCount; $i++)
     {
         $html .= "<td width=40 align=middle class=td_background_info>";
-        $html .= $_data[$a][0][$i];
+		$html .= isset($_data[$a][0][$i]) ? $_data[$a][0][$i] : "";
         $html .= "</td>";
     }
     $html .= "</tr>";
@@ -280,7 +296,7 @@ function view_jahr($a)
         $html .= "</td>";
         
         // Werte für jeden Monat
-        for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
+		for($mi = 1; $mi <= $detailColumnCount; $mi++)
         {
             $html .= "<td width=40 align=middle class=td_background_tag> ";
             
@@ -309,7 +325,7 @@ function view_jahr($a)
     // Summenzeile
     $html .= "<tr>";
     $html .= "<td class=td_background_info>Summe:</td>";
-    for($mi = 1; $mi <= ($AnzahlAbsenzen + 3); $mi++)
+	for($mi = 1; $mi <= $detailColumnCount; $mi++)
     {
         $html .= "<td width=40 align=middle class=td_background_info> ";
         if(isset($_data[$a][13][$mi]) && $_data[$a][13][$mi] != 0)

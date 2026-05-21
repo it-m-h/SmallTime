@@ -9,7 +9,7 @@
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // PDF erstellen mit mehreren Stempelzeiten und Kommentaren auf gleicher Seite
-// ----------------------------------------------------------------------------
+* Version 0.9.205
 function erstelle_neu($_drucktime) {
 	global $_user;
 	global $_time;
@@ -27,11 +27,11 @@ function erstelle_neu($_drucktime) {
 			$tmp_jahr = $tmp_jahr - 1;
 		}
 		// Falls der Mitarbeiter Drucken darf ist das nur der letzte Monat
-		$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
-		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_drucktime);
+		$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1], $_user->_EndeDerZeitrechnung);
+		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_drucktime, $_user->_EndeDerZeitrechnung);
 	} else {
-		$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
-		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
+		$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1], $_user->_EndeDerZeitrechnung);
+		$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp, $_user->_EndeDerZeitrechnung);
 	}
 
 
@@ -258,9 +258,9 @@ function erstelle_neu($_drucktime) {
 				$zeile[6] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[6]));
 				$zeile[16] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[16]));
 				if (($zeile[16] != "") && (strlen($zeile[34]) > 1))
-					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].";\r\n".$_txt, 1, '', 'L', '1');
+					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].";\r\n".$_txt, 1, 'L', true);
 				else
-					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].$_txt, 1, '', 'L', '1');
+					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].$_txt, 1, 'L', true);
 
 				// Stempelzeiten auf mehrere Zeilen
 				$pdf->Cell(29, 5, '', 0, '', 'C');
@@ -296,9 +296,9 @@ function erstelle_neu($_drucktime) {
 				$zeile[6] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[6]));
 				$zeile[16] = str_replace("0", "", iconv("UTF-8", "ISO-8859-1", $zeile[16]));
 				if (($zeile[16] != "") && (strlen($zeile[34]) > 1))
-					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].";\r\n".$_txt, 1, '', 'L', '1');
+					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].";\r\n".$_txt, 1, 'L', true);
 				else
-					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].$_txt, 1, '', 'L', '1');
+					$pdf->MultiCell(48, 5, $zeile[6].$zeile[16].$_txt, 1, 'L', true);
 			}
 
 

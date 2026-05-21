@@ -3,7 +3,7 @@
 /*******************************************************************************
  * Jahresberechnung
 /*******************************************************************************
- * Version 0.9.204
+ * Version 0.9.205
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -22,11 +22,16 @@ class time_jahr
 	public $_saldo_F			= NULL;		// Feriensaldo
 	public $_saldo_Fv			= NULL;		// Vergangene Ferien
 	public $_saldo_Fz			= NULL;		// Eingetragene Ferien in der Zukunft
+	public $_summe_Fv			= NULL;
+	public $_summe_Fz			= NULL;
+	public $_summe_Ft			= NULL;
+	public $_summe_Fgeplant		= NULL;
 	public $_arr_ausz			= NULL;		// Auszahlungen als array (Monat, Jahr, Anzahl)
 	public $_tot_ausz			= NULL;		// Auszahlungen summe
 	public $_ordnerpfad			= NULL;		// Pfad zu den Daten
 	public $_startjahr 			= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
 	public $_startmonat			= NULL;		// Beginn der Zeitrechnung in den User - Einstellungen
+	public $_endzeit			= NULL;
 	public $_array				= NULL;		// Array des Jahres
 	public $_data				= NULL;		// Array der Daten	
 	public $_Ferien_pro_Jahr	= NULL;
@@ -35,7 +40,7 @@ class time_jahr
 	//public $Ferien_pro_Jahr; 		
 	public $_Vorholzeit_pro_Jahr		= NULL;
 
-	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp)
+	function __construct($ordnerpfad, $jahr, $startjahr, $Stunden_uebertrag, $Ferienguthaben_uebertrag, $Ferien_pro_Jahr, $Vorholzeit_pro_Jahr, $modell, $_timestamp, $_endzeit = 0)
 	{
 		$this->_ordnerpfad 				= $ordnerpfad;
 		$this->_timestamp 				= $_timestamp;
@@ -44,6 +49,7 @@ class time_jahr
 		$startjahr = trim($startjahr);
 		$this->_startjahr 				= date("Y", $startjahr);
 		$this->_startmonat 				= date("n", $startjahr);
+		$this->_endzeit 				= intval($_endzeit);
 		$this->_Stunden_uebertrag 		= $Stunden_uebertrag;
 		$this->_Ferienguthaben_uebertrag = $Ferienguthaben_uebertrag;
 		$this->_Ferien_pro_Jahr 		= $Ferien_pro_Jahr;
@@ -73,9 +79,14 @@ class time_jahr
 	function get_auszahlung($monat, $jahr)
 	{
 		$anz = 0;
+		if (time_user::is_month_after_end($jahr, $monat, $this->_endzeit)) {
+			return 0;
+		}
+		$referenceYear = $this->get_reference_year();
+		$referenceMonth = $this->get_reference_month();
 		if(is_array($this->_arr_ausz)){
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
-				if ($this->_CalcToTimestamp && date("Y", $this->_timestamp) > trim($monat)) {
+				if ($this->_CalcToTimestamp && ($jahr < $referenceYear || ($jahr == $referenceYear && $monat <= $referenceMonth))) {
 					if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
 						$anz =  $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 					}
@@ -96,25 +107,25 @@ class time_jahr
 	{
 		// Auszahlungen berechnen (Datei ./Data/username/Timetable/auszahlungen : Monat;Jahr;Anzahl)
 		$file = "./Data/" . $_SESSION['datenpfad'] . "/Timetable/auszahlungen";
+		$referenceYear = $this->get_reference_year();
+		$referenceMonth = $this->get_reference_month();
 		if (file_exists($file)) {
 			$this->_arr_ausz = file($file);
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
-				$auszahlung = $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
-				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
-				if ($this->_CalcToTimestamp && date("n", $this->_timestamp) >= $this->_arr_ausz[$i][0] && date("Y", $this->_timestamp) >= $this->_arr_ausz[$i][1]) {
-					if ($this->_modell == 1 &&  date("Y", $this->_CalcToTimestamp) == $this->_arr_ausz[$i][1]) {
-						$this->_tot_ausz += $auszahlung;
-					} elseif (!$this->_modell == 1) {
-						$this->_tot_ausz += $auszahlung;
-					}
-				} elseif (!$this->_CalcToTimestamp) {
-					if ($this->_modell == 1 &&  date("Y", $this->_CalcToTimestamp) == $this->_arr_ausz[$i][1]) {
-						$this->_tot_ausz += $auszahlung;
-					} elseif (!$this->_modell == 1) {
-						$this->_tot_ausz += $auszahlung;
-					}
+				$monat = intval(trim($this->_arr_ausz[$i][0] ?? 0));
+				$jahr = intval(trim($this->_arr_ausz[$i][1] ?? 0));
+				if (!$this->is_auszahlung_allowed($monat, $jahr)) {
+					continue;
 				}
+				$auszahlung = $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
+				if ($jahr != $referenceYear) {
+					continue;
+				}
+				if ($this->_CalcToTimestamp && $monat > $referenceMonth) {
+					continue;
+				}
+				$this->_tot_ausz += $auszahlung;
 			}
 		}
 	}
@@ -126,6 +137,9 @@ class time_jahr
 			$this->_arr_ausz = file($file);
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
+				if (!$this->is_auszahlung_allowed(intval(trim($this->_arr_ausz[$i][0] ?? 0)), intval(trim($this->_arr_ausz[$i][1] ?? 0)))) {
+					continue;
+				}
 				$auszahlung = $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 				if (isset($this->_arr_ausz[$i][0]) && isset($this->_arr_ausz[$i][1])) {
@@ -148,8 +162,8 @@ class time_jahr
 	}
 	function calc_month()
 	{
-		$i = date("Y", $this->_timestamp);
-		$z = date("m", $this->_timestamp) - 1;
+		$i = $this->get_reference_year();
+		$z = $this->get_reference_month() - 1;
 		$file = "./Data/" . $this->_ordnerpfad . "/Timetable/" . $i;
 		if (!file_exists($file)) {
 			$fp = fopen($file, "w");
@@ -197,10 +211,78 @@ class time_jahr
 
 		return floatval(str_replace(',', '.', $value));
 	}
+	private function get_reference_timestamp()
+	{
+		if ($this->_endzeit > 0 && intval($this->_timestamp) > $this->_endzeit) {
+			return $this->_endzeit;
+		}
+
+		return intval($this->_timestamp);
+	}
+	private function get_reference_year()
+	{
+		return intval(date("Y", $this->get_reference_timestamp()));
+	}
+	private function get_reference_month()
+	{
+		return intval(date("n", $this->get_reference_timestamp()));
+	}
+	private function get_calc_month_limit($year)
+	{
+		$year = intval($year);
+		$limit = 12;
+
+		if ($this->_CalcToTimestamp) {
+			$selectedYear = intval(date("Y", intval($this->_timestamp)));
+			$selectedMonth = intval(date("n", intval($this->_timestamp)));
+			if ($year > $selectedYear) {
+				return 0;
+			}
+			if ($year === $selectedYear) {
+				$limit = min($limit, $selectedMonth);
+			}
+		}
+		if ($this->_endzeit > 0) {
+			$endYear = intval(date("Y", $this->_endzeit));
+			$endMonth = intval(date("n", $this->_endzeit));
+			if ($year > $endYear) {
+				return 0;
+			}
+			if ($year === $endYear) {
+				$limit = min($limit, $endMonth);
+			}
+		}
+
+		return $limit;
+	}
+	private function get_year_active_months($year, $respectCalcLimit = false)
+	{
+		$starttime = mktime(0, 0, 0, intval($this->_startmonat), 1, intval($this->_startjahr));
+		$endtime = $this->_endzeit;
+
+		if ($respectCalcLimit) {
+			$calcLimit = $this->get_calc_month_limit($year);
+			if ($calcLimit <= 0) {
+				return 0;
+			}
+			$calcEnd = mktime(23, 59, 59, $calcLimit + 1, 0, intval($year));
+			if ($endtime > 0) {
+				$endtime = min($endtime, $calcEnd);
+			} else {
+				$endtime = $calcEnd;
+			}
+		}
+
+		return time_user::get_year_active_months($year, $starttime, $endtime);
+	}
+	private function is_auszahlung_allowed($monat, $jahr)
+	{
+		return !time_user::is_month_after_end($jahr, $monat, $this->_endzeit);
+	}
 
 	function calc_year()
 	{
-		$i = date("Y", $this->_timestamp);
+		$i = $this->get_reference_year();
 		$file = "./Data/" . $this->_ordnerpfad . "/Timetable/" . $i;
 		if (!file_exists($file)) {
 			$fp = fopen($file, "w");
@@ -208,21 +290,24 @@ class time_jahr
 		}
 		$this->_data[$i] = file($file);
 		$z = 0;
+		$maxMonth = $this->get_calc_month_limit($i);
 		foreach ($this->_data[$i] as $zeile) {
 			$this->_data[$i][$z] = explode(";", $zeile);
 			$monatssumme = $this->get_timetable_value($this->_data[$i][$z][0] ?? 0);
-			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
-			if ($this->_CalcToTimestamp && date("n", $this->_timestamp) > $z) {
-				$this->_summe_t = $this->_summe_t + $monatssumme;
-			} elseif (!$this->_CalcToTimestamp) {
+			if (($z + 1) <= $maxMonth) {
 				$this->_summe_t = $this->_summe_t + $monatssumme;
 			}
 			$z++;
 		}
 		// jährliche Vorholzeit - Summe hinzurechnen
-		$this->_saldo_t = $this->_summe_t - $this->_Vorholzeit_pro_Jahr - $this->_tot_ausz;
+		$vorholzeit = floatval($this->_Vorholzeit_pro_Jahr);
+		if ($this->_endzeit > 0) {
+			$vorholzeitMonate = $this->get_year_active_months($i, true);
+			$vorholzeit = round(floatval($this->_Vorholzeit_pro_Jahr) / 12 * floatval($vorholzeitMonate), 2);
+		}
+		$this->_saldo_t = $this->_summe_t - $vorholzeit - $this->_tot_ausz;
 		// im Start-Jahr Übertrag hinzufügen
-		if ($this->_startjahr == date("Y", $this->_timestamp)) {
+		if ($this->_startjahr == $i) {
 			$this->_saldo_t = $this->_saldo_t  + $this->_Stunden_uebertrag;
 		}
 	}
@@ -244,43 +329,22 @@ class time_jahr
 			}
 			$this->_data[$i] = file($file);
 			$z = 0;
+			$maxMonth = $this->get_calc_month_limit($i);
 			// Schleife - Monats Daten in der Jahres Datei 
 			foreach ($this->_data[$i] as $zeile) {
 				$this->_data[$i][$z] = explode(";", $zeile);
 				$monatssumme = $this->get_timetable_value($this->_data[$i][$z][0] ?? 0);
-				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
-				if ($this->_CalcToTimestamp) {
-					// Jahr ist gleich, dann nur bis zum aktuellen Monat
-					$year = date("Y", $this->_timestamp);
-					if (date("Y", $this->_timestamp) == $i) {
-						if (date("n", $this->_timestamp) > $z) {
-							$this->_summe_t = $this->_summe_t + $monatssumme;
-						}
-					} else {
-						$this->_summe_t = $this->_summe_t + $monatssumme;
-					}
-				} else {
+				if (($z + 1) <= $maxMonth) {
 					$this->_summe_t = $this->_summe_t + $monatssumme;
 				}
 				$z++;
 				$temp = $this->_summe_t;
 			}
 			// Jährliche Vorholzeit - Summe
-			$_monate = 0;
-			if ($this->_startjahr == $i) {
-				if ($_year_wahl == $i) {
-					$_monate = $_month_wahl - $this->_startmonat + 1;
-				} else {
-					$_monate = 13 - $this->_startmonat;
-				}
+			$_monate = $this->get_year_active_months($i, true);
+			if ($_monate > 0) {
 				$tmp = round(floatval($this->_Vorholzeit_pro_Jahr) / 12 * floatval($_monate), 2);
 				$this->_summe_vorholzeit += $tmp;
-			} elseif ($_year_wahl == $i) {
-				$_monate = $_month_wahl;
-				$tmp = round(floatval($this->_Vorholzeit_pro_Jahr) / 12 * floatval($_monate), 2);
-				$this->_summe_vorholzeit += $tmp;
-			} else {
-				$this->_summe_vorholzeit += floatval($this->_Vorholzeit_pro_Jahr);
 			}
 		}
 		$this->_saldo_t 	= 	0;
@@ -328,6 +392,9 @@ class time_jahr
 			if (file_exists($file)) {
 				$_arr = file($file);
 				for ($i = 0; $i < count($_arr); $i++) {
+					if (time_user::is_month_after_end($j, $i + 1, $this->_endzeit)) {
+						continue;
+					}
 					$_arr[$i] = explode(";", $_arr[$i]);
 					// settings == 1 wenn kommende Ferien nicht mitberechnet werden sollen
 					if ($tmpsettings->_array[27][1] == 1) {
@@ -361,7 +428,7 @@ class time_jahr
 					foreach ($tmp_absenzen[$i]->_array as $eintrag) {
 						if ($eintrag[1] == 'F') {
 							$zahl = $eintrag[2];
-							if (time() < $eintrag[0]) {
+							if (time() < $eintrag[0] && !time_user::is_after_endtime($eintrag[0], $this->_endzeit)) {
 								//wenn der eintrag in der Zukunft liegt und noch nicht in den Summen enthalten ist
 								$this->_summe_Fgeplant += floatval($eintrag[2]);
 							}
@@ -399,13 +466,14 @@ class time_jahr
 	}
 	function calc_Ferien($i)
 	{
-		// Falls der Startmonat nicht der Januar ist, restliches Guthaben der Ferien berechnen
-		if ($this->_startmonat > 1 && $this->_startjahr == $i) {
-			$Ferien = round((floatval($this->_Ferien_pro_Jahr) / 12 * (13 - intval($this->_startmonat))), 2);
-		} else {
-			$Ferien = $this->_Ferien_pro_Jahr;
+		$monate = time_user::get_year_active_months($i, mktime(0, 0, 0, intval($this->_startmonat), 1, intval($this->_startjahr)), $this->_endzeit);
+		if ($monate <= 0) {
+			return 0;
 		}
-		return 	$Ferien;
+		if ($monate < 12) {
+			return round((floatval($this->_Ferien_pro_Jahr) / 12 * floatval($monate)), 2);
+		}
+		return 	$this->_Ferien_pro_Jahr;
 	}
 	// TODO : löschen ist als Plugin gelöst
 	function set_ueberschriften($jahr)

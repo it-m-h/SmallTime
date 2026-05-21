@@ -1,3 +1,13 @@
+<?php
+/********************************************************************************
+	* Small Time
+	/*******************************************************************************
+* Version 0.9.205
+	* Author:  IT-Master
+	* www.it-master.ch / info@it-master.ch
+	* Copyright (c), IT-Master, All rights reserved
+	********************************************************************************/
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -8,14 +18,6 @@
 		<center>
 Sie werden nach 2 Sekunden automatisch weitergeleitet.
 <?php
-/********************************************************************************
-   * Small Time
-   /*******************************************************************************
-   * Version 0.9.1
-   * Author:  IT-Master
-   * www.it-master.ch / info@it-master.ch
-   * Copyright (c), IT-Master, All rights reserved
-   ********************************************************************************/
 // -----------------------------------------------------------------------------
 // idtime - Stempelzeit via Direkt-URL eintragen, z.B. ID oder
 //          komplette URL von einem Barcode-Scanner
@@ -37,6 +39,7 @@ date_default_timezone_set("Europe/Paris");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
+include_once('./include/class_user.php');
 // Microtime für die Seitenanzeige (Geschwindigkeit des Seitenaufbaus)
 $_start_time = explode(" ", microtime());
 $_start_time = $_start_time[1] + $_start_time[0];
@@ -67,6 +70,9 @@ if (isset($_GET['id'])) {
 	echo $_stempelid[$ID];
 	if (isset($_stempelid[$ID])) {
 		$user = $_stempelid[$ID];
+		if (time_user::is_after_endtime(time(), time_user::get_user_endtime_by_path($user))) {
+			txt("Keine Erfassung mehr m&ouml;glich, End-Datum erreicht.", false);
+		} else {
 		$_timestamp = time();
 		$_zeilenvorschub = "\r\n";
 		$_file = './Data/'.$user.'/Timetable/'.date('Y').'.'.date('n');
@@ -74,11 +80,15 @@ if (isset($_GET['id'])) {
 		fputs($fp, time().$_zeilenvorschub);
 		fclose($fp);
 		txt("OK und Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
+		}
 		//$_SESSION['time'] = true; // ?
 	} else
 		txt("Fehler, unbekannte ID!", false);
 } elseif (isset($_GET['rfid'])) {
 	if (isset($user)) {
+		if (time_user::is_after_endtime(time(), time_user::get_user_endtime_by_path($user))) {
+			txt("Keine Erfassung mehr m&ouml;glich, End-Datum erreicht.", false);
+		} else {
 		$_timestamp = time();
 		$_zeilenvorschub = "\r\n";
 		$_file = './Data/'.$user.'/Timetable/'.date('Y').'.'.date('n');
@@ -86,6 +96,7 @@ if (isset($_GET['id'])) {
 		fputs($fp, time().$_zeilenvorschub);
 		fclose($fp);
 		txt("OK und Stempelzeit f&uuml;r <b>$user</b> eingetragen.", true);
+		}
 		//$_SESSION['time'] = true; // ?			
 	} else
 		txt("Fehler, unbekannte ID!", false);

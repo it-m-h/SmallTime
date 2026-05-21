@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -27,7 +27,10 @@
 		<?php
 		$i=0;
 		foreach($_user->get_user_absenzen() as $string){
-			$string = explode(";", $string);
+			$string = array_pad(explode(";", rtrim((string)$string, "\r\n")), 3, '');
+			if (trim($string[0]) == '' && trim($string[1]) == '' && trim($string[2]) == '') {
+				continue;
+			}
 			echo "
 			<tr>
 			<td class=td_background_tag align=left>

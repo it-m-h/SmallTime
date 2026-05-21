@@ -3,14 +3,13 @@
 /*******************************************************************************
  * User - Daten
 /*******************************************************************************
- * Version 0.9.130
+ * Version 0.9.205
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
  *******************************************************************************/
 class time_user
 {
-	public $_loginname 			= NULL;
 	public $_password 			= NULL;
 	public $_ordnerpfad 			= NULL;
 	public $_name				= NULL;
@@ -22,6 +21,7 @@ class time_user
 	public $_SummeArbeitstage 	= NULL;
 	public $_SollZeitProTag		= NULL;
 	public $_BeginnDerZeitrechnung	= NULL;
+	public $_EndeDerZeitrechnung	= NULL;
 	public $_Vorholzeit_pro_Jahr	= NULL;
 	public $_Ferien_pro_Jahr		= NULL;
 	public $_Stunden_uebertrag 	= NULL;
@@ -35,9 +35,117 @@ class time_user
 	{
 		$this->check_htaccess();
 	}
+	private static function read_userdaten($datenpfad)
+	{
+		$_file = "./Data/" . $datenpfad . "/userdaten.txt";
+		if (!file_exists($_file)) {
+			return array();
+		}
+
+		return file($_file);
+	}
+	private static function get_userdaten_value($_userdaten, $index, $default = '')
+	{
+		if (!isset($_userdaten[$index])) {
+			return $default;
+		}
+
+		$tmp = trim((string)$_userdaten[$index]);
+		$tmp = str_ireplace('\r', '', $tmp);
+		$tmp = str_ireplace('\n', '', $tmp);
+		return $tmp;
+	}
+	public static function format_enddatum($timestamp)
+	{
+		$timestamp = intval($timestamp);
+		if ($timestamp <= 0) {
+			return '';
+		}
+
+		return date('m.Y', $timestamp);
+	}
+	public static function normalize_enddatum($value)
+	{
+		$value = trim((string)$value);
+		if ($value === '') {
+			return 0;
+		}
+
+		$value = str_replace('/', '.', $value);
+		if (preg_match('/^(\d{1,2})\.(\d{4})$/', $value, $matches)) {
+			$month = intval($matches[1]);
+			$year = intval($matches[2]);
+		} elseif (preg_match('/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/', $value, $matches)) {
+			$month = intval($matches[2]);
+			$year = intval($matches[3]);
+		} else {
+			return 0;
+		}
+
+		if ($month < 1 || $month > 12 || $year < 1970) {
+			return 0;
+		}
+
+		return mktime(23, 59, 59, $month + 1, 0, $year);
+	}
+	public static function get_user_starttime_by_path($datenpfad)
+	{
+		$_userdaten = self::read_userdaten($datenpfad);
+		return intval(self::get_userdaten_value($_userdaten, 1, 0));
+	}
+	public static function get_user_endtime_by_path($datenpfad)
+	{
+		$_userdaten = self::read_userdaten($datenpfad);
+		return intval(self::get_userdaten_value($_userdaten, 17, 0));
+	}
+	public static function get_user_endtime()
+	{
+		if (!isset($_SESSION['datenpfad'])) {
+			return 0;
+		}
+
+		return self::get_user_endtime_by_path($_SESSION['datenpfad']);
+	}
+	public static function is_after_endtime($timestamp, $endtime)
+	{
+		return intval($endtime) > 0 && intval($timestamp) > intval($endtime);
+	}
+	public static function is_month_after_end($year, $month, $endtime)
+	{
+		if (intval($endtime) <= 0) {
+			return false;
+		}
+
+		return mktime(0, 0, 0, intval($month), 1, intval($year)) > intval($endtime);
+	}
+	public static function get_year_active_months($year, $starttime, $endtime = 0)
+	{
+		$year = intval($year);
+		$startMonth = 1;
+		$endMonth = 12;
+
+		if (intval($starttime) > 0 && intval(date('Y', intval($starttime))) === $year) {
+			$startMonth = intval(date('n', intval($starttime)));
+		}
+		if (intval($endtime) > 0) {
+			$endYear = intval(date('Y', intval($endtime)));
+			if ($year > $endYear) {
+				return 0;
+			}
+			if ($year === $endYear) {
+				$endMonth = intval(date('n', intval($endtime)));
+			}
+		}
+
+		if ($endMonth < $startMonth) {
+			return 0;
+		}
+
+		return $endMonth - $startMonth + 1;
+	}
 	function load_data_pfad($datenpfad)
 	{
-		$_userdaten = file("./Data/" . $datenpfad . "/userdaten.txt");
+		$_userdaten = self::read_userdaten($datenpfad);
 		$this->_loginname 	= $_SESSION['username'];
 		$this->_password 	= $_SESSION['passwort'];
 		$this->_ordnerpfad	= $_SESSION['datenpfad'];
@@ -51,7 +159,8 @@ class time_user
 			$this->_SummeArbeitstage = $this->_SummeArbeitstage + floatval($_tmp);
 		}
 		$this->_SollZeitProTag = round($this->_SollZeitProWoche / $this->_SummeArbeitstage, 2);
-		$this->_BeginnDerZeitrechnung = $_userdaten[1];
+		$this->_BeginnDerZeitrechnung = intval(self::get_userdaten_value($_userdaten, 1, 0));
+		$this->_EndeDerZeitrechnung = intval(self::get_userdaten_value($_userdaten, 17, 0));
 		$this->_Vorholzeit_pro_Jahr = $_userdaten[4];
 		$this->_Ferien_pro_Jahr = $_userdaten[5];
 		$tmp = explode(';', $_userdaten[6]);
@@ -71,7 +180,7 @@ class time_user
 	function load_data_session()
 	{
 		if (isset($_SESSION['datenpfad'])) {
-			$_userdaten = file("./Data/" . $_SESSION['datenpfad'] . "/userdaten.txt");
+			$_userdaten = self::read_userdaten($_SESSION['datenpfad']);
 			$this->_loginname 	= $_SESSION['username'];
 			$this->_password 	= $_SESSION['passwort'];
 			$this->_ordnerpfad	= $_SESSION['datenpfad'];
@@ -85,7 +194,8 @@ class time_user
 				$this->_SummeArbeitstage = $this->_SummeArbeitstage + floatval($_tmp);
 			}
 			$this->_SollZeitProTag = round($this->_SollZeitProWoche / $this->_SummeArbeitstage, 2);
-			$this->_BeginnDerZeitrechnung = $_userdaten[1];
+			$this->_BeginnDerZeitrechnung = intval(self::get_userdaten_value($_userdaten, 1, 0));
+			$this->_EndeDerZeitrechnung = intval(self::get_userdaten_value($_userdaten, 17, 0));
 			$this->_Vorholzeit_pro_Jahr = $_userdaten[4];
 			$this->_Ferien_pro_Jahr = $_userdaten[5];
 			$tmp = explode(';', $_userdaten[6]);
@@ -129,6 +239,8 @@ class time_user
 		//$_b wird zu einem Timestamp
 		$_b = explode(".", $_b);
 		$_tmp = mktime(0, 0, 0, $_b[1], $_b[0], $_b[2]);
+		$_enddatum = isset($_POST['_enddatum']) ? $_POST['_enddatum'] : '';
+		$_endzeit = self::normalize_enddatum($_enddatum);
 		$_m = $_POST['_m'];
 		$_c 				= $_POST['_c'];
 		$_d				= $_POST['_d'];
@@ -183,6 +295,7 @@ class time_user
 		$_ZT = implode($_zeilenvorschub, $_ZT);
 		fputs($fp, $_ZT . $_zeilenvorschub);
 		fputs($fp, $_m . $_zeilenvorschub);
+		fputs($fp, ($_endzeit > 0 ? $_endzeit : '') . $_zeilenvorschub);
 		fclose($fp);
 		$this->load_data_pfad($_SESSION['datenpfad']);
 	}
@@ -229,7 +342,7 @@ class time_user
 			$_uhrzeit = date("H:i", time());
 			$_datetime =  $_datum . " - " . $_uhrzeit;
 			$_debug 	= new time_filehandle("./debug/", "time.txt", ";");
-			$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_user;213;" . $this->_file . ";htaccess nicht vorhanden, wurde erstellt.");
+			$_debug->insert_line("Time;" . $_datetime . ";Fehler in class_user;213;" . $_file . ";htaccess nicht vorhanden, wurde erstellt.");
 		}
 	}
 	public static function get_user_startyear()
@@ -246,11 +359,11 @@ class time_user
 	}
 	public static function get_user_starttime()
 	{
-		$_userdaten = file("./Data/" . $_SESSION['datenpfad'] . "/userdaten.txt");
-		$tmp = trim($_userdaten[1]);
-		$tmp = str_ireplace('\r', '', $tmp);
-		$tmp = str_ireplace('\n', '', $tmp);
-		return $tmp;
+		if (!isset($_SESSION['datenpfad'])) {
+			return 0;
+		}
+
+		return self::get_user_starttime_by_path($_SESSION['datenpfad']);
 	}
 	public static function get_user_stempelzeiten($user, $jahr, $monat, $tag)
 	{

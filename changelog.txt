@@ -44,3 +44,4 @@ V 0.9.201 06.02.2025 -> kleine Fehler wenn Pfad falsch um .htaccess zu erstellen
 V 0.9.202 18.04.2026 -> Versionsstand in Git
 V 0.9.203 18.04.2026 -> Versionsdatei smalltime.txt aktualisiert
 V 0.9.204 21.05.2026 -> PHP-8 Typfehler in Jahres- und Auszahlungsberechnung sowie Warning beim ersten .htaccess-Aufruf korrigiert
+V 0.9.205 21.05.2026 -> End-Datum pro Mitarbeiter ergänzt, Berechnungen und Erfassung nach Austritt begrenzt sowie diverse PHP-8 Warnings und Ansichten korrigiert

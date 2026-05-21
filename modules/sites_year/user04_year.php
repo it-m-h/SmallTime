@@ -3,7 +3,7 @@
 /********************************************************************************
  * Small Time
 /*******************************************************************************
- * Version 0.9.121
+* Version 0.9.205
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -67,22 +67,36 @@ $monate = explode(";", $_settings->_array[11][1]);
 $y      = $_jahr->_startjahr;
 $_now   = date("Y", time());
 $_to    = $_jahr->_startjahr;
+$_starttime = $_user->_BeginnDerZeitrechnung;
+$_endtime = $_user->_EndeDerZeitrechnung;
+$_kumulativ = (strstr(trim($_user->_modell), '0') or trim($_user->_modell) == '0');
 //----------------------------------------------------------------------------------------------
 
 
 $anzeige = array();
 for ($year = $_now; $year >= $_to; $year--) {
 	for ($month = 0; $month < 12; $month++) {
+		$_isAfterEnd = time_user::is_month_after_end($year, $month + 1, $_endtime);
+		$_monthSaldo = 0;
+		$_monthFerien = 0;
+		$_monthWork = 0;
+		$_monthSoll = 0;
+		if (!$_isAfterEnd && isset($_jahr->_data[$year][$month])) {
+			$_monthSaldo = floatval($_jahr->_data[$year][$month][0] ?? 0);
+			$_monthFerien = floatval($_jahr->_data[$year][$month][1] ?? 0);
+			$_monthWork = floatval($_jahr->_data[$year][$month][2] ?? 0);
+			$_monthSoll = floatval($_jahr->_data[$year][$month][3] ?? 0);
+		}
 		//Zeiten eintragen
-		$anzeige[$year]['Saldo'][$month] 	= floatval($_jahr->_data[$year][$month][0]);	// Saldo im Monat
-		$anzeige[$year]['Ferien'][$month] 	= floatval($_jahr->_data[$year][$month][1]);	// Ferien im Monat
-		$anzeige[$year]['Work'][$month] 	= floatval($_jahr->_data[$year][$month][2]);	// Gearbeitet
-		$anzeige[$year]['Soll'][$month] 		= floatval($_jahr->_data[$year][$month][3]);	// Sollstunden
+		$anzeige[$year]['Saldo'][$month] 	= $_monthSaldo;	// Saldo im Monat
+		$anzeige[$year]['Ferien'][$month] 	= $_monthFerien;	// Ferien im Monat
+		$anzeige[$year]['Work'][$month] 	= $_monthWork;	// Gearbeitet
+		$anzeige[$year]['Soll'][$month] 		= $_monthSoll;	// Sollstunden
 		//Summen eintragen
-		@$anzeige[$year]['Saldo'][12] 		+= floatval($_jahr->_data[$year][$month][0]);
-		@$anzeige[$year]['Ferien'][12] 		+= floatval($_jahr->_data[$year][$month][1]);
-		@$anzeige[$year]['Work'][12] 		+= floatval($_jahr->_data[$year][$month][2]);
-		@$anzeige[$year]['Soll'][12] 		+= floatval($_jahr->_data[$year][$month][3]);
+		@$anzeige[$year]['Saldo'][12] 		+= $_monthSaldo;
+		@$anzeige[$year]['Ferien'][12] 		+= $_monthFerien;
+		@$anzeige[$year]['Work'][12] 		+= $_monthWork;
+		@$anzeige[$year]['Soll'][12] 		+= $_monthSoll;
 		//Monatsname und Link
 		$_tempstamp = mktime(0, 0, 0, $month + 1, 1, $year);
 		$monatslink = "
@@ -101,15 +115,19 @@ for ($year = $_now; $year >= $_to; $year--) {
 }
 //----------------------------------------------------------------------------------------------
 // Auszahlungen eintragen
-for ($u = 0; $u < count($auszahlung->_arr_ausz); $u++) {
-	(isset($auszahlung->_arr_ausz[$u][1])) ? $_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]) : $_tmp_ausz_y = 0;
-	(isset($auszahlung->_arr_ausz[$u][0])) ? $_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]) : $_tmp_ausz_m = 0;
-	$_tmp_ausz_m--;
-	(isset($auszahlung->_arr_ausz[$u][2])) ? $_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]) : $_tmp_ausz_a = 0;
-	$_tmp_ausz_a = str_ireplace('\r', '', $_tmp_ausz_a);
-	$_tmp_ausz_a = str_ireplace('\n', '', $_tmp_ausz_a);
+if (is_array($auszahlung->_arr_ausz)) {
+	for ($u = 0; $u < count($auszahlung->_arr_ausz); $u++) {
+		(isset($auszahlung->_arr_ausz[$u][1])) ? $_tmp_ausz_y = trim($auszahlung->_arr_ausz[$u][1]) : $_tmp_ausz_y = 0;
+		(isset($auszahlung->_arr_ausz[$u][0])) ? $_tmp_ausz_m = trim($auszahlung->_arr_ausz[$u][0]) : $_tmp_ausz_m = 0;
+		$_tmp_ausz_m--;
+		(isset($auszahlung->_arr_ausz[$u][2])) ? $_tmp_ausz_a = trim($auszahlung->_arr_ausz[$u][2]) : $_tmp_ausz_a = 0;
+		$_tmp_ausz_a = str_ireplace('\r', '', $_tmp_ausz_a);
+		$_tmp_ausz_a = str_ireplace('\n', '', $_tmp_ausz_a);
 
-	$anzeige[$_tmp_ausz_y]['Auszahlung'][$_tmp_ausz_m] = $_tmp_ausz_a;
+		if (!time_user::is_month_after_end(intval($_tmp_ausz_y), intval($_tmp_ausz_m) + 1, $_endtime) && isset($anzeige[$_tmp_ausz_y])) {
+			$anzeige[$_tmp_ausz_y]['Auszahlung'][$_tmp_ausz_m] = floatval($_tmp_ausz_a);
+		}
+	}
 }
 //----------------------------------------------------------------------------------------------
 //Summen berechnen
@@ -123,41 +141,36 @@ for ($year = $_to; $year <= $_now; $year++) {
 		//Auszahlung
 		@$anzeige[$year]['Summ']['Auszahlung'] += $anzeige[$year]['Auszahlung'][$month];
 	}
-	//Saldo
 	$startjahr = intval($_jahr->_startjahr);
-	if ($year == $_jahr->_startjahr) {
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] + $_user->_Stunden_uebertrag;
+	$_activeMonths = time_user::get_year_active_months($year, $_starttime, $_endtime);
+	$_vorholzeit = 0;
+	$_ferien = 0;
+	if ($_activeMonths > 0) {
+		$_vorholzeit = round(floatval($_jahr->_Vorholzeit_pro_Jahr) / 12 * floatval($_activeMonths), 2);
+		$_ferien = round(floatval($_jahr->_Ferien_pro_Jahr) / 12 * floatval($_activeMonths), 2);
 	}
-	if ($year == $startjahr or intval($_user->_modell) != 0) {
-		// Saldo bei Startjahr Vorholzeit Prozentual
-		$_vorholzeit = round(floatval($_jahr->_Vorholzeit_pro_Jahr) / 12 * (13 - floatval($_jahr->_startmonat)), 2);
+	$anzeige[$year]['Summ']['vorholzeit'] = $_vorholzeit;
+	$anzeige[$year]['Summ']['feriengutschrift'] = $_ferien;
+	if ($year == $startjahr) {
 		$anzeige[$year]['Summ']['vorholzeit_start'] = $_vorholzeit;
-		$anzeige[$year]['Summ']['vorholzeit'] = $_vorholzeit;
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $_vorholzeit;
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $anzeige[$year]['Summ']['Auszahlung'];
-	} else {
-		// vorholzeit nachfolgende Jahre
-		$anzeige[$year]['Summ']['vorholzeit'] = trim(str_ireplace('\n', '', $_jahr->_Vorholzeit_pro_Jahr));
-		$anzeige[$year]['Summ']['vorholzeit'] = str_ireplace('\r', '', $anzeige[$year]['Summ']['vorholzeit']);
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] + $anzeige[($year - 1)]['Summ']['Saldo'];
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $_jahr->_Vorholzeit_pro_Jahr;
-		$anzeige[$year]['Summ']['Saldo'] = $anzeige[$year]['Summ']['Saldo'] - $anzeige[$year]['Summ']['Auszahlung'];
-	}
-	//Ferien
-	if ($year == $_jahr->_startjahr) {
-		// Ferien bei Startjahr prozentual
-		$_ferien = round(floatval($_jahr->_Ferien_pro_Jahr) / 12 * (13 - floatval($_jahr->_startmonat)), 2);
 		$anzeige[$year]['Summ']['ferien_start'] = $_ferien;
-		$anzeige[$year]['Summ']['ferien_uebertrag'] = $_ferien;
-		$_ferien = $_ferien + floatval($_user->_Ferienguthaben_uebertrag);
-		$anzeige[$year]['Summ']['feriengutschrift'] = $_ferien;
-		$anzeige[$year]['Summ']['Ferien'] = $_ferien - $anzeige[$year]['Summ']['Ferien'];
-	} else {
-		// Ferien nachfolgende Jahre
-		$anzeige[$year]['Summ']['feriengutschrift'] = $_jahr->_Ferien_pro_Jahr;
-		$anzeige[$year]['Summ']['Ferien'] = $anzeige[$year]['Summ']['Ferien'] - $anzeige[($year - 1)]['Summ']['Ferien'];
-		$anzeige[$year]['Summ']['Ferien'] = $_jahr->_Ferien_pro_Jahr - $anzeige[$year]['Summ']['Ferien'];
 	}
+
+	$_saldo = $anzeige[$year]['Summ']['Saldo'] - $_vorholzeit - $anzeige[$year]['Summ']['Auszahlung'];
+	if ($year == $startjahr) {
+		$_saldo += floatval($_user->_Stunden_uebertrag);
+	} elseif ($_kumulativ) {
+		$_saldo += floatval($anzeige[($year - 1)]['Summ']['Saldo']);
+	}
+	$anzeige[$year]['Summ']['Saldo'] = $_saldo;
+
+	if ($year == $startjahr) {
+		$anzeige[$year]['Summ']['feriengutschrift'] = $_ferien + floatval($_user->_Ferienguthaben_uebertrag);
+		$_ferienSaldo = $anzeige[$year]['Summ']['feriengutschrift'] - $anzeige[$year]['Summ']['Ferien'];
+	} else {
+		$_ferienSaldo = floatval($anzeige[($year - 1)]['Summ']['Ferien']) + $_ferien - $anzeige[$year]['Summ']['Ferien'];
+	}
+	$anzeige[$year]['Summ']['Ferien'] = $_ferienSaldo;
 }
 //----------------------------------------------------------------------------------------------
 

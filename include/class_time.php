@@ -9,7 +9,7 @@
 *******************************************************************************/
 class time{
 	public $_jahr;
-	public $_monat;
+* Version 0.9.205
 	public $_monatname;
 	public $_tag;
 	public $_stunde;
@@ -30,7 +30,14 @@ class time{
 		$this->_letzterTag = idate('d', mktime(0, 0, 0, ($this->_monat+1), 0, $this->_jahr));
 		$this->_runden = 0;
 	}
-	function edit_accept($time,$settingday){
+	private function is_after_user_end($_timestamp, $_ordnerpfad){
+		$_endtime = time_user::get_user_endtime_by_path($_ordnerpfad);
+		return time_user::is_after_endtime($_timestamp, $_endtime);
+	}
+	function edit_accept($time,$settingday,$endtime = 0){
+		if(time_user::is_after_endtime($time, $endtime)){
+			return false;
+		}
 		$lastday = mktime(0, 0, 0, date("n", time()), date("j", time())-$settingday, date("Y", time()));
 		if($time>=$lastday){
 			return true;
@@ -99,6 +106,9 @@ class time{
 	}
 
 	function save_time($_timestamp, $_ordnerpfad){	
+		if($this->is_after_user_end($_timestamp, $_ordnerpfad)){
+			return false;
+		}
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
 		$fp = fopen($_file,"a+");
@@ -113,6 +123,9 @@ class time{
 	function save_quicktime($_ordnerpfad){
 		$_zeilenvorschub = "\r\n";
 		$time = time();
+		if($this->is_after_user_end($time, $_ordnerpfad)){
+			return false;
+		}
 		$_w_jahr = date("Y", $time);
 		$_w_monat = date("n", $time);
 		$_w_tag = date("j", $time);
@@ -143,6 +156,9 @@ class time{
 	}
 
 	function update_stempelzeit($_oldtime, $_newtime, $_ordnerpfad){
+		if($this->is_after_user_end($_oldtime, $_ordnerpfad) || $this->is_after_user_end($_newtime, $_ordnerpfad)){
+			return false;
+		}
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
 		//Stempelzeiten in ein Array speichern
@@ -170,6 +186,9 @@ class time{
 		fclose($open);
 	}
 	function delete_stempelzeit($_oldtime, $_ordnerpfad){
+		if($this->is_after_user_end($_oldtime, $_ordnerpfad)){
+			return false;
+		}
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $this->_jahr . "." . $this->_monat;
 		//Stempelzeiten in ein Array speichern
 		if(!file_exists($_file)){
@@ -196,6 +215,9 @@ class time{
 		fclose($open);
 	}
 	function save_timestamp($_timestamp, $_ordnerpfad){
+		if($this->is_after_user_end($_timestamp, $_ordnerpfad)){
+			return false;
+		}
 		$_zeilenvorschub = "\r\n";
 		$jahr = date("Y", $_timestamp);
 		$monat = date("n", $_timestamp);

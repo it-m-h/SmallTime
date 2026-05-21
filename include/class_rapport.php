@@ -9,10 +9,17 @@
 *******************************************************************************/
 class time_rapport{
 	function __construct(){	
-	}
+* Version 0.9.205
 	function __destruct(){
 	}
+	private function is_after_user_end($_ordnerpfad, $_timestamp){
+		$_endtime = time_user::get_user_endtime_by_path($_ordnerpfad);
+		return time_user::is_after_endtime($_timestamp, $_endtime);
+	}
 	function insert_rapport($_ordnerpfad, $_timestamp){
+		if($this->is_after_user_end($_ordnerpfad, $_timestamp)){
+			return false;
+		}
 		$rapport = $_POST['rapport'];
 		$_file = "./Data/".$_ordnerpfad."/Rapport/".date("Y.m.d", $_timestamp);
 		$_folder = "./Data/".$_ordnerpfad."/Rapport/";
@@ -24,6 +31,9 @@ class time_rapport{
 		fclose($fp);
 	}
 	function delete_rapport($_ordnerpfad, $_timestamp){
+		if($this->is_after_user_end($_ordnerpfad, $_timestamp)){
+			return false;
+		}
 		$_file = "./Data/".$_ordnerpfad."/Rapport/".date("Y.m.d", $_timestamp);
 		if(file_exists($_file)){
 			unlink($_file);

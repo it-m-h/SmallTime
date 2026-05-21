@@ -3,7 +3,7 @@
 /********************************************************************************
  * Small Time
 /*******************************************************************************
- * Version 0.9.131
+* Version 0.9.205
  * Author: IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -37,6 +37,7 @@ if (strstr($_template->_modal, 'true'))
         </tr>
         <?php
         for ($z = 1; $z < count($_monat->_MonatsArray); $z++) {
+                $edit = !time_user::is_after_endtime($_monat->_MonatsArray[$z][0], $_user->_EndeDerZeitrechnung);
                 //-------------------------------------------------------------------------
                 //Feiertag - Textanzeige
                 //-------------------------------------------------------------------------
@@ -54,13 +55,17 @@ if (strstr($_template->_modal, 'true'))
                 // Falls User die Zeit eintragen darf - anzeigen
                 //-------------------------------------------------------------------------
         
-                if ($_settings->_array[15][1] == 1 || $_settings->_array[26][1])
+                if (($_settings->_array[15][1] == 1 || $_settings->_array[26][1]) && $edit)
                         echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=".$_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
+                elseif ($_settings->_array[15][1] == 1 || $_settings->_array[26][1])
+                        echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
                 //-------------------------------------------------------------------------
                 // Falls User mehrere zeiten eintragen darf - anzeigen
                 //-------------------------------------------------------------------------
-                if ($_settings->_array[16][1] == 1 || $_settings->_array[26][1])
+                if (($_settings->_array[16][1] == 1 || $_settings->_array[26][1]) && $edit)
                         echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=".$_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
+                elseif ($_settings->_array[16][1] == 1 || $_settings->_array[26][1])
+                        echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
                 //-------------------------------------------------------------------------
                 // Stempelzeiten anzeigen mit Link zum editieren falls in den Settings true
                 //-------------------------------------------------------------------------
@@ -76,7 +81,7 @@ if (strstr($_template->_modal, 'true'))
                                 $trenn = " / ";
                         }
                         $tmp = $tmp.$trenn;
-                        if ($_settings->_array[14][1] || $_settings->_array[26][1]) {
+                        if (($_settings->_array[14][1] || $_settings->_array[26][1]) && $edit) {
                                 $tmp = $tmp."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x].$modal."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
                         } else {
                                 $tmp = $tmp.' '.$_monat->_MonatsArray[$z][12][$x].' ';
@@ -87,9 +92,11 @@ if (strstr($_template->_modal, 'true'))
                 // Anzeige von Zeit fehlt, wenn ungerade Stempelzeiten
                 //-------------------------------------------------------------------------
                 if ($_monat->_MonatsArray[$z][11] % 2 == 1) {
-                        $tmp = $tmp."<a href='?action=add_time&timestamp=".$_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'>";
+                        if (($_settings->_array[15][1] == 1 || $_settings->_array[26][1]) && $edit)
+                                $tmp = $tmp."<a href='?action=add_time&timestamp=".$_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'>";
                         $tmp = $tmp." - <font class=timefehlt>Zeit fehlt!</font>";
-                        $tmp = $tmp."</a>";
+                        if (($_settings->_array[15][1] == 1 || $_settings->_array[26][1]) && $edit)
+                                $tmp = $tmp."</a>";
                 }
                 echo $tmp;
                 echo "</td>\n";
@@ -114,8 +121,10 @@ if (strstr($_template->_modal, 'true'))
                 //-------------------------------------------------------------------------
                 // Absenzen enzeigen
                 //-------------------------------------------------------------------------
-                if ($_settings->_array[17][1] || $_settings->_array[26][1]) {
+                if (($_settings->_array[17][1] || $_settings->_array[26][1]) && $edit) {
                         echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";
+                } elseif ($_settings->_array[17][1] || $_settings->_array[26][1]) {
+                        echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center></td>\n";
                 }
                 echo " <td ".$_monat->_MonatsArray[$z][30]." width=62 align=center>";
                 //-------------------------------------------------------------------------
@@ -134,8 +143,10 @@ if (strstr($_template->_modal, 'true'))
                 //-------------------------------------------------------------------------
                 // Rapport editieren oder erstellen
                 //-------------------------------------------------------------------------
-                if ($_settings->_array[18][1] || $_settings->_array[26][1]) {
+                if (($_settings->_array[18][1] || $_settings->_array[26][1]) && $edit) {
                         echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][33]."</td>\n";
+                } elseif ($_settings->_array[18][1] || $_settings->_array[26][1]) {
+                        echo " <td ".$_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][37]."</td>\n";
                 }
                 echo " </tr>\n";
         }

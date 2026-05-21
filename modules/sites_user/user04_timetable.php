@@ -3,7 +3,7 @@
 /********************************************************************************
  * Small Time
 /*******************************************************************************
- * Version 0.9.11
+* Version 0.9.205
  * Author: IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c) , IT-Master, All rights reserved
@@ -34,7 +34,7 @@ if (strstr($_template->_modal, 'true')) $modal = "&modal";
 		//-------------------------------------------------------------------------
 		// Settings Einstellungen - Anzahl Tage zurück editierbar für User
 		//-------------------------------------------------------------------------
-		$edit = $_time->edit_accept($_monat->_MonatsArray[$z][0], $_settings->_array[23][1]);
+		$edit = $_time->edit_accept($_monat->_MonatsArray[$z][0], $_settings->_array[23][1], $_user->_EndeDerZeitrechnung);
 
 
 		//-------------------------------------------------------------------------
@@ -87,11 +87,11 @@ if (strstr($_template->_modal, 'true')) $modal = "&modal";
 		// Anzeige von Zeit fehlt, wenn ungerade Stempelzeiten
 		//-------------------------------------------------------------------------
 		if ($_monat->_MonatsArray[$z][11] % 2 == 1) {
-			if ($_settings->_array[15][1] == 1) {
+			if ($_settings->_array[15][1] == 1 && $edit) {
 				$tmp = $tmp . "<a href='?action=add_time&timestamp=" . $_monat->_MonatsArray[$z][0] . $modal . "' title='Zeit zuf&uuml;gen'>";
 			}
 			$tmp = $tmp . " - <font class=timefehlt>Zeit fehlt!</font>";
-			if ($_settings->_array[15][1] == 1) {
+			if ($_settings->_array[15][1] == 1 && $edit) {
 				$tmp = $tmp . "</a>";
 			}
 		}

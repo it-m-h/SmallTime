@@ -7,7 +7,13 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
-$_infotext = "<b>Plugins werden geladen</b> : ".$_POST['plugin'] . " wird geladen.";
+$plugin = 'Kalender';
+if (isset($_POST['plugin']) && $_POST['plugin'] != '') {
+* Version 0.9.205
+} elseif (isset($_GET['plugin']) && $_GET['plugin'] != '') {
+	$plugin = $_GET['plugin'];
+}
+$_infotext = "<b>Plugins werden geladen</b> : ".$plugin . " wird geladen.";
 $_template->_user01 = "Kalender/sites/div01.php";
 $_template->_user02 = "Kalender/sites/div02.php";
 $_template->_user03 = "Kalender/sites/div03.php";

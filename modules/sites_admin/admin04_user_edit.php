@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.020
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -168,6 +168,12 @@ for($i = 0; $i <= 6; $i++)
 echo "</table>";
 echo "</td>";
 echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Arbeitszuschlag' src='images/icons/information.png' border=0></td>";
+echo "</tr>";
+
+echo "<tr>";
+echo "<td align=left class=td_background_tag>End - Datum</td>";
+echo "<td align=left class=td_background_tag ><input type='text' name='_enddatum' value='".time_user::format_enddatum($_user->_EndeDerZeitrechnung)."' size='7'> <br>(MM.JJJJ / Ende der Zeitrechnung, immer Monatsende)</td>";
+echo "<td align=left class=td_background_tag width='16'><img title='Optional. Wird intern immer auf den letzten Tag des gew&auml;hlten Monats gesetzt.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
 
 echo "<tr>";

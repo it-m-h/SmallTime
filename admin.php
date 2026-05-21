@@ -2,7 +2,7 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.200
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -190,6 +190,7 @@ if (@$_SESSION['admin']) {
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
+$edit_by_enddatum = !time_user::is_after_endtime($_time->_timestamp, $_user->_EndeDerZeitrechnung);
 switch (@$_action) {
 	case "pdfgenerate":
 		if (isset($_POST['jahr']) && isset($_POST['monat'])) {
@@ -305,13 +306,17 @@ switch (@$_action) {
 		break;
 	case "login_mehr":
 		if (@$_POST['login'] == "Stempelzeit eintragen" and $_write) {
+			$_stempelGespeichert = false;
 			$_logcheck->login($_POST, $_users->_array);
 			if ($_SESSION['admin']) {
 				$id = $_logcheck->_id;
 				// Fehlerhandling bei F5 und dann sendenklick
 				if ($_POST['_n'] != '' and $_POST['_p'] != '') {
 					$_time->set_timestamp(time());
-					$_time->save_time(time(), $_user->_ordnerpfad);
+					$_stempelGespeichert = $_time->save_time(time(), $_user->_ordnerpfad);
+				}
+				if (!$_stempelGespeichert) {
+					$_infotext04 = getinfotext("Keine Erfassung mehr m&ouml;glich, End-Datum erreicht.", "alert alert-danger");
 				}
 			}
 			$_logcheck->logout();
@@ -329,7 +334,7 @@ switch (@$_action) {
 		$_template->_user04 = "sites_login/login_einzel_04.php";
 		break;
 	case "login":
-		$_logcheck = new time_login($_POST, $_users->_array);
+		$_logcheck->login($_POST, $_users->_array);
 		break;
 	case "logout":
 		$_logcheck->logout();
@@ -337,18 +342,20 @@ switch (@$_action) {
 		$_group = new time_group($_grpwahl);
 		setLoginForm();
 		break;
-	case "anwesend":
-		break;
 	case "add_rapport":
-		$_rapport = new time_rapport();
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
-		$_template->_user04 = "sites_time/rapport_add_04.php";
+		if ($edit_by_enddatum) {
+			$_rapport = new time_rapport();
+			$_template->_user04 = "sites_time/rapport_add_04.php";
+		} else {
+			$_template->_user04 = "sites_user/admin04_timetable.php";
+		}
 		break;
 	case "insert_rapport":
 		$_rapport = new time_rapport();
-		if ($_POST['absenden'] == "UPDATE" and $_write) {
+		if ($_POST['absenden'] == "UPDATE" and $_write and $edit_by_enddatum) {
 			$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
-		} elseif ($_POST['absenden'] == "DELETE" and $_write) {
+		} elseif ($_POST['absenden'] == "DELETE" and $_write and $edit_by_enddatum) {
 			$_rapport->delete_rapport($_user->_ordnerpfad, $_time->_timestamp);
 		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
@@ -356,31 +363,41 @@ switch (@$_action) {
 		break;
 	case "add_absenz":
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
-		$_template->_user04 = "sites_time/absenz_add_04.php";
+		if ($edit_by_enddatum) {
+			$_template->_user04 = "sites_time/absenz_add_04.php";
+		} else {
+			$_template->_user04 = "sites_user/admin04_timetable.php";
+		}
 		break;
 	case "insert_absenz":
-		if (@$_POST['absenden'] == "OK" and $_write) {
+		if (@$_POST['absenden'] == "OK" and $_write and $edit_by_enddatum) {
 			$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
 		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "delete_absenz":
-		$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
+		if ($edit_by_enddatum) {
+			$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
+		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "edit_time":
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
-		$_template->_user04 = "sites_time/time_edit_04.php";
+		if ($edit_by_enddatum) {
+			$_template->_user04 = "sites_time/time_edit_04.php";
+		} else {
+			$_template->_user04 = "sites_user/admin04_timetable.php";
+		}
 		break;
 	case "update_time":
 		$_oldtime = $_GET['timestamp'];
 		$_newtime = $_time->mktime($_POST['_w_stunde'], $_POST['_w_minute'], 0, $_POST['_w_monat'], $_POST['_w_tag'], $_POST['_w_jahr']);
-		if ($_POST['absenden'] == "UPDATE" and $_write) {
+		if ($_POST['absenden'] == "UPDATE" and $_write and $edit_by_enddatum) {
 			// update oldtime, newtime, Ordner
 			$_time->update_stempelzeit($_oldtime, $_newtime, $_user->_ordnerpfad);
-		} elseif ($_POST['absenden'] == "DELETE" and $_write) {
+		} elseif ($_POST['absenden'] == "DELETE" and $_write and $edit_by_enddatum) {
 			// delete //oldtime, Ordner
 			$_time->delete_stempelzeit($_oldtime, $_user->_ordnerpfad);
 		}
@@ -388,7 +405,7 @@ switch (@$_action) {
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "insert_time_list":
-		if (@$_POST['absenden'] == "OK" and $_write) {
+		if (@$_POST['absenden'] == "OK" and $_write and $edit_by_enddatum) {
 			$_timestamp = $_GET['timestamp'];
 			$_w_tag = $_POST['_w_tag'];
 			$_w_monat = $_POST['_w_monat'];
@@ -425,7 +442,7 @@ switch (@$_action) {
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "insert_time":
-		if (@$_POST['absenden'] == "OK" and $_write) {
+		if (@$_POST['absenden'] == "OK" and $_write and $edit_by_enddatum) {
 			//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
 			if (isset($_POST['oldtime']) == 1) {
 				$tmp2 = $_time->mktime($_POST['_w2_stunde'], $_POST['_w2_minute'], 0, $_POST['_w2_monat'], $_POST['_w2_tag'], $_POST['_w2_jahr']);
@@ -448,19 +465,29 @@ switch (@$_action) {
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int)$_settings->_array[25][1]);
-		$_time->save_quicktime($_user->_ordnerpfad);
+		if ($edit_by_enddatum) {
+			$_time->set_runden((int)$_settings->_array[25][1]);
+			$_time->save_quicktime($_user->_ordnerpfad);
+		}
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		header("Location: admin.php");
 		break;
 	case "add_time":
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
-		$_template->_user04 = "sites_time/time_add_04.php";
+		if ($edit_by_enddatum) {
+			$_template->_user04 = "sites_time/time_add_04.php";
+		} else {
+			$_template->_user04 = "sites_user/admin04_timetable.php";
+		}
 		break;
 	case "add_time_list":
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
-		$_template->_user04 = "sites_time/time_addlist_04.php";
+		if ($edit_by_enddatum) {
+			$_template->_user04 = "sites_time/time_addlist_04.php";
+		} else {
+			$_template->_user04 = "sites_user/admin04_timetable.php";
+		}
 		break;
 	case "show_time":
 		$_template->_user01 = "sites_admin/admin01.php";
@@ -658,7 +685,7 @@ if (@$_SESSION['admin']) {
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
+	$_monat = new time_month($_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1], $_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1], $_user->_EndeDerZeitrechnung);
 	$_monat->_modal = $_template->_modal;
 	// Falls automatische Pause eingestellt
 	// TODO : wurde anderst gelöst, entfernen
@@ -668,7 +695,7 @@ if (@$_SESSION['admin']) {
 	// Jahresdaten berechnen
 	// ----------------------------------------------------------------------------
 	// Berechnung Endjahr = aktuelles Jahr, dann 0 sonst $_time->_jahr
-	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
+	$_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp, $_user->_EndeDerZeitrechnung);
 }
 $_copyright = '<div class="copyright">';
 //-----------------------------------------------------------------------------
