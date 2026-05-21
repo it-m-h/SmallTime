@@ -1,0 +1,7 @@
+Order deny,allow
+Allow from all
+<Files ~ "\.(jpg)$">
+	order deny,allow
+	allow from all
+</Files>
+Options -Indexes
