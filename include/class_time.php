@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Timestamp für alle anderen Berechnungen
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time{
 	public $_jahr;
-* Version 0.9.205
+	public $_monat;
 	public $_monatname;
 	public $_tag;
 	public $_stunde;

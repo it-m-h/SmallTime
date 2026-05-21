@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.131
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 // ----------------------------------------------------------------------------
 // PDF erstellen mit mehreren Stempelzeiten und Kommentaren auf gleicher Seite
-* Version 0.9.205
+
 function erstelle_neu($_drucktime) {
 	global $_user;
 	global $_time;

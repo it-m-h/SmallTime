@@ -10,6 +10,7 @@
  *******************************************************************************/
 class time_user
 {
+	public $_loginname 			= NULL;
 	public $_password 			= NULL;
 	public $_ordnerpfad 			= NULL;
 	public $_name				= NULL;

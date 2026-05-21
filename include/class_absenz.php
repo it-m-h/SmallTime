@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Absenzen - Klasse
 /*******************************************************************************
-* Version 0.9.126
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_absenz
 {
-* Version 0.9.205
+	public $_array = array();
 	public $_filetext = array();
 	public $_calc = array();
 	private $ordnerpfad = NULL;

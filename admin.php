@@ -190,7 +190,10 @@ if (@$_SESSION['admin']) {
 // ----------------------------------------------------------------------------
 // Controller Templatedarstellung
 // ----------------------------------------------------------------------------
-$edit_by_enddatum = !time_user::is_after_endtime($_time->_timestamp, $_user->_EndeDerZeitrechnung);
+$edit_by_enddatum = true;
+if (isset($_time) && isset($_user)) {
+	$edit_by_enddatum = !time_user::is_after_endtime($_time->_timestamp, $_user->_EndeDerZeitrechnung);
+}
 switch (@$_action) {
 	case "pdfgenerate":
 		if (isset($_POST['jahr']) && isset($_POST['monat'])) {

@@ -1,12 +1,12 @@
 <?php
 /********************************************************************************
-	* Small Time
-	/*******************************************************************************
+* Small Time
+/*******************************************************************************
 * Version 0.9.205
-	* Author:  IT-Master
-	* www.it-master.ch / info@it-master.ch
-	* Copyright (c), IT-Master, All rights reserved
-	********************************************************************************/
+* Author:  IT-Master
+* www.it-master.ch / info@it-master.ch
+* Copyright (c), IT-Master, All rights reserved
+********************************************************************************/
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

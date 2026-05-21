@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Small Time - Plugin : Statistik der Mitarbeiter (Überzeit, Ferien usw.)
 /*******************************************************************************
-* Version 0.899
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 ?>
 <!--Anfang DIV für die InfoBoxMonat -->
-* Version 0.9.205
+
 	<div id="BoxInnenMonat">
 		<span id="BoxInhalteMonat">
 		</span>

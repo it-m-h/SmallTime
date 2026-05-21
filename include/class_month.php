@@ -10,6 +10,7 @@
 *******************************************************************************/
 class time_month
 {
+	private $_file = NULL;
 	private $_pfad = NULL; // Ordnerpfad
 	private $_wochentage = NULL; // Bezeichnung der Wochentage
 	private $_arbeitstage = NULL; // User - Arbeitstage - Einstellungen	

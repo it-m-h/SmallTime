@@ -2,17 +2,18 @@
 /*******************************************************************************
 * Rapport
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_rapport{
 	function __construct(){	
-* Version 0.9.205
+	}
+
 	function __destruct(){
 	}
-	private function is_after_user_end($_ordnerpfad, $_timestamp){
+	function is_after_user_end($_ordnerpfad, $_timestamp){
 		$_endtime = time_user::get_user_endtime_by_path($_ordnerpfad);
 		return time_user::is_after_endtime($_timestamp, $_endtime);
 	}

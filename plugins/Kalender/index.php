@@ -2,14 +2,14 @@
 /*******************************************************************************
 * Small Time - Plugin : Kalender Absenzenansicht der Mitarbeiter
 /*******************************************************************************
-* Version 0.896
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 $plugin = 'Kalender';
 if (isset($_POST['plugin']) && $_POST['plugin'] != '') {
-* Version 0.9.205
+	$plugin = $_POST['plugin'];
 } elseif (isset($_GET['plugin']) && $_GET['plugin'] != '') {
 	$plugin = $_GET['plugin'];
 }

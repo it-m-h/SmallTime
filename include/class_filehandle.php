@@ -2,14 +2,15 @@
 /*******************************************************************************
 * Filehandle (fopen)
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.205
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
 *******************************************************************************/
 class time_filehandle{
+	public $_filepfad 	= "";
 	public $_filename 	= ""; 
-* Version 0.9.205
+
 	public $_array		= NULL;
 	
 	function __construct($_filepfad, $_filename, $_trennzeichen){
