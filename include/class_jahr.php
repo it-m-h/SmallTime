@@ -3,7 +3,7 @@
 /*******************************************************************************
  * Jahresberechnung
 /*******************************************************************************
- * Version 0.9.130
+ * Version 0.9.204
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -77,16 +77,16 @@ class time_jahr
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				if ($this->_CalcToTimestamp && date("Y", $this->_timestamp) > trim($monat)) {
 					if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
-						$anz =  $this->_arr_ausz[$i][2];
+						$anz =  $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 					}
 				} elseif (!$this->_CalcToTimestamp) {
 					if (trim($this->_arr_ausz[$i][0]) == trim($monat) && trim($this->_arr_ausz[$i][1]) == trim($jahr)) {
-						$anz =  $this->_arr_ausz[$i][2];
+						$anz =  $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 					}
 				}
 			}
 		}elseif(isset($this->_arr_ausz)){
-			$anz =  $this->_arr_ausz;
+			$anz =  $this->get_timetable_value($this->_arr_ausz);
 		}else{
 			$anz =  0;
 		}
@@ -100,18 +100,19 @@ class time_jahr
 			$this->_arr_ausz = file($file);
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
+				$auszahlung = $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 				if ($this->_CalcToTimestamp && date("n", $this->_timestamp) >= $this->_arr_ausz[$i][0] && date("Y", $this->_timestamp) >= $this->_arr_ausz[$i][1]) {
 					if ($this->_modell == 1 &&  date("Y", $this->_CalcToTimestamp) == $this->_arr_ausz[$i][1]) {
-						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						$this->_tot_ausz += $auszahlung;
 					} elseif (!$this->_modell == 1) {
-						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						$this->_tot_ausz += $auszahlung;
 					}
 				} elseif (!$this->_CalcToTimestamp) {
 					if ($this->_modell == 1 &&  date("Y", $this->_CalcToTimestamp) == $this->_arr_ausz[$i][1]) {
-						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						$this->_tot_ausz += $auszahlung;
 					} elseif (!$this->_modell == 1) {
-						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						$this->_tot_ausz += $auszahlung;
 					}
 				}
 			}
@@ -125,6 +126,7 @@ class time_jahr
 			$this->_arr_ausz = file($file);
 			for ($i = 0; $i < count($this->_arr_ausz); $i++) {
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
+				$auszahlung = $this->get_timetable_value($this->_arr_ausz[$i][2] ?? 0);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 				if (isset($this->_arr_ausz[$i][0]) && isset($this->_arr_ausz[$i][1])) {
 					$tmpaustime = mktime(1, 1, 1, $this->_arr_ausz[$i][0], 1, $this->_arr_ausz[$i][1]);
@@ -133,11 +135,11 @@ class time_jahr
 					$_am 	= date("m", $this->_timestamp);
 					// wenn Auszahlungsjahr kleiner, alle Einträge
 					if ($this->_arr_ausz[$i][1] < $_aj) {
-						$this->_tot_ausz += $this->_arr_ausz[$i][2];
+						$this->_tot_ausz += $auszahlung;
 						//wenn Auszahlungsjahr gleich, dann nur bis zum Monat	
 					} elseif ($this->_arr_ausz[$i][1] == $_aj) {
 						if ($this->_arr_ausz[$i][0] <= $_am) {
-							$this->_tot_ausz += $this->_arr_ausz[$i][2];
+							$this->_tot_ausz += $auszahlung;
 						}
 					}
 				}
@@ -179,8 +181,23 @@ class time_jahr
 		//$this->_data[$i][$z][0] = 0;
 
 		
-		$this->_saldo_t = $this->_data[$i][$z][0];
+		$this->_saldo_t = $this->get_timetable_value($this->_data[$i][$z][0] ?? 0);
 	}
+
+	function get_timetable_value($value)
+	{
+		if (is_array($value)) {
+			$value = $value[0] ?? 0;
+		}
+
+		$value = trim((string)$value);
+		if ($value === '') {
+			return 0.0;
+		}
+
+		return floatval(str_replace(',', '.', $value));
+	}
+
 	function calc_year()
 	{
 		$i = date("Y", $this->_timestamp);
@@ -193,11 +210,12 @@ class time_jahr
 		$z = 0;
 		foreach ($this->_data[$i] as $zeile) {
 			$this->_data[$i][$z] = explode(";", $zeile);
+			$monatssumme = $this->get_timetable_value($this->_data[$i][$z][0] ?? 0);
 			// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp
 			if ($this->_CalcToTimestamp && date("n", $this->_timestamp) > $z) {
-				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+				$this->_summe_t = $this->_summe_t + $monatssumme;
 			} elseif (!$this->_CalcToTimestamp) {
-				$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+				$this->_summe_t = $this->_summe_t + $monatssumme;
 			}
 			$z++;
 		}
@@ -229,19 +247,20 @@ class time_jahr
 			// Schleife - Monats Daten in der Jahres Datei 
 			foreach ($this->_data[$i] as $zeile) {
 				$this->_data[$i][$z] = explode(";", $zeile);
+				$monatssumme = $this->get_timetable_value($this->_data[$i][$z][0] ?? 0);
 				// nur bis zum aktuellen Datum berechnen = $htis->_CalcToTimestamp wenn der Monat auch im Gewählten Jahr liegt
 				if ($this->_CalcToTimestamp) {
 					// Jahr ist gleich, dann nur bis zum aktuellen Monat
 					$year = date("Y", $this->_timestamp);
 					if (date("Y", $this->_timestamp) == $i) {
 						if (date("n", $this->_timestamp) > $z) {
-							$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+							$this->_summe_t = $this->_summe_t + $monatssumme;
 						}
 					} else {
-						$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+						$this->_summe_t = $this->_summe_t + $monatssumme;
 					}
 				} else {
-					$this->_summe_t = $this->_summe_t + $this->_data[$i][$z][0];
+					$this->_summe_t = $this->_summe_t + $monatssumme;
 				}
 				$z++;
 				$temp = $this->_summe_t;

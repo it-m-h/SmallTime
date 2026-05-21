@@ -41,3 +41,6 @@ V 0.9.131 16.05.2023 -> UserDelete - crash fix, PDF mit vielen Zeiten , Darstell
 V 0.9.132 03.01.2025 -> Der 1. Advent wurde falsch berechnet, und somit auch der 2. bis. 4.
 V 0.9.200 07.01.2025 -> diverse kleinere Bug eliminiert
 V 0.9.201 06.02.2025 -> kleine Fehler wenn Pfad falsch um .htaccess zu erstellen
+V 0.9.202 18.04.2026 -> Versionsstand in Git
+V 0.9.203 18.04.2026 -> Versionsdatei smalltime.txt aktualisiert
+V 0.9.204 21.05.2026 -> PHP-8 Typfehler in Jahres- und Auszahlungsberechnung sowie Warning beim ersten .htaccess-Aufruf korrigiert

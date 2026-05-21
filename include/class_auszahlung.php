@@ -2,7 +2,7 @@
 /*******************************************************************************
 * Auszahlung von Stunden
 /*******************************************************************************
-* Version 0.9.1
+* Version 0.9.204
 * Author:  IT-Master
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master, All rights reserved
@@ -62,12 +62,23 @@ class auszahlung{
 		fputs($fp, $array.$_zeilenvorschub);		
 		fclose($fp);
 	}
+
+	function get_numeric_value($value){
+		if(is_array($value)){
+			$value = $value[0] ?? 0;
+		}
+		$value = trim((string)$value);
+		if($value === ""){
+			return 0.0;
+		}
+		return floatval(str_replace(',', '.', $value));
+	}
               
 	function get_auszahlung($monat, $jahr){
 		$anz = 0;
 		for($i=0; $i< count($this->_arr_ausz);$i++){
 			if(trim($this->_arr_ausz[$i][0])== trim($monat) && trim($this->_arr_ausz[$i][1])== trim($jahr)){		
-				$anz =  $this->_arr_ausz[$i][2];				
+				$anz =  $this->get_numeric_value($this->_arr_ausz[$i][2] ?? 0);				
 			}
 		}
 		return $anz;
@@ -81,7 +92,7 @@ class auszahlung{
 			for($i=0; $i< count($this->_arr_ausz);$i++){
 				$this->_arr_ausz[$i] = explode(";", $this->_arr_ausz[$i]);
 				if(isset($this->_arr_ausz[$i][2])){
-					$this->_tot_ausz += $this->_arr_ausz[$i][2];
+					$this->_tot_ausz += $this->get_numeric_value($this->_arr_ausz[$i][2]);
 				}
 			}
 		}else{

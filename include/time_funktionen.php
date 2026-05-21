@@ -3,7 +3,7 @@
 /*******************************************************************************
  * Small Time allgemeine Funktionen
 /*******************************************************************************
- * Version 0.9.201
+ * Version 0.9.204
  * Author:  IT-Master
  * www.it-master.ch / info@it-master.ch
  * Copyright (c), IT-Master, All rights reserved
@@ -92,6 +92,16 @@ function create_htaccess($datenpfad)
 	}
 }
 
+function get_htaccess_datenpfad($_file)
+{
+	$_file = str_replace('\\', '/', $_file);
+	if (preg_match('#(?:^|/)Data/([^/]+)/#', $_file, $matches)) {
+		return $matches[1];
+	}
+
+	return 'unbekannt';
+}
+
 function write_htaccess_img($_file)
 {
 	$_zeilenvorschub = "\r\n";
@@ -119,9 +129,7 @@ function write_htaccess_img($_file)
 		$_uhrzeit = date("H:i", time());
 		$_datetime = $_datum . " - " . $_uhrzeit;
 		$_debug = new time_filehandle("./debug/", "time.txt", ";");
-		if (!isset($datenpfad) || $datenpfad != '') {
-			$datenpfad = "xxxxxx bug001";
-		}
+		$datenpfad = get_htaccess_datenpfad($_file);
 		$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" . $datenpfad . ";htaccess nicht vorhanden, wurde erstellt.");
 	}
 }
@@ -151,6 +159,7 @@ function write_htaccess($_file)
 		$_uhrzeit = date("H:i", time());
 		$_datetime = $_datum . " - " . $_uhrzeit;
 		$_debug = new time_filehandle("./debug/", "time.txt", ";");
+		$datenpfad = get_htaccess_datenpfad($_file);
 		$_debug->insert_line("Time;" . $_datetime . ";Fehler in time_funktion_pdf;193;" . $datenpfad . ";htaccess nicht vorhanden, wurde erstellt.");
 	}
 }
