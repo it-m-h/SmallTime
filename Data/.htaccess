@@ -1,6 +1,0 @@
-Order deny,allow
-Allow from all
-<Files "*">
-  	deny from all
- </Files>
-Options -Indexes
